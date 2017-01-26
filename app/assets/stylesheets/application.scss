@@ -1,3 +1,14 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+
+$font-family-sans-serif: 'Avenir', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
 @import "bootstrap";
 @import "pages";
+
+.uppercase {
+  text-transform: uppercase;
+}
+.titlecase {
+  text-transform: capitalize;
+}
