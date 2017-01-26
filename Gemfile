@@ -24,6 +24,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
+  gem 'guard-rails', require: false
 end
 
 group :development do
