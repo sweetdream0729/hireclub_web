@@ -12,3 +12,19 @@ $font-family-sans-serif: 'Avenir', "Helvetica Neue", Helvetica, Arial, sans-seri
 .titlecase {
   text-transform: capitalize;
 }
+
+.bold {
+  font-weight: bold;
+}
+
+.black {
+  font-weight: 900;
+}
+
+h6 {
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
