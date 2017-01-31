@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email).case_insensitive }
   end
 
-  describe "facebook import",focus: true do
+  describe "facebook import" do
     it "should import omniauth data from facebook" do
       json = '{"provider":"facebook","uid":"10154112674905244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/10154112674905244/picture","location":"San Francisco, California"},"credentials":{"token":"CAADZBqzEIZB9UBAOG2GpsXPmEe0OGzRpJneajHbnLkl1bEom5mj7W1VqZAl5b3h0Q8eWMhCRc3Poqkkttbary0TokborCK3UCXa56SHvVLuMwSJoFJqZALknZAiAss458DYTfdpMWmp9op9tfW5Q522KwBRqEtannxwVra97F3pYK7NYJFusLmUH74hQI0jGcriZCZCyifp0AZDZD","expires_at":1405445165,"expires":true},"extra":{"raw_info":{"id":"10154112674905244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"}}}}'
       omniauth = JSON.parse(json)
