@@ -2,6 +2,7 @@
 
 $font-family-sans-serif: 'Avenir', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+// $brand-primary: #F67280;
 
 @import "bootstrap";
 @import "pages";
@@ -11,6 +12,10 @@ $font-family-sans-serif: 'Avenir', "Helvetica Neue", Helvetica, Arial, sans-seri
 }
 .titlecase {
   text-transform: capitalize;
+}
+
+.letterspace {
+  letter-spacing: 1px
 }
 
 .bold {
