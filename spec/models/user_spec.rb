@@ -14,4 +14,23 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email).case_insensitive }
   end
 
+  describe "facebook import",focus: true do
+    it "should import omniauth data from facebook" do
+      json = '{"provider":"facebook","uid":"10154112674905244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/10154112674905244/picture","location":"San Francisco, California"},"credentials":{"token":"CAADZBqzEIZB9UBAOG2GpsXPmEe0OGzRpJneajHbnLkl1bEom5mj7W1VqZAl5b3h0Q8eWMhCRc3Poqkkttbary0TokborCK3UCXa56SHvVLuMwSJoFJqZALknZAiAss458DYTfdpMWmp9op9tfW5Q522KwBRqEtannxwVra97F3pYK7NYJFusLmUH74hQI0jGcriZCZCyifp0AZDZD","expires_at":1405445165,"expires":true},"extra":{"raw_info":{"id":"10154112674905244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"}}}}'
+      omniauth = JSON.parse(json)
+
+      user = User.from_omniauth(omniauth)
+
+      expect(user).to be_valid
+      expect(user).to be_persisted
+
+      expect(user.email).to eq("fire@kidbombay.com")
+      expect(user.name).to eq("Ketan Anjaria")
+      
+      auth = user.authentications.first
+      expect(auth).not_to be_nil
+      expect(auth).to be_valid
+      expect(auth).to be_persisted
+    end
+  end
 end
