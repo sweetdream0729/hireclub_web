@@ -6,7 +6,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 gem 'rails', '~> 5.0.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
@@ -14,9 +13,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
-gem 'friendly_id', '~> 5.1.0'
-gem 'devise'
-gem 'pundit'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -54,3 +50,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Custom Gems
 gem 'haml-rails', '~> 0.9'
 gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'friendly_id', '~> 5.1.0'
+gem 'devise'
+gem 'pundit'
+gem 'hashie', '~> 3.4.6'
+gem 'omniauth'
+gem 'omniauth-facebook'

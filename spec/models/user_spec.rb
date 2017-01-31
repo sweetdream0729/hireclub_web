@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   subject { user }
 
   describe "associations" do
-
+    it { should have_many(:authentications) }
   end
 
   describe 'validations' do
