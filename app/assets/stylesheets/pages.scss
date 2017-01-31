@@ -7,8 +7,8 @@ footer {
   padding-bottom: 1rem;
   background: rgb(234, 237, 243);
 }
+
 .home_banner {
-  // background: url("https://images.unsplash.com/photo-1473207730345-6cb17f27bd46?dpr=2&auto=format&fit=crop&w=767&h=512&q=80&cs=tinysrgb&crop=");
   background: asset-url("home_bg.jpg");
   background-size: cover;
   background-position: center center;
@@ -17,6 +17,7 @@ footer {
     color: white
   }
 }
+
 hr.inverse {
   border-top: 5px solid rgb(255,255,255);
   opacity: .4;

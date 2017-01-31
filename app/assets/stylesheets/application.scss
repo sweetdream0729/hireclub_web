@@ -5,31 +5,7 @@ $font-family-sans-serif: 'Avenir', "Helvetica Neue", Helvetica, Arial, sans-seri
 // $brand-primary: #F67280;
 
 @import "bootstrap";
+@import "bootstrap_overrides";
+@import "typography";
 @import "pages";
 
-.uppercase {
-  text-transform: uppercase;
-}
-.titlecase {
-  text-transform: capitalize;
-}
-
-.letterspace {
-  letter-spacing: 1px
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.black {
-  font-weight: 900;
-}
-
-h6 {
-  text-transform: uppercase;
-  font-weight: 900;
-  letter-spacing: 1px;
-  font-size: 0.8rem;
-  opacity: 0.3;
-}

@@ -1,19 +1,29 @@
 %nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
   %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
     %span.navbar-toggler-icon
+
   %a.navbar-brand{:href => root_path} HireClub
+
   #navbarSupportedContent.collapse.navbar-collapse
-    %ul.navbar-nav.mr-auto
+  
+    %ul.nav.navbar-nav.mr-auto
+      %li.nav-item.active
+        %a.nav-link{:href => about_path} About
       %li.nav-item
-        %a.nav-link{:href => about_path}
-          About
+        %a.nav-link{:href => contact_path} Contact
       %li.nav-item
-        %a.nav-link{:href => contact_path}
-          Contact
-      %li.nav-item
-        %a.nav-link{:href => "http://facebook.com/groups/hireclub"}
-          Apply
-      
-    / %form.form-inline.my-2.my-lg-0
-    /   %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
-    /   %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
+        %a.nav-link{:href => "http://facebook.com/groups/hireclub"} Apply
+
+    %ul.nav.navbar-nav
+      - if !user_signed_in?
+        %li.nav-item
+          %a.nav-link{:href => new_user_registration_path} Sign Up
+        %li.nav-item
+          %a.nav-link{:href => new_user_session_path} Login
+      - else
+        %li.nav-item
+          %a.nav-link{:href => edit_user_registration_path} Settings
+        %li.nav-item
+          %a.nav-link{:href => destroy_user_session_path} Logout
+
+  
