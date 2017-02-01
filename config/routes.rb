@@ -10,5 +10,10 @@ Rails.application.routes.draw do
     controllers: {registrations: 'registrations',
                   omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
+    member do
+    end
+  end
+
   root to: "pages#index"
 end
