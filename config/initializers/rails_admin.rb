@@ -1,3 +1,5 @@
+require Rails.root.join('lib/rails_admin/config/fields/types/citext')
+
 RailsAdmin.config do |config|
   config.main_app_name = ["HireClub", "Admin"]
 
