@@ -12,6 +12,21 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email).case_insensitive }
+
+    it { is_expected.to validate_uniqueness_of(:username).case_insensitive }
+    it { is_expected.to validate_length_of(:username).is_at_least(0).is_at_most(50) }
+
+    it "should not allow invalid usernames" do
+      # from route recognizers
+      invalid_usernames = ["assets", "about","contact", "admin"]
+      invalid_usernames += ["!","#","test name"]
+      invalid_usernames.each do |username|
+        user.username = username
+        expect(user.valid?).to eq(false)
+      end
+    end
+
+    it { is_expected.to allow_value("test.name", "5", "test_name", "test-name").for(:username) }
   end
 
   describe "facebook import" do

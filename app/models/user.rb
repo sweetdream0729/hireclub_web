@@ -1,5 +1,10 @@
+require 'route_recognizer'
+
 class User < ApplicationRecord
   # Extensions
+  extend FriendlyId
+  friendly_id :username
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
 
@@ -8,6 +13,11 @@ class User < ApplicationRecord
 
 
   # Validations
+  validate  :username_not_in_routes
+  validates :username, :uniqueness => { :case_sensitive => false },
+            :format => { :with => /\A[\w\d\._-]+\Z/n,
+            :message => "can only contain letters, numbers, underscores, dashes and dots" },
+            :length => { :in => 0..50 }, allow_blank: true
 
 
   def self.from_omniauth(omniauth, signed_in_resource=nil)
@@ -16,8 +26,7 @@ class User < ApplicationRecord
 
     if auth.present?
       # auth exists, update it
-      user = auth.user
-      
+      user = auth.user      
     elsif signed_in_resource
       # user exists, no auth exists
       user = signed_in_resource
@@ -39,5 +48,11 @@ class User < ApplicationRecord
     auth.save
 
     return user
+  end
+
+  def username_not_in_routes
+    if RouteRecognizer.new.initial_path_segments.include?(username)
+      errors.add(:username, "not available")
+    end
   end
 end

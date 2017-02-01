@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131165517) do
+ActiveRecord::Schema.define(version: 20170201131431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "authentications", force: :cascade do |t|
     t.string   "provider",      null: false
@@ -63,10 +64,12 @@ ActiveRecord::Schema.define(version: 20170131165517) do
     t.datetime "updated_at",                             null: false
     t.string   "name"
     t.boolean  "is_admin",               default: false, null: false
+    t.citext   "username"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["is_admin"], name: "index_users_on_is_admin", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
   add_foreign_key "authentications", "users"
