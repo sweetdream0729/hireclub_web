@@ -4,4 +4,6 @@
   %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Hireclub Web'}"}
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload'
   = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
+  %script{:src => "https://use.fontawesome.com/df39f018e9.js"}
+  
   = csrf_meta_tags
