@@ -1,6 +1,7 @@
 class OnboardingController < ApplicationController
   include Wicked::Wizard
   before_action :sign_up_required
+  layout "minimal"
 
   steps :username
 
