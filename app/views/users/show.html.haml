@@ -1,5 +1,6 @@
 .container.mt-5.mb-5
   %h1
     = @user.name
-  %h5
-    = "@#{@user.try(:username)}"
+  - if @user.username.present?
+    %h5
+      = "@#{@user.username}"
