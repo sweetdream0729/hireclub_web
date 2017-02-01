@@ -1,0 +1,9 @@
+= title "Choose Username"
+
+.container.mt-5.mb-5
+  = form_for @user, url: wizard_path, method: :put do |f|
+    .form-group
+      = f.label :username, "Username"
+      = f.text_field :username, class: 'form-control'
+
+    = f.submit "Next", class: "btn btn-primary"
