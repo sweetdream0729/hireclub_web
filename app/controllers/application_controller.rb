@@ -5,6 +5,20 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+
+
+  def after_sign_in_path_for(user)
+    if user.onboarded?
+      return root_path
+    else
+      return onboarding_index_path
+    end
+  end
+
+  def sign_up_required
+    redirect_to new_user_registration_url unless user_signed_in?
+  end
+  
   private
 
   def user_not_authorized

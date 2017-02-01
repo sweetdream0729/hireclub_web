@@ -16,10 +16,10 @@
 
     %ul.nav.navbar-nav
       - if !user_signed_in?
-        / %li.nav-item
-        /   %a.nav-link{:href => new_user_registration_path} Sign Up
-        / %li.nav-item
-        /   %a.nav-link{:href => new_user_session_path} Login
+        %li.nav-item
+          %a.nav-link{:href => new_user_registration_path} Sign Up
+        %li.nav-item
+          %a.nav-link{:href => new_user_session_path} Login
       - else
         %li.nav-item
           %a.nav-link{:href => user_path(current_user)} Profile

@@ -48,4 +48,15 @@ RSpec.describe User, type: :model do
       expect(auth).to be_persisted
     end
   end
+
+  describe "onboarded?" do
+    it "should return false if no username" do
+      expect(user.onboarded?).to eq(false)
+    end
+
+    it "should return false if username" do
+      user.username = "test"
+      expect(user.onboarded?).to eq(true)
+    end
+  end
 end

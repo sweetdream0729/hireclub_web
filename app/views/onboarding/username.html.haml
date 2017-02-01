@@ -1,9 +1,16 @@
 = title "Choose Username"
 
 .container.mt-5.mb-5
-  = form_for @user, url: wizard_path, method: :put do |f|
-    .form-group
-      = f.label :username, "Username"
-      = f.text_field :username, class: 'form-control'
+  .row.justify-content-center
+    .col-lg-6.col-md-8.col-sm-10
+      %h1 Choose Username
 
-    = f.submit "Next", class: "btn btn-primary"
+      = form_for @user, url: wizard_path, method: :put do |f|
+        .form-group
+          = f.text_field :username, class: 'form-control'
+          %small.form-text.text-muted 
+            %span hireclub.co/username
+            %br
+            You can change this at any time.
+
+        = f.submit "Next", class: "btn btn-primary"

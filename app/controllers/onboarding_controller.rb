@@ -1,5 +1,6 @@
 class OnboardingController < ApplicationController
   include Wicked::Wizard
+  before_action :sign_up_required
 
   steps :username
 
@@ -16,6 +17,14 @@ class OnboardingController < ApplicationController
     @user = current_user
     @user.update_attributes(user_params)
     render_wizard @user
+  end
+
+  def finish_wizard_path
+    if current_user.onboarded?
+      user_path(current_user)
+    else
+      onboarding_path(:username)
+    end
   end
 
   def user_params

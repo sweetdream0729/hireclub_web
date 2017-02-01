@@ -19,6 +19,9 @@ class User < ApplicationRecord
             :message => "can only contain letters, numbers, underscores, dashes and dots" },
             :length => { :in => 0..50 }, allow_blank: true
 
+  def onboarded?
+    username.present?
+  end
 
   def self.from_omniauth(omniauth, signed_in_resource=nil)
     # get auth model from omniauth data
