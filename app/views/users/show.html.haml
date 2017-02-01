@@ -5,3 +5,7 @@
   - if @user.username.present?
     %h5
       = "@#{@user.username}"
+
+  - if @user == current_user
+    - unless @user.onboarded?
+      = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
