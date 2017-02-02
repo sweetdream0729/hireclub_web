@@ -1,0 +1,20 @@
+.container.mt-5.mb-5
+  %h1 Skills
+
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th
+        %th
+
+    %tbody
+      - @skills.each do |skill|
+        %tr
+          %td= link_to skill.name, skill
+          %td= link_to 'Edit', edit_skill_path(skill) if policy(skill).edit?
+          %td= link_to 'Destroy', skill, :method => :delete, :data => { :confirm => 'Are you sure?' } if policy(skill).destroy?
+
+  %br
+
+  = link_to 'New Skill', new_skill_path, class: "btn btn-primary" if policy(Skill).new?

@@ -1,0 +1,8 @@
+= title @skill.name
+.container.mt-5.mb-5
+  / %a{:href => skills_path } « Skills
+
+  %h1
+    = @skill.name
+
+  = link_to 'Edit', edit_skill_path(@skill), class: "btn btn-primary" if policy(@skill).edit?

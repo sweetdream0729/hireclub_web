@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :skills
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   resources :onboarding
