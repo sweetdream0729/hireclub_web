@@ -9,3 +9,12 @@
   - if @user == current_user
     - unless @user.onboarded?
       = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
+
+  - if @user.user_skills.any?
+    %hr
+    %h6.mt-4.mb-4 Skills
+    - @user.user_skills.each do |user_skill|
+      %h5
+        = user_skill.skill.name
+        %small
+          = pluralize(user_skill.years, "year")

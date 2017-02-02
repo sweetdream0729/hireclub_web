@@ -1,7 +1,11 @@
 class UserSkillPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
+      if user
+        user.user_skills
+      else
+        scope.none
+      end
     end
   end
 

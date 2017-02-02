@@ -1,0 +1,17 @@
+= form_for @user_skill do |f|
+  - if @user_skill.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user_skill.errors.count, "error")} prohibited this user_skill from being saved:"
+      %ul
+        - @user_skill.errors.full_messages.each do |msg|
+          %li= msg
+
+  
+  .form-group
+    = f.label :skill
+    = f.collection_select(:skill_id, Skill.all, :id, :name, {}, {class: "form-control"})
+  .form-group
+    = f.label :years
+    = f.number_field :years, class: "form-control"
+  .actions
+    = f.submit 'Save', class: "btn btn-primary"
