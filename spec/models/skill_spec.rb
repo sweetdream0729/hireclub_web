@@ -6,7 +6,8 @@ RSpec.describe Skill, type: :model do
   subject { skill }
 
   describe "associations" do
-    # it { should have_many(:authentications) }
+    it { should have_many(:user_skills) }
+    it { should have_many(:users).through(:user_skills) }
   end
 
   describe 'validations' do
