@@ -18,6 +18,6 @@
     %h6.mt-4.mb-4 Skills
     - @user.user_skills.each do |user_skill|
       %h5
-        = user_skill.skill.name
+        = link_to user_skill.skill.name, user_skill.skill
         %small
           = pluralize(user_skill.years, "year")
