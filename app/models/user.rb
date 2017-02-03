@@ -12,6 +12,7 @@ class User < ApplicationRecord
   # Associations
   has_many :authentications, dependent: :destroy, inverse_of: :user
   has_many :user_skills, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
+  has_many :skills, through: :user_skills
 
 
   # Validations
@@ -24,6 +25,10 @@ class User < ApplicationRecord
 
   def onboarded?
     username.present?
+  end
+
+  def available_skills
+    Skill.where.not(id: self.skills.pluck(:id))
   end
 
   def self.from_omniauth(omniauth, signed_in_resource=nil)

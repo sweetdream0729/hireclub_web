@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   describe "associations" do
     it { should have_many(:authentications) }
     it { should have_many(:user_skills) }
+    it { should have_many(:skills).through(:user_skills) }
   end
 
   describe 'validations' do
@@ -58,6 +59,24 @@ RSpec.describe User, type: :model do
     it "should return false if username" do
       user.username = "test"
       expect(user.onboarded?).to eq(true)
+    end
+  end
+
+  describe "available_skills" do
+    before {
+      user.save
+      Skill.seed
+    }
+    let(:user_skill) { FactoryGirl.create(:user_skill, user: user, skill: Skill.first) }
+
+    it "should return all skills as available when none" do
+      expect(user.available_skills.count).to eq Skill.count
+    end
+
+    it "should return unused skills when user skill added" do
+      user_skill
+      expect(user.skills.count).to eq(1)
+      expect(user.available_skills.count).to eq Skill.count - 1
     end
   end
 end

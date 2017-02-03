@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserSkill, type: :model do
-  let(:user_skill) { FactoryGirl.create(:user_skill) }
+  let(:user_skill) { FactoryGirl.build(:user_skill) }
 
   subject { user_skill }
 
