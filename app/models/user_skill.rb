@@ -1,6 +1,7 @@
 class UserSkill < ApplicationRecord
   belongs_to :user
   belongs_to :skill
+  counter_culture :skill, column_name: :users_count
 
   validates :user, presence: true
   validates :skill, presence: true
