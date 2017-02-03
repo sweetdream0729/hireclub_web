@@ -30,7 +30,7 @@ class UserSkillsController < ApplicationController
     authorize @user_skill
     
     if @user_skill.save
-      redirect_to current_user, notice: "Added #{@user_skill.name}"
+      redirect_to current_user, notice: "Added #{@user_skill.name} skill"
     else
       render :new
     end
@@ -39,7 +39,7 @@ class UserSkillsController < ApplicationController
   # PATCH/PUT /user_skills/1
   def update
     if @user_skill.update(user_skill_params)
-      redirect_to current_user, notice: "Updated #{@user_skill.name}"
+      redirect_to current_user, notice: "Updated #{@user_skill.name} skill"
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class UserSkillsController < ApplicationController
 
     respond_to do |format|
       format.js   { render layout: false }
-      format.html { redirect_to user_skills_url, notice: "#{@user_skill.name} deleted" }
+      format.html { redirect_to user_skills_url, notice: "#{@user_skill.name} skill deleted" }
     end
     
   end
