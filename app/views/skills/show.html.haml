@@ -4,9 +4,15 @@
 
   %h1
     = @skill.name
+    %small
+      = link_to 'Edit', edit_skill_path(@skill), class: "btn btn-primary btn-sm" if policy(@skill).edit?
   %p
     %small
       = pluralize(@skill.users_count, "member")
 
+  = render partial: "users/user", collection: @users 
 
-  = link_to 'Edit', edit_skill_path(@skill), class: "btn btn-primary" if policy(@skill).edit?
+  = paginate @users
+
+
+  

@@ -9,7 +9,7 @@ class SkillsController < ApplicationController
 
   # GET /skills/1
   def show
-    
+    @users = @skill.users.page(params[:page])
   end
 
   # GET /skills/new
