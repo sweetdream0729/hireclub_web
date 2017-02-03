@@ -23,3 +23,5 @@
         = link_to user_skill.skill.name, user_skill.skill
         %small
           = pluralize(user_skill.years, "year")
+          = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, :remote => true, :class => 'delete_user_skill' do
+            %i.fa.fa-trash-o

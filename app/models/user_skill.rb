@@ -2,6 +2,7 @@ class UserSkill < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :skill
+  delegate :name, to: :skill
   
   # Extensions
   counter_culture :skill, column_name: :users_count

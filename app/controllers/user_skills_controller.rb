@@ -48,7 +48,12 @@ class UserSkillsController < ApplicationController
   # DELETE /user_skills/1
   def destroy
     @user_skill.destroy
-    redirect_to user_skills_url, notice: 'User skill was successfully destroyed.'
+
+    respond_to do |format|
+      format.js   { render layout: false }
+      format.html { redirect_to user_skills_url, notice: "#{@user_skill.name} deleted" }
+    end
+    
   end
 
   private
