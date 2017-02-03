@@ -13,15 +13,17 @@
     - unless @user.onboarded?
       = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
 
-    %hr
-    %h6.mt-4.mb-4
-      Skills
+  %hr
+  %h6.mt-4.mb-4
+    Skills
+    - if @user == current_user
       %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
         %i.fa.fa-plus
-    - @user.user_skills.each do |user_skill|
-      %h5.user_skill
-        = link_to user_skill.skill.name, user_skill.skill
-        %small
-          = pluralize(user_skill.years, "year")
+  - @user.user_skills.each do |user_skill|
+    %h5.user_skill
+      = link_to user_skill.skill.name, user_skill.skill
+      %small
+        = pluralize(user_skill.years, "year")
+        - if policy(user_skill).destroy?
           = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, :remote => true, :class => 'delete_user_skill' do
             %i.fa.fa-trash-o
