@@ -37,8 +37,8 @@ RSpec.describe UserSkillPolicy do
 
     it { should permit_action(:show) }
     it { should permit_action(:create) }
-    it { should permit_action(:update) }
-    it { should permit_action(:destroy) }
+    it { should forbid_action(:update) }
+    it { should forbid_action(:destroy) }
   end
 
 end

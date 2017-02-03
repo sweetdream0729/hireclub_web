@@ -16,11 +16,11 @@ class UserSkillPolicy < ApplicationPolicy
   
   def update?
     return false if user.nil?
-    record.user == user || user.is_admin
+    record.user == user
   end
 
   def destroy?
     return false if user.nil?
-    record.user == user || user.is_admin
+    record.user == user
   end
 end
