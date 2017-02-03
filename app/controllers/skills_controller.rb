@@ -4,7 +4,7 @@ class SkillsController < ApplicationController
 
   # GET /skills
   def index
-    @skills = Skill.all
+    @skills = Skill.page(params[:page])
   end
 
   # GET /skills/1
