@@ -19,7 +19,7 @@
       %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
         %i.fa.fa-plus
     - @user.user_skills.each do |user_skill|
-      %h5
+      %h5.user_skill
         = link_to user_skill.skill.name, user_skill.skill
         %small
           = pluralize(user_skill.years, "year")
