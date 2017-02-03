@@ -13,9 +13,11 @@
     - unless @user.onboarded?
       = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
 
-  - if @user.user_skills.any?
     %hr
-    %h6.mt-4.mb-4 Skills
+    %h6.mt-4.mb-4
+      Skills
+      %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
+        %i.fa.fa-plus
     - @user.user_skills.each do |user_skill|
       %h5
         = link_to user_skill.skill.name, user_skill.skill

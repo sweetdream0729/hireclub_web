@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   # Associations
   has_many :authentications, dependent: :destroy, inverse_of: :user
-  has_many :user_skills, dependent: :destroy, inverse_of: :user
+  has_many :user_skills, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
 
 
   # Validations

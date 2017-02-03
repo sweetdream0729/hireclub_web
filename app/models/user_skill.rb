@@ -1,8 +1,13 @@
 class UserSkill < ApplicationRecord
+  # Associations
   belongs_to :user
   belongs_to :skill
+  
+  # Extensions
   counter_culture :skill, column_name: :users_count
+  acts_as_list scope: :user, top_of_list: 0
 
+  # Validations
   validates :user, presence: true
   validates :skill, presence: true
   validates :skill_id, uniqueness: { scope: :user_id }
