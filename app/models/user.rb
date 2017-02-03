@@ -4,6 +4,7 @@ class User < ApplicationRecord
   # Extensions
   extend FriendlyId
   friendly_id :username
+  dragonfly_accessor :avatar
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
@@ -19,6 +20,7 @@ class User < ApplicationRecord
             :format => { :with => /\A[\w\d\._-]+\Z/n,
             :message => "can only contain letters, numbers, underscores, dashes and dots" },
             :length => { :in => 0..50 }, allow_blank: true
+  validates_size_of :avatar, maximum: 5.megabytes
 
   def onboarded?
     username.present?

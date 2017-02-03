@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: hireclub
+  api_key: '443824319623561'
+  api_secret: fO4mkHzhIM8vaWZofR-tQ0ng7lE
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: hireclub
+  api_key: '443824319623561'
+  api_secret: fO4mkHzhIM8vaWZofR-tQ0ng7lE
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: hireclub
+  api_key: '443824319623561'
+  api_secret: fO4mkHzhIM8vaWZofR-tQ0ng7lE
+  enhance_image_tag: true
+  static_image_support: false
