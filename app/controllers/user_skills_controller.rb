@@ -30,7 +30,7 @@ class UserSkillsController < ApplicationController
     authorize @user_skill
     
     if @user_skill.save
-      redirect_to @user_skill, notice: 'User skill was successfully created.'
+      redirect_to current_user, notice: "Added #{@user_skill.name}"
     else
       render :new
     end
@@ -39,7 +39,7 @@ class UserSkillsController < ApplicationController
   # PATCH/PUT /user_skills/1
   def update
     if @user_skill.update(user_skill_params)
-      redirect_to @user_skill, notice: 'User skill was successfully updated.'
+      redirect_to current_user, notice: "Updated #{@user_skill.name}"
     else
       render :edit
     end
