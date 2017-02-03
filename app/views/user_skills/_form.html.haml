@@ -7,9 +7,11 @@
           %li= msg
 
   
-  .form-group
-    = f.label :skill
-    = f.collection_select(:skill_id, current_user.available_skills, :id, :name, {}, {class: "form-control"})
+  - unless @user_skill.persisted?
+    .form-group
+      = f.label :skill
+      = f.collection_select(:skill_id, current_user.available_skills, :id, :name, {}, {class: "form-control"})
+
   .form-group
     = f.label :years
     = f.number_field :years, class: "form-control"
