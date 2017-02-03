@@ -1,7 +1,27 @@
-.delete_user_skill {
+.delete_user_skills, .edit_user_skills {
    display: none;
 }
 
-.user_skill:hover .delete_user_skill { 
+.user_skill:hover .edit_user_skills { 
    display: inline;
+}
+
+.user_skill:hover .delete_user_skills { 
+   display: inline;
+}
+
+.edit_user_skills {
+  color: $text-muted;
+}
+
+.edit_user_skills:hover {
+  color: $brand-primary;
+}
+
+.delete_user_skills {
+  color: $text-muted;
+}
+
+.delete_user_skills:hover {
+  color: $brand-danger;
 }
