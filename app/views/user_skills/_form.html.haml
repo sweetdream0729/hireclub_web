@@ -10,7 +10,7 @@
   - unless @user_skill.persisted?
     .form-group
       = f.label :skill
-      = f.collection_select(:skill_id, current_user.available_skills, :id, :name, {}, {class: "form-control"})
+      = f.collection_select(:skill_id, current_user.available_skills.by_name, :id, :name, {}, {class: "form-control"})
 
   .form-group
     = f.label :years

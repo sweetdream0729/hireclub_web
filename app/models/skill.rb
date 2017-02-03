@@ -3,6 +3,9 @@ class Skill < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  # Scopes
+  scope :by_name, -> { order('name ASC') }
+
   # Associations
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
