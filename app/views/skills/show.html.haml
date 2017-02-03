@@ -4,5 +4,9 @@
 
   %h1
     = @skill.name
+  %p
+    %small
+      = pluralize(@skill.users_count, "member")
+
 
   = link_to 'Edit', edit_skill_path(@skill), class: "btn btn-primary" if policy(@skill).edit?
