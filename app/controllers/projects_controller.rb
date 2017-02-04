@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
     authorize @project
     
     if @project.save
-      redirect_to current_user, notice: 'Project was successfully created.'
+      redirect_to current_user, notice: 'Project added'
     else
       render :new
     end
@@ -39,7 +39,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to current_user, notice: 'Project was successfully updated.'
+      redirect_to current_user, notice: 'Project updated'
     else
       render :edit
     end

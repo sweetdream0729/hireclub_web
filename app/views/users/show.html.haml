@@ -28,7 +28,7 @@
         = pluralize(user_skill.years, "year")
 
         - if policy(user_skill).edit?
-          = link_to edit_user_skill_path(user_skill), class: "edit_user_skills mr-1 text-muted hover_primary" do
+          = link_to edit_user_skill_path(user_skill), class: "edit_user_skills ml-1 mr-1 text-muted hover_primary" do
             %i.fa.fa-pencil
 
         - if policy(user_skill).destroy?
@@ -42,16 +42,19 @@
       - if @user == current_user
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
-  - @user.projects.each do |project|
-    .project
-      = image_tag(model_image(project.image, 800, 600, true), width: 200, alt: project.name, class: "mb-2")
-      %p
-        = project.name
 
-        - if policy(project).edit?
-          = link_to edit_user_project_path(current_user, project), class: "edit_user_projects mr-1 text-muted hover_primary " do
-            %i.fa.fa-pencil
-            
-        - if policy(project).destroy?
-          = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects text-muted hover_danger" do
-            %i.fa.fa-trash-o
+  .row
+    - @user.projects.each do |project|
+      .col-sm-3.project
+        .card
+          %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
+          .card-block
+            %p.card-text
+              = project.name
+              - if policy(project).edit?
+                = link_to edit_user_project_path(current_user, project), class: "edit_user_projects ml-1 mr-1 text-muted hover_primary " do
+                  %i.fa.fa-pencil
+
+              - if policy(project).destroy?
+                = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects text-muted hover_danger" do
+                  %i.fa.fa-trash-o
