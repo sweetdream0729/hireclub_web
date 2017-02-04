@@ -11,4 +11,9 @@ class Project < ApplicationRecord
   # Validations
   validates :slug, uniqueness: { scope: :user_id, case_sensitive:false }
   validates_size_of :image, maximum: 5.megabytes
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
+  
 end
