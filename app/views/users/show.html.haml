@@ -14,7 +14,7 @@
     - unless @user.onboarded?
       = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
 
-  - if @user.user_skills.any?
+  - if @user.user_skills.any? || @user == current_user
     %hr
     %h6.mt-4.mb-4
       Skills
@@ -35,7 +35,7 @@
           = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills text-muted hover_danger" do
             %i.fa.fa-trash-o
 
-  - if @user.projects.any?
+  - if @user.projects.any? || @user == current_user
     %hr
     %h6.mt-4.mb-4
       Projects
