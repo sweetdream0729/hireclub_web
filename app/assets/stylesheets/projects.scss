@@ -2,5 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .project {
-  display: inline-block;
+  .card {
+    border: none;
+    .card-block {
+      padding: 1rem 0 0 0;
+    }
+  }
 }
