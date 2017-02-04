@@ -7,17 +7,24 @@
           %li= msg
 
   .form-group
-    = f.label 'Image'
+    = f.label 'Upload Image'
     %br
     = image_tag(model_image(@project.image, 200, 200, true), width: 100, class: 'img-circle m-b-1')
     %br
     = f.file_field :image
     = f.hidden_field :retained_image
-
+  
+  .form-group
+    = f.label "Or Add Image URL"
+    = f.text_field :image_url, placeholder: "http://hireclub.co/logo.jpg", class: 'form-control'
 
   .form-group
     = f.label :name
     = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :link
+    = f.text_field :link, class: 'form-control', placeholder: "http://hireclub.co"
+
   .form-group
     = f.label :position
     = f.number_field :position, class: 'form-control'

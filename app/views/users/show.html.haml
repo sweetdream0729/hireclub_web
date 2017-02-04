@@ -47,7 +47,12 @@
     - @user.projects.each do |project|
       .col-sm-3.project
         .card
-          %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
+          - if project.link.present?
+            = link_to project.link, target: "_blank" do
+              %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
+          - else
+            %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
+            
           .card-block
             %p.card-text
               = project.name
