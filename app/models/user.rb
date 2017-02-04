@@ -6,7 +6,7 @@ class User < ApplicationRecord
   friendly_id :username
   dragonfly_accessor :avatar
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :async,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Associations
