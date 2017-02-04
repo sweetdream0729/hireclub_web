@@ -208,7 +208,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
-    puma (3.6.2)
+    puma (3.7.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     pundit-matchers (1.1.0)
