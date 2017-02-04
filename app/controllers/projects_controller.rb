@@ -48,7 +48,10 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to current_user, notice: 'Project was successfully destroyed.'
+    respond_to do |format|
+      format.js   { render layout: false }
+      format.html { redirect_to current_user, notice: 'Project deleted' }
+    end
   end
 
   private
