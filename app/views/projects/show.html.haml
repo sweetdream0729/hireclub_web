@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @project.user
+%p
+  %b Name:
+  = @project.name
+%p
+  %b Slug:
+  = @project.slug
+%p
+  %b Position:
+  = @project.position
+%p
+  %b Image uid:
+  = @project.image_uid
+%p
+  %b Image name:
+  = @project.image_name
+%p
+  %b Image width:
+  = @project.image_width
+%p
+  %b Image height:
+  = @project.image_height
+
+= link_to 'Edit', edit_project_path(@project)
+\|
+= link_to 'Back', projects_path

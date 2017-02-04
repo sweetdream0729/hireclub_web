@@ -1,0 +1,29 @@
+%h1
+  Projects by
+  = @current_user.display_name
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Slug
+      %th Position
+      %th Image uid
+      %th
+      %th
+      %th
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.name
+        %td= project.slug
+        %td= project.position
+        %td= project.image_uid
+        %td= link_to 'Show', user_project_path(current_user, project)
+        %td= link_to 'Edit', edit_user_project_path(current_user, project)
+        %td= link_to 'Destroy', user_project_path(current_user, project), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Project', new_user_project_path(current_user)

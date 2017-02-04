@@ -1,0 +1,28 @@
+= form_for [@current_user,@project] do |f|
+  - if @project.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+      %ul
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label 'Image'
+    %br
+    = image_tag(model_image(@project.image, 200, 200, true), width: 100, class: 'img-circle m-b-1')
+    %br
+    = f.file_field :image
+    = f.hidden_field :retained_image
+
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :position
+    = f.number_field :position, class: 'form-control'
+
+
+    
+  = f.submit 'Save', class: "btn btn-primary btn-lg"
+  = link_to "Cancel", current_user, class: "btn btn-link btn-lg"

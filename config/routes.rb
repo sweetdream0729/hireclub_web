@@ -20,7 +20,9 @@ Rails.application.routes.draw do
                   omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
+    resources :projects
     member do
+      
     end
   end
 

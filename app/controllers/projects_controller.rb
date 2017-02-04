@@ -1,0 +1,69 @@
+class ProjectsController < ApplicationController
+  before_action :sign_up_required
+  after_action :verify_authorized, except: [:index]
+
+  before_action :set_user
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+  # GET /projects
+  def index
+    @projects = current_user.projects
+  end
+
+  # GET /projects/1
+  def show
+  end
+
+  # GET /projects/new
+  def new
+    @project = current_user.projects.build
+    authorize @project
+  end
+
+  # GET /projects/1/edit
+  def edit
+  end
+
+  # POST /projects
+  def create
+    @project = current_user.projects.build(project_params)
+    authorize @project
+    
+    if @project.save
+      redirect_to current_user, notice: 'Project was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  # PATCH/PUT /projects/1
+  def update
+    if @project.update(project_params)
+      redirect_to current_user, notice: 'Project was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  # DELETE /projects/1
+  def destroy
+    @project.destroy
+    redirect_to current_user, notice: 'Project was successfully destroyed.'
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.friendly.find(params[:user_id])
+    end
+
+    def set_project
+      @project = @user.projects.friendly.find(params[:id])
+      authorize @project
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def project_params
+      params.require(:project).permit(:name, :slug, :position, :image, :retained_image, :remove_image)
+    end
+end

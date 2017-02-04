@@ -10,6 +10,9 @@ Things you may want to cover:
 * System dependencies
 
 * Configuration
+```
+env PORT=3001 rails server
+```
 
 * Database creation
 

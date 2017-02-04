@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   # Associations
   has_many :authentications, dependent: :destroy, inverse_of: :user
+  has_many :projects, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :user_skills, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :skills, through: :user_skills
 
@@ -31,6 +32,11 @@ class User < ApplicationRecord
     Skill.where.not(id: self.skills.pluck(:id))
   end
 
+  def display_name
+    return name if name.present?
+    return username
+  end
+  
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end

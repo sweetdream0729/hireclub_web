@@ -33,3 +33,22 @@
         - if policy(user_skill).destroy?
           = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills" do
             %i.fa.fa-trash-o
+
+  %hr
+  %h6.mt-4.mb-4
+    Projects
+    - if @user == current_user
+      %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
+        %i.fa.fa-plus
+  - @user.projects.each do |project|
+    .project
+      = image_tag(model_image(project.image, 800, 600, true), width: 200, alt: project.name, class: "mb-2")
+      %p
+        = project.name
+        
+        - if policy(project).edit?
+          = link_to edit_user_project_path(current_user, project), class: "edit_user_projects mr-1" do
+            %i.fa.fa-pencil
+        - if policy(project).destroy?
+          = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects" do
+            %i.fa.fa-trash-o

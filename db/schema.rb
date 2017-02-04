@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203130217) do
+ActiveRecord::Schema.define(version: 20170204144333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,21 @@ ActiveRecord::Schema.define(version: 20170203130217) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer  "user_id",                  null: false
+    t.string   "name"
+    t.citext   "slug"
+    t.integer  "position",     default: 0, null: false
+    t.string   "image_uid"
+    t.string   "image_name"
+    t.integer  "image_width"
+    t.integer  "image_height"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["user_id", "slug"], name: "index_projects_on_user_id_and_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
   create_table "skills", force: :cascade do |t|
@@ -96,6 +111,7 @@ ActiveRecord::Schema.define(version: 20170203130217) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "projects", "users"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
 end
