@@ -1,4 +1,4 @@
-.delete_user_skills, .edit_user_skills {
+.delete_user_skills, .edit_user_skills, .edit_user_projects, .delete_user_projects {
    display: none;
 }
 
@@ -10,18 +10,22 @@
    display: inline;
 }
 
-.edit_user_skills {
-  color: $text-muted;
+.project:hover .edit_user_projects { 
+   display: inline;
 }
 
-.edit_user_skills:hover {
-  color: $brand-primary;
+.project:hover .delete_user_projects { 
+   display: inline;
 }
 
-.delete_user_skills {
-  color: $text-muted;
+.hover_primary {
+  :hover {
+    color: $brand-primary;
+  }
 }
 
-.delete_user_skills:hover {
-  color: $brand-danger;
+.hover_danger {
+  :hover {
+    color: $brand-danger;
+  }
 }

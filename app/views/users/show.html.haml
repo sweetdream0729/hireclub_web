@@ -28,11 +28,11 @@
         = pluralize(user_skill.years, "year")
 
         - if policy(user_skill).edit?
-          = link_to edit_user_skill_path(user_skill), class: "edit_user_skills mr-1" do
+          = link_to edit_user_skill_path(user_skill), class: "edit_user_skills mr-1 text-muted hover_primary" do
             %i.fa.fa-pencil
 
         - if policy(user_skill).destroy?
-          = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills" do
+          = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills text-muted hover_danger" do
             %i.fa.fa-trash-o
 
   - if @user.projects.any?
@@ -47,10 +47,11 @@
       = image_tag(model_image(project.image, 800, 600, true), width: 200, alt: project.name, class: "mb-2")
       %p
         = project.name
-        
+
         - if policy(project).edit?
-          = link_to edit_user_project_path(current_user, project), class: "edit_user_projects mr-1" do
+          = link_to edit_user_project_path(current_user, project), class: "edit_user_projects mr-1 text-muted hover_primary " do
             %i.fa.fa-pencil
+            
         - if policy(project).destroy?
-          = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects" do
+          = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects text-muted hover_danger" do
             %i.fa.fa-trash-o
