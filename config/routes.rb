@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     controllers: {registrations: 'registrations',
                   omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  get "/members",   to: "users#index",   as: :members
+
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
     resources :projects
     member do

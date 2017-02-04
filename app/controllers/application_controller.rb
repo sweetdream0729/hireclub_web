@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     if user.onboarded?
-      return root_path
+      return members_path
     else
       return onboarding_index_path
     end
