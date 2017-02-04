@@ -36,6 +36,8 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'terminal-notifier-guard', '~> 1.6.1'
   gem 'rails_layout'
+  gem 'guard-foreman'
+  gem 'foreman'
 end
 
 group :test do
