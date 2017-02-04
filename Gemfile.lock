@@ -67,6 +67,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.4)
+    connection_pool (2.2.1)
     counter_culture (1.1.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -212,6 +213,8 @@ GEM
     rack-pjax (1.0.0)
       nokogiri (~> 1.5)
       rack (>= 1.1)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.1)
@@ -300,6 +303,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.2.9)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -382,6 +390,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sendgrid-ruby
   shoulda-matchers
+  sidekiq
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
