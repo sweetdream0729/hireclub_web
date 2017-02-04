@@ -6,7 +6,7 @@ class User < ApplicationRecord
   friendly_id :username
   dragonfly_accessor :avatar
 
-  devise :database_authenticatable, :registerable, :async,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Associations
@@ -29,6 +29,10 @@ class User < ApplicationRecord
 
   def available_skills
     Skill.where.not(id: self.skills.pluck(:id))
+  end
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
   end
 
   def self.from_omniauth(omniauth, signed_in_resource=nil)
