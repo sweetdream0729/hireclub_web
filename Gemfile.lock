@@ -40,6 +40,8 @@ GEM
       tzinfo (~> 1.1)
     acts_as_list (0.9.1)
       activerecord (>= 3.0)
+    acts_as_tree (2.6.1)
+      activerecord (>= 3.0.0)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     after_commit_action (1.0.1)
@@ -359,6 +361,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list
+  acts_as_tree
   bootstrap (~> 4.0.0.alpha6)
   byebug
   cloudinary
