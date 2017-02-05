@@ -102,4 +102,28 @@ RSpec.describe User, type: :model do
       expect(user.available_roles.count).to eq Role.count - 1
     end
   end
+
+  describe "search" do
+    it "should search_by_name" do
+      user.name = "Developer"
+      user.save
+
+      results = User.search_by_name('dev')
+
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first).to eq user      
+    end
+
+    it "should search_by_exact_name" do
+      user.name = "Developer"
+      user.save
+
+      results = User.search_by_exact_name('Developer')
+
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first).to eq user      
+    end
+  end
 end
