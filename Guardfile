@@ -111,9 +111,9 @@ end
 # * :procfile - an alternate Procfile to use (default is Procfile)
 # * :port - an alternate port to use (default is 5000)
 # * :root - an alternate application root
-guard :foreman, cmd: "bundle exec foreman" do
-  # Rails example - Watch controllers, models, helpers, lib, and config files
-  watch( /^app\/(controllers|models|helpers)\/.+\.rb$/ )
-  watch( /^lib\/.+\.rb$/ )
-  watch( /^config\/*/ )
-end
+# guard :foreman, cmd: "bundle exec foreman" do
+#   # Rails example - Watch controllers, models, helpers, lib, and config files
+#   watch( /^app\/(controllers|models|helpers)\/.+\.rb$/ )
+#   watch( /^lib\/.+\.rb$/ )
+#   watch( /^config\/*/ )
+# end
