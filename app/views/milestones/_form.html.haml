@@ -11,7 +11,7 @@
     = f.text_field :title
   .form-group
     = f.label :start_date
-    = f.date_select :start_date
+    = f.date_select :start_date, end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]
   / .form-group
   /   = f.label :end_date
   /   = f.date_select :end_date
