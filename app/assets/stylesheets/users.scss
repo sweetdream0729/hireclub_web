@@ -1,4 +1,4 @@
-.delete_user_skills, .edit_user_skills, .edit_user_projects, .delete_user_projects {
+.delete_user_skills, .edit_user_skills, .edit_user_projects, .delete_user_projects,.edit_user_milestones, .delete_user_milestones {
    display: none;
 }
 
@@ -16,6 +16,14 @@
 
 .project:hover .delete_user_projects { 
    display: inline;
+}
+
+.user_milestone:hover .edit_user_milestones {
+  display: inline; 
+}
+
+.user_milestone:hover .delete_user_milestones {
+  display: inline; 
 }
 
 .hover_primary {

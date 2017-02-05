@@ -22,7 +22,7 @@
         %a.btn.btn-primary.btn-sm{href: new_milestone_path}
           %i.fa.fa-plus
     - @user.milestones.by_newest.each do |milestone|
-      .row
+      .row.user_milestone
         .col-sm-2
           = milestone.start_date.strftime("%B %Y")
         .col-sm-10
