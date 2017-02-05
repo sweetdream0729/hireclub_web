@@ -22,11 +22,16 @@
         %a.btn.btn-primary.btn-sm{href: new_milestone_path}
           %i.fa.fa-plus
     - @user.milestones.by_newest.each do |milestone|
-      .row.user_milestone
+      .row.user_milestone.mb-1
         .col-sm-2
           = milestone.start_date.strftime("%B %Y")
         .col-sm-10
-          = milestone.title
+          
+          - if milestone.link.present?
+            = link_to milestone.title, milestone.link, target: "_blank"
+          - else
+            = milestone.title
+
           - if policy(milestone).edit?
             = link_to edit_milestone_path(milestone), class: "edit_user_milestones ml-1 mr-1 text-muted hover_primary " do
               %i.fa.fa-pencil
