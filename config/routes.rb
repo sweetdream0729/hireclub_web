@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
   
+  resources :roles
   resources :milestones
   resources :user_skills
   resources :skills
