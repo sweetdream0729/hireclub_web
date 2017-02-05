@@ -22,7 +22,7 @@
         %a.btn.btn-primary.btn-sm{href: new_milestone_path}
           %i.fa.fa-plus
     - @user.milestones.by_newest.each do |milestone|
-      .row.user_milestone.mb-1
+      .row.user_milestone.mb-2
         .col-sm-2
           = milestone.start_date.strftime("%B %Y")
         .col-sm-10
@@ -38,22 +38,6 @@
           - if policy(milestone).destroy?
             = link_to milestone, method: :delete, data: { confirm: "Remove this milestone?" }, remote: true, class: "delete_user_milestones text-muted hover_danger" do
               %i.fa.fa-trash-o
-
-
-      / .col-sm-2
-      /   April 2012
-      / .col-sm-10
-      /   CardFlick funded by 500 Startups Batch 4 for $100,000
-
-      / September 2016 - Up All Night funded by 500 Startups Batch 18 for $125,000
-      / June 2008 -      Added First Employee for kidBombay
-      / July 2009 -      Qik becomes first client for kidBombay
-      / March 2010 -     Twitter becomes second client for kidBombay
-      / April 2010 -     Adobe becomes third client for kidBombay
-      / May 2010 -       Yammer becomes client for kidBombay
-      / Decemeber 2016 - Up All Night hits $700k in revenue
-      / Feburary 2013 - Joined Samba.tv as Design Director
-
 
   - if @user.user_skills.any? || @user == current_user
     %hr
