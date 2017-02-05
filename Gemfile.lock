@@ -123,9 +123,6 @@ GEM
       guard (~> 2.2)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
-    guard-foreman (0.0.4)
-      guard (~> 2.6)
-      spoon (~> 0.0, >= 0.0.4)
     guard-rails (0.8.0)
       guard (~> 2.11)
       guard-compat (~> 1.0)
@@ -316,8 +313,6 @@ GEM
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
     slop (3.6.0)
-    spoon (0.0.6)
-      ffi
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-commands-rspec (1.0.4)
@@ -378,7 +373,6 @@ DEPENDENCIES
   friendly_id (~> 5.1.0)
   guard
   guard-bundler
-  guard-foreman
   guard-rails
   guard-rspec
   haml-rails (~> 0.9)
