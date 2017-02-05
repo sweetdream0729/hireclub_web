@@ -1,8 +1,8 @@
-class ProjectPolicy < ApplicationPolicy
+class MilestonePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user
-        user.projects
+        user.milestones
       else
         scope.none
       end

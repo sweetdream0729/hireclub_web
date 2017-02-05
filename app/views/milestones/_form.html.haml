@@ -1,0 +1,23 @@
+= form_for @milestone do |f|
+  - if @milestone.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@milestone.errors.count, "error")} prohibited this milestone from being saved:"
+      %ul
+        - @milestone.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :title
+    = f.text_field :title
+  .form-group
+    = f.label :start_date
+    = f.date_select :start_date
+  / .form-group
+  /   = f.label :end_date
+  /   = f.date_select :end_date
+  .form-group
+    = f.label :link
+    = f.text_field :link
+  
+  = f.submit 'Save', class: "btn btn-primary"
+  = link_to "Cancel", current_user, class: "btn btn-link"

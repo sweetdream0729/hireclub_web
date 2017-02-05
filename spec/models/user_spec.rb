@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   describe "associations" do
     it { should have_many(:authentications) }
     it { should have_many(:projects) }
+    it { should have_many(:milestones) }
     it { should have_many(:user_skills) }
     it { should have_many(:skills).through(:user_skills) }
   end

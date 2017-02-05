@@ -1,0 +1,29 @@
+%h1 Listing milestones
+
+%table
+  %thead
+    %tr
+      %th User
+      %th Title
+      %th Start date
+      %th End date
+      %th Link
+      %th
+      %th
+      %th
+
+  %tbody
+    - @milestones.each do |milestone|
+      %tr
+        %td= milestone.user
+        %td= milestone.title
+        %td= milestone.start_date
+        %td= milestone.end_date
+        %td= milestone.link
+        %td= link_to 'Show', milestone
+        %td= link_to 'Edit', edit_milestone_path(milestone)
+        %td= link_to 'Destroy', milestone, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Milestone', new_milestone_path
