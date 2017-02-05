@@ -19,5 +19,9 @@
     = f.label :link
     = f.text_field :link
   
+  .form-group
+    = f.label :description
+    = f.text_area :description
+  
   = f.submit 'Save', class: "btn btn-primary"
   = link_to "Cancel", current_user, class: "btn btn-link"

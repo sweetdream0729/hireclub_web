@@ -25,6 +25,12 @@
 .user_milestone:hover .delete_user_milestones {
   display: inline; 
 }
+.milestone_description {
+  display: none;
+}
+.user_milestone:hover .milestone_description {
+  display: block; 
+}
 
 .hover_primary {
   :hover {
