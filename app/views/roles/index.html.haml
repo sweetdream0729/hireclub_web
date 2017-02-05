@@ -3,11 +3,16 @@
     Roles
     %small
       = link_to 'New', new_role_path, class: "btn btn-primary btn-sm" if policy(Role).new?
-
-  
+    
   - @roles.each do |role|
     %h5
       = link_to role.name, role
+    - if role.children.any?
+      %ul
+        - role.children.each do |child|
+          %li
+            = link_to child.name, child
+
 
 
   = paginate @roles

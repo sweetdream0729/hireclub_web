@@ -21,6 +21,14 @@ RSpec.describe Role, type: :model do
     it "should seed roles" do
       Role.seed
       expect(Role.all.count).to be >= 1
+      
+      developer = Role.search_by_exact_name("Developer").first
+      expect(developer).to be_persisted
+      expect(developer.parent).to be_nil
+
+      front_end = Role.search_by_exact_name("Front End Developer").first
+      expect(front_end).to be_persisted
+      expect(front_end.parent).to eq developer
     end
   end
 

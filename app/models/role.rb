@@ -3,9 +3,11 @@ class Role < ApplicationRecord
   include Searchable
   extend FriendlyId
   friendly_id :name, use: :slugged
+  acts_as_tree order: "name"
 
   # Scopes
-  scope :by_name, -> { order('name ASC') }
+  scope :by_name,        -> { order('name ASC') }
+  scope :without_parent, -> { where(parent_id: nil) }
 
   # Associations
   has_many :user_roles, dependent: :destroy
@@ -17,9 +19,20 @@ class Role < ApplicationRecord
 
 
   def self.seed
-    names = %w(Designer Developer Founder)
-    names.each do |name|
-      Role.where(name: name).first_or_create
-    end    
+    file_name = "roles.csv"
+    csv_file = File.join("#{Rails.root}/db/seeds/", "#{file_name}")
+    lines = CSV.read(csv_file)
+
+    lines.each do |line|
+      name = line[0]
+      parent_name = line[1]
+
+      if parent_name.present? && parent_name != "null"
+        parent = Role.search_by_exact_name(parent_name).first
+      end
+
+      Role.where(name: name, parent: parent).first_or_create
+    end
+   
   end
 end
