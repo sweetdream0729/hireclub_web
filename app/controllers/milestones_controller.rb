@@ -6,7 +6,7 @@ class MilestonesController < ApplicationController
 
   # GET /milestones
   def index
-    @milestones = current_user.milestones.by_start_date
+    @milestones = current_user.milestones.by_newest
   end
 
   # GET /milestones/1
@@ -47,7 +47,7 @@ class MilestonesController < ApplicationController
   # DELETE /milestones/1
   def destroy
     @milestone.destroy
-    redirect_to milestones_url, notice: 'Milestone was successfully destroyed.'
+    redirect_to current_user, notice: 'Milestone deleted'
   end
 
   private
