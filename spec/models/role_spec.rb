@@ -24,4 +24,28 @@ RSpec.describe Role, type: :model do
     end
   end
 
+  describe "search" do
+    it "should search_by_name" do
+      role.name = "Developer"
+      role.save
+
+      results = Role.search_by_name('dev')
+
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first).to eq role      
+    end
+
+    it "should search_by_exact_name" do
+      role.name = "Developer"
+      role.save
+
+      results = Role.search_by_exact_name('Developer')
+
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first).to eq role      
+    end
+  end
+
 end
