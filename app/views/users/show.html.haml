@@ -21,7 +21,7 @@
       - if @user == current_user
         %a.btn.btn-primary.btn-sm{href: new_milestone_path}
           %i.fa.fa-plus
-    - @user.milestones.by_oldest.each do |milestone|
+    - @user.milestones.by_recent.each do |milestone|
       .row
         .col-sm-2
           = milestone.start_date.strftime("%B %Y")
