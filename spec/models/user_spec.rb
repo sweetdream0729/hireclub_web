@@ -11,6 +11,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:milestones) }
     it { should have_many(:user_skills) }
     it { should have_many(:skills).through(:user_skills) }
+
+    it { should have_many(:user_roles) }
+    it { should have_many(:roles).through(:user_roles) }
   end
 
   describe 'validations' do
@@ -79,6 +82,24 @@ RSpec.describe User, type: :model do
       user_skill
       expect(user.skills.count).to eq(1)
       expect(user.available_skills.count).to eq Skill.count - 1
+    end
+  end
+
+  describe "available_roles" do
+    before {
+      user.save
+      Role.seed
+    }
+    let(:user_role) { FactoryGirl.create(:user_role, user: user, role: Role.first) }
+
+    it "should return all roles as available when none" do
+      expect(user.available_roles.count).to eq Role.count
+    end
+
+    it "should return unused roles when user role added" do
+      user_role
+      expect(user.roles.count).to eq(1)
+      expect(user.available_roles.count).to eq Role.count - 1
     end
   end
 end

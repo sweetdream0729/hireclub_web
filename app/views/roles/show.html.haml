@@ -9,5 +9,7 @@
   %p
     %small
       = pluralize(@role.users_count, "member")
+      
+  = render partial: "users/user", collection: @users 
 
-  = link_to 'Back', roles_path
+  = paginate @users

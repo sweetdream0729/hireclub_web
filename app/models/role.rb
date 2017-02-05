@@ -7,8 +7,8 @@ class Role < ApplicationRecord
   scope :by_name, -> { order('name ASC') }
 
   # Associations
-  #has_many :user_skills, dependent: :destroy
-  #has_many :users, through: :user_skills
+  has_many :user_roles, dependent: :destroy
+  has_many :users, through: :user_roles
 
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}

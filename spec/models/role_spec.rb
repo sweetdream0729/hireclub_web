@@ -6,8 +6,8 @@ RSpec.describe Role, type: :model do
   subject { role }
 
   describe "associations" do
-    # it { should have_many(:user_roles) }
-    # it { should have_many(:users).through(:user_roles) }
+    it { should have_many(:user_roles) }
+    it { should have_many(:users).through(:user_roles) }
   end
 
   describe 'validations' do

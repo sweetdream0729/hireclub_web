@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :milestones, dependent: :destroy, inverse_of: :user
   has_many :user_skills, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :skills, through: :user_skills
+  has_many :user_roles, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
+  has_many :roles, through: :user_roles
 
 
   # Validations
@@ -31,6 +33,10 @@ class User < ApplicationRecord
 
   def available_skills
     Skill.where.not(id: self.skills.pluck(:id))
+  end
+
+  def available_roles
+    Role.where.not(id: self.roles.pluck(:id))
   end
 
   def display_name

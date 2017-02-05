@@ -6,9 +6,27 @@
     .media-body
       %h1.black
         = @user.name
-      - if @user.username.present?
+      - if @user.user_roles.any? || @user == current_user
         %h5
-          = "@#{@user.username}"
+          - @user.user_roles.each_with_index do |user_role, index|
+            = link_to user_role.name, user_role.role
+            - if policy(user_role).edit?
+              = link_to edit_user_role_path(user_role), class: "edit_user_roles ml-1 mr-1 text-muted hover_primary" do
+                %i.fa.fa-pencil
+
+            - if policy(user_role).destroy?
+              = link_to user_role, method: :delete, data: { confirm: "Remove #{user_role.name} role?" }, remote: true, class: "delete_user_roles text-muted hover_danger" do
+                %i.fa.fa-trash-o
+            - comma = index < (@user.user_roles.count - 1) ? ", " : ""
+            = comma
+
+          - if @user == current_user && @user.user_roles.count < 3
+            %a.btn.btn-primary.btn-sm.ml-2{href: new_user_role_path}
+              %i.fa.fa-plus
+            
+      - if @user.username.present? 
+        %small
+          = link_to "@#{@user.username}", user_url(@user)
 
   - if @user == current_user
     - unless @user.onboarded?

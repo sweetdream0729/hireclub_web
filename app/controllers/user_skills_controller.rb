@@ -51,7 +51,7 @@ class UserSkillsController < ApplicationController
 
     respond_to do |format|
       format.js   { render layout: false }
-      format.html { redirect_to user_skills_url, notice: "#{@user_skill.name} skill deleted" }
+      format.html { redirect_to current_user, notice: "#{@user_skill.name} skill deleted" }
     end
     
   end

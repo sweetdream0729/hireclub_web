@@ -9,6 +9,7 @@ class RolesController < ApplicationController
 
   # GET /roles/1
   def show
+    @users = @role.users.page(params[:page])
   end
 
   # GET /roles/new
