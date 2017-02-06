@@ -30,7 +30,7 @@ class User < ApplicationRecord
   validates_size_of :avatar, maximum: 5.megabytes
 
   def onboarded?
-    username.present?
+    username.present? && location.present?
   end
 
   def available_skills
@@ -93,7 +93,6 @@ class User < ApplicationRecord
     # self.location = omniauth["info"]["location"] if !omniauth["info"]["location"].blank? && self.location.blank?
 
     if self.avatar.nil?
-      puts "avatar.nil?"
       uid = omniauth["uid"]
       #image = "http://res.cloudinary.com/photoschool/image/facebook/#{uid}.jpg"
       image = omniauth["info"]["image"] + "?type=large"

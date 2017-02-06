@@ -65,10 +65,19 @@ RSpec.describe User, type: :model do
 
   describe "onboarded?" do
     it "should return false if no username" do
+      location = FactoryGirl.create(:location)
+      user.location = location
       expect(user.onboarded?).to eq(false)
     end
 
-    it "should return false if username" do
+    it "should return false if no location" do
+      user.username = "test"
+      expect(user.onboarded?).to eq(false)
+    end
+
+    it "should return true if username and location" do
+      location = FactoryGirl.create(:location)
+      user.location = location
       user.username = "test"
       expect(user.onboarded?).to eq(true)
     end

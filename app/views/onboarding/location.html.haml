@@ -1,0 +1,12 @@
+= title "Choose Location"
+
+.container.mt-5.mb-5
+  .row.justify-content-center
+    .col-lg-6.col-md-8.col-sm-10
+      %h1 Your City
+
+      = form_for @user, url: wizard_path, method: :put do |f|
+        .form-group
+          = f.collection_select(:location_id, Location.all, :id, :name_and_short, {}, {class: "form-control"})
+
+        = f.submit "Next", class: "btn btn-primary btn-lg"

@@ -3,7 +3,7 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username
+  steps :username, :location
 
   def show
     @user = current_user
