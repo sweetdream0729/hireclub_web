@@ -48,4 +48,10 @@ class Authentication < ApplicationRecord
 
     self.username = omniauth['info']["nickname"] if !omniauth['info']['nickname'].blank?
   end
+
+  rails_admin do
+    show do
+      configure(:omniauth_json, :string)
+    end
+  end
 end
