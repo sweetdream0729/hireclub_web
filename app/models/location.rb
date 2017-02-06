@@ -37,6 +37,11 @@ class Location < ApplicationRecord
     name_changed? || parent_id_changed? || short_changed?
   end
 
+  def display_name
+    return "#{name}, #{parent.short.upcase}" if (level == CITY || level == STATE)
+    name
+  end
+
   def name_and_short
     return name if parent.nil?
     return "#{name}-#{parent.short}" if parent.short

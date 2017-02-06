@@ -18,7 +18,7 @@
 
         .form-group
           = f.label :location
-          = f.collection_select(:location_id, Location.all, :id, :name_and_short, {}, {class: "form-control"})
+          = f.collection_select(:location_id, Location.all, :id, :display_name, {}, {class: "form-control"})
 
         .form-group
           = f.label 'Profile Image'
