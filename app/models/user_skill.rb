@@ -1,4 +1,8 @@
 class UserSkill < ApplicationRecord
+  # Scopes
+  scope :by_position, -> { order(position: :asc) }
+  scope :by_longest,  -> { order(years: :desc) }
+
   # Associations
   belongs_to :user
   belongs_to :skill

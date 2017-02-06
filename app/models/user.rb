@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy, inverse_of: :user
   has_many :projects, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :milestones, dependent: :destroy, inverse_of: :user
-  has_many :user_skills, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
+  has_many :user_skills, dependent: :destroy, inverse_of: :user
   has_many :skills, through: :user_skills
   has_many :user_roles, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :roles, through: :user_roles
