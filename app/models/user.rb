@@ -76,8 +76,38 @@ class User < ApplicationRecord
     auth.from_omniauth(omniauth)
     auth.save
 
+    user.import_facebook_omniauth(omniauth)
+
     return user
   end
+
+  def import_facebook_omniauth(omniauth)
+    return if omniauth["provider"] != "facebook"
+    
+    self.email = omniauth["info"]["email"] if !omniauth["info"]["email"].blank? && self.email.blank?
+    self.name = omniauth["info"]["name"] if !omniauth["info"]["name"].blank? && self.name.blank?
+    self.username = omniauth["info"]["nickname"] if !omniauth["info"]["nickname"].blank? && self.username.blank?
+
+    # self.description = omniauth["info"]["description"] if !omniauth["info"]["description"].blank? && self.description.blank?
+    # self.location = omniauth["info"]["location"] if !omniauth["info"]["location"].blank? && self.location.blank?
+
+    if self.avatar.nil?
+      puts "avatar.nil?"
+      uid = omniauth["uid"]
+      #image = "http://res.cloudinary.com/photoschool/image/facebook/#{uid}.jpg"
+      image = omniauth["info"]["image"] + "?type=large"
+      self.avatar_url = image
+    end
+
+    # self.website = omniauth["extra"]["raw_info"]["website"] if !omniauth["extra"]["raw_info"]["website"].blank? && self.website.blank?
+    # self.gender = omniauth["extra"]["raw_info"]["gender"] if !omniauth["extra"]["raw_info"]["gender"].blank? && self.gender.blank?
+
+    self.save
+
+    return self
+  end
+
+
 
   def username_not_in_routes
     if RouteRecognizer.new.initial_path_segments.include?(username)
