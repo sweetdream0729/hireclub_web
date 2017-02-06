@@ -32,6 +32,8 @@
         - if @user.location.present?
           •
           = @user.location.name
+        - if @user == current_user
+          = link_to "Edit", edit_user_registration_path, class: "btn btn-sm btn-primary"
 
   - if @user == current_user
     - unless @user.onboarded?
