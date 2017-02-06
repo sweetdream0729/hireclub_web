@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206161615) do
+ActiveRecord::Schema.define(version: 20170206164708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,9 +152,11 @@ ActiveRecord::Schema.define(version: 20170206161615) do
     t.boolean  "is_admin",               default: false, null: false
     t.citext   "username"
     t.string   "avatar_uid"
+    t.integer  "location_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["is_admin"], name: "index_users_on_is_admin", using: :btree
+    t.index ["location_id"], name: "index_users_on_location_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
@@ -166,4 +168,5 @@ ActiveRecord::Schema.define(version: 20170206161615) do
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
+  add_foreign_key "users", "locations"
 end

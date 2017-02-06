@@ -14,6 +14,8 @@ RSpec.describe User, type: :model do
 
     it { should have_many(:user_roles) }
     it { should have_many(:roles).through(:user_roles) }
+
+    it { should belong_to(:location)}
   end
 
   describe 'validations' do
@@ -54,6 +56,9 @@ RSpec.describe User, type: :model do
       expect(auth).not_to be_nil
       expect(auth).to be_valid
       expect(auth).to be_persisted
+
+
+
 
     end
   end

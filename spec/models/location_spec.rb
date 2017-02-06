@@ -8,7 +8,7 @@ RSpec.describe Location, type: :model do
   describe "associations" do
     it { should belong_to(:parent) }
     it { should have_many(:children) }
-    # it { should have_many(:user_locations) }
+    it { should have_many(:users) }
     # it { should have_many(:users).through(:user_locations) }
   end
 

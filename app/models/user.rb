@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :skills, through: :user_skills
   has_many :user_roles, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :roles, through: :user_roles
+  belongs_to :location
 
 
   # Validations

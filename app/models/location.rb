@@ -17,6 +17,7 @@ class Location < ApplicationRecord
   # https://www.iso.org/obp/ui/#search
 
   # Associations
+  has_many :users
   
   # Extensions
   include Searchable
