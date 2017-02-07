@@ -4,9 +4,8 @@
   %title= content_for?(:title) ? yield(:title) : 'HireClub'
   %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'HireClub'}"}
 
-  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload'
-  = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
-  = yield :javascript_includes
+  = stylesheet_link_tag 'application', media: 'all'
+  = javascript_include_tag 'application'
   
   %script{:src => "https://use.fontawesome.com/df39f018e9.js"}
   
