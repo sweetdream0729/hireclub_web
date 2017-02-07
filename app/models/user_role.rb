@@ -1,6 +1,6 @@
 class UserRole < ApplicationRecord
   # Extensions
-  counter_culture :role, column_name: :users_count
+  counter_culture :role, column_name: :users_count, touch: true
   acts_as_list scope: :user, top_of_list: 0
 
   # Scopes

@@ -19,7 +19,7 @@ class User < ApplicationRecord
   has_many :user_roles, dependent: :destroy, inverse_of: :user
   has_many :roles, through: :user_roles
   belongs_to :location
-  counter_culture :location, column_name: :users_count
+  counter_culture :location, column_name: :users_count, touch: true
 
 
   # Validations
