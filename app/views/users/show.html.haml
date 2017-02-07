@@ -45,55 +45,57 @@
     - unless @user.onboarded?
       = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
 
-  - if @user.milestones.any? || @user == current_user
-    %hr
-    %h6.mt-4.mb-4
-      Milestones
-      - if @user == current_user
-        %a.btn.btn-primary.btn-sm{href: new_milestone_path}
-          %i.fa.fa-plus
-    - @user.milestones.by_newest.each do |milestone|
-      .row.user_milestone.mb-2
-        .col-sm-2
-          = milestone.start_date.strftime("%B %Y")
-        .col-sm-10
-          
-          - if milestone.link.present?
-            = link_to milestone.title, milestone.link, target: "_blank"
-          - else
-            = milestone.title
+  .row
+    .col-sm-8
+      - if @user.milestones.any? || @user == current_user
+        %hr
+        %h6.mt-4.mb-4
+          Milestones
+          - if @user == current_user
+            %a.btn.btn-primary.btn-sm{href: new_milestone_path}
+              %i.fa.fa-plus
+        - @user.milestones.by_newest.each do |milestone|
+          .row.user_milestone.mb-2
+            .col-sm-4.col-md-3.col-lg-2
+              = milestone.start_date.strftime("%b %Y")
+            .col-sm-8.col-md-9.col-lg-10
+              
+              - if milestone.link.present?
+                = link_to milestone.title, milestone.link, target: "_blank"
+              - else
+                = milestone.title
 
-          - if policy(milestone).edit?
-            = link_to edit_milestone_path(milestone), class: "edit_user_milestones ml-1 mr-1 display_none text-muted hover_primary " do
-              %i.fa.fa-pencil
-          - if policy(milestone).destroy?
-            = link_to milestone, method: :delete, data: { confirm: "Remove this milestone?" }, remote: true, class: "delete_user_milestones display_none text-muted hover_danger" do
-              %i.fa.fa-trash-o
-          - if milestone.description.present?
-            %p.milestone_description.display_none
-              %small
-                = milestone.description
+              - if policy(milestone).edit?
+                = link_to edit_milestone_path(milestone), class: "edit_user_milestones ml-1 mr-1 display_none text-muted hover_primary " do
+                  %i.fa.fa-pencil
+              - if policy(milestone).destroy?
+                = link_to milestone, method: :delete, data: { confirm: "Remove this milestone?" }, remote: true, class: "delete_user_milestones display_none text-muted hover_danger" do
+                  %i.fa.fa-trash-o
+              - if milestone.description.present?
+                %p.milestone_description.display_none
+                  %small
+                    = milestone.description
+    .col-sm-4
+      - if @user.user_skills.any? || @user == current_user
+        %hr
+        %h6.mt-4.mb-4
+          Skills
+          - if @user == current_user
+            %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
+              %i.fa.fa-plus
+      - @user.user_skills.by_position.each do |user_skill|
+        %h5.user_skill
+          = link_to user_skill.skill.name, user_skill.skill
+          %small
+            = pluralize(user_skill.years, "year") if user_skill.years > 0
 
-  - if @user.user_skills.any? || @user == current_user
-    %hr
-    %h6.mt-4.mb-4
-      Skills
-      - if @user == current_user
-        %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
-          %i.fa.fa-plus
-  - @user.user_skills.by_position.each do |user_skill|
-    %h5.user_skill
-      = link_to user_skill.skill.name, user_skill.skill
-      %small
-        = pluralize(user_skill.years, "year") if user_skill.years > 0
+            - if policy(user_skill).edit?
+              = link_to edit_user_skill_path(user_skill), class: "edit_user_skills ml-1 mr-1 display_none text-muted hover_primary" do
+                %i.fa.fa-pencil
 
-        - if policy(user_skill).edit?
-          = link_to edit_user_skill_path(user_skill), class: "edit_user_skills ml-1 mr-1 display_none text-muted hover_primary" do
-            %i.fa.fa-pencil
-
-        - if policy(user_skill).destroy?
-          = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills display_none text-muted hover_danger" do
-            %i.fa.fa-trash-o
+            - if policy(user_skill).destroy?
+              = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills display_none text-muted hover_danger" do
+                %i.fa.fa-trash-o
 
   - if @user.projects.any? || @user == current_user
     %hr
