@@ -94,9 +94,7 @@ class User < ApplicationRecord
 
     if self.avatar.nil?
       image_url = omniauth["info"]["image"]
-      image = image_url + "?type=large"
-      Rails.logger.info(puts "image_url: #{image_url}")
-      # self.avatar_url = image
+      self.avatar_url = image_url
     end
 
     # self.website = omniauth["extra"]["raw_info"]["website"] if !omniauth["extra"]["raw_info"]["website"].blank? && self.website.blank?
