@@ -1,7 +1,6 @@
 $(document).ready ->
   locationSearch = (query, syncResults, asyncResults) ->
     $.get '/locations.json', { query: query }, ((data) ->
-      console.log query
       asyncResults data
       return
     ), 'json'
