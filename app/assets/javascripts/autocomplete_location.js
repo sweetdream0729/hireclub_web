@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+$(function() {
+  console.log("load");
   var locationSearch = function(query, syncResults, asyncResults) {
     $.get('/locations.json', {query: query}, function(data){
       asyncResults(data);
