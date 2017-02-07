@@ -10,6 +10,7 @@ class UserSkill < ApplicationRecord
   
   # Extensions
   counter_culture :skill, column_name: :users_count
+  counter_culture :user, column_name: :years_experience, delta_column: :years
   acts_as_list scope: :user, top_of_list: 0
 
   # Validations
