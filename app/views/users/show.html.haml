@@ -19,7 +19,7 @@
               - if policy(user_role).destroy?
                 = link_to user_role, method: :delete, data: { confirm: "Remove #{user_role.name} role?" }, remote: true, class: "delete_user_roles display_none text-muted hover_danger" do
                   %i.fa.fa-trash-o
-              - comma = index < (@user.user_roles.count - 1) ? " • " : ""
+              - comma = index < (@user.user_roles.count - 1) ? " · " : ""
               = comma
 
           
@@ -30,9 +30,9 @@
         - if @user.username.present? 
           = link_to "@#{@user.username}", user_url(@user)
         - if @user.location.present?
-          •
+          ·
           = @user.location.name
-        •
+        ·
         = pluralize(@user.years_experience, "Year")
         Experience
 
