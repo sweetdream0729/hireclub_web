@@ -40,7 +40,7 @@ RSpec.describe User, type: :model do
 
   describe "facebook import" do
     it "should import omniauth data from facebook" do
-      json = '{"provider":"facebook","uid":"10154112674905244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/10154112674905244/picture","location":"San Francisco, California"},"credentials":{"token":"CAADZBqzEIZB9UBAOG2GpsXPmEe0OGzRpJneajHbnLkl1bEom5mj7W1VqZAl5b3h0Q8eWMhCRc3Poqkkttbary0TokborCK3UCXa56SHvVLuMwSJoFJqZALknZAiAss458DYTfdpMWmp9op9tfW5Q522KwBRqEtannxwVra97F3pYK7NYJFusLmUH74hQI0jGcriZCZCyifp0AZDZD","expires_at":1405445165,"expires":true},"extra":{"raw_info":{"id":"10154112674905244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"}}}}'
+      json = '{"provider":"facebook","uid":"643675243","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/643675243/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAACiIAGQWrYBAKDtZB5XJwSH5nwuRheTxOZBP6LXAoBjHxZBbWqfVMkZBRE8DDTXh2aa1ODVFAtCkW8TVlNZAlwALfuUT0S71m71oksuja4JaAws7DETGjUhcFGZBLCt6gZAOLMrWSgOKUWPLeGpb4R20mDUoP3w0EZD","expires_at":1491352014,"expires":true},"extra":{"raw_info":{"id":"643675243","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"}}}}'
       omniauth = JSON.parse(json)
 
       user = User.from_omniauth(omniauth)
@@ -50,15 +50,13 @@ RSpec.describe User, type: :model do
 
       expect(user.email).to eq("fire@kidbombay.com")
       expect(user.name).to eq("Ketan Anjaria")
-      expect(user.avatar).not_to be_nil
-      
+      expect(user.gender).to eq("male")
+      #expect(user.avatar).not_to be_nil
+
       auth = user.authentications.first
       expect(auth).not_to be_nil
       expect(auth).to be_valid
       expect(auth).to be_persisted
-
-
-
 
     end
   end
