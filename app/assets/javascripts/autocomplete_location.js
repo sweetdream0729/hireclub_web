@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("turbolinks:load", function(event) {
   var locationSearch = function(query, syncResults, asyncResults) {
     $.get('/locations.json', {query: query}, function(data){
       asyncResults(data);
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // location selected, let's set hidden location_id field
   $("input#user_location").bind("typeahead:select", function(ev, location) {
     // Set hidden form field of location_id
+    console.log(location);
     $("input#user_location_id").val(location.id);
   });
 });
