@@ -1,7 +1,4 @@
-console.log 'autocomplete_location'
 $(document).ready ->
-  console.log 'ready'
-
   locationSearch = (query, syncResults, asyncResults) ->
     $.get '/locations.json', { query: query }, ((data) ->
       console.log query
@@ -22,7 +19,6 @@ $(document).ready ->
   # location selected, let's set hidden location_id field
   $('input#user_location').bind 'typeahead:select', (ev, location) ->
     # Set hidden form field of location_id
-    console.log location
     $('input#user_location_id').val location.id
     return
   return
