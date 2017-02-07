@@ -26,6 +26,9 @@ class Location < ApplicationRecord
 
   acts_as_tree order: "name"
 
+  # Scope
+  scope :by_users_count, -> { order(users_count: :desc) }
+
   # Validations
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :scope => [:parent_id], :case_sensitive => false
