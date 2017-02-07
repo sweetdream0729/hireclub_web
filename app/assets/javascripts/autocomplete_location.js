@@ -1,8 +1,6 @@
-$(document).on('turbolinks:load', function(event) {
-  console.log("load")
+document.addEventListener("DOMContentLoaded", function(event) {
   var locationSearch = function(query, syncResults, asyncResults) {
     $.get('/locations.json', {query: query}, function(data){
-      console.log(query);
       asyncResults(data);
     }, 'json');
   };
