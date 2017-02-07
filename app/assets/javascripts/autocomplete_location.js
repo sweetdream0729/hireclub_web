@@ -1,5 +1,6 @@
+console.log("autocomplete_location");
 $(document).ready(function() {
-  console.log("load");
+  console.log("ready");
   var locationSearch = function(query, syncResults, asyncResults) {
     $.get('/locations.json', {query: query}, function(data){
       console.log(query);
