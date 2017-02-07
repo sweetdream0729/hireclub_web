@@ -1,12 +1,14 @@
-= title "Choose Location"
+= title "Where you at?"
 
 .container.mt-5.mb-5
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
-      %h1 Your City
+      %h1 Where you at?
 
       = form_for @user, url: wizard_path, method: :put do |f|
         .form-group
-          = f.collection_select(:location_id, Location.all, :id, :display_name, {}, {class: "form-control"})
+          = f.text_field :location, class: "form-control", value: @user.location.try(:display_name)
+          = f.hidden_field :location_id, value: @user.location_id
 
         = f.submit "Next", class: "btn btn-primary btn-lg"
+

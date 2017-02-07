@@ -18,7 +18,8 @@
 
         .form-group
           = f.label :location
-          = f.collection_select(:location_id, Location.all, :id, :display_name, {}, {class: "form-control"})
+          = f.text_field :location, class: 'form-control', value: @user.location.try(:display_name)
+          = f.hidden_field :location_id, value: @user.location_id
 
         .form-group
           = f.label 'Profile Image'
