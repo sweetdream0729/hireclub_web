@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require typeahead.bundle.js
+//= require autocomplete_location
 //= require_tree .
