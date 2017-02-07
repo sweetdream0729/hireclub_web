@@ -9,7 +9,7 @@
 
       - if @user.user_roles.any? || @user == current_user
         %h5
-          - @user.user_roles.each_with_index do |user_role, index|
+          - @user.user_roles.by_position.each_with_index do |user_role, index|
             %span.user_role
               = link_to user_role.name, user_role.role
               / - if policy(user_role).edit?
@@ -32,10 +32,9 @@
         - if @user.location.present?
           •
           = @user.location.name
-        - if @user.user_skills.by_longest.first.present?
-          •
-          = pluralize(@user.user_skills.by_longest.first.years, "Year")
-          Experience
+        •
+        = pluralize(@user.years_experience, "Year")
+        Experience
 
         - if @user == current_user
           = link_to "Edit", edit_user_registration_path, class: "btn btn-sm btn-primary"
