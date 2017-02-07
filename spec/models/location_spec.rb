@@ -25,15 +25,16 @@ RSpec.describe Location, type: :model do
       location.parent = california
       location.name = "San Francisco"
       location.save
-      location.slug.should == "san-francisco-ca"
+
+      expect(location.slug).to eq "san-francisco-ca"
     end
   end
 
   describe "root" do
     it "should have a root" do
       root = Location.create_root
-      root.name.should == "Anywhere"
-      root.level.should == Location::ROOT
+      expect(root.name).to eq "Anywhere"
+      expect(root.level).to eq Location::ROOT
     end
   end
 
@@ -45,7 +46,7 @@ RSpec.describe Location, type: :model do
       countries.count.should > 1
 
       usa = Location.where(short:'US', level: Location::COUNTRY).first
-      usa.should_not be_nil
+      expect(usa).to be_present
     end
 
     it "should import states" do
@@ -55,8 +56,8 @@ RSpec.describe Location, type: :model do
       states.count.should > 1
 
       california = Location.where(name:'California', level: Location::STATE).first
-      california.short.should == "CA"
-      california.parent.should == Location.where(short:'US', level: Location::COUNTRY).first
+      expect(california.short).to eq "CA"
+      expect(california.parent).to eq Location.where(short:'US', level: Location::COUNTRY).first
 
     end
 
@@ -65,12 +66,12 @@ RSpec.describe Location, type: :model do
       Location.import_cities
 
       la = Location.where(name:'Los Angeles').first
-      la.should_not be_nil
-      la.parent.name.should == "California"
+      expect(la).to be_present
+      expect(la.parent.name).to eq "California"
 
       sf = Location.where(name:'San Francisco').first
-      sf.should_not be_nil
-      sf.parent.name.should == "California"
+      expect(sf).to be_present
+      expect(sf.parent.name).to eq "California"
     end
   end
 
@@ -95,6 +96,17 @@ RSpec.describe Location, type: :model do
       expect(results).not_to be_nil
       expect(results.count).to eq 1
       expect(results.first).to eq location      
+    end
+  end
+
+  describe "users_count" do
+    let(:user) { FactoryGirl.create(:user) }
+    it "should cache users count" do
+      user.location = location
+      user.save
+
+      location.reload
+      expect(location.users_count).to eq 1
     end
   end
 
