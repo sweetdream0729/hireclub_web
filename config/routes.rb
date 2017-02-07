@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :skills
   resources :onboarding
 
+  get "/locations",   to: "locations#index",   as: :locations
+
   get "/about",   to: "pages#about",   as: :about
   get "/contact", to: "pages#contact", as: :contact
 
