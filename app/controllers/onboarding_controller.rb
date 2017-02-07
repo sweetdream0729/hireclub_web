@@ -29,6 +29,6 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :username)
+    params.require(:user).permit(:name, :username, :location_id)
   end
 end
