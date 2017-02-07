@@ -93,9 +93,9 @@ class User < ApplicationRecord
     # self.location = omniauth["info"]["location"] if !omniauth["info"]["location"].blank? && self.location.blank?
 
     if self.avatar.nil?
-      uid = omniauth["uid"]
-      #image = "http://res.cloudinary.com/photoschool/image/facebook/#{uid}.jpg"
-      image = omniauth["info"]["image"] + "?type=large"
+      image_url = omniauth["info"]["image"]
+      image = image_url + "?type=large"
+      Rails.logger.info("image_url: #{image_url}")
       self.avatar_url = image
     end
 
