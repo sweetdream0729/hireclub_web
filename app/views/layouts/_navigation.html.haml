@@ -13,13 +13,7 @@
         %a.nav-link{:href => skills_path} Skills
       %li.nav-item.active
         %a.nav-link{:href => roles_path} Roles
-      %li.nav-item.active
-        %a.nav-link{:href => about_path} About
-      %li.nav-item
-        %a.nav-link{:href => contact_path} Contact
-      %li.nav-item
-        %a.nav-link{:href => "http://facebook.com/groups/hireclub"} Apply
-
+      
     %ul.nav.navbar-nav
       - if !user_signed_in?
         %li.nav-item
