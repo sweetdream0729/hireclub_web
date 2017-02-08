@@ -1,56 +1,64 @@
 = title @user.name
 
 .container.mt-5
-  .media
-    = image_tag(model_image(@user.avatar, 200, 200, true), width: 100, class: "d-flex mr-3 rounded-circle")
-    .media-body
-      %h1.black
-        = @user.name
+  .row
+    .col-sm-8
+      .media
+        = image_tag(model_image(@user.avatar, 200, 200, true), width: 100, class: "d-flex mr-3 rounded-circle")
+        .media-body
+          %h1.black
+            = @user.name
 
-      - if @user.user_roles.any? || @user == current_user
-        %h5
-          - @user.user_roles.by_position.each_with_index do |user_role, index|
-            %span.user_role
-              = link_to user_role.name, user_role.role
-              / - if policy(user_role).edit?
-              /   = link_to edit_user_role_path(user_role), class: "edit_user_roles ml-1 mr-1 display_none text-muted hover_primary" do
-              /     %i.fa.fa-pencil
+          - if @user.user_roles.any? || @user == current_user
+            %h5
+              - @user.user_roles.by_position.each_with_index do |user_role, index|
+                %span.user_role
+                  = link_to user_role.name, user_role.role
+                  / - if policy(user_role).edit?
+                  /   = link_to edit_user_role_path(user_role), class: "edit_user_roles ml-1 mr-1 display_none text-muted hover_primary" do
+                  /     %i.fa.fa-pencil
 
-              - if policy(user_role).destroy?
-                = link_to user_role, method: :delete, data: { confirm: "Remove #{user_role.name} role?" }, remote: true, class: "delete_user_roles display_none text-muted hover_danger" do
-                  %i.fa.fa-trash-o
-              - comma = index < (@user.user_roles.count - 1) ? " · " : ""
-              = comma
+                  - if policy(user_role).destroy?
+                    = link_to user_role, method: :delete, data: { confirm: "Remove #{user_role.name} role?" }, remote: true, class: "delete_user_roles display_none text-muted hover_danger" do
+                      %i.fa.fa-trash-o
+                  - comma = index < (@user.user_roles.count - 1) ? " · " : ""
+                  = comma
 
-          
-          %a.add_role_btn.btn.btn-primary.btn-sm{href: new_user_role_path}
-            %i.fa.fa-plus
+              - if @user == current_user
+                %a.add_role_btn.btn.btn-primary.btn-sm{href: new_user_role_path}
+                  %i.fa.fa-plus
+            
+          %small    
+            - if @user.username.present? 
+              = link_to "@#{@user.username}", user_url(@user)
+            - if @user.location.present?
+              ·
+              = @user.location.name
+            ·
+            = pluralize(@user.years_experience, "Year")
+            Experience
+
         
-      %small    
-        - if @user.username.present? 
-          = link_to "@#{@user.username}", user_url(@user)
-        - if @user.location.present?
-          ·
-          = @user.location.name
-        ·
-        = pluralize(@user.years_experience, "Year")
-        Experience
 
-        - if @user == current_user
-          = link_to "Edit", edit_user_registration_path, class: "btn btn-sm btn-primary"
+    .col-sm-3
+      - if @user == current_user
+        - unless @user.onboarded?
+          = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
+        - else
+          = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
 
+  - if @user.bio
+    %hr
+      %p.lead.mt-4
+        = @user.bio
 
-  - if @user == current_user
-    - unless @user.onboarded?
-      = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary"
-
-- if @user.bio
-  .jumbotron.mt-4
-    .container
-      .row.justify-content-center
-        .col-sm-10
-          %p.lead
-            = @user.bio
+/ - if @user.bio
+/   .jumbotron.mt-4
+/     .container
+/       .row.justify-content-center
+/         .col-sm-10
+/           %p.lead
+/             = @user.bio
 
 .container.mb-5
   .row
