@@ -40,6 +40,7 @@ RSpec.describe User, type: :model do
 
   describe "facebook import" do
     it "should import omniauth data from facebook" do
+      Location.import_cities
       json = '{"provider":"facebook","uid":"643675243","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/643675243/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAACiIAGQWrYBAKDtZB5XJwSH5nwuRheTxOZBP6LXAoBjHxZBbWqfVMkZBRE8DDTXh2aa1ODVFAtCkW8TVlNZAlwALfuUT0S71m71oksuja4JaAws7DETGjUhcFGZBLCt6gZAOLMrWSgOKUWPLeGpb4R20mDUoP3w0EZD","expires_at":1491352014,"expires":true},"extra":{"raw_info":{"id":"643675243","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"}}}}'
       omniauth = JSON.parse(json)
 
@@ -51,6 +52,7 @@ RSpec.describe User, type: :model do
       expect(user.email).to eq("fire@kidbombay.com")
       expect(user.name).to eq("Ketan Anjaria")
       expect(user.gender).to eq("male")
+      expect(user.location).not_to be_nil
       #expect(user.avatar).not_to be_nil
 
       auth = user.authentications.first
