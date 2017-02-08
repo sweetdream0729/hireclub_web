@@ -55,7 +55,7 @@ gem 'sidekiq'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
-end
+end 
 gem 'friendly_id', '~> 5.1.0'
 gem 'devise'
 gem 'pundit'
@@ -74,3 +74,4 @@ gem 'kaminari'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'rollbar'
