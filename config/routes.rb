@@ -1,12 +1,14 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :user_roles
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   authenticate :user, lambda { |u| u.is_admin } do
     mount Sidekiq::Web => '/sidekiq'
   end
   
+  get 'feed', to: "feed#index", as: :feed
+
+  resources :user_roles
   resources :roles
   resources :milestones
   resources :user_skills
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
   resources :onboarding
 
   get "/locations",   to: "locations#index",   as: :locations
-
   get "/about",   to: "pages#about",   as: :about
   get "/contact", to: "pages#contact", as: :contact
 

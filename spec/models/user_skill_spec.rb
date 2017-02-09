@@ -34,6 +34,15 @@ RSpec.describe UserSkill, type: :model do
 
       expect(user_skill.user.years_experience).to eq(1)
     end
+  end
 
+  describe "activity" do
+    it "should have create activity" do
+      user_skill.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user_skill)
+      expect(activity.owner).to eq(user_skill.user)
+    end
   end
 end
