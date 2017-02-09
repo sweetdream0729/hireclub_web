@@ -43,6 +43,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'pundit-matchers'
+  gem 'wisper-rspec', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -76,3 +77,4 @@ gem 'acts_as_tree'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'rollbar'
 gem 'newrelic_rpm'
+gem 'wisper'
