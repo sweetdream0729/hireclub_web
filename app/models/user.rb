@@ -46,6 +46,11 @@ class User < ApplicationRecord
     return name if name.present?
     return username
   end
+
+  def update_years_experience
+    value = [user_skills.maximum(:years),0].compact.max
+    self.update_attributes(years_experience: value)
+  end
   
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
