@@ -125,15 +125,16 @@
     - @user.projects.each do |project|
       .col-sm-3.project
         .card
-          - if project.link.present?
-            = link_to project.link, target: "_blank" do
-              %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
-          - else
+          = link_to user_project_path(project.user, project) do
             %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
 
           .card-block
             %p.card-text
-              = project.name
+              = link_to project.name, user_project_path(project.user, project) if project.name.present?
+              - if project.link.present?
+                = link_to project.link, target: "_blank" do
+                  %i.fa.fa-external-link
+
               - if policy(project).edit?
                 = link_to edit_user_project_path(current_user, project), class: "edit_user_projects ml-1 mr-1 display_none text-muted hover_primary " do
                   %i.fa.fa-pencil
