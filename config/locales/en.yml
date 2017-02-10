@@ -21,3 +21,42 @@
 
 en:
   hello: "Hello world"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 1hr
+        other: about %{count}hr
+      about_x_months:
+        one: 1mo
+        other: about %{count}mo
+      about_x_years:
+        one: 1yr
+        other: about %{count}yr
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      over_x_years:
+        one: over 1yr
+        other: over %{count}yrs
+      x_days:
+        one: 1d
+        other: "%{count}d"
+      x_minutes:
+        one: 1m
+        other: "%{count}m"
+      x_months:
+        one: 1mo
+        other: "%{count}mo"
+      x_years:
+        one: 1yr
+        other: "%{count}yr"  
+      x_seconds:
+        one: 1s
+        other: "%{count}1s"
