@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  let(:project) { FactoryGirl.create(:project) }
+  let(:project) { FactoryGirl.build(:project) }
 
   subject { project }
 
@@ -14,5 +14,13 @@ RSpec.describe Project, type: :model do
   end
 
 
-
+  describe "activity" do
+    it "should have create activity" do
+      project.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(project)
+      expect(activity.owner).to eq(project.user)
+    end
+  end
 end

@@ -14,3 +14,10 @@
           = link_to @project.user.display_name, @project.user
       - if @project.link.present?
         = link_to @project.link, @project.link, target: "_blank"
+
+      - if policy(@project).edit?
+        %hr
+        = link_to edit_user_project_path(@project.user, @project), class: "btn btn-primary btn-sm" do
+          %i.fa.fa-pencil.mr-1
+          Edit
+      
