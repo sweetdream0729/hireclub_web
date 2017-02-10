@@ -2,6 +2,7 @@ require 'route_recognizer'
 
 class User < ApplicationRecord
   # Extensions
+  include Admin::UserAdmin
   include UnpublishableActivity
   include Searchable
   extend FriendlyId
@@ -12,6 +13,10 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
+
+  # Scope
+  scope :admin,        -> { where(is_admin: true) }
+  scope :normal,       -> { where(is_admin: false) }
 
   # Associations
   has_many :authentications, dependent: :destroy, inverse_of: :user
