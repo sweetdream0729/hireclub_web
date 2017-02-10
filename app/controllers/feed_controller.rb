@@ -1,5 +1,5 @@
 class FeedController < ApplicationController
   def index
-    @activities = PublicActivity::Activity.order(created_at: :desc).page(params[:page])
+    @activities = Activity.published.by_recent.page(params[:page])
   end
 end
