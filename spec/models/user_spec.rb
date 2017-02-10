@@ -142,4 +142,14 @@ RSpec.describe User, type: :model do
       expect(results.first).to eq user      
     end
   end
+
+  describe "activity" do
+    it "should have create activity" do
+      user.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.owner).to eq(user)
+    end
+  end
 end

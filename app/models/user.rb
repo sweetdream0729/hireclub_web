@@ -6,6 +6,8 @@ class User < ApplicationRecord
   extend FriendlyId
   friendly_id :username
   dragonfly_accessor :avatar
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
