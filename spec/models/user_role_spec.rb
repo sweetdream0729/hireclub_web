@@ -25,5 +25,14 @@ RSpec.describe UserRole, type: :model do
       expect(activity.trackable).to eq(user_role)
       expect(activity.owner).to eq(user_role.user)
     end
+
+    it "should unpublish activity on destroy" do
+      user_role.save
+      user_role.destroy
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to be_nil
+      expect(activity.published).to eq(false)
+    end
   end
 end

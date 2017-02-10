@@ -1,5 +1,6 @@
 class UserRole < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
   counter_culture :role, column_name: :users_count, touch: true
   acts_as_list scope: :user, top_of_list: 0
   include PublicActivity::Model
