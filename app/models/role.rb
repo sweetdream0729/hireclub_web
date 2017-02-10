@@ -1,5 +1,6 @@
 class Role < ApplicationRecord
   # Extensions
+  include Admin::RoleAdmin
   include Searchable
   extend FriendlyId
   friendly_id :name, use: :slugged
