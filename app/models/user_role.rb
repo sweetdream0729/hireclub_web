@@ -2,6 +2,8 @@ class UserRole < ApplicationRecord
   # Extensions
   counter_culture :role, column_name: :users_count, touch: true
   acts_as_list scope: :user, top_of_list: 0
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   # Scopes
   scope :by_position, -> { order(position: :asc) }

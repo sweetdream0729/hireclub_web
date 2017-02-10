@@ -16,4 +16,14 @@ RSpec.describe UserRole, type: :model do
 
     it { should validate_uniqueness_of(:role_id).scoped_to(:user_id) }
   end
+
+  describe "activity" do
+    it "should have create activity" do
+      user_role.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user_role)
+      expect(activity.owner).to eq(user_role.user)
+    end
+  end
 end
