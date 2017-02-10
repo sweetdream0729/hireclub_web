@@ -1,5 +1,6 @@
 class UserSkill < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
   include Wisper::Publisher
   counter_culture :skill, column_name: :users_count, touch: true
   acts_as_list scope: :user, top_of_list: 0

@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
   extend FriendlyId
   friendly_id :name, use: :slugged
 

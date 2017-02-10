@@ -2,6 +2,7 @@ require 'route_recognizer'
 
 class User < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
   include Searchable
   extend FriendlyId
   friendly_id :username

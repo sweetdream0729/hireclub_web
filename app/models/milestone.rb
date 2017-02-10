@@ -1,5 +1,6 @@
 class Milestone < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
   
