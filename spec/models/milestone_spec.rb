@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Milestone, type: :model do
-  let(:milestone) { FactoryGirl.create(:milestone) }
+  let(:milestone) { FactoryGirl.build(:milestone) }
 
   subject { milestone }
 
@@ -14,5 +14,13 @@ RSpec.describe Milestone, type: :model do
   end
 
 
-
+  describe "activity" do
+    it "should have create activity" do
+      milestone.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(milestone)
+      expect(activity.owner).to eq(milestone.user)
+    end
+  end
 end
