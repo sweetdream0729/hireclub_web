@@ -48,6 +48,9 @@
         - else
           = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
       %p.mt-4
+        - if @user.facebook_url.present?
+          = link_to @user.facebook_url do
+            %i.fa.fa-facebook.ml-2
         - if @user.twitter_url.present?
           = link_to @user.twitter_url do
             %i.fa.fa-twitter.ml-2
