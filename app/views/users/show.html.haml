@@ -57,6 +57,10 @@
         - if @user.github_url.present?
           = link_to @user.github_url do
             %i.fa.fa-github.ml-2
+        - if @user.medium_url.present?
+          = link_to @user.medium_url do
+            %i.fa.fa-medium.ml-2
+
 
 
   - if @user.bio
