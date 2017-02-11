@@ -6,14 +6,16 @@
         - @user_role.errors.full_messages.each do |msg|
           %li= msg
 
-  - if !@user_role.persisted?
-    .form-group
-      = f.label :role
-      = f.collection_select(:role_id, current_user.available_roles.by_name, :id, :name, {}, {class: "form-control"})
-    
-  .form-group
-    = f.label :position
-    = f.number_field :position, class: "form-control"
+  .row
+    - if !@user_role.persisted?
+      .col-6
+        .form-group
+          = f.label :role
+          = f.collection_select(:role_id, current_user.available_roles.by_name, :id, :name, {}, {class: "form-control"})
+    .col-6
+      .form-group
+        = f.label :position
+        = f.number_field :position, class: "form-control"
 
   .actions
     = f.submit 'Save', class: "btn btn-primary"
