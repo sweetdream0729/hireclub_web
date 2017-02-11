@@ -3,14 +3,16 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username, :location
+  steps :username, :location, :roles
 
   def show
     @user = current_user
-    # case step
-    # when :find_friends
-    #   @friends = @user.find_friends
-    # end
+    case step
+    when :roles
+      unless @user.user_roles.any?
+        @user.user_roles.build
+      end
+    end
     render_wizard
   end
 
@@ -29,6 +31,6 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :username, :location_id)
+    params.require(:user).permit(:name, :username, :location_id, user_roles_attributes: [:id, :role_id])
   end
 end

@@ -29,6 +29,8 @@ class User < ApplicationRecord
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
 
+  # Nested
+  accepts_nested_attributes_for :user_roles
 
   # Validations
   validate  :username_not_in_routes
