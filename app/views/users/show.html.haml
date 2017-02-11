@@ -47,6 +47,11 @@
           = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
         - else
           = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
+      %p
+        - if @user.twitter_url.present?
+          = link_to @user.twitter_url do
+            %i.fa.fa-twitter.ml-2
+
 
   - if @user.bio
     %hr
