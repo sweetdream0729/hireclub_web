@@ -7,21 +7,34 @@
           %li= msg
 
   .form-group
-    = f.label :title
-    = f.text_field :title
+    = f.text_field :title, class: "form-control", placeholder: "Founded HireClub"
+    %small#emailHelp.form-text.text-muted
+      Milestones are the remarkable things you did.
+      Make them short, punchy and interesting.
+      %br
+    %p
+      Joined HireClub as CEO
+    %p
+      Increased Sales by 75% at Google Adwords
+    %p
+      Learned Python at HackReactor
+    %p
+      Graduated from Harvard with a degree in Computer Science
+
   .form-group
-    = f.label :start_date
+    = f.label "When did you do this?"
     = f.date_select :start_date, end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]
-  / .form-group
-  /   = f.label :end_date
-  /   = f.date_select :end_date
   .form-group
     = f.label :link
-    = f.text_field :link
-  
+    = f.text_field :link, class: "form-control"
+    %small.text-muted
+      Optional link for Milestone
+
   .form-group
     = f.label :description
-    = f.text_area :description
-  
-  = f.submit 'Save', class: "btn btn-primary"
-  = link_to "Cancel", current_user, class: "btn btn-link"
+    = f.text_area :description, class: 'form-control', placeholder: "HireClub started with 25 friends. Now it's 9000+ people.", rows: 3
+    %small.text-muted
+      Optional short description to provide more details.
+  %hr
+  = f.submit 'Save', class: "btn btn-primary btn-lg"
+  = link_to "Cancel", current_user, class: "btn btn-link btn-lg"
