@@ -41,6 +41,7 @@ class User < ApplicationRecord
             :length => { :in => 0..50 }, allow_blank: true
   validates_size_of :avatar, maximum: 5.megabytes
   validates :website_url, url: { allow_blank: true }
+  validates :twitter_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?
