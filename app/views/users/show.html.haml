@@ -123,7 +123,7 @@
 
   .row
     - @user.projects.each do |project|
-      .col-sm-3.project
+      .col-sm-6.col-md-4.project
         .card
           = link_to user_project_path(project.user, project) do
             %img.card-img-top{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%"}
