@@ -7,9 +7,11 @@
 
       = form_for @user, url: wizard_path, method: :put do |f|
         .form-group
-          = f.text_field :username, class: 'form-control form-control-lg'
+          = f.text_field :username, class: 'form-control form-control-lg', placeholder: "john-doe"
           %small.form-text.text-muted 
             %span hireclub.co/username
+            %p
+            You can use letters, dashes, underscores or dots.
             %br
             You can change this at any time.
 

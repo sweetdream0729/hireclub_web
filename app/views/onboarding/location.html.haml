@@ -7,7 +7,9 @@
 
       = form_for @user, url: wizard_path, method: :put do |f|
         .form-group
-          = f.text_field :location, class: "form-control", value: @user.location.try(:display_name)
+          = f.text_field :location, class: "form-control", value: @user.location.try(:display_name), placeholder: "San Francisco, CA"
+          %small.form-text.text-muted 
+            What city are you in?
           = f.hidden_field :location_id, value: @user.location_id
 
         = f.submit "Next", class: "btn btn-primary btn-lg"
