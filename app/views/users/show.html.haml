@@ -51,6 +51,9 @@
         - if @user.twitter_url.present?
           = link_to @user.twitter_url do
             %i.fa.fa-twitter.ml-2
+        - if @user.dribbble_url.present?
+          = link_to @user.dribbble_url do
+            %i.fa.fa-dribbble.ml-2
 
 
   - if @user.bio

@@ -36,11 +36,15 @@
           
         .form-group
           = f.label "Website"
-          = f.url_field :website_url, class: 'form-control'
+          = f.url_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
 
         .form-group
           = f.label "Twitter"
-          = f.url_field :twitter_url, class: 'form-control'
+          = f.url_field :twitter_url, class: 'form-control', placeholder: "http://twitter.com/username"
+
+        .form-group
+          = f.label "Dribbble"
+          = f.url_field :dribbble_url, class: 'form-control', placeholder: "http://dribbble.com/username"
 
         %hr
           
