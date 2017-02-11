@@ -31,6 +31,7 @@ class User < ApplicationRecord
 
   # Nested
   accepts_nested_attributes_for :user_roles
+  accepts_nested_attributes_for :user_skills, reject_if: :all_blank, allow_destroy: true
 
   # Validations
   validate  :username_not_in_routes

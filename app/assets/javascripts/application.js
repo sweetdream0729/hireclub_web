@@ -15,4 +15,5 @@
 //= require tether
 //= require bootstrap
 //= require typeahead.bundle.js
+//= require cocoon
 //= require_tree .

@@ -68,6 +68,7 @@ GEM
     cloudinary (1.4.0)
       aws_cf_signer
       rest-client
+    cocoon (1.2.9)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -387,6 +388,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha6)
   byebug
   cloudinary
+  cocoon
   counter_culture (~> 1.0)
   dalli
   database_cleaner

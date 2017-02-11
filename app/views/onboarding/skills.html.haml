@@ -1,0 +1,18 @@
+= title "What are your skills?"
+
+.container.mt-5.mb-5
+  .row.justify-content-center
+    .col-lg-6.col-md-8.col-sm-10
+      %h1 What are your skills?
+      = form_for @user, url: wizard_path, method: :put do |f|
+        #user_skills
+          = f.fields_for :user_skills do |user_skill|
+            = render 'user_skill_fields', f: user_skill
+          .links
+            = link_to_add_association 'Add Skill', f, :user_skills, class: "btn btn-info btn-sm"
+            %hr
+            
+        = f.submit "Next", class: "btn btn-primary btn-lg"
+        
+
+          

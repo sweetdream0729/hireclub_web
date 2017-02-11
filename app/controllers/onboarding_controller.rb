@@ -3,7 +3,7 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username, :location, :roles
+  steps :username, :location, :roles, :skills
 
   def show
     @user = current_user
@@ -12,6 +12,8 @@ class OnboardingController < ApplicationController
       unless @user.user_roles.any?
         @user.user_roles.build
       end
+    when :skills
+      @user.user_skills.build if @user.user_skills.empty?
     end
     render_wizard
   end
@@ -31,6 +33,6 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :username, :location_id, user_roles_attributes: [:id, :role_id])
+    params.require(:user).permit(:name, :username, :location_id, user_roles_attributes: [:id, :role_id], user_skills_attributes: [:id, :skill_id, :years, :_destroy])
   end
 end
