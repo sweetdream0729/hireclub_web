@@ -40,6 +40,7 @@ class User < ApplicationRecord
             :message => "can only contain letters, numbers, underscores, dashes and dots" },
             :length => { :in => 0..50 }, allow_blank: true
   validates_size_of :avatar, maximum: 5.megabytes
+  validates :website_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?
@@ -63,6 +64,7 @@ class User < ApplicationRecord
     self.update_attributes(years_experience: value)
   end
   
+
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end

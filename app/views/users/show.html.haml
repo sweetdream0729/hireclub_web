@@ -7,7 +7,8 @@
         = image_tag(model_image(@user.avatar, 200, 200, true), width: 100, class: "d-flex mr-3 rounded-circle")
         .media-body
           %h1.black
-            = @user.name
+            - link = @user.website_url.present? ? @user.website_url : user_url(@user)
+            = link_to @user.name, link
 
           - if @user.user_roles.any? || @user == current_user
             %h5

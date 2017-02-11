@@ -36,6 +36,9 @@ RSpec.describe User, type: :model do
     end
 
     it { is_expected.to allow_value("test.name", "5", "test_name", "test-name").for(:username) }
+
+    it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
+    it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
   end
 
   describe "facebook import" do
