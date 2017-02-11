@@ -54,6 +54,9 @@
         - if @user.dribbble_url.present?
           = link_to @user.dribbble_url do
             %i.fa.fa-dribbble.ml-2
+        - if @user.github_url.present?
+          = link_to @user.github_url do
+            %i.fa.fa-github.ml-2
 
 
   - if @user.bio
