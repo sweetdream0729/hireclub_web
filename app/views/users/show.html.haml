@@ -100,18 +100,8 @@
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       - @user.user_skills.by_position.each do |user_skill|
-        .user_skill.mb-2
-          = link_to user_skill.skill.name, user_skill.skill
-          %small
-            = pluralize(user_skill.years, "year") if user_skill.years > 0
+        = render user_skill
 
-          - if policy(user_skill).edit?
-            = link_to edit_user_skill_path(user_skill), class: "edit_user_skills ml-1 mr-1 display_none text-muted hover_primary" do
-              %i.fa.fa-pencil
-
-          - if policy(user_skill).destroy?
-            = link_to user_skill, method: :delete, data: { confirm: "Remove #{user_skill.name} skill?" }, remote: true, class: "delete_user_skills display_none text-muted hover_danger" do
-              %i.fa.fa-trash-o
 
   - if @user.projects.any? || @user == current_user
     %hr
