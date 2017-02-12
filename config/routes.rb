@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   authenticate :user, lambda { |u| u.is_admin } do
     mount Sidekiq::Web => '/sidekiq'
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   
   get 'feed', to: "feed#index", as: :feed
 
+  resources :companies
   resources :user_roles
   resources :roles
   resources :milestones

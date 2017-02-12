@@ -1,0 +1,48 @@
+= form_for @company do |f|
+  - if @company.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@company.errors.count, "error")} prohibited this company from being saved:"
+      %ul
+        - @company.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-6
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label "Website"
+        = f.url_field :website_url, class: 'form-control'
+      .form-group
+        = f.label "Facebook"
+        = f.url_field :facebook_url, class: 'form-control'
+      .form-group
+        = f.label "Twitter"
+        = f.url_field :twitter_url, class: 'form-control'
+      .form-group
+        = f.label "Instagram"
+        = f.url_field :instagram_url, class: 'form-control'
+      .form-group
+        = f.label "AngelList"
+        = f.url_field :angellist_url, class: 'form-control'
+      .form-group
+        = f.label :tagline
+        = f.text_field :tagline, class: 'form-control'
+    .col-6
+      .form-group
+        = f.label 'Avatar'
+        %br
+        = image_tag(model_image(@company.avatar, 200, 200, true), width: 100, class: 'm-b-1')
+        %br
+        = f.file_field :avatar
+        = f.hidden_field :retained_avatar
+      .form-group
+        = f.label 'Logo'
+        %br
+        = image_tag(model_image(@company.logo, 200, 200, true), width: 100, class: 'm-b-1')
+        %br
+        = f.file_field :logo
+        = f.hidden_field :retained_logo
+  
+  %hr
+  = f.submit 'Save', class: 'btn btn-primary btn-lg'
