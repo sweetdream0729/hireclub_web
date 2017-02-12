@@ -12,6 +12,7 @@
         %th Avatar
         %th Logo
         %th Website
+        %th Clearbit
         %th
         %th
 
@@ -22,4 +23,5 @@
           %td= image_tag(model_image(company.avatar, 200, 200, true), width: 100)
           %td= image_tag(model_image(company.logo, 200, 200, true), width: 100)
           %td= company.website_url
+          %td= image_tag("https://logo.clearbit.com/#{company.domain}", width: 100) if company.website_url.present?
           %td= link_to 'Edit', edit_company_path(company) if policy(company).edit?

@@ -24,4 +24,29 @@ class Company < ApplicationRecord
   validates :angellist_url, url: { allow_blank: true }
 
 
+  def domain
+    URI.parse(website_url).host.downcase if website_url.present?
+  end
+
+  def self.import
+    file_name = "companies.json"
+    path = File.join("#{Rails.root}/db/seeds/", "#{file_name}")
+    return if !File.exist?(path)
+
+    json = JSON.parse(open(path).read)
+    json.each do |data|
+      company = Company.where(:name => data["name"], :slug => data["slug"]).first_or_create
+
+      company.twitter_url   = data["twitter_url"] if company.twitter_url.blank?
+      company.facebook_url  = data["facebook_url"] if company.facebook_url.blank?
+      company.instagram_url = data["instagram_url"] if company.instagram_url.blank?
+      company.angellist_url = data["angellist_url"] if company.angellist_url.blank?
+      company.website_url   = data["website_url"] if company.website_url.blank?
+      company.tagline   = data["tagline"] if company.tagline.blank?
+      # company.verified = data["verified"]
+      # company.color = data["color"]
+      
+      company.save
+    end
+  end
 end
