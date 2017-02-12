@@ -8,7 +8,6 @@
       "angellist_url":"",
       "tagline":"Invite only job referrals.",
       "website_url":"http://hireclub.co",
-      "verified":true,
       "color":"#7D8D94"
    },
    {
@@ -20,7 +19,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"https://www.gotinder.com/",
-      "verified":true,
       "color":""
    },
    {
@@ -32,7 +30,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://propanestudio.com/",
-      "verified":true,
       "color":""
    },
    {
@@ -44,7 +41,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"https://remind101.com/",
-      "verified":true,
       "color":""
    },
    {
@@ -56,7 +52,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://inmobi.com/",
-      "verified":true,
       "color":""
    },
    {
@@ -68,7 +63,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://uber.com",
-      "verified":true,
       "color":""
    },
    {
@@ -80,7 +74,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://lyft.com",
-      "verified":true,
       "color":"#ed627b"
    },
    {
@@ -92,7 +85,6 @@
       "angellist_url":"",
       "tagline":"Connect with friends and the world around you on Facebook.",
       "website_url":"http://facebook.com",
-      "verified":true,
       "color":"#3b5998"
    },
    {
@@ -104,7 +96,6 @@
       "angellist_url":"https://angel.co/womply",
       "tagline":"",
       "website_url":"https://womply.com",
-      "verified":true,
       "color":"#104b7d"
    },
    {
@@ -116,7 +107,6 @@
       "angellist_url":"",
       "tagline":"Prototyping \u0026 Collaboration For Design Teams",
       "website_url":"http://www.invisionapp.com/",
-      "verified":true,
       "color":"#5ba44e"
    },
    {
@@ -128,7 +118,6 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://amazon.com",
-      "verified":true,
       "color":"#ff9900"
    },
    {
@@ -140,7 +129,6 @@
       "angellist_url":"",
       "tagline":"KeepSafe protects privacy on mobile phones.",
       "website_url":"http://www.getkeepsafe.com/",
-      "verified":true,
       "color":"#49a5d0"
    },
    {
@@ -152,7 +140,6 @@
       "angellist_url":"",
       "tagline":"Feed your office!",
       "website_url":"http://zerocater.com",
-      "verified":true,
       "color":"#e41e27"
    },
    {
@@ -164,7 +151,6 @@
       "angellist_url":"",
       "tagline":"Changing the world through digital experiences",
       "website_url":"http://adobe.com",
-      "verified":true,
       "color":"#ff0000"
    },
    {
@@ -176,7 +162,17 @@
       "angellist_url":"",
       "tagline":"",
       "website_url":"http://google.com",
-      "verified":true,
       "color":"#4285f4"
+   },
+   {
+      "name":"Twitter",
+      "slug":"twitter",
+      "twitter_url":"https://twitter.com/twitter",
+      "facebook_url":"",
+      "instagram_url":"",
+      "angellist_url":"",
+      "tagline":"",
+      "website_url":"http://twitter.com",
+      "color":"#2aa2f0"
    }
 ]
