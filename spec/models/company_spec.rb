@@ -17,6 +17,7 @@ RSpec.describe Company, type: :model do
     it { should validate_uniqueness_of(:name).case_insensitive }
 
     it { should validate_uniqueness_of(:slug).case_insensitive }
+    it { should validate_uniqueness_of(:facebook_id) }
 
     it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
     it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
@@ -38,6 +39,26 @@ RSpec.describe Company, type: :model do
   end
 
   describe "imports" do
+    let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
+    let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+
+    it "should import company from facebook_url",focus: true do
+      expect(kidbombay_auth).to be_valid
+  
+      url = "https://www.facebook.com/HappyCoInc/"
+
+      company = Company.import_facebook_url(url)
+
+      expect(company).to be_present
+      expect(company).to be_valid
+      expect(company.name).to eq "HappyCo"
+      expect(company.slug).to eq "HappyCoInc"
+      expect(company.facebook_id).to eq "1408344736131335"
+      expect(company.website_url).to eq "http://www.happyco.com"
+      expect(company.facebook_url).to eq "https://www.facebook.com/HappyCoInc/"
+      expect(company.tagline).to be_present
+    end
+
     it "should import companies from companies.json" do
       Company.destroy_all
 

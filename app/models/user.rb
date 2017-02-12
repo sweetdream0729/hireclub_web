@@ -68,8 +68,19 @@ class User < ApplicationRecord
     value = [user_skills.maximum(:years),0].compact.max
     self.update_attributes(years_experience: value)
   end
-  
 
+  def has_facebook?
+    authentications.facebook.any?
+  end
+
+  def facebook_client
+    Koala::Facebook::API.new(get_fb_token)
+  end
+
+  def get_fb_token
+    token = self.authentications.facebook.first.token if has_facebook?
+  end
+  
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end

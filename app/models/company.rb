@@ -17,6 +17,7 @@ class Company < ApplicationRecord
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
+  validates :facebook_id, uniqueness: true
   validates :website_url,   url: { allow_blank: true }
   validates :twitter_url,   url: { allow_blank: true }
   validates :instagram_url, url: { allow_blank: true }
@@ -26,6 +27,39 @@ class Company < ApplicationRecord
 
   def domain
     URI.parse(website_url).host.downcase if website_url.present?
+  end
+
+  def self.import_facebook_url(url)
+    puts "url #{url}"
+    client = FacebookService.get_client
+
+    begin
+      # fb_page = FacebookService.facebook_client.get_object(url, {"fields"=>"id,name,description,phone,website,location,cover"}) 
+      fb_page = client.get_object('', {id: url, fields: "id,username,name,website,link,about,description,founded,location,phone,emails,cover"})
+      puts fb_page.inspect
+      facebook_id = fb_page["id"]
+      name = fb_page["name"]
+      slug = fb_page["username"]
+      puts facebook_id,name,slug
+      
+      company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
+
+      if company.nil? 
+        company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
+      end
+
+      company.website_url = fb_page["website"] if company.website_url.nil? 
+      company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
+      company.tagline = fb_page["about"] if company.tagline.nil? 
+      
+      company.save
+
+      return company
+
+    rescue Exception => e
+      message = "Cound not import facebook page: #{url}" 
+      puts message
+    end
   end
 
   def self.import
