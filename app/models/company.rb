@@ -25,6 +25,17 @@ class Company < ApplicationRecord
   validates :angellist_url, url: { allow_blank: true }
 
 
+  def website_url=(_link)
+    u=URI.parse(_link)
+
+    if (!u.scheme)
+        link = "http://" + _link
+    else
+        link = _link
+    end
+    super(link)
+  end
+
   def domain
     URI.parse(website_url).host.downcase if website_url.present?
   end
