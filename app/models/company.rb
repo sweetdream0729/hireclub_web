@@ -8,7 +8,7 @@ class Company < ApplicationRecord
   dragonfly_accessor :logo
 
   # Scopes
-  scope :by_name, -> { order('name ASC') }
+  scope :by_name, -> { order(name: :asc) }
 
   # Associations
   #has_many :user_skills, dependent: :destroy

@@ -25,3 +25,5 @@
           %td= company.website_url
           %td= image_tag("https://logo.clearbit.com/#{company.domain}", width: 100) if company.website_url.present?
           %td= link_to 'Edit', edit_company_path(company) if policy(company).edit?
+
+  = paginate @companies

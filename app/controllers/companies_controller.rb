@@ -4,7 +4,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   def index
-    @companies = Company.all
+    @companies = Company.by_name.page(params[:page]).per(10)
   end
 
   # GET /companies/1
