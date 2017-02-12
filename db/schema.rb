@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211223754) do
+ActiveRecord::Schema.define(version: 20170212154641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,22 @@ ActiveRecord::Schema.define(version: 20170211223754) do
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid", unique: true, using: :btree
     t.index ["provider"], name: "index_authentications_on_provider", using: :btree
     t.index ["user_id"], name: "index_authentications_on_user_id", using: :btree
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name",          null: false
+    t.citext   "slug",          null: false
+    t.string   "avatar_uid"
+    t.string   "logo_uid"
+    t.string   "twitter_url"
+    t.string   "facebook_url"
+    t.string   "instagram_url"
+    t.string   "angellist_url"
+    t.string   "website_url"
+    t.string   "tagline"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["slug"], name: "index_companies_on_slug", unique: true, using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
