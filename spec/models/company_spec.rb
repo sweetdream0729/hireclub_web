@@ -38,7 +38,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe "imports" do
-    it "should import companies from companies.json",focus: true do
+    it "should import companies from companies.json" do
       Company.destroy_all
 
       json = Company.import
