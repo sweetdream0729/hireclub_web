@@ -21,7 +21,7 @@
       - @companies.each do |company|
         %tr
           %td= link_to company.name, company
-          %td= image_tag(model_image(company.avatar, 200, 200, true), width: 100)
+          %td= link_to image_tag(model_image(company.avatar, 200, 200, true), width: 100), company
           %td= image_tag(model_image(company.logo, 200, 200, true), width: 100)
           %td= link_to company.website_url, company.website_url if company.website_url.present?
           %td= image_tag("https://logo.clearbit.com/#{company.domain}", width: 100) if company.website_url.present?
