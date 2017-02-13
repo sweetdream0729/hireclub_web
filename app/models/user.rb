@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # Extensions
   include Admin::UserAdmin
   include PgSearch
-  multisearchable :against => [:name, :username, :website_url, :skill_names, :role_names]
+  multisearchable :against => [:name, :username, :website_url, :skill_names, :role_names, :location_name]
 
   include UnpublishableActivity
   include Searchable
@@ -53,6 +53,10 @@ class User < ApplicationRecord
 
   def onboarded?
     username.present? && location.present?
+  end
+
+  def location_name
+    return location.name if location.present?
   end
 
   def skill_names
