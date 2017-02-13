@@ -49,22 +49,22 @@
           = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
       %p.mt-4
         - if @user.facebook_url.present?
-          = link_to @user.facebook_url do
+          = link_to @user.facebook_url, target: "_blank" do
             %i.fa.fa-facebook.ml-2
         - if @user.twitter_url.present?
-          = link_to @user.twitter_url do
+          = link_to @user.twitter_url, target: "_blank" do
             %i.fa.fa-twitter.ml-2
         - if @user.dribbble_url.present?
-          = link_to @user.dribbble_url do
+          = link_to @user.dribbble_url, target: "_blank" do
             %i.fa.fa-dribbble.ml-2
         - if @user.github_url.present?
-          = link_to @user.github_url do
+          = link_to @user.github_url, target: "_blank" do
             %i.fa.fa-github.ml-2
         - if @user.linkedin_url.present?
-          = link_to @user.linkedin_url do
+          = link_to @user.linkedin_url, target: "_blank" do
             %i.fa.fa-linkedin.ml-2
         - if @user.medium_url.present?
-          = link_to @user.medium_url do
+          = link_to @user.medium_url, target: "_blank" do
             %i.fa.fa-medium.ml-2
 
 
@@ -87,7 +87,7 @@
     .col-sm-8
       - @user.companies.distinct.each do |company|
 
-        = image_tag(model_image(company.avatar, 200, 200, true), width: 50, class:"rounded")
+        = link_to image_tag(model_image(company.avatar, 200, 200, true), width: 50, class:"rounded"), company
 
   .row
     .col-sm-8
