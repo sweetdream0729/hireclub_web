@@ -3,6 +3,9 @@ require 'route_recognizer'
 class User < ApplicationRecord
   # Extensions
   include Admin::UserAdmin
+  include PgSearch
+  multisearchable :against => [:name, :username, :website_url]
+
   include UnpublishableActivity
   include Searchable
   extend FriendlyId

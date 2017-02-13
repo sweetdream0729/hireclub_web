@@ -1,10 +1,11 @@
 = title "Search Results"
 .container.mt-3
-  %h5
+  %h5.mb-3
     = "Search Results for \"#{params[:q]}\""
-  
-  .companies.mt-4
-    %h6.mb-3 Companies
-    = render @companies
+  - @results.each do |result|
+    - if result.searchable_type == "Company"
+      = render partial: "/companies/company", locals: {company: result.searchable}
+    - elsif result.searchable_type == "User"
+      = render partial: "/users/user", locals: {user: result.searchable}
 
-  = paginate @companies
+  = paginate @results

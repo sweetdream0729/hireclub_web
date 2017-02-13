@@ -1,6 +1,9 @@
 class Company < ApplicationRecord
   # Extensions
   #include Admin::SkillAdmin
+  include PgSearch
+  multisearchable :against => [:name, :website_url]
+  
   include Searchable
   extend FriendlyId
   friendly_id :name, use: :slugged
