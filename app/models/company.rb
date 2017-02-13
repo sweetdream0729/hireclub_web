@@ -26,12 +26,14 @@ class Company < ApplicationRecord
 
 
   def website_url=(_link)
-    u=URI.parse(_link)
+    if _link.present?
+      u=URI.parse(_link)
 
-    if (!u.scheme)
-        link = "http://" + _link
-    else
-        link = _link
+      if (!u.scheme)
+          link = "http://" + _link
+      else
+          link = _link
+      end
     end
     super(link)
   end
