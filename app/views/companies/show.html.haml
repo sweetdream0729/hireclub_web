@@ -10,7 +10,7 @@
             = @company.name
           = @company.tagline
           %p
-            = link_to @company.website_url, @company_website_url
+            = link_to @company.website_url, @company.website_url if @company.website_url.present?
     .col-sm-3
       = link_to 'Edit', edit_company_path(@company), class: "btn btn-primary btn-block" if policy(@company).edit?
       = link_to 'Refresh', refresh_company_path(@company), class: "btn btn-info btn-block" if policy(@company).refresh? && @company.facebook_url.present?
