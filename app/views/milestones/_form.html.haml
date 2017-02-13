@@ -35,6 +35,9 @@
     = f.text_area :description, class: 'form-control', placeholder: "HireClub started with 25 friends. Now it's 9000+ people.", rows: 2
     %small.text-muted
       Optional short description to provide more details.
+  .form-group
+    = f.label :company
+    = f.collection_select(:company_id, Company.by_name, :id, :name, {include_blank: true}, {class: "form-control"})
   %hr
   = f.submit 'Save', class: "btn btn-primary btn-lg"
   = link_to "Cancel", current_user, class: "btn btn-link btn-lg"

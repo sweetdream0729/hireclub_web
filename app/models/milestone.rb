@@ -10,6 +10,7 @@ class Milestone < ApplicationRecord
 
   # Associations
   belongs_to :user
+  belongs_to :company
 
   # Validations
   validates :title, presence: true
