@@ -248,7 +248,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :facebook, Rails.application.secrets.facebook_app_id, Rails.application.secrets.facebook_app_secret,
-    :scope => "email, public_profile, user_friends, user_location, user_work_history, user_education_history",
+    :scope => "email, public_profile, user_friends, user_location, user_work_history, user_education_history, user_website",
     :info_fields => "id, name, gender, locale, email, location",
     :image_size => "large"
 
