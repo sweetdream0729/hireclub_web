@@ -3,7 +3,7 @@ class Company < ApplicationRecord
   #include Admin::SkillAdmin
   include PgSearch
   multisearchable :against => [:name, :website_url]
-  
+
   include Searchable
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -14,7 +14,7 @@ class Company < ApplicationRecord
   scope :by_name, -> { order(name: :asc) }
 
   # Associations
-  #has_many :user_skills, dependent: :destroy
+  has_many :milestones
   #has_many :users, through: :user_skills
 
   # Validations

@@ -8,7 +8,7 @@ RSpec.describe Company, type: :model do
   describe "associations" do
     it { should respond_to(:avatar) }
     it { should respond_to(:logo) }
-    # it { should have_many(:user_companys) }
+    it { should have_many(:milestones) }
     # it { should have_many(:users).through(:user_companys) }
   end
 
@@ -20,7 +20,7 @@ RSpec.describe Company, type: :model do
     it { should validate_uniqueness_of(:facebook_id) }
 
     it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
-    it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
+    # it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
   end
 
   describe 'seed' do
@@ -42,7 +42,7 @@ RSpec.describe Company, type: :model do
     let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
     let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
 
-    it "should import company from facebook_url",focus: true do
+    it "should import company from facebook_url" do
       expect(kidbombay_auth).to be_valid
   
       url = "https://www.facebook.com/HappyCoInc/"
