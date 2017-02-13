@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # Extensions
   include Admin::UserAdmin
   include PgSearch
-  multisearchable :against => [:name, :username, :website_url]
+  multisearchable :against => [:name, :username, :website_url, :skill_names]
 
   include UnpublishableActivity
   include Searchable
@@ -55,6 +55,10 @@ class User < ApplicationRecord
     username.present? && location.present?
   end
 
+  def skill_names
+    self.skills.pluck(:name).join(" ")
+  end
+  
   def available_skills
     Skill.where.not(id: self.skills.pluck(:id))
   end
