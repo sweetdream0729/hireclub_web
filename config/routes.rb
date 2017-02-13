@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
   
+  get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
   resources :companies do

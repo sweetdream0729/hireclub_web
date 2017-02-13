@@ -1,0 +1,10 @@
+= title "Search Results"
+.container.mt-3
+  %h5
+    = "Search Results for \"#{params[:q]}\""
+  
+  .companies.mt-4
+    %h6.mb-3 Companies
+    = render @companies
+
+  = paginate @companies
