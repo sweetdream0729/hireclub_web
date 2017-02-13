@@ -36,6 +36,7 @@
         %br
         = f.file_field :avatar
         = f.hidden_field :retained_avatar
+        = f.text_field :avatar_url, class: 'form-control', placeholder: "http://site.com/image.jpg"
       .form-group
         = f.label 'Logo'
         %br
