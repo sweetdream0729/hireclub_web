@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   
   get 'feed', to: "feed#index", as: :feed
 
-  resources :companies
+  resources :companies do
+    member do
+      get :refresh
+    end
+  end
+  
   resources :user_roles
   resources :roles
   resources :milestones

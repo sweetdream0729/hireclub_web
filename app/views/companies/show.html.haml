@@ -5,6 +5,7 @@
     = @company.name
     %small
       = link_to 'Edit', edit_company_path(@company), class: "btn btn-primary btn-sm" if policy(@company).edit?
+      = link_to 'Refresh', refresh_company_path(@company), class: "btn btn-info btn-sm" if policy(@company).refresh? && @company.facebook_url.present?
   
   - if @company.tagline.present?
     %h4

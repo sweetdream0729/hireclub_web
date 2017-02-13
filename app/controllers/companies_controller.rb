@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   after_action :verify_authorized, except: [:index]
-  before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: [:show, :edit, :update, :destroy, :refresh]
 
   # GET /companies
   def index
@@ -9,6 +9,14 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   def show
+  end
+
+  def refresh
+    if @company.facebook_url.present?
+      Company.import_facebook_url(@company.facebook_url) 
+      notice = "Company Refreshed"
+    end
+    redirect_to @company, notice: notice
   end
 
   # GET /companies/new

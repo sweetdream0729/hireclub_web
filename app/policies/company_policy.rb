@@ -19,4 +19,9 @@ class CompanyPolicy < ApplicationPolicy
     return false if user.nil?
     user.is_admin
   end
+
+  def refresh?
+    return false if user.nil?
+    user.is_admin
+  end
 end

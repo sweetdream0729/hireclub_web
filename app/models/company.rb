@@ -17,7 +17,7 @@ class Company < ApplicationRecord
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
-  validates :facebook_id, uniqueness: true
+  validates :facebook_id, uniqueness: {allow_blank: true}
   validates :website_url,   url: { allow_blank: true }
   validates :twitter_url,   url: { allow_blank: true }
   validates :instagram_url, url: { allow_blank: true }
