@@ -63,11 +63,12 @@ class Company < ApplicationRecord
       name = fb_page["name"]
       slug = fb_page["username"]
       
-      company = Company.where('lower(name) = ? OR lower(slug) = ? OR facebook_id = ?', name.downcase, slug.downcase, facebook_id).take
+      company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
+
       if company.nil? 
         company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
       end
-
+      company.name = name
       company.website_url = fb_page["website"] if company.website_url.nil? 
       company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
       company.tagline = fb_page["about"] if company.tagline.nil?
