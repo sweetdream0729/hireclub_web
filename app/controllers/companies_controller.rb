@@ -12,8 +12,7 @@ class CompaniesController < ApplicationController
   end
 
   def refresh
-    if @company.facebook_url.present?
-      Company.import_facebook_url(@company.facebook_url) 
+    if @company.refresh
       notice = "Company Refreshed"
     end
     redirect_to @company, notice: notice

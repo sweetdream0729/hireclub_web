@@ -57,11 +57,12 @@ RSpec.describe Company, type: :model do
       expect(company.website_url).to eq "http://www.happyco.com"
       expect(company.facebook_url).to eq "https://www.facebook.com/HappyCoInc/"
       expect(company.tagline).to be_present
+      expect(company.avatar).to be_present
 
       url = "https://www.facebook.com/OpenTable/"
 
       company = Company.import_facebook_url(url)
-      
+
       expect(company).to be_present
       expect(company).to be_valid
       expect(company.name).to eq "OpenTable"
@@ -70,6 +71,7 @@ RSpec.describe Company, type: :model do
       expect(company.website_url).to eq "http://www.opentable.com"
       expect(company.facebook_url).to eq "https://www.facebook.com/OpenTable/"
       expect(company.tagline).to be_present
+      expect(company.avatar).to be_present
     end
 
 

@@ -40,18 +40,26 @@ class Company < ApplicationRecord
     URI.parse(website_url).host.downcase if website_url.present?
   end
 
+  def refresh
+    if self.facebook_url.present?
+      Company.import_facebook_url(self.facebook_url) 
+      return true
+    end
+    return false
+  end
+
   def self.import_facebook_url(url)
-    puts "url #{url}"
+    puts "import_facebook_url #{url}"
     client = FacebookService.get_client
 
     begin
       # fb_page = FacebookService.facebook_client.get_object(url, {"fields"=>"id,name,description,phone,website,location,cover"}) 
-      fb_page = client.get_object('', {id: url, fields: "id,username,name,website,link,about,description,founded,location,phone,emails,cover"})
+      fb_page = client.get_object('', {id: url, fields: "id,username,name,website,link,about,description,founded,location,phone,emails,cover,picture.type(large)"})
       puts fb_page.inspect
+      
       facebook_id = fb_page["id"]
       name = fb_page["name"]
       slug = fb_page["username"]
-      puts facebook_id,name,slug
       
       company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
 
@@ -61,7 +69,12 @@ class Company < ApplicationRecord
 
       company.website_url = fb_page["website"] if company.website_url.nil? 
       company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
-      company.tagline = fb_page["about"] if company.tagline.nil? 
+      company.tagline = fb_page["about"] if company.tagline.nil?
+
+      if company.avatar_uid.nil? && !fb_page["picture"]["data"]["is_silhouette"]
+        picture_url = fb_page["picture"]["data"]["url"]
+        company.avatar_url = picture_url
+      end
       
       company.save
 
