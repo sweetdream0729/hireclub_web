@@ -38,7 +38,7 @@ class MilestonesController < ApplicationController
   # PATCH/PUT /milestones/1
   def update
     if @milestone.update(milestone_params)
-      redirect_to current_user, notice: 'Milestone updated'
+      redirect_to @milestone.user, notice: 'Milestone updated'
     else
       render :edit
     end
