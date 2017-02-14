@@ -16,7 +16,7 @@ class MilestonePolicy < ApplicationPolicy
   
   def update?
     return false if user.nil?
-    record.user == user
+    record.user == user || user.is_admin
   end
 
   def destroy?
