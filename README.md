@@ -65,6 +65,12 @@ rspec
 rake docs:generate
 ```
 
+* Rebuild Search Index
+```
+heroku run rake pg_search:multisearch:rebuild[Company]
+heroku run rake pg_search:multisearch:rebuild[User]
+```
+
 Contributing
 ------------
 
