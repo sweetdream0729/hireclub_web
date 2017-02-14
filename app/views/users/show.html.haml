@@ -9,6 +9,9 @@
           %h1.black
             - link = @user.website_url.present? ? @user.website_url : user_url(@user)
             = link_to @user.name, link
+            - if @user.is_available
+              %span.small
+                %i.fa.fa-briefcase.text-success
 
           - if @user.user_roles.any? || @user == current_user
             %h5
@@ -38,7 +41,6 @@
             ·
             = pluralize(@user.years_experience, "Year")
             Experience
-
         
 
     .col-sm-3
