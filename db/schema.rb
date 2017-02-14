@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214105731) do
+ActiveRecord::Schema.define(version: 20170214112655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,11 @@ ActiveRecord::Schema.define(version: 20170214105731) do
     t.string   "linkedin_url"
     t.boolean  "is_available",           default: false, null: false
     t.boolean  "is_hiring",              default: false, null: false
+    t.boolean  "open_to_remote",         default: false, null: false
+    t.boolean  "open_to_full_time",      default: false, null: false
+    t.boolean  "open_to_part_time",      default: false, null: false
+    t.boolean  "open_to_contract",       default: false, null: false
+    t.boolean  "open_to_internship",     default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["gender"], name: "index_users_on_gender", using: :btree
@@ -220,6 +225,11 @@ ActiveRecord::Schema.define(version: 20170214105731) do
     t.index ["is_available"], name: "index_users_on_is_available", using: :btree
     t.index ["is_hiring"], name: "index_users_on_is_hiring", using: :btree
     t.index ["location_id"], name: "index_users_on_location_id", using: :btree
+    t.index ["open_to_contract"], name: "index_users_on_open_to_contract", using: :btree
+    t.index ["open_to_full_time"], name: "index_users_on_open_to_full_time", using: :btree
+    t.index ["open_to_internship"], name: "index_users_on_open_to_internship", using: :btree
+    t.index ["open_to_part_time"], name: "index_users_on_open_to_part_time", using: :btree
+    t.index ["open_to_remote"], name: "index_users_on_open_to_remote", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end

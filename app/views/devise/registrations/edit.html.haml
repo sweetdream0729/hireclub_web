@@ -18,6 +18,30 @@
             = f.check_box :is_available, class: 'form-check-input'
             %i.fa.fa-briefcase.text-success
             Available To Hire
+
+        %h2.mt-5 Open To
+        %hr
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_remote, class: 'form-check-input'
+            %i.fa.fa-plane
+            Remote
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_full_time, class: 'form-check-input'
+            Full Time
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_part_time, class: 'form-check-input'
+            Part Time
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_contract, class: 'form-check-input'
+            Contract
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_internship, class: 'form-check-input'
+            Internship
         
 
         %h2.mt-5 Profile

@@ -19,4 +19,7 @@
             
         = "#{user.location.name} · " if user.location.present?
         = "#{pluralize(user.years_experience, 'Year')} Experience"
+        - if user.open_to_remote
+          ·
+          %i.fa.fa-plane.text-muted
   %hr

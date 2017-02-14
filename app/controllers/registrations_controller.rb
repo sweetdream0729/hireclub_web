@@ -8,6 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:username, :name, :email, :password, :avatar, :retained_avatar, :remove_avatar, 
       :location_id, :bio,
       :is_available, :is_hiring,
+      :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship,
       :website_url, :twitter_url, :dribbble_url, :github_url, :medium_url, :facebook_url, :linkedin_url)
   end
 
