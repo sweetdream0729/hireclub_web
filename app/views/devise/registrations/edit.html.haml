@@ -9,9 +9,16 @@
         %hr
         .form-check
           %label.form-check-label
+            = f.check_box :is_hiring, class: 'form-check-input'
+            %i.fa.fa-bullseye.text-primary
+            Hiring
+
+        .form-check
+          %label.form-check-label
             = f.check_box :is_available, class: 'form-check-input'
             %i.fa.fa-briefcase.text-success
             Available To Hire
+        
 
         %h2.mt-5 Profile
         %hr

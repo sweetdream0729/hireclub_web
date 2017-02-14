@@ -4,6 +4,10 @@
     .media-body
       %h5.mt-0
         = link_to user.name, user
+        - if user.is_hiring
+          %span.small
+            %i.fa.fa-bullseye.text-primary
+
         - if user.is_available
           %small
             %i.fa.fa-briefcase.text-success
