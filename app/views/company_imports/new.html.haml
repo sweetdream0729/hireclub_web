@@ -1,0 +1,11 @@
+= title "Import Company"
+.container.mt-5.mb-5
+  %h1 Import Company
+
+  = form_for @company, url: company_imports_path do |f|
+    .row
+      .col-6
+        .form-group
+          = f.label "Facebook URL"
+          = f.url_field :facebook_url, class: 'form-control'
+        = f.submit 'Import', class: 'btn btn-primary btn-lg'

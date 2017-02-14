@@ -24,4 +24,9 @@ class CompanyPolicy < ApplicationPolicy
     return false if user.nil?
     user.is_admin
   end
+
+  def import?
+    return false if user.nil?
+    user.is_admin
+  end
 end
