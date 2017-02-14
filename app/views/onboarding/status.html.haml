@@ -17,6 +17,15 @@
             = f.check_box :is_available, class: 'form-check-input'
             %i.fa.fa-briefcase.text-success
             Available To Hire
+        %p.form-text.text-muted 
+          Your profile will show
+          %i.fa.fa-bullseye.text-primary
+          to let people know you are hiring.
+          %br
+          Your profile will show
+          %i.fa.fa-briefcase.text-success
+
+          to let people know you are available.
 
         %h2.mt-5 Open To
         %hr
@@ -42,5 +51,9 @@
             = f.check_box :open_to_internship, class: 'form-check-input'
             Internship
 
+        %hr
+        %small.form-text.text-muted 
+          You can change any of these settings later.
+        %p
         = f.submit "Next", class: "btn btn-primary btn-lg"
 
