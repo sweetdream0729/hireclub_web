@@ -11,6 +11,9 @@ class Company < ApplicationRecord
   dragonfly_accessor :logo
   is_impressionable
 
+  auto_strip_attributes :name, squish: true
+  nilify_blanks
+
   # Scopes
   scope :by_name, -> { order(name: :asc) }
 
@@ -84,6 +87,7 @@ class Company < ApplicationRecord
       
       company.save
 
+      puts company.errors.inspect
       return company
 
     rescue Exception => e
