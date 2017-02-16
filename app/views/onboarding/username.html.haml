@@ -6,10 +6,15 @@
       %h1 Choose Username
 
       = form_for @user, url: wizard_path, method: :put do |f|
-        .form-group
-          = f.text_field :username, class: 'form-control form-control-lg', placeholder: "john-doe"
+        .form-group{class: ('has-danger' if @user.errors.any?)}
+          = f.text_field :username, class: 'form-control form-control-lg', placeholder: "johndoe"
+          
+          .form-control-feedback
+            - username = @user.errors.any? ? @user.errors.details[:username][0][:value] : "username"
+            = "hireclub.co/#{username}"
+            - if @user.errors.any?
+              is not available
           %small.form-text.text-muted 
-            %span hireclub.co/username
             %p
             You can use letters, dashes, underscores or dots.
             %br
