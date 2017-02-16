@@ -4,7 +4,18 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   def index
-    @companies = Company.by_name.page(params[:page]).per(10)
+    scope = Company.by_name
+
+    if params[:query]
+      scope = scope.search_by_name(params[:query])
+    end
+
+    @companies = scope.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.json { render json: @companies }
+      format.html
+    end
   end
 
   # GET /companies/1

@@ -37,7 +37,10 @@
       Optional short description to provide more details.
   .form-group
     = f.label :company
-    = f.collection_select(:company_id, Company.by_name, :id, :name, {include_blank: true}, {class: "form-control"})
+
+    = f.text_field :company, class: "form-control", value: @milestone.company.try(:name), placeholder: "HireClub"
+    = f.hidden_field :company_id, value: @milestone.company_id
+    / = f.collection_select(:company_id, Company.by_name, :id, :name, {include_blank: true}, {class: "form-control"})
   %hr
   = f.submit 'Save', class: "btn btn-primary btn-lg"
   = link_to "Cancel", current_user, class: "btn btn-link btn-lg"
