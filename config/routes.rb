@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :onboarding
 
   get "/locations",   to: "locations#index",   as: :locations
+  get "/privacy",   to: "pages#privacy",   as: :privacy
   get "/about",   to: "pages#about",   as: :about
   get "/contact", to: "pages#contact", as: :contact
 
