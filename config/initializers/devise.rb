@@ -252,6 +252,8 @@ Devise.setup do |config|
     :info_fields => "id, name, gender, locale, email, location",
     :image_size => "large"
 
+  config.omniauth :linkedin, Rails.application.secrets.linkedin_client_id, Rails.application.secrets.linkedin_client_secret
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

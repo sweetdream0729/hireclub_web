@@ -46,7 +46,15 @@ class Authentication < ApplicationRecord
     date = omniauth["credentials"]["expires_at"].to_s
     self.expires_at =     DateTime.strptime(date,'%s') if date.present?
 
-    self.username = omniauth['info']["nickname"] if !omniauth['info']['nickname'].blank?
+    if provider == LINKEDIN
+      # linked doesn't return the username from omniauth
+      # profile url is like http://www.linkedin.com/in/kidbombay
+      profile_url = omniauth['info']["urls"]["public_profile"]
+      self.username = profile_url.split("https://www.linkedin.com/in/")[1]
+    else
+      self.username = omniauth['info']["nickname"] if !omniauth['info']['nickname'].blank?
+    end
+
   end
 
   rails_admin do

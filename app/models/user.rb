@@ -16,7 +16,7 @@ class User < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook]
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin]
 
   # Scope
   scope :admin,        -> { where(is_admin: true) }
@@ -100,6 +100,10 @@ class User < ApplicationRecord
 
   def has_facebook?
     authentications.facebook.any?
+  end
+
+  def has_linkedin?
+    authentications.linkedin.any?
   end
 
   def facebook_client

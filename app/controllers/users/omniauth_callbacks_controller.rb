@@ -9,6 +9,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def linkedin
+    authorize("linkedin")
+  end
+
   def authorize(provider)
     omniauth = request.env["omniauth.auth"]
     

@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/Devato/omniauth-linkedin-oauth2.git
+  revision: 57a86aaf25060e05f5e7bcf97a0197f6b3b0044d
+  specs:
+    omniauth-linkedin-oauth2 (0.1.5)
+      omniauth (~> 1.0)
+      omniauth-oauth2
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -426,6 +434,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth
   omniauth-facebook
+  omniauth-linkedin-oauth2!
   pg (~> 0.18)
   pg_search
   public_activity
