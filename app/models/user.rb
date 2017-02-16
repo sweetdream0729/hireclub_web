@@ -11,6 +11,7 @@ class User < ApplicationRecord
   extend FriendlyId
   friendly_id :username
   dragonfly_accessor :avatar
+  is_impressionable
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 

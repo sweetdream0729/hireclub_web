@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   friendly_id :name, use: :slugged
 
   dragonfly_accessor :image
+  is_impressionable
   
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }

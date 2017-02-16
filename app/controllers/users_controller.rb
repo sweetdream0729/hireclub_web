@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     set_user
+    impressionist(@user)
   end
 
   private

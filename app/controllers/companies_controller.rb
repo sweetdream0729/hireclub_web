@@ -9,6 +9,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   def show
+    impressionist(@company)
   end
 
   def refresh

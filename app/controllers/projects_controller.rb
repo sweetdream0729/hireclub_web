@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    impressionist(@project)
   end
 
   # GET /projects/new

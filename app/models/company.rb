@@ -9,6 +9,7 @@ class Company < ApplicationRecord
   friendly_id :name, use: :slugged
   dragonfly_accessor :avatar
   dragonfly_accessor :logo
+  is_impressionable
 
   # Scopes
   scope :by_name, -> { order(name: :asc) }
