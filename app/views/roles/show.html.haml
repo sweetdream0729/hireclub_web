@@ -10,11 +10,14 @@
   %p
     %small
       = pluralize(@role.users_count, "member")
-  - if @role.children.any?
-    - @role.children.each do |child|
-      = link_to child.name, child
-      ·
       
   = render partial: "users/user", collection: @users 
 
   = paginate @users
+
+  - if @role.children.any?
+    %hr
+    - @role.children.each do |child|
+      = link_to child.name, child
+      ·
+  
