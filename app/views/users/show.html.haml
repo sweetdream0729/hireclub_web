@@ -110,6 +110,12 @@
           - if @user == current_user
             %a.btn.btn-primary.btn-sm{href: new_milestone_path}
               %i.fa.fa-plus
+        - if @user.milestones.empty?
+          .row
+            .col-12
+              %a.btn.btn-warning{href: new_milestone_path}
+                Add Your First Milestone
+
         - @user.milestones.by_newest.each do |milestone|
           .row.user_milestone.mb-2
             .col-sm-4.col-md-3.col-lg-2
@@ -150,6 +156,12 @@
       - if @user == current_user
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
+    - if @user.projects.empty?
+      .row
+        .col-12
+          %a.btn.btn-warning{href: new_user_project_path(current_user)}
+            Add Your First Project
+
 
   .row
     - @user.projects.each do |project|
