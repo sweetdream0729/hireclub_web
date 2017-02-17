@@ -3,12 +3,17 @@
 
   %h1
     = @role.name
-  %p
     %small
+      - if @role.parent
+        = link_to @role.parent.name, @role.parent
       = link_to 'Edit', edit_role_path(@role), class: "btn btn-primary btn-sm" if policy(@role).edit?
   %p
     %small
       = pluralize(@role.users_count, "member")
+  - if @role.children.any?
+    - @role.children.each do |child|
+      = link_to child.name, child
+      ·
       
   = render partial: "users/user", collection: @users 
 
