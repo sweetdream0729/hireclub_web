@@ -6,41 +6,57 @@
         - @milestone.errors.full_messages.each do |msg|
           %li= msg
 
-  .form-group
-    = f.text_field :title, class: "form-control", placeholder: "Founded HireClub"
-    %small#emailHelp.form-text.text-muted
-      Milestones are the remarkable things you did.
-      Make them short, punchy and interesting.
-      %br
-    %p
-      Joined HireClub as CEO
-    %p
-      Increased Sales by 75% at Google Adwords
-    %p
-      Learned Python at HackReactor
-    %p
-      Graduated from Harvard with a degree in Computer Science
+  .row
+    .col-6
+      %p.lead
+        Milestones are the remarkable things you accomplished.
 
-  .form-group
-    = f.label "When did you do this?"
-    = f.date_select :start_date, end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]
-  .form-group
-    = f.label :link
-    = f.text_field :link, class: "form-control"
-    %small.text-muted
-      Optional link for Milestone
+      .form-group
+        = f.text_field :title, class: "form-control", placeholder: "Founded HireClub with 25 of my friends"
+        %small.form-text.text-muted 
+          Make them short, objective and interesting.
 
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control', placeholder: "HireClub started with 25 friends. Now it's 9000+ people.", rows: 2
-    %small.text-muted
-      Optional short description to provide more details.
-  .form-group
-    = f.label :company
+      .form-group
+        = f.label :company
 
-    = f.text_field :company, class: "form-control", value: @milestone.company.try(:name), placeholder: "HireClub"
-    = f.hidden_field :company_id, value: @milestone.company_id
-    / = f.collection_select(:company_id, Company.by_name, :id, :name, {include_blank: true}, {class: "form-control"})
+        = f.text_field :company, class: "form-control", value: @milestone.company.try(:name), placeholder: "HireClub"
+        %small.form-text.text-muted 
+          Which Company, School or Organization was this milestone for?
+        = f.hidden_field :company_id, value: @milestone.company_id
+      .form-group
+        = f.label "When?"
+        %br
+        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]}
+      .form-group
+        = f.label :link
+        = f.text_field :link, class: "form-control"
+        %small.text-muted
+          Optional - Where should the milestone link to?
+
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control', placeholder: "HireClub started with 25 friends. Now it's 9000+ people.", rows: 2
+        %small.text-muted
+          Optional short description to provide more details.
+       
+
+    .col-1
+    .col-5
+      %h6 Examples
+      %p
+        Increased Sales by 75% at Google Adwords
+      %p
+        Learned Python at HackReactor
+      %p
+        Graduated from Harvard with a degree in Computer Science
+      %h6.mt-5 Tips
+      %p
+        Add new milestones at least once a month.
+      %p
+        Milestones should be the things you are proud of.
+      %p
+        = link_to "Check out a sample profile", "http://hireclub.co/kidbombay", target: "_blank"
+
   %hr
   = f.submit 'Save', class: "btn btn-primary btn-lg"
   = link_to "Cancel", current_user, class: "btn btn-link btn-lg"

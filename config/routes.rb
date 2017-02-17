@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :company_imports, only: [:new, :create]
 
-  resources :companies, :format => false do
+  resources :companies do
     member do
       get :refresh
     end
