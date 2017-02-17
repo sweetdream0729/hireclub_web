@@ -16,7 +16,6 @@
   = paginate @users
 
   - if @role.children.any?
-    %hr
     - @role.children.each do |child|
       = link_to child.name, child
       ·
