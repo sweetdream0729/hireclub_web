@@ -4,7 +4,7 @@ class RolesController < ApplicationController
 
   # GET /roles
   def index
-    @roles = Role.without_parent.by_name.page(params[:page])
+    @roles = Role.by_name.page(params[:page]).per(20)
   end
 
   # GET /roles/1

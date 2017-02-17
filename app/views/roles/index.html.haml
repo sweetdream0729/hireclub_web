@@ -7,13 +7,9 @@
   - @roles.each do |role|
     %h5
       = link_to role.name, role
-    - if role.children.any?
-      %ul
-        - role.children.each do |child|
-          %li
-            = link_to child.name, child
-
-
+      - if role.parent
+        %small
+          = link_to role.parent.name, role.parent
 
   = paginate @roles
 
