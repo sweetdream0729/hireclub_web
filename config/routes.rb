@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :company_imports, only: [:new, :create]
 
-  resources :companies do
+  resources :companies, :format => false do
     member do
       get :refresh
     end
@@ -45,5 +45,8 @@ Rails.application.routes.draw do
     end
   end
 
+  authenticated :user do
+    root :to => 'feed#index', as: :authenticated_root
+  end
   root to: "pages#index"
 end
