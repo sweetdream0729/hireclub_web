@@ -21,6 +21,9 @@ class User < ApplicationRecord
   # Scope
   scope :admin,        -> { where(is_admin: true) }
   scope :normal,       -> { where(is_admin: false) }
+  scope :recent,       -> { order(created_at: :desc) }
+  scope :oldest,       -> { order(created_at: :asc) }
+  scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
   has_many :authentications, dependent: :destroy, inverse_of: :user

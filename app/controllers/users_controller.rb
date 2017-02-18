@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all.page(params[:page]).per(10)
+    scope = User.all
+    if params[:sort_by] == "alphabetical"
+      scope = scope.alphabetical
+    elsif params[:sort_by] == "oldest"
+      scope = scope.oldest
+    else
+      scope = scope.recent
+    end
+    @users = scope.page(params[:page]).per(10)
   end
 
   def show
