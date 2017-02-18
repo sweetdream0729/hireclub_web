@@ -40,7 +40,7 @@ class UserSkillsController < ApplicationController
   def update
     if @user_skill.update(user_skill_params)
       respond_to do |format|
-        format.js   { render layout: false }
+        format.js   { }
         format.html { redirect_to current_user, notice: "Updated #{@user_skill.name} skill" }
       end
     else

@@ -1,4 +1,4 @@
-.user_skill.mb-2{"data-id": user_skill.id, "data-position": user_skill.position}
+.user_skill.mb-2{data: { id: user_skill.id, position: user_skill.position  }, class: "user_skill_id_#{user_skill.id}" }
   - if policy(user_skill).edit?
     %span.drag_handle.mr-1
       %i.fa.fa-bars
