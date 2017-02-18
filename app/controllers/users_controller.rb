@@ -15,6 +15,10 @@ class UsersController < ApplicationController
     set_user
     impressionist(@user)
 
+    @milestones = @user.milestones.by_newest
+    @first_milestones = @milestones.limit(5)
+    @rest_milestones = @milestones.offset(5)
+
     @user_skills = @user.user_skills.by_position
     @first_skills = @user_skills.limit(5)
     @rest_skills = @user_skills.offset(5)
