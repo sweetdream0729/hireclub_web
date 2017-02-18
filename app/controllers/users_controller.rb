@@ -14,6 +14,10 @@ class UsersController < ApplicationController
   def show
     set_user
     impressionist(@user)
+
+    @user_skills = @user.user_skills.by_position
+    @first_skills = @user_skills.limit(5)
+    @rest_skills = @user_skills.offset(5)
   end
 
   private

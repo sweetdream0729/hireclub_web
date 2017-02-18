@@ -145,8 +145,13 @@
           - if @user == current_user
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
-      - @user.user_skills.by_position.each do |user_skill|
-        = render user_skill
+      
+      = render @first_skills
+      .toggle_skills.mb-2
+        %a{"aria-controls" => "collapseExample", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseSkills"}
+          View All
+      #collapseSkills.collapse
+        = render @rest_skills
 
 
   - if @user.projects.any? || @user == current_user
