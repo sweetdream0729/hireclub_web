@@ -133,13 +133,17 @@
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       
-      = render @first_skills
-      - if @rest_skills.any?
-        .toggle_skills.mb-2
-          %a.black.uppercase.text-muted{"aria-controls" => "collapseSkills", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseSkills"}
-            View All
-        #collapseSkills.collapse
-          = render @rest_skills
+      - if @user == current_user
+        #sortable_user_skills
+          = render @user_skills
+      - else
+        = render @first_skills
+        - if @rest_skills.any?
+          .toggle_skills.mb-2
+            %a.black.uppercase.text-muted{"aria-controls" => "collapseSkills", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseSkills"}
+              View All
+          #collapseSkills.collapse
+            = render @rest_skills
 
 
   - if @user.projects.any? || @user == current_user

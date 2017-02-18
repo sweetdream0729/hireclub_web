@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require tether
 //= require bootstrap
+//= require sortable.min
 //= require typeahead.bundle.js
 //= require cocoon
 //= require_tree .

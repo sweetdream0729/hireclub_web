@@ -39,7 +39,10 @@ class UserSkillsController < ApplicationController
   # PATCH/PUT /user_skills/1
   def update
     if @user_skill.update(user_skill_params)
-      redirect_to current_user, notice: "Updated #{@user_skill.name} skill"
+      respond_to do |format|
+        format.js   { render layout: false }
+        format.html { redirect_to current_user, notice: "Updated #{@user_skill.name} skill" }
+      end
     else
       render :edit
     end
