@@ -22,6 +22,7 @@ RSpec.describe FacebookService do
     first = results.first
     expect(first["name"]).to eq "Visa"
     expect(first["id"]).to eq "211718455520845"
+    expect(first["link"]).to eq "https://www.facebook.com/VisaUnitedStates/"
   end
 
 
