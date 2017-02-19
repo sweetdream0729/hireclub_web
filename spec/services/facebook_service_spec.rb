@@ -13,6 +13,17 @@ RSpec.describe FacebookService do
     puts client
   end
 
+  it "should search facebook pages" do
+    expect(kidbombay_auth).to be_valid
+
+    results = FacebookService.search_pages("visa")
+    expect(results).to be_present
+
+    first = results.first
+    expect(first["name"]).to eq "Visa"
+    expect(first["id"]).to eq "211718455520845"
+  end
+
 
 
 end

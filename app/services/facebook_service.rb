@@ -5,5 +5,9 @@ class FacebookService
     @graph ||=  Koala::Facebook::API.new(@user.get_fb_token)
   end
 
+  def self.search_pages(query)
+    self.get_client.search(query, {type: "page", fields: "id,name,picture,link",limit: 5})
+  end
+
   
 end
