@@ -4,7 +4,23 @@ class SkillsController < ApplicationController
 
   # GET /skills
   def index
-    @skills = Skill.by_name.page(params[:page]).per(20)
+    
+    if user_signed_in?
+      scope = current_user.available_skills.by_name
+    else
+      scope = Skill.by_name
+    end
+
+    if params[:query]
+      scope = scope.search_by_name(params[:query])
+    end
+
+    @skills = scope.page(params[:page]).per(20)
+
+    respond_to do |format|
+      format.json { render json: @skills }
+      format.html
+    end
   end
 
   # GET /skills/1

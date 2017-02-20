@@ -12,7 +12,9 @@
       .col-6
         .form-group
           = f.label :skill
-          = f.collection_select(:skill_id, current_user.available_skills.by_name, :id, :name, {}, {class: "form-control"})
+          = f.text_field :skill, class: "form-control", value: @user_skill.skill.try(:name), placeholder: "Design"
+          = f.hidden_field :skill_id, value: @user_skill.skill_id
+          
     .col-6
       .form-group
         = f.label :years
