@@ -1,4 +1,5 @@
 $(document).ready ->
+  $('[data-toggle="tooltip"]').tooltip()
   el = document.getElementById('sortable_user_skills')
   sortable = Sortable.create(el, {
     onEnd: (event) ->
