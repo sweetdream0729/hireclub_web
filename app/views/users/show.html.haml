@@ -78,6 +78,9 @@
         - if @user.medium_url.present?
           = link_to @user.medium_url, target: "_blank" do
             %i.fa.fa-medium.ml-2
+        - if @user.instagram_url.present?
+          = link_to @user.instagram_url, target: "_blank" do
+            %i.fa.fa-instagram.ml-2
 
 
   - if @user.bio
