@@ -6,6 +6,8 @@
         - @user_role.errors.full_messages.each do |msg|
           %li= msg
 
+  %p.lead
+    Roles are what you do. You should have 2-3 at the most.
   .row
     - if !@user_role.persisted?
       .col-6
