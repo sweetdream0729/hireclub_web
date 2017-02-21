@@ -12,6 +12,8 @@
           %li.list-inline-item
             = link_to "Privacy", privacy_path
           %li.list-inline-item
+            = link_to "Badges", badges_path
+          %li.list-inline-item
             = link_to "Apply", "http://facebook.com/groups/hireclub"
           - if user_signed_in? && current_user.is_admin
             = link_to "Admin", rails_admin_path

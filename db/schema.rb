@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220204218) do
+ActiveRecord::Schema.define(version: 20170221080805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,18 @@ ActiveRecord::Schema.define(version: 20170220204218) do
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid", unique: true, using: :btree
     t.index ["provider"], name: "index_authentications_on_provider", using: :btree
     t.index ["user_id"], name: "index_authentications_on_user_id", using: :btree
+  end
+
+  create_table "badges", force: :cascade do |t|
+    t.citext   "name",        null: false
+    t.citext   "slug",        null: false
+    t.string   "avatar_uid"
+    t.string   "description"
+    t.string   "earned_by"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
+    t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
