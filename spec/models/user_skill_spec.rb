@@ -45,4 +45,18 @@ RSpec.describe UserSkill, type: :model do
       expect(activity.owner).to eq(user_skill.user)
     end
   end
+
+  describe "badges" do
+    let(:user) { FactoryGirl.create(:user) }
+    it "should reward skill badge after 5 skills" do
+      Badge.seed
+      5.times do 
+        FactoryGirl.create(:user_skill, user: user)
+      end
+      expect(user.skills.count).to eq 5
+
+      user_badge = user.user_badges.first
+      expect(user_badge).to be_present
+    end
+  end
 end

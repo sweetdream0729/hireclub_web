@@ -15,6 +15,14 @@ class Badge < ApplicationRecord
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
 
+  def self.reward_skill_badge(user)
+    badge = Badge.where(name: "Skillz").first
+    self.reward(user, badge)
+  end
+
+  def self.reward(user, badge)
+    user_badge = UserBadge.where(user: user, badge: badge).first_or_create
+  end
 
   def self.seed
     badge = Badge.where(name: "Original Gangsta").first_or_create

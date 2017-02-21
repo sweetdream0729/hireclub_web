@@ -53,4 +53,31 @@ RSpec.describe Badge, type: :model do
     end
   end
 
+  describe "reward Skillz" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it "should reward a badge to user only once" do
+      Badge.reward(user, badge)
+
+      user_badge = user.user_badges.first
+      expect(user_badge).to be_present
+      expect(user_badge.badge).to eq badge
+      expect(user_badge.user).to eq user
+
+      Badge.reward(user, badge)
+      expect(user.user_badges.count).to eq 1
+    end
+
+    it "should reward skill badge to user" do
+      Badge.seed
+      badge = Badge.where(name: "Skillz").first
+      
+      Badge.reward_skill_badge(user)
+
+      user_badge = user.user_badges.first
+      expect(user_badge).to be_present
+      expect(user_badge.badge).to eq badge
+      expect(user_badge.user).to eq user
+    end
+  end
 end
