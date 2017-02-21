@@ -7,5 +7,9 @@ FactoryGirl.define do
     factory :admin do
       after(:build) {|user| user.is_admin = true }
     end
+
+    factory :moderator do
+      after(:build) {|user| user.is_moderator = true }
+    end
   end
 end

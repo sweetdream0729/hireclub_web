@@ -7,12 +7,12 @@ class CompanyPolicy < ApplicationPolicy
 
   def create?
     return false if user.nil?
-    user.is_admin
+    user.is_moderator || user.is_admin
   end
   
   def update?
     return false if user.nil?
-    user.is_admin
+    user.is_moderator || user.is_admin
   end
 
   def destroy?
@@ -22,11 +22,11 @@ class CompanyPolicy < ApplicationPolicy
 
   def refresh?
     return false if user.nil?
-    user.is_admin
+    user.is_moderator || user.is_admin
   end
 
   def import?
     return false if user.nil?
-    user.is_admin
+    user.is_moderator || user.is_admin
   end
 end

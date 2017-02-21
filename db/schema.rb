@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221101054) do
+ActiveRecord::Schema.define(version: 20170221183941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 20170221101054) do
     t.boolean  "open_to_contract",       default: false, null: false
     t.boolean  "open_to_internship",     default: false, null: false
     t.string   "instagram_url"
+    t.boolean  "is_moderator",           default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["gender"], name: "index_users_on_gender", using: :btree
