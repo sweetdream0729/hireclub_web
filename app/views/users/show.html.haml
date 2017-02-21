@@ -184,3 +184,12 @@
               - if policy(project).destroy?
                 = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects display_none text-muted hover_danger" do
                   %i.fa.fa-trash-o
+  .row
+    .col-sm-8
+      %hr
+        %h6.mt-4.mb-4
+          Badges
+      - @user.badges.each do |badge|
+        .user_badge.mb-2
+          = link_to image_tag(model_image(badge.avatar, 200, 200, true), width: 50, class:"rounded"), badge
+          = link_to badge.name, badge

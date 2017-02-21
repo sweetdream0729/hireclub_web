@@ -17,7 +17,7 @@ class Badge < ApplicationRecord
 
 
   def self.seed
-    badge = Badge.where(name: "Original").first_or_create
+    badge = Badge.where(name: "Original Gangsta").first_or_create
     badge.update_attributes(
       description: "Original HireClub group member.",
       earned_by: "being part of HireClub group before launch."

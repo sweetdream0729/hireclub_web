@@ -1,0 +1,9 @@
+- user = activity.owner
+- user_badge = activity.trackable
+.media.mb-2
+  = link_to image_tag(model_image(user.avatar, 200, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), user
+  .media-body
+    = link_to user.display_name, user
+    earned badge
+    = link_to user_badge.name, user_badge.badge
+    = render partial: "/public_activity/time_ago", locals: {activity: activity}

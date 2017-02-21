@@ -10,6 +10,7 @@ class BadgesController < ApplicationController
 
   # GET /badges/1
   def show
+    @users = @badge.users.page(params[:page])
   end
 
   # GET /badges/new
