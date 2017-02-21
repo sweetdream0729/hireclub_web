@@ -4,7 +4,7 @@ class BadgesController < ApplicationController
 
   # GET /badges
   def index
-    scope = Badge.by_name
+    scope = Badge.by_position
     @badges = scope.page(params[:page]).per(10)
   end
 
@@ -59,7 +59,7 @@ class BadgesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def badge_params
-      params.require(:badge).permit(:name, :slug, :description, :earned_by,
+      params.require(:badge).permit(:name, :slug, :description, :earned_by, :position,
         :avatar, :retained_avatar, :remove_avatar, :avatar_url
       )
     end

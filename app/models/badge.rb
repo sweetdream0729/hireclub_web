@@ -6,6 +6,7 @@ class Badge < ApplicationRecord
 
   # Scopes
   scope :by_name, -> { order('name ASC') }
+  scope :by_position, -> { order(position: :asc) }
 
   # Associations
   has_many :user_badges, dependent: :destroy
