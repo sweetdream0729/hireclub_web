@@ -4,7 +4,14 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   def index
-    scope = Company.by_name
+    scope = Company.all
+    if params[:sort_by] == "alphabetical"
+      scope = scope.alphabetical
+    elsif params[:sort_by] == "oldest"
+      scope = scope.oldest
+    else
+      scope = scope.recent
+    end
 
     if params[:query]
       scope = scope.search_by_name(params[:query])

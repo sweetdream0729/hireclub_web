@@ -15,7 +15,9 @@ class Company < ApplicationRecord
   nilify_blanks
 
   # Scopes
-  scope :by_name, -> { order(name: :asc) }
+  scope :recent,       -> { order(created_at: :desc) }
+  scope :oldest,       -> { order(created_at: :asc) }
+  scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
   has_many :milestones
@@ -67,6 +69,8 @@ class Company < ApplicationRecord
       puts fb_page.inspect
       
       facebook_id = fb_page["id"]
+      puts "facebook_id #{facebook_id}"
+
       name = fb_page["name"]
       slug = fb_page["username"]
       
@@ -93,6 +97,7 @@ class Company < ApplicationRecord
     rescue Exception => e
       message = "Cound not import facebook page: #{url}" 
       puts message
+      puts "   errors = #{e.inspect}"
     end
   end
 
