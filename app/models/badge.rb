@@ -87,6 +87,12 @@ class Badge < ApplicationRecord
       earned_by: "adding 3 projects."
     )
 
+    badge = Badge.where(name: "Mod").first_or_create
+    badge.update_attributes(
+      description: "HireClub posse in the house.",
+      earned_by: "being a moderator."
+    )
+
     # badge = Badge.where(name: "Mile High Club").first_or_create
     # badge.update_attributes(
     #   description: "Go on wit yo bad self",
