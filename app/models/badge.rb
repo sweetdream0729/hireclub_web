@@ -25,6 +25,16 @@ class Badge < ApplicationRecord
     Badge.reward(user, badge)
   end
 
+  def self.reward_milestone_badge(user)
+    badge = Badge.where(name: "Milestoned").first
+    Badge.reward(user, badge)
+  end
+
+  def self.reward_milehigh_badge(user)
+    badge = Badge.where(name: "Mile High Club").first
+    Badge.reward(user, badge)
+  end
+
   def self.reward(user, badge)
     user_badge = UserBadge.where(user: user, badge: badge).first_or_create
   end
