@@ -16,6 +16,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:user_roles) }
     it { should have_many(:roles).through(:user_roles) }
 
+    it { should have_many(:user_badges) }
+    it { should have_many(:badges).through(:user_badges) }
+
     it { should belong_to(:location)}
   end
 

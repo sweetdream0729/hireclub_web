@@ -34,6 +34,9 @@ class User < ApplicationRecord
   has_many :skills, through: :user_skills
   has_many :user_roles, dependent: :destroy, inverse_of: :user
   has_many :roles, through: :user_roles
+  has_many :user_badges, dependent: :destroy, inverse_of: :user
+  has_many :badges, through: :user_badges
+
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
 

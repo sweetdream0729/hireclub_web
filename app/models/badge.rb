@@ -8,8 +8,8 @@ class Badge < ApplicationRecord
   scope :by_name, -> { order('name ASC') }
 
   # Associations
-  # has_many :user_badges, dependent: :destroy
-  # has_many :users, through: :user_badges
+  has_many :user_badges, dependent: :destroy
+  has_many :users, through: :user_badges
 
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
