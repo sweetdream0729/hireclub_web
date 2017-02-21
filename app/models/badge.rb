@@ -17,12 +17,12 @@ class Badge < ApplicationRecord
 
   def self.reward_og_badge(user)
     badge = Badge.where(name: "Original Gangsta").first
-    self.reward(user, badge)
+    Badge.reward(user, badge)
   end
 
   def self.reward_skill_badge(user)
     badge = Badge.where(name: "Skillz").first
-    self.reward(user, badge)
+    Badge.reward(user, badge)
   end
 
   def self.reward(user, badge)

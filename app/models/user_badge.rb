@@ -8,7 +8,7 @@ class UserBadge < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :badge
-  delegate :name, to: :badge
+  delegate :name, to: :badge, allow_nil: true
 
   # Validations
   validates :user, presence: true
