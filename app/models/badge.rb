@@ -26,6 +26,11 @@ class Badge < ApplicationRecord
     Badge.reward(user, badge)
   end
 
+  def self.reward_skill10_badge(user)
+    badge = Badge.where(name: "Brainz").first
+    Badge.reward(user, badge)
+  end
+
   def self.reward_milestone_badge(user)
     badge = Badge.where(name: "Milestoned").first
     Badge.reward(user, badge)
@@ -51,6 +56,12 @@ class Badge < ApplicationRecord
     badge.update_attributes(
       description: "Skillz to pay the bills.",
       earned_by: "adding 5 skills."
+    )
+
+    badge = Badge.where(name: "Brainz").first_or_create
+    badge.update_attributes(
+      description: "Smarty Pants",
+      earned_by: "adding 10 skills."
     )
 
     badge = Badge.where(name: "Milestoned").first_or_create
