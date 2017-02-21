@@ -101,3 +101,5 @@ Sidekiq handles all background jobs and mailers
 * Deployment instructions
 git push production master && heroku run rake db:migrate -r production
 
+* Colors
+https://coolors.co/6070e9-9fd356-484041-434371-79aea3

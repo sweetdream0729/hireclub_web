@@ -41,6 +41,11 @@ class Badge < ApplicationRecord
     Badge.reward(user, badge)
   end
 
+  def self.reward_project_badge(user)
+    badge = Badge.where(name: "ProPro").first
+    Badge.reward(user, badge)
+  end
+
   def self.reward(user, badge)
     user_badge = UserBadge.where(user: user, badge: badge).first_or_create
   end
@@ -75,6 +80,38 @@ class Badge < ApplicationRecord
       description: "Nothin gonna stop us now.",
       earned_by: "adding 10 milestones."
     )
+
+    badge = Badge.where(name: "ProPro").first_or_create
+    badge.update_attributes(
+      description: "Looking fly AF.",
+      earned_by: "adding 3 projects."
+    )
+
+    # badge = Badge.where(name: "Mile High Club").first_or_create
+    # badge.update_attributes(
+    #   description: "Go on wit yo bad self",
+    #   earned_by: "adding 6 projects."
+    # )
+  end
+
+  def self.check_badges
+    User.all.find_each do |user|
+      if user.user_skills.count >= 5
+        Badge.reward_skill_badge(user)
+      end
+
+      if user.milestones.count >= 5
+        Badge.reward_milestone_badge(user)
+        if user.milestones.count >= 10
+          Badge.reward_milehigh_badge(user)
+        end
+      end
+
+      if user.projects.count >= 3
+        Badge.reward_project_badge(user)
+      end
+
+    end
   end
 
 end
