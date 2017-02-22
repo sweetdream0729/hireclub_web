@@ -56,6 +56,8 @@
           = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
         - else
           = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
+      - if current_user && current_user.is_admin
+        = link_to "Admin", rails_admin.edit_path(model_name: 'user', id: @user.id), class: "btn btn-danger btn-block"
       %p.mt-4
         - if @user.website_url.present?
           = link_to @user.website_url, target: "_blank" do
