@@ -57,6 +57,7 @@ class User < ApplicationRecord
   validates :github_url, url: { allow_blank: true }
   validates :medium_url, url: { allow_blank: true }
   validates :facebook_url, url: { allow_blank: true }
+  validates :instagram_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?
