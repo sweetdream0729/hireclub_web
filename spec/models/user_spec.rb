@@ -59,11 +59,10 @@ RSpec.describe User, type: :model do
       expect(user.email).to eq("fire@kidbombay.com")
       expect(user.name).to eq("Ketan Anjaria")
       expect(user.gender).to eq("male")
-      expect(user.location).not_to be_nil
-      #expect(user.avatar).not_to be_nil
+      expect(user.location).to be_present
 
       auth = user.authentications.first
-      expect(auth).not_to be_nil
+      expect(auth).to be_present
       expect(auth).to be_valid
       expect(auth).to be_persisted
 

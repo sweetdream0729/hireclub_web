@@ -164,7 +164,13 @@ class User < ApplicationRecord
     self.username = omniauth["info"]["nickname"] if !omniauth["info"]["nickname"].blank? && self.username.blank?
 
     # self.description = omniauth["info"]["description"] if !omniauth["info"]["description"].blank? && self.description.blank?
-    # self.location = omniauth["info"]["location"] if !omniauth["info"]["location"].blank? && self.location.blank?
+
+    city = "#{omniauth['info']['location']}"
+    if city.present? && self.location.nil?
+      prefix = city.split(",")[0]
+      locations = Location.search_by_name(prefix)
+      self.location = locations.first
+    end
 
     if self.avatar.nil?
       image_url = omniauth["info"]["image"]
