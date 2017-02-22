@@ -51,6 +51,11 @@ class Badge < ApplicationRecord
     Badge.reward(user, badge)
   end
 
+  def self.reward_hired_badge(user)
+    badge = Badge.where(name: "HireClubbed!").first
+    Badge.reward(user, badge)
+  end
+
   def self.reward(user, badge)
     user_badge = UserBadge.where(user: user, badge: badge).first_or_create
   end
@@ -96,6 +101,12 @@ class Badge < ApplicationRecord
     badge.update_attributes(
       description: "HireClub posse in the house.",
       earned_by: "being a moderator."
+    )
+
+    badge = Badge.where(name: "HireClubbed!").first_or_create
+    badge.update_attributes(
+      description: "YAS.",
+      earned_by: "getting hired through HireClub."
     )
 
     # badge = Badge.where(name: "Mile High Club").first_or_create
