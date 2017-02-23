@@ -60,7 +60,7 @@ RSpec.describe UserSkill, type: :model do
     end
   end
 
-  describe "name_years",focus: true do
+  describe "name_years" do
     before(:all) do
       Skill.seed
     end
