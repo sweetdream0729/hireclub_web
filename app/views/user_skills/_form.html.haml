@@ -18,7 +18,7 @@
     .col-6
       .form-group
         = f.label :years
-        = f.number_field :years, class: "form-control"
+        = f.number_field :years, class: "form-control", min: 0, max: 50
 
     / .col-6
     /   .form-group
