@@ -59,4 +59,84 @@ RSpec.describe UserSkill, type: :model do
       expect(user_badge).to be_present
     end
   end
+
+  describe "name_years",focus: true do
+    before(:all) do
+      Skill.seed
+    end
+    
+    it "should get name : years" do
+      expect(user_skill.name_years).to eq "#{user_skill.name} : #{user_skill.years}"
+    end
+
+    it "should set name : years" do
+      user_skill.name_years = "Design : 4"
+      user_skill.save
+
+      expect(user_skill.name).to eq "Design"
+      expect(user_skill.years).to eq 4
+    end
+
+    it "should accept name only" do
+      new_skill = Skill.last
+      original_years = user_skill.years
+      user_skill.name_years = "#{new_skill.name}"
+      user_skill.save
+
+      expect(user_skill.skill).to eq new_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+    it "should ignore invalid name only" do
+      original_skill = user_skill.skill
+      original_years = user_skill.years
+      user_skill.name_years = "SkillWeDontHave"
+      user_skill.save
+
+      expect(user_skill.skill).to eq original_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+    it "should ignore invalid name : years" do
+      original_skill = user_skill.skill
+      original_years = user_skill.years
+      user_skill.name_years = "SkillWeDontHave : 4"
+      user_skill.save
+
+      expect(user_skill.skill).to eq original_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+    it "should ignore name invalid seperator years" do
+      original_skill = user_skill.skill
+      original_years = user_skill.years
+      user_skill.name_years = "SkillWeDontHave ; 4"
+      user_skill.save
+
+      expect(user_skill.skill).to eq original_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+    it "should ignore name : invalid years" do
+      original_skill = user_skill.skill
+      original_years = user_skill.years
+      user_skill.name_years = "#{original_skill.name} : foo"
+      user_skill.save
+
+      expect(user_skill.skill).to eq original_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+    it "should ignore name : negative years" do
+      original_skill = user_skill.skill
+      original_years = user_skill.years
+      user_skill.name_years = "#{original_skill.name} : -1"
+      user_skill.save
+
+      expect(user_skill.skill).to eq original_skill
+      expect(user_skill.years).to eq original_years
+    end
+
+
+  end
 end

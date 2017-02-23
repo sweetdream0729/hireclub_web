@@ -34,4 +34,25 @@ class UserSkill < ApplicationRecord
   def broadcast_update
     broadcast(:update_user_skill, self)
   end
+
+  def name_years
+    if skill.present?
+      return "#{skill.name} : #{years}"
+    end
+  end
+
+  def name_years=(input)
+    split = input.split(":")
+    skill_name = split[0].strip
+    found_skill = Skill.search_by_exact_name(skill_name).first
+    if found_skill
+      self.skill = found_skill
+      if split[1]
+        found_years = split[1].strip.to_i 
+        self.years = [found_years,0].max
+      end
+    end
+  end
+
+
 end
