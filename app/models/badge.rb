@@ -120,6 +120,9 @@ class Badge < ApplicationRecord
     User.all.find_each do |user|
       if user.user_skills.count >= 5
         Badge.reward_skill_badge(user)
+        if user.user_skills.count >= 10
+          Badge.reward_skill10_badge(user)
+        end
       end
 
       if user.milestones.count >= 5

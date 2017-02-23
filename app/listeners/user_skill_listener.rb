@@ -8,7 +8,7 @@ class UserSkillListener
     user.reload
     if user.user_skills.count >= 5
       Badge.reward_skill_badge(user)
-      if user.milestones.count >= 10
+      if user.user_skills.count >= 10
         Badge.reward_skill10_badge(user)
       end
     end
