@@ -3,17 +3,22 @@
 .container.mt-5.mb-5
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
-      %h1 Choose Username
+      %h1 🙊 Choose Username
 
       = form_for @user, url: wizard_path, method: :put do |f|
         .form-group{class: ('has-danger' if @user.errors.any?)}
           = f.text_field :username, class: 'form-control form-control-lg', placeholder: "johndoe"
           
           .form-control-feedback
-            - username = @user.errors.any? ? @user.errors.details[:username][0][:value] : "username"
+            - username = "username"
+            - if @user.errors.any? && @user.errors.details[:username].present?
+              - username = @user.errors.details[:username][0][:value]
+            
             = "hireclub.co/#{username}"
+
             - if @user.errors.any?
               is not available
+
           %small.form-text.text-muted 
             %p
             You can use letters, dashes, underscores or dots.
