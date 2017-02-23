@@ -3,6 +3,9 @@
 .container.mt-5.mb-5
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
+      .progress.mb-4
+        .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "25", :role => "progressbar", :style => "width: 80%; height: 5px;"}
+
       %h1 🎩 What's your role?
 
       = form_for @user, url: wizard_path, method: :put do |f|
