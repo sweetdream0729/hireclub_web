@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221183941) do
+ActiveRecord::Schema.define(version: 20170223164123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(version: 20170221183941) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "facebook_id"
+    t.integer  "added_by_id"
+    t.index ["added_by_id"], name: "index_companies_on_added_by_id", using: :btree
     t.index ["facebook_id"], name: "index_companies_on_facebook_id", unique: true, using: :btree
     t.index ["slug"], name: "index_companies_on_slug", unique: true, using: :btree
   end

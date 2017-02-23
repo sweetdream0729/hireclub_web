@@ -6,6 +6,11 @@ class CompanyImportsController < ApplicationController
   def create
     facebook_url = params[:company][:facebook_url]
     @company = Company.import_facebook_url(facebook_url)
+    if @company.persisted?
+      @company.added_by = current_user
+      @company.save
+    end
+    
     redirect_to @company
   end
 

@@ -51,6 +51,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     authorize @company
+    @company.added_by = current_user
 
     if @company.save
       redirect_to @company, notice: 'Company was successfully created.'

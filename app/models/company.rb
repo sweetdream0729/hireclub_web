@@ -11,6 +11,8 @@ class Company < ApplicationRecord
   dragonfly_accessor :logo
   is_impressionable
 
+  #has_smart_url :instagram_url
+
   auto_strip_attributes :name, squish: true
   nilify_blanks
 
@@ -21,7 +23,9 @@ class Company < ApplicationRecord
 
   # Associations
   has_many :milestones
-  #has_many :users, through: :user_skills
+  #has_many :users, through: :milestones
+  belongs_to :added_by, class_name: 'User'
+
 
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
