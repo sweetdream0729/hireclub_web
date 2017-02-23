@@ -27,10 +27,10 @@ RSpec.describe Skill, type: :model do
 
   describe "search" do
     it "should search_by_name" do
-      skill.name = "Developer"
+      skill.name = "orange"
       skill.save
 
-      results = Skill.search_by_name('dev')
+      results = Skill.search_by_name('oran')
 
       expect(results).not_to be_nil
       expect(results.count).to eq 1
