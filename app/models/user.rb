@@ -193,4 +193,10 @@ class User < ApplicationRecord
       errors.add(:username, "not available")
     end
   end
+
+  # Always remember user
+  # https://github.com/plataformatec/devise/issues/1513
+  def remember_me
+    (super == nil) ? '1' : super
+  end
 end
