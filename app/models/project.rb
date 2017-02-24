@@ -44,7 +44,7 @@ class Project < ApplicationRecord
   end
 
   def skills_list
-    self.skills.join(",")
+    self.skills.join(", ")
   end
 
   def skills_exist

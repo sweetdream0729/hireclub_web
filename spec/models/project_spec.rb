@@ -52,12 +52,13 @@ RSpec.describe Project, type: :model do
     end
 
     it "should be able to set skills as string" do
-      project.skills_list = "#{skill.name}, #{skill2.name}"
+      project.skills_list = "  #{skill.name},    #{skill2.name}  "
       project.save
 
       expect(project.skills.count).to eq 2
       expect(project.skills).to include(skill.name)
       expect(project.skills).to include(skill2.name)
+      expect(project.skills_list).to eq "#{skill.name}, #{skill2.name}"
     end
 
   end
