@@ -3,7 +3,8 @@
     %span.drag_handle.mr-1
       %i.fa.fa-bars
 
-  = link_to user_skill.skill.name, user_skill.skill
+  %span.semi_bold
+    = link_to user_skill.skill.name, user_skill.skill
   %small
     = pluralize(user_skill.years, "year") if user_skill.years > 0
 
