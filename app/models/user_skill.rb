@@ -54,5 +54,10 @@ class UserSkill < ApplicationRecord
     end
   end
 
+  def bar_width
+    return 0 if years == 0 || user.years_experience == 0
+    (user.years_experience * (years / 100.0)) * 100
+  end
+
 
 end
