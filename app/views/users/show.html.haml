@@ -180,11 +180,11 @@
                   %i.fa.fa-external-link
 
               - if policy(project).edit?
-                = link_to edit_user_project_path(current_user, project), class: "edit_user_projects ml-1 mr-1 display_none text-muted hover_primary " do
+                = link_to edit_user_project_path(project.user, project), class: "edit_user_projects ml-1 mr-1 display_none text-muted hover_primary " do
                   %i.fa.fa-pencil
 
               - if policy(project).destroy?
-                = link_to user_project_path(current_user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects display_none text-muted hover_danger" do
+                = link_to user_project_path(project.user, project), method: :delete, data: { confirm: "Remove #{project.name} project?" }, remote: true, class: "delete_user_projects display_none text-muted hover_danger" do
                   %i.fa.fa-trash-o
   - if @user.badges.any?
     .row
