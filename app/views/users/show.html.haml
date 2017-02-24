@@ -123,8 +123,8 @@
 
         = render @first_milestones
         - if @rest_milestones.any?
-          .toggle_skills.mb-2
-            %a.black.uppercase.text-muted{"aria-controls" => "collapseMilestones", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseMilestones"}
+          .mb-2
+            %a.toggle_skills{"aria-controls" => "collapseMilestones", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseMilestones"}
               View All
           #collapseMilestones.collapse
             = render @rest_milestones
@@ -144,8 +144,8 @@
       - else
         = render @first_skills
         - if @rest_skills.any?
-          .toggle_skills.mb-2
-            %a.black.uppercase.text-muted{"aria-controls" => "collapseSkills", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseSkills"}
+          .mb-2
+            %a.toggle_skills{"aria-controls" => "collapseSkills", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseSkills"}
               View All
           #collapseSkills.collapse
             = render @rest_skills

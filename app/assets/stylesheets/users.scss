@@ -35,7 +35,11 @@
   }
 }
 .toggle_skills {
-  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  color: #9B9AAC;
 }
 .drag_handle {
   cursor: move;
