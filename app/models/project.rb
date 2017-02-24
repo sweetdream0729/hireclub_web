@@ -20,6 +20,7 @@ class Project < ApplicationRecord
   # Validations
   validates :slug, uniqueness: { scope: :user_id, case_sensitive:false }
   validates_size_of :image, maximum: 5.megabytes
+  validates_property :format, of: :image, in: ['jpeg', 'png', 'gif']
   validate :skills_exist
 
   # Broadcasts
