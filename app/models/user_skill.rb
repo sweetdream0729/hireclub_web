@@ -56,7 +56,7 @@ class UserSkill < ApplicationRecord
 
   def bar_width
     return 0 if years == 0
-    years / 20.0 * 100
+    years / 10.0 * 100
   end
 
 end
