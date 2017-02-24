@@ -12,6 +12,10 @@
         = link_to image_tag(model_image(@project.user.avatar, 200, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
         .media-body
           = link_to @project.user.display_name, @project.user
+      %h6 Skills
+      %p
+        = @project.skills_list
+      %h6 Description
       %p
         = @project.description
       - if @project.link.present?

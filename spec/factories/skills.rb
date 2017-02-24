@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :skill do
-    name { FactoryGirl.generate(:company_name) }
+    name { FactoryGirl.generate(:name) }
   end
 end
