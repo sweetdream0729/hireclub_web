@@ -136,6 +136,8 @@ GEM
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
     hashie (3.4.6)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     html2haml (2.1.0)
       erubis (~> 2.7.0)
       haml (~> 4.0)
@@ -377,6 +379,7 @@ DEPENDENCIES
   friendly_id (~> 5.1.0)
   haml-rails (~> 0.9)
   hashie (~> 3.4.6)
+  heroku-deflater
   impressionist
   jquery-rails
   kaminari
@@ -419,4 +422,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.14.3
+   1.14.5
