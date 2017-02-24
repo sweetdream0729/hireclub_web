@@ -6,12 +6,15 @@ class CompanyImportsController < ApplicationController
   def create
     facebook_url = params[:company][:facebook_url]
     @company = Company.import_facebook_url(facebook_url)
-    if @company.persisted?
+    if @company && @company.persisted?
       @company.added_by = current_user
       @company.save
+      redirect_to @company
+    else
+      redirect_to new_company_import_path, alert: "There was an error importing #{facebook_url}"
     end
+
     
-    redirect_to @company
   end
 
   def search
