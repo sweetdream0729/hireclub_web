@@ -37,7 +37,7 @@ RSpec.describe ProjectPolicy do
 
     it { should permit_action(:show) }
     it { should permit_action(:create) }
-    it { should forbid_action(:update) }
+    it { should permit_action(:update) }
     it { should forbid_action(:destroy) }
   end
 
