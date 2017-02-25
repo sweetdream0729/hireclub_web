@@ -91,7 +91,7 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  describe "acts_as_likeable",focus: true do
+  describe "acts_as_likeable" do
     let!(:project) { FactoryGirl.create(:project, name: nil) }
     let(:user) { FactoryGirl.create(:user) }
     context "no likes" do

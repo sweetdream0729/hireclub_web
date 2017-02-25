@@ -10,7 +10,7 @@ module ActsAsLikeable
   end
 
   def liked_by?(user)
-    likes.where(user: user).exists?
+    likes.where(user: user).any?
   end
 
   def like!(user)

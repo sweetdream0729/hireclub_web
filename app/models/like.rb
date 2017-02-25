@@ -1,7 +1,11 @@
 class Like < ApplicationRecord
   # In order to make a Model Likeable, you must add a likes_count column
   # rails generate counter_culture Project likes_count
+  
+  # Scopes
+  scope :recent,       -> { order(created_at: :desc) }
 
+  # Associations
   belongs_to :user
   belongs_to :likeable, polymorphic: true, counter_cache: true
   
