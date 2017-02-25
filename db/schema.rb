@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224200049) do
+ActiveRecord::Schema.define(version: 20170225040116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,17 @@ ActiveRecord::Schema.define(version: 20170224200049) do
     t.index ["user_id"], name: "index_impressions_on_user_id", using: :btree
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "likeable_type"
+    t.integer  "likeable_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id", using: :btree
+    t.index ["user_id", "likeable_type", "likeable_id"], name: "index_likes_on_user_id_and_likeable_type_and_likeable_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string   "name",                    null: false
     t.citext   "slug",                    null: false
@@ -139,14 +150,15 @@ ActiveRecord::Schema.define(version: 20170224200049) do
 
   create_table "milestones", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",       null: false
-    t.date     "start_date",  null: false
+    t.string   "title",                   null: false
+    t.date     "start_date",              null: false
     t.date     "end_date"
     t.string   "link"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.text     "description"
     t.integer  "company_id"
+    t.integer  "likes_count", default: 0, null: false
     t.index ["company_id"], name: "index_milestones_on_company_id", using: :btree
     t.index ["start_date"], name: "index_milestones_on_start_date", using: :btree
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree
@@ -175,6 +187,7 @@ ActiveRecord::Schema.define(version: 20170224200049) do
     t.string   "link"
     t.text     "description"
     t.string   "skills",       default: [],              array: true
+    t.integer  "likes_count",  default: 0,  null: false
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["user_id", "slug"], name: "index_projects_on_user_id_and_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
@@ -292,6 +305,7 @@ ActiveRecord::Schema.define(version: 20170224200049) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "likes", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"
   add_foreign_key "projects", "users"

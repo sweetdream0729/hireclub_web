@@ -2,4 +2,5 @@
   %small.text-muted
     = time_ago_in_words(activity.created_at)
     ago
-    
+  %br
+  = render partial: "/likes/like_button", locals: { likeable: activity.trackable } if activity.trackable.respond_to?(:likeable?)

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
+  resources :likes, only: [:index, :new, :create, :destroy]
+
   resources :badges
   resources :company_imports, only: [:new, :create] do
     collection do

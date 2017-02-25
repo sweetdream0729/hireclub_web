@@ -90,4 +90,65 @@ RSpec.describe Project, type: :model do
       expect(user_badge.name).to eq "ProPro"
     end
   end
+
+  describe "acts_as_likeable" do
+    let!(:project) { FactoryGirl.create(:project, name: nil) }
+    let(:user) { FactoryGirl.create(:user) }
+    context "no likes" do
+      it "should get no likes when not liked" do
+        expect(project.likes.any?).to be false
+      end
+
+      it "liked? should return false" do
+        expect(project.liked?).to be false
+      end
+
+      it "like!(user) should create like" do
+        liked = project.like!(user)
+        expect(liked).to be true
+        expect(project.liked_by?(user)).to be true
+      end
+
+      it "toggle_like!(user) should create like" do
+        liked = project.toggle_like!(user)
+        expect(liked).to be true
+        expect(project.liked_by?(user)).to be true
+      end
+    end
+
+    context "likes exists" do
+      let!(:like) { FactoryGirl.create(:like, likeable: project) }
+      it "should get likes" do
+        like
+        expect(project.likes.any?).to be true
+        expect(project.likes.count).to eq 1
+        expect(project.likes.first).to eq like
+      end
+
+      it "liked? should return true" do
+        expect(project.liked?).to be true
+      end
+
+      it "liked_by?(liker) should return true" do
+        expect(project.liked_by?(like.user)).to be true
+      end
+
+      it "liked_by?(other_user) should return false" do
+        expect(project.liked_by?(project.user)).to be false
+      end
+
+      it "unlike!(user) should destroy like" do
+        liked = project.unlike!(like.user)
+        expect(liked).to be false
+        expect(project.liked_by?(user)).to be false
+        expect(project.likes.count).to eq 0
+      end
+
+      it "toggle_like!(user) should destroy like" do
+        liked = project.toggle_like!(like.user)
+        expect(liked).to be false
+        expect(project.liked_by?(user)).to be false
+      end
+    end
+  end
 end
