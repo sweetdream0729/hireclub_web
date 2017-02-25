@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   # Extensions
   include Wisper::Publisher
   include UnpublishableActivity
+  include ActsAsLikeable
   extend FriendlyId
   friendly_id :name, use: :slugged
 
