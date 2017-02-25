@@ -32,6 +32,9 @@
         /   %a.nav-link{:href => new_user_session_path} Login
       - else
         %li.nav-item
+          %a.nav-link{:href => notifications_path}
+            %i.fa.fa-bell-o{"aria-hidden" => "true"}
+        %li.nav-item
           %a.nav-link{:href => user_path(current_user)} Profile
         %li.nav-item
           %a.nav-link{:href => edit_user_registration_path} Settings

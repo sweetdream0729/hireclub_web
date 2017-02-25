@@ -1,12 +1,12 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   authenticate :user, lambda { |u| u.is_admin } do
     mount Sidekiq::Web => '/sidekiq'
   end
   
+  get 'notifications' => 'notifications#index', as: :notifications
   get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
