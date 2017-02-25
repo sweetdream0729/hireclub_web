@@ -7,12 +7,7 @@ class LikesController < ApplicationController
     scope = Like.recent
     @likes = scope.page(params[:page]).per(10)
   end
-
-  # GET /likes/1
-  def show
-    
-  end
-
+  
   # GET /likes/new
   def new
     @like = Like.new
@@ -23,9 +18,14 @@ class LikesController < ApplicationController
   def create
     @like = Like.new(like_params)
     #authorize @like
+    @like.user = current_user
+    @likeable = @like.likeable
 
     if @like.save
-      redirect_to @like, notice: 'Like was successfully created.'
+      respond_to do |format|
+        format.js {  render :update }
+        format.html { redirect_to likes_path, notice: 'Like was successfully created.'}
+      end
     else
       render :new
     end
@@ -33,8 +33,13 @@ class LikesController < ApplicationController
 
   # DELETE /likes/1
   def destroy
+    @likeable = @like.likeable
     @like.destroy
-    redirect_to likes_url, notice: 'Like was successfully destroyed.'
+    respond_to do |format|
+      format.js {  render :update }
+      format.html { redirect_to likes_url, notice: 'Like was successfully destroyed.'}
+    end
+    
   end
 
   private
@@ -46,6 +51,6 @@ class LikesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def like_params
-      params.require(:like).permit(:user_id, :likeable_id, :likeable_type)
+      params.require(:like).permit(:user_id, :likeable_id, :likeable_type, :likeable)
     end
 end
