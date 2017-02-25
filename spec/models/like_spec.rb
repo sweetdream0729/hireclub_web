@@ -26,4 +26,25 @@ RSpec.describe Like, type: :model do
       expect(like.likeable.likes_count).to eq(0)      
     end
   end
+
+  describe "activity" do
+    it "should have create activity" do
+      like
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(like)
+      expect(activity.owner).to eq(like.user)
+    end
+  end
+
+  describe "likeable_name" do
+    it "should project name when project" do
+      expect(like.likeable_name).to eq like.likeable.name
+    end
+    it "should project name when milestone" do
+      milestone = FactoryGirl.create(:milestone)
+      like =  FactoryGirl.create(:like, likeable: milestone)
+      expect(like.likeable_name).to eq like.likeable.title
+    end
+  end
 end
