@@ -1,9 +1,11 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!
   #after_action :verify_authorized, except: [:index]
   before_action :set_like, only: [:show, :destroy]
 
   # GET /likes
   def index
+    redirect_to root_path unless current_user.is_admin
     scope = Like.recent
     @likes = scope.page(params[:page]).per(10)
   end
