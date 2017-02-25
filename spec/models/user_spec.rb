@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
   subject { user }
 
   describe "associations" do
+    it { should have_many(:notifications) }
     it { should have_many(:authentications) }
     it { should have_many(:projects) }
     it { should have_many(:milestones) }

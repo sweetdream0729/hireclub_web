@@ -26,6 +26,7 @@ class User < ApplicationRecord
   scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
+  has_many :notifications, dependent: :destroy, inverse_of: :user
   has_many :authentications, dependent: :destroy, inverse_of: :user
   has_many :projects, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
   has_many :milestones, dependent: :destroy, inverse_of: :user

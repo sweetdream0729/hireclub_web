@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225040116) do
+ActiveRecord::Schema.define(version: 20170225145844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,22 @@ ActiveRecord::Schema.define(version: 20170225040116) do
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "activity_id"
+    t.string   "activity_key",                null: false
+    t.datetime "read_at"
+    t.boolean  "published",    default: true, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
+    t.index ["activity_key"], name: "index_notifications_on_activity_key", using: :btree
+    t.index ["published"], name: "index_notifications_on_published", using: :btree
+    t.index ["read_at"], name: "index_notifications_on_read_at", using: :btree
+    t.index ["user_id", "activity_id"], name: "index_notifications_on_user_id_and_activity_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.string   "searchable_type"
@@ -308,6 +324,8 @@ ActiveRecord::Schema.define(version: 20170225040116) do
   add_foreign_key "likes", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"
+  add_foreign_key "notifications", "activities"
+  add_foreign_key "notifications", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"

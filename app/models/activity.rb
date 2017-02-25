@@ -5,3 +5,8 @@ class Activity < PublicActivity::Activity
   scope :unpublished,  -> { where(published: false) }
   scope :published,    -> { where(published: true) }
 end
+
+PublicActivity::Activity.class_eval do
+  has_many :notifications, dependent: :destroy
+  
+end
