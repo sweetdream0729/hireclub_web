@@ -28,7 +28,9 @@
       %p
         = @project.description
       - if @project.link.present?
-        = link_to @project.link, @project.link, target: "_blank"
+        %h6 Link
+        %p
+          = link_to @project.link, @project.link, target: "_blank"
 
       - if policy(@project).edit?
         %hr
