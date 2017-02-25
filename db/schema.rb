@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225145844) do
+ActiveRecord::Schema.define(version: 20170225195638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,8 @@ ActiveRecord::Schema.define(version: 20170225145844) do
     t.text     "description"
     t.string   "skills",       default: [],              array: true
     t.integer  "likes_count",  default: 0,  null: false
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["user_id", "slug"], name: "index_projects_on_user_id_and_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
@@ -326,6 +328,7 @@ ActiveRecord::Schema.define(version: 20170225145844) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"

@@ -22,7 +22,8 @@ class Company < ApplicationRecord
   scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
-  has_many :milestones
+  has_many :milestones, dependent: :nullify
+  has_many :projects, dependent: :nullify
   #has_many :users, through: :milestones
   belongs_to :added_by, class_name: 'User'
 
