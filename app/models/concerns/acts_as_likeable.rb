@@ -5,6 +5,10 @@ module ActsAsLikeable
     has_many :likes, class_name: "Like", as: :likeable, dependent: :destroy
   end
 
+  def likeable?
+    true
+  end
+  
   def liked?
     likes.any?
   end
@@ -13,8 +17,12 @@ module ActsAsLikeable
     likes.where(user: user).any?
   end
 
+  def like_for(user)
+    likes.where(user: user).first
+  end
+
   def like!(user)
-    self.likes.where(user: user).first_or_create.persisted?
+    likes.where(user: user).first_or_create.persisted?
   end
 
   def unlike!(user)

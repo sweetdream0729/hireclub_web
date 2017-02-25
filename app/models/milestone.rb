@@ -2,6 +2,7 @@ class Milestone < ApplicationRecord
   # Extensions
   include Wisper::Publisher
   include UnpublishableActivity
+  include ActsAsLikeable
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
   
