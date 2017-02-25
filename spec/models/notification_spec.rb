@@ -22,7 +22,7 @@ RSpec.describe Notification, type: :model do
     it { should validate_uniqueness_of(:activity_id).scoped_to(:user_id) }
   end
 
-  context 'like.create',focus: true do
+  context 'like.create' do
     let(:like) { FactoryGirl.create(:like) }
     it "should create notification for likeable user" do
       expect(like).to be_valid

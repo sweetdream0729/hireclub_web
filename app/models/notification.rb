@@ -28,7 +28,7 @@ class Notification < ApplicationRecord
   end
 
   def self.create_notifications_for_activity(activity_id)
-    puts "Notification.create_notifications_for_activity #{activity_id}"
+    #puts "Notification.create_notifications_for_activity #{activity_id}"
     activity = Activity.where(id: activity_id).first
     return false if activity.nil? || skip_notifications?(activity)
 

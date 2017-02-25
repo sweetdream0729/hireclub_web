@@ -6,6 +6,11 @@ module UnpublishableActivity
   end
   
   def unpublish_activities
-    Activity.where(trackable_id: self.id, trackable_type: self.class.name).update_all(published: false)
+    activities = Activity.where(trackable_id: self.id, trackable_type: self.class.name)
+    activities.update_all(published: false)
+    notifications = Notification.where(activity_id: activities.pluck(:id))
+    notifications.update_all(published: false)
+    return true
   end
+
 end
