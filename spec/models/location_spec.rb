@@ -43,7 +43,7 @@ RSpec.describe Location, type: :model do
       Location.import_countries
 
       countries = Location.where(level: Location::COUNTRY)
-      countries.count.should > 1
+      expect(countries.count).to be > 1
 
       usa = Location.where(short:'US', level: Location::COUNTRY).first
       expect(usa).to be_present
@@ -53,7 +53,7 @@ RSpec.describe Location, type: :model do
       Location.import_states
 
       states = Location.where(level: Location::STATE)
-      states.count.should > 1
+      expect(states.count).to be > 1
 
       california = Location.where(name:'California', level: Location::STATE).first
       expect(california.short).to eq "CA"
