@@ -151,7 +151,7 @@
             = render @rest_skills
 
 
-  - if @user.projects.any? || @user == current_user
+  - if @user.projects.by_position.any? || @user == current_user
     %hr
     %h6.mt-4.mb-4
       Projects

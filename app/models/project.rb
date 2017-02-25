@@ -12,6 +12,11 @@ class Project < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
+  acts_as_list scope: :user, top_of_list: 0
+  
+  # Scopes
+  scope :by_position, -> { order(position: :asc) }
+
   # Extensions
   acts_as_taggable_array_on :skills
 
