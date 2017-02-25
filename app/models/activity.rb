@@ -9,4 +9,9 @@ end
 PublicActivity::Activity.class_eval do
   has_many :notifications, dependent: :destroy
   
+  after_commit :create_notifications, on: :create
+
+  def create_notifications
+    CreateNotificationJob.perform_later(self.id) if Notification.enabled
+  end
 end
