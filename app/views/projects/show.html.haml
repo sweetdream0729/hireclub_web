@@ -16,17 +16,21 @@
       = render partial: "/likes/like_button", locals: { likeable: @project }
       %hr
 
+      - if @project.skills_list.present?
+        %h6 Skills
+        %p
+          = @project.skills_list
 
-      %h6 Skills
-      %p
-        = @project.skills_list
       - if @project.company
         %h6 Company
         %p
           = link_to @project.company.name, @project.company
-      %h6 Description
-      %p
-        = @project.description
+
+      - if @project.description.present?
+        %h6 Description
+        %p
+          = @project.description
+          
       - if @project.link.present?
         %h6 Link
         %p
