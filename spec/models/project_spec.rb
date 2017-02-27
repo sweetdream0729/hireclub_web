@@ -39,6 +39,25 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe "next/previous project" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:project1) { FactoryGirl.create(:project, user: user, position: 0) }
+    let!(:project2) { FactoryGirl.create(:project, user: user, position: 1) }
+    let!(:project3) { FactoryGirl.create(:project, user: user, position: 2) }
+
+    it "should link to next project for user" do
+      expect(project1.next_project).to eq(project2)
+      expect(project2.next_project).to eq(project3)
+      expect(project3.next_project).to eq(nil)
+    end
+
+    it "should link to previous project for user" do
+      expect(project1.previous_project).to eq(nil)
+      expect(project2.previous_project).to eq(project1)
+      expect(project3.previous_project).to eq(project2)
+    end
+  end
+
   describe "skills" do
     it "should be able to set skills as array" do
       project.skills = [skill.name, skill2.name]

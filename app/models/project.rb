@@ -13,7 +13,7 @@ class Project < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   acts_as_list scope: :user, top_of_list: 0
-  
+
   # Scopes
   scope :by_position, -> { order(position: :asc) }
 
@@ -61,6 +61,19 @@ class Project < ApplicationRecord
         errors.add(:skills, "#{name} isn't a valid skill")
       end
     end
+  end
+
+  def next_project
+    projects = user.projects.by_position
+    index = projects.index(self)
+    return projects[index + 1]
+  end
+
+  def previous_project
+    projects = user.projects.by_position
+    index = projects.index(self)
+    return nil if index == 0
+    return projects[index - 1]
   end
   
 end

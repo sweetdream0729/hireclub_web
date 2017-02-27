@@ -30,7 +30,7 @@
         %h6 Description
         %p
           = @project.description
-          
+
       - if @project.link.present?
         %h6 Link
         %p
@@ -41,4 +41,8 @@
         = link_to edit_user_project_path(@project.user, @project), class: "btn btn-primary btn-sm" do
           %i.fa.fa-pencil.mr-1
           Edit
-      
+      %hr
+      - if @project.previous_project
+        = link_to "Previous", user_project_path(@project.user, @project.previous_project) 
+      - if @project.next_project
+        = link_to "Next", user_project_path(@project.user, @project.next_project), class: 'pull-right'
