@@ -2,6 +2,7 @@ $(document).ready ->
   $('[data-toggle="tooltip"]').tooltip()
   el = document.getElementById('sortable_user_skills')
   sortable = Sortable.create(el, {
+    handle: ".drag_handle",
     onEnd: (event) ->
       user_skill_id = $(event.item).attr("data-id");
       $.ajax
