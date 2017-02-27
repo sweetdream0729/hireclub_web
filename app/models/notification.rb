@@ -62,9 +62,11 @@ class Notification < ApplicationRecord
     key = activity.key
     puts "Notification.get_recipients_for #{key}"
 
-    class_name = key.titlecase.delete(".") + "Activity"
-    klass = class_name.constantize
+    class_name = key.titlecase.delete(".").delete(" ") + "Activity"
     #puts "   class_name #{class_name}"
+
+    klass = class_name.constantize
+    
     
     #puts "   #{klass}"
     

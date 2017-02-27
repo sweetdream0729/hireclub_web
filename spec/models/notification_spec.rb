@@ -39,4 +39,21 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  context 'badge.create' do
+    let(:user_badge) { FactoryGirl.create(:user_badge) }
+    it "should badge notification for likeable user" do
+      expect(user_badge).to be_valid
+      Notification.create_notifications_for_activity(user_badge.activities.last.id)
+
+      notification = Notification.last
+
+      expect(notification).to be_present
+      expect(notification.activity_key).to eq UserBadgeCreateActivity::KEY
+      expect(notification.user).to eq (user_badge.user)
+
+      activity = notification.activity
+      expect(activity.owner).to eq(user_badge.user)
+    end
+  end
+
 end
