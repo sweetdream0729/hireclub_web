@@ -1,7 +1,7 @@
 %head
   %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
   
-  = display_meta_tags site: 'HireClub'
+  = display_meta_tags site: 'HireClub', reverse: true
   %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'HireClub'}"}
 
   = stylesheet_link_tag 'application', media: 'all'

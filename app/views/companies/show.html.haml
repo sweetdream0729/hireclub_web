@@ -1,5 +1,3 @@
-= title @company.name
-
 .container.mt-5.mb-5
   .row
     .col-sm-8
@@ -7,7 +5,7 @@
         = image_tag(model_image(@company.avatar, 200, 200, true), width: 100, class: "d-flex mr-3 rounded")
         .media-body
           %h1.black
-            = @company.name
+            = title @company.name
           = @company.tagline
           %p
             = link_to @company.website_url, @company.website_url if @company.website_url.present?
