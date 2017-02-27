@@ -1,10 +1,5 @@
 module ApplicationHelper
   
-  def title(page_title)
-    @title = page_title
-    content_for(:title) { page_title }
-  end
-
   def model_image(image, width, height, use_https = false)
     if image
       image.remote_url(width: width, height: height, crop: :fill, secure: use_https, gravity: :north, format: "jpg", quality: 80)
