@@ -34,7 +34,7 @@
       - if @project.link.present?
         %h6 Link
         %p
-          = link_to @project.link, @project.link, target: "_blank"
+          = link_to link_host(@project.link), @project.link, target: "_blank"
 
       - if policy(@project).edit?
         %hr
