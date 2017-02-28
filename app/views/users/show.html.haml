@@ -44,8 +44,13 @@
               ·
               = @user.location.name
             ·
-            = pluralize(@user.years_experience, "Year")
-            Experience
+            - if @user == current_user
+              = link_to new_user_skill_path do
+                = pluralize(@user.years_experience, "Year")
+                Experience
+            - else
+              = pluralize(@user.years_experience, "Year")
+              Experience
             - if @user.open_to_remote
               ·
               %i.fa.fa-plane.text-muted

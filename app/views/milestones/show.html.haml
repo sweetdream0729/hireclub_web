@@ -6,24 +6,20 @@
         .media-body
           %h5.mt-0
             = link_to @milestone.user.name, @milestone.user
-          %p.text-muted
-            = @milestone.start_date.strftime("%b %Y")
-            ·
-            Milestone
+          - if @milestone.company
+            %p
+              For
+              = link_to @milestone.company.name, @milestone.company
       
       %h2
         = @milestone.title
 
+      %p.text-muted
+        = @milestone.start_date.strftime("%b %Y")
+
       %p
         = @milestone.description  
-      - if @milestone.company
-        %hr
-        .media
-          = link_to image_tag(model_image(@milestone.company.avatar, 200, 200, true), width: 52, class: 'd-flex mr-3 rounded'), @milestone.company
-          .media-body
-            = link_to @milestone.company.name, @milestone.company
-      %hr  
-      
+      %hr
       .row
         .col-6
           - if @milestone.link
