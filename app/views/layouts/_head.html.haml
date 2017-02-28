@@ -1,7 +1,8 @@
 %head
   %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
   
-  = display_meta_tags site: 'HireClub', reverse: true
+  = display_meta_tags site: 'HireClub', reverse: true, og: { title: :title}, fb: {app_id: Rails.application.secrets.facebook_app_id}
+  
   %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'HireClub'}"}
 
   = stylesheet_link_tag 'application', media: 'all'
