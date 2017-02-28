@@ -1,4 +1,7 @@
-- set_meta_tags title: @user.name
+- set_meta_tags title: @user.display_name
+- set_meta_tags canonical: user_url(@user)
+- set_meta_tags keywords: @user.user_roles.by_position.limit(3).map(&:name) + @user.user_skills.by_position.limit(5).map(&:name) + [ @user.location.try(:name_and_parent) ] 
+- set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
 
 .container.mt-5
   .row
@@ -8,7 +11,7 @@
         .media-body
           %h1.black
             - link = @user.website_url.present? ? @user.website_url : user_url(@user)
-            = link_to @user.name, link
+            = link_to @user.display_name, link
             - if @user.is_hiring
               %span.small
                 %i.fa.fa-bullseye.text-primary
