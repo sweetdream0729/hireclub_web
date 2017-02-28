@@ -10,7 +10,7 @@
     - if like.likeable_type == "Project"
       = link_to like.likeable_name, user_project_path(likeable.user, likeable)
     - else
-      = like.likeable_name
+      = link_to like.likeable_name, like.likeable
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
     

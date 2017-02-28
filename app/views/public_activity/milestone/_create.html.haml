@@ -5,7 +5,7 @@
   .media-body
     = link_to user.display_name, user
     added milestone
-    = "#{milestone.title} - #{milestone.start_date.strftime("%b %Y")}"
+    = link_to "#{milestone.title} - #{milestone.start_date.strftime("%b %Y")}", milestone
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
     
