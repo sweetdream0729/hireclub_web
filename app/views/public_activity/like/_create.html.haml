@@ -6,10 +6,15 @@
   .media-body
     = link_to user.display_name, user
     likes
-    = like.likeable_type.downcase
+    = link_to "#{likeable.user.display_name}'s", likeable.user
     - if like.likeable_type == "Project"
+      project
       = link_to like.likeable_name, user_project_path(likeable.user, likeable)
-    - else
+    - if like.likeable_type == "UserBadge"
+      badge
+      = link_to like.likeable_name, user_path(likeable.user)
+    - if like.likeable_type == "Milestone"
+      milestone
       = link_to like.likeable_name, like.likeable
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
