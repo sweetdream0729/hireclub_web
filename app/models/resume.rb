@@ -2,6 +2,9 @@ class Resume < ApplicationRecord
   # Extensions
   dragonfly_accessor :file
 
+  # Scopes
+  scope :by_newest,     -> { order(created_at: :desc)}
+
   # Associations
   belongs_to :user
 
