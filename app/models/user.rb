@@ -38,6 +38,8 @@ class User < ApplicationRecord
   has_many :user_badges, dependent: :destroy, inverse_of: :user
   has_many :badges, through: :user_badges
 
+  has_many :resumes, dependent: :destroy, inverse_of: :user
+
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
 

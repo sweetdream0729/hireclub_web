@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225195638) do
+ActiveRecord::Schema.define(version: 20170302151633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,15 @@ ActiveRecord::Schema.define(version: 20170225195638) do
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
+  create_table "resumes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "file_uid"
+    t.string   "file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_resumes_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",                    null: false
     t.citext   "slug",                    null: false
@@ -330,6 +339,7 @@ ActiveRecord::Schema.define(version: 20170225195638) do
   add_foreign_key "notifications", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
+  add_foreign_key "resumes", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
   add_foreign_key "user_roles", "roles"
