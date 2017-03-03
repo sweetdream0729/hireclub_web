@@ -2,7 +2,7 @@
 
 $font-family-sans-serif: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-// $brand-primary: #F67280;
+$brand-primary: #6070E9;
 $link-hover-decoration: none !default;
 $input-color-placeholder: #bbb;
 
@@ -16,4 +16,9 @@ $input-color-placeholder: #bbb;
 
 .facebook_blue {
   color: #4e7ad9
+}
+.navbar-light .navbar-brand {
+  font-weight: 700;
+  font-size: 15px;
+  color: $brand-primary;
 }
