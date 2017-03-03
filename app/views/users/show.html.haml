@@ -132,7 +132,7 @@
           - if @user == current_user
             %a.btn.btn-primary.btn-sm{href: new_milestone_path}
               %i.fa.fa-plus
-        - if @user == current_user
+        - if @user == current_user && @user.milestones.count < 5
           %p
             = link_to new_milestone_path, class: "btn btn-sm btn-warning" do
               Add at least
@@ -157,7 +157,7 @@
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       
-      - if @user == current_user
+      - if @user == current_user && @user.skills.count < 5
         %p
           = link_to new_user_skill_path, class: "btn btn-sm btn-warning" do
             Add at least
@@ -182,7 +182,7 @@
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
 
-    - if @user == current_user
+    - if @user == current_user && @user.skills.count < 3
       %p
         = link_to new_user_project_path(current_user), class: "btn btn-sm btn-warning" do
           Add at least
