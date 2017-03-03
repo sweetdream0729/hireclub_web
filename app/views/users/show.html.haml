@@ -182,7 +182,7 @@
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
 
-    - if @user == current_user && @user.skills.count < 3
+    - if @user == current_user && @user.projects.count < 3
       %p
         = link_to new_user_project_path(current_user), class: "btn btn-sm btn-warning" do
           Add at least
