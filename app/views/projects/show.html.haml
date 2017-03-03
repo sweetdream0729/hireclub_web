@@ -44,7 +44,7 @@
       %hr
       - previous_project = @project.previous_project
       - if previous_project
-        = link_to "Previous", user_project_path(@project.user, previous_project) 
+        = link_to "Previous", user_project_path(@project.user, previous_project), id: "previous_project"
       - next_project = @project.next_project
       - if next_project
-        = link_to "Next", user_project_path(@project.user, next_project), class: 'pull-right'
+        = link_to "Next", user_project_path(@project.user, next_project), id: "next_project", class: 'pull-right'
