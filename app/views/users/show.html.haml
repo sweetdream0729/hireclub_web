@@ -132,11 +132,13 @@
           - if @user == current_user
             %a.btn.btn-primary.btn-sm{href: new_milestone_path}
               %i.fa.fa-plus
-        - if @user.milestones.empty?
-          .row
-            .col-12
-              %a.btn.btn-warning{href: new_milestone_path}
-                Add Your First Milestone
+        - if @user == current_user
+          %p
+            = link_to new_milestone_path, class: "btn btn-sm btn-warning" do
+              Add at least
+              = pluralize(5 - @user.milestones.count, "more Milestone")
+
+
 
         = render @first_milestones
         - if @rest_milestones.any?
@@ -156,6 +158,10 @@
               %i.fa.fa-plus
       
       - if @user == current_user
+        %p
+          = link_to new_user_skill_path, class: "btn btn-sm btn-warning" do
+            Add at least
+            = pluralize(5 - @user.skills.count, "more Skill")
         #sortable_user_skills
           = render @user_skills
       - else
@@ -175,12 +181,13 @@
       - if @user == current_user
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
-    - if @user.projects.empty?
-      .row
-        .col-12
-          %a.btn.btn-warning{href: new_user_project_path(current_user)}
-            Add Your First Project
 
+    - if @user == current_user
+      %p
+        = link_to new_user_project_path(current_user), class: "btn btn-sm btn-warning" do
+          Add at least
+          = pluralize(3 - @user.projects.count, "more Project")
+    
 
   .row
     - @user.projects.each do |project|
