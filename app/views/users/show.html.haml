@@ -157,11 +157,12 @@
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       
-      - if @user == current_user && @user.skills.count < 5
-        %p
-          = link_to new_user_skill_path, class: "btn btn-sm btn-warning" do
-            Add at least
-            = pluralize(5 - @user.skills.count, "more Skill")
+      - if @user == current_user
+        - if @user.skills.count < 5
+          %p
+            = link_to new_user_skill_path, class: "btn btn-sm btn-warning" do
+              Add at least
+              = pluralize(5 - @user.skills.count, "more Skill")
         #sortable_user_skills
           = render @user_skills
       - else
