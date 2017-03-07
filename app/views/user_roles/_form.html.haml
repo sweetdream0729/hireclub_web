@@ -8,6 +8,11 @@
 
   %p.lead
     Roles are what you do. You should have 2-3 at the most.
+    - if current_user.roles.count >= 3
+      .text-warning
+        Hey there jack of all trades, you already have
+        = pluralize(current_user.roles.count, "role") + "!"
+
   .row
     - if !@user_role.persisted?
       .col-6
