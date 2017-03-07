@@ -1,9 +1,9 @@
 .container.mt-5.mb-5
   %h1
     - if params[:skill].present?
-      = title "#{params[:skill]} Projects by #{current_user.display_name}"
+      = title "#{params[:skill]} Projects by #{@user.display_name}"
     - else
-      = title "Projects by #{current_user.display_name}"
+      = title "Projects by #{@user.display_name}"
     %small
       = link_to 'Add Project', new_user_project_path(current_user), class: "btn btn-primary btn-sm" if policy(Project).new?
   .row
