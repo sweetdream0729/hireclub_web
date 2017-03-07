@@ -4,6 +4,10 @@
 2. cd hireclub_web
 3. Install dependencies listed below
 4. Copy .env.example to .env
+5. Send @kidbombay your Facebook Account ID or username to add to HireClub Test App
+6. Add a user to seeds file with email matching your FB account
+7. Migrate and Seed
+8. foreman start
 
 ```
 bundle install
