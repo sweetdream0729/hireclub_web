@@ -4,7 +4,7 @@
       %i.fa.fa-bars
 
   %span.semi_bold
-    = link_to user_skill.skill.name, user_skill.skill
+    = link_to user_skill.name, user_projects_path(user_skill.user, skill: user_skill.name)
   %small
     = pluralize(user_skill.years, "year") if user_skill.years > 0
 
