@@ -52,7 +52,11 @@ Copy .env.example to .env
 rake db:create
 ```
 
-* Database initialization
+* Database Seed
+
+```
+rake db:seed
+```
 
 * How to run the test suite
 
