@@ -1,21 +1,34 @@
-%p#notice= notice
+.container.mt-5.mb-5
+  .row
+    .col-md-6
+      .media
+        = link_to image_tag(model_image(@milestone.user.avatar, 200, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @milestone.user
+        .media-body
+          %h5.mt-0
+            = link_to @milestone.user.name, @milestone.user
+          - if @milestone.company
+            %p
+              For
+              = link_to @milestone.company.name, @milestone.company
+      
+      %h2.mt-2
+        = @milestone.title
 
-%p
-  %b User:
-  = @milestone.user
-%p
-  %b Title:
-  = @milestone.title
-%p
-  %b Start date:
-  = @milestone.start_date
-%p
-  %b End date:
-  = @milestone.end_date
-%p
-  %b Link:
-  = @milestone.link
+      %p.text-muted
+        = @milestone.start_date.strftime("%b %Y")
 
-= link_to 'Edit', edit_milestone_path(@milestone)
-\|
-= link_to 'Back', milestones_path
+      %p
+        = @milestone.description  
+      %hr
+      .row
+        .col-6
+          - if @milestone.link
+            = link_to link_host(@milestone.link), @milestone.link, target: "_blank"
+        .col-6
+          .pull-right
+            = render partial: "/likes/like_button", locals: { likeable: @milestone }
+      %hr
+      - if policy(@milestone).edit?
+        = link_to edit_milestone_path(@milestone), class: "btn btn-primary btn-sm" do
+          %i.fa.fa-pencil.mr-1
+          Edit

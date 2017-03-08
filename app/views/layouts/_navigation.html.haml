@@ -2,11 +2,13 @@
   %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
     %span.navbar-toggler-icon
 
-  %a.navbar-brand{:href => root_path} HireClub
+  %a.navbar-brand{:href => root_path}
+    = image_tag("logo.svg", width: 30, height: 30, alt: "HireClub Logo")
+    HireClub
 
   #navbarSupportedContent.collapse.navbar-collapse
     = form_tag search_path, :method => 'get', class: 'form-inline my-2 my-lg-0' do
-      = text_field_tag :q, params[:q], {placeholder: "Search", type: "text", class: "form-control mr-sm-2"}
+      = text_field_tag :q, params[:q], {placeholder: "Search", class: "form-control mr-sm-2", type: "search", id: "nav_search"}
 
     %ul.nav.navbar-nav.mr-auto
       %li.nav-item.active
@@ -32,13 +34,19 @@
         /   %a.nav-link{:href => new_user_session_path} Login
       - else
         %li.nav-item
+          %a.nav-link{:href => conversations_path}
+            %i.fa.fa-comment-o{"aria-hidden" => "true"}
+        %li.nav-item
           %a.nav-link{:href => notifications_path}
             %i.fa.fa-bell-o{"aria-hidden" => "true"}
         %li.nav-item
           %a.nav-link{:href => user_path(current_user)} Profile
-        %li.nav-item
-          %a.nav-link{:href => edit_user_registration_path} Settings
-        %li.nav-item
-          %a.nav-link{:href => destroy_user_session_path} Logout
-
+        %li.nav-item.dropdown
+          %a#navbarDropdownMenuLink.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => user_path(current_user)}
+            Menu
+          .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdownMenuLink"}
+            %a.dropdown-item{:href => edit_user_registration_path} Settings
+            %a.dropdown-item{:href => resumes_path } Resumes
+            .dropdown-divider
+            %a.dropdown-item{:href => destroy_user_session_path} Logout
   

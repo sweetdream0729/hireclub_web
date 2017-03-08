@@ -21,7 +21,11 @@
       - if @project.skills_list.present?
         %h6 Skills
         %p
-          = @project.skills_list
+          - @project.skills.each_with_index do |skill, index|
+            = link_to skill, user_projects_path(@project.user, skill: skill)
+            - delimiter = index < (@project.skills.count - 1) ? " · " : ""
+            = delimiter
+          
 
       - if @project.company
         %h6 Company
@@ -36,7 +40,7 @@
       - if @project.link.present?
         %h6 Link
         %p
-          = link_to @project.link, @project.link, target: "_blank"
+          = link_to link_host(@project.link), @project.link, target: "_blank"
 
       - if policy(@project).edit?
         %hr
@@ -46,7 +50,7 @@
       %hr
       - previous_project = @project.previous_project
       - if previous_project
-        = link_to "Previous", user_project_path(@project.user, previous_project) 
+        = link_to "Previous", user_project_path(@project.user, previous_project), id: "previous_project"
       - next_project = @project.next_project
       - if next_project
-        = link_to "Next", user_project_path(@project.user, next_project), class: 'pull-right'
+        = link_to "Next", user_project_path(@project.user, next_project), id: "next_project", class: 'pull-right'

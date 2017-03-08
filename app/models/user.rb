@@ -8,6 +8,16 @@ class User < ApplicationRecord
 
   include UnpublishableActivity
   include Searchable
+  include HasSmartUrl
+  has_smart_url :website_url
+  has_smart_url :twitter_url
+  has_smart_url :dribbble_url
+  has_smart_url :github_url
+  has_smart_url :medium_url
+  has_smart_url :facebook_url
+  has_smart_url :instagram_url
+  has_smart_url :linkedin_url
+
   extend FriendlyId
   friendly_id :username
   dragonfly_accessor :avatar
@@ -26,6 +36,9 @@ class User < ApplicationRecord
   scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
+  has_many :conversation_users, dependent: :destroy, inverse_of: :user
+  has_many :conversations, through: :conversation_users
+
   has_many :notifications, dependent: :destroy, inverse_of: :user
   has_many :authentications, dependent: :destroy, inverse_of: :user
   has_many :projects, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user
@@ -37,6 +50,8 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles
   has_many :user_badges, dependent: :destroy, inverse_of: :user
   has_many :badges, through: :user_badges
+
+  has_many :resumes, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -59,6 +74,7 @@ class User < ApplicationRecord
   validates :medium_url, url: { allow_blank: true }
   validates :facebook_url, url: { allow_blank: true }
   validates :instagram_url, url: { allow_blank: true }
+  validates :linkedin_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?

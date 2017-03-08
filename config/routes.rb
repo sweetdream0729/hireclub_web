@@ -10,6 +10,15 @@ Rails.application.routes.draw do
   get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
+  resources :messages, only: [:create]
+
+  resources :conversations do
+    collection do
+      get :between
+    end
+  end
+  
+  resources :resumes, except: [:edit, :update]
   resources :likes, only: [:index, :new, :create, :destroy]
 
   resources :badges
@@ -47,9 +56,6 @@ Rails.application.routes.draw do
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
     resources :projects
-    member do
-      
-    end
   end
 
   authenticated :user do

@@ -3,8 +3,6 @@
   
   = display_meta_tags site: 'HireClub', reverse: true, og: { title: :title}, fb: {app_id: Rails.application.secrets.facebook_app_id}
   
-  %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'HireClub'}"}
-
   = stylesheet_link_tag 'application', media: 'all'
   = javascript_include_tag 'application'
   

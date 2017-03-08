@@ -7,7 +7,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = current_user.projects
+    scope = @user.projects.by_position
+
+    if params[:skill]
+      scope = scope.with_any_skills(params[:skill])
+    end
+
+    @projects = scope
   end
 
   # GET /projects/1

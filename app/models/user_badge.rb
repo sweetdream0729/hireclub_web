@@ -1,6 +1,7 @@
 class UserBadge < ApplicationRecord
   # Extensions
   include UnpublishableActivity
+  include ActsAsLikeable
   include Wisper::Publisher
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }

@@ -89,12 +89,24 @@ RSpec.describe Project, type: :model do
   describe "key_words" do 
 
     it "should return skills_list with added company as meta tags" do
-      project.company_id = Company.find(7).id
-      expect(project.key_words).to eq(project.skills_list + ", " + Company.find(project.company_id).name)
+      company = FactoryGirl.create(:company)
+      project.company = company
+      project.skills = [skill.name, skill2.name]
+      project.save
+      expect(project.key_words).to eq(project.skills_list + ", " + company.name)
     end
 
     it "should return skills when company is nil" do
+      project.skills = [skill.name, skill2.name]
+      project.save
       expect(project.key_words).to eq(project.skills_list)
+    end
+
+    it "should return company name when skills are nil" do
+      company = FactoryGirl.create(:company)
+      project.company = company
+      project.save
+      expect(project.key_words).to eq(company.name)
     end
 
   end

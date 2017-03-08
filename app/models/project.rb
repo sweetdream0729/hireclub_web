@@ -64,8 +64,9 @@ class Project < ApplicationRecord
   end
 
   def key_words
-    company = Company.find(self.company_id).name
-    self.skills_list + ", " + company 
+    keywords = skills_list.split(", ")
+    keywords << company.name if company.present?
+    return keywords.join(", ")
   end
 
   def next_project 

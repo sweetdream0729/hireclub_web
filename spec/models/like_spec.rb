@@ -38,13 +38,21 @@ RSpec.describe Like, type: :model do
   end
 
   describe "likeable_name" do
-    it "should project name when project" do
+
+    it "should be project name when project" do
       expect(like.likeable_name).to eq like.likeable.name
     end
-    it "should project name when milestone" do
+
+    it "should be milestone title when milestone" do
       milestone = FactoryGirl.create(:milestone)
       like =  FactoryGirl.create(:like, likeable: milestone)
       expect(like.likeable_name).to eq like.likeable.title
+    end
+
+    it "should be badge name when badge" do
+      user_badge = FactoryGirl.create(:user_badge)
+      like =  FactoryGirl.create(:like, likeable: user_badge)
+      expect(like.likeable_name).to eq like.likeable.name
     end
   end
 end

@@ -3,10 +3,10 @@
     = milestone.start_date.strftime("%b %Y")
   .col-sm-8.col-md-9.col-lg-10
     
-    - if milestone.link.present?
-      = link_to milestone.title, milestone.link, target: "_blank"
-    - else
-      = milestone.title
+    / - if milestone.link.present?
+    /   = link_to milestone.title, milestone.link, target: "_blank"
+    / - else
+    = link_to milestone.title, milestone
 
     - if policy(milestone).edit?
       = link_to edit_milestone_path(milestone), class: "edit_user_milestones ml-1 mr-1 display_none text-muted hover_primary " do

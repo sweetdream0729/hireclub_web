@@ -15,6 +15,7 @@
 //= require tether
 //= require bootstrap
 //= require sortable.min
-//= require typeahead.bundle.js
+//= require typeahead.bundle
+//= require mousetrap.min
 //= require cocoon
 //= require_tree .

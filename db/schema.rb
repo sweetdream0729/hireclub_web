@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225195638) do
+ActiveRecord::Schema.define(version: 20170308164532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,26 @@ ActiveRecord::Schema.define(version: 20170225195638) do
     t.index ["slug"], name: "index_companies_on_slug", unique: true, using: :btree
   end
 
+  create_table "conversation_users", force: :cascade do |t|
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id", "user_id"], name: "index_conversation_users_on_conversation_id_and_user_id", unique: true, using: :btree
+    t.index ["conversation_id"], name: "index_conversation_users_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_conversation_users_on_user_id", using: :btree
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.string   "slug",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.citext   "key"
+    t.integer  "messages_count", default: 0, null: false
+    t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
+    t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -146,6 +166,16 @@ ActiveRecord::Schema.define(version: 20170225195638) do
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
     t.index ["parent_id"], name: "index_locations_on_parent_id", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.string   "text",            null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "milestones", force: :cascade do |t|
@@ -211,6 +241,15 @@ ActiveRecord::Schema.define(version: 20170225195638) do
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
+  create_table "resumes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "file_uid"
+    t.string   "file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_resumes_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",                    null: false
     t.citext   "slug",                    null: false
@@ -235,8 +274,9 @@ ActiveRecord::Schema.define(version: 20170225195638) do
   create_table "user_badges", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "likes_count", default: 0, null: false
     t.index ["badge_id"], name: "index_user_badges_on_badge_id", using: :btree
     t.index ["user_id", "badge_id"], name: "index_user_badges_on_user_id_and_badge_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_user_badges_on_user_id", using: :btree
@@ -323,13 +363,18 @@ ActiveRecord::Schema.define(version: 20170225195638) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "conversation_users", "conversations"
+  add_foreign_key "conversation_users", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
+  add_foreign_key "resumes", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
   add_foreign_key "user_roles", "roles"
