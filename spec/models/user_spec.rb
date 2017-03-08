@@ -6,10 +6,13 @@ RSpec.describe User, type: :model do
   subject { user }
 
   describe "associations" do
+    it { should have_many(:conversation_users) }
+    it { should have_many(:conversations).through(:conversation_users) }
     it { should have_many(:notifications) }
     it { should have_many(:authentications) }
     it { should have_many(:projects) }
     it { should have_many(:milestones) }
+    it { should have_many(:resumes) }
     it { should have_many(:companies).through(:milestones) }
     it { should have_many(:user_skills) }
     it { should have_many(:skills).through(:user_skills) }
@@ -41,9 +44,6 @@ RSpec.describe User, type: :model do
     end
 
     it { is_expected.to allow_value("test.name", "5", "test_name", "test-name").for(:username) }
-
-    it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
-    it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
   end
 
   describe "facebook import" do
@@ -160,30 +160,68 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "keywords method for meta-tags" do
+  describe "key_words" do
     let(:user) { FactoryGirl.create(:user) }
 
     it "should have roles by position" do
-      Role.seed
-      FactoryGirl.create(:user_role, user: user, role: Role.first, position: 0) 
-      FactoryGirl.create(:user_role, user: user, role: Role.last, position: 10)
-      FactoryGirl.create(:user_role, user: user, role: Role.find(2), position: 3)
+      FactoryGirl.create(:user_role, user: user, position: 0) 
+      FactoryGirl.create(:user_role, user: user, position: 10)
+      FactoryGirl.create(:user_role, user: user, position: 3)
       user.save 
       # nil added to the end to simulate the addition of further meta tags
-      expect(user.key_words).to eq(user.user_roles.by_position.limit(3).map(&:name) + [nil]) 
+      keywords = user.user_roles.by_position.limit(3).map(&:name) + [nil]
+      expect(user.key_words).to eq(keywords) 
     end
 
     it "should have skills by position" do 
-      Skill.seed
-      FactoryGirl.create(:user_skill, user: user, skill: Skill.first)
-      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(2))
-      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(3))
-      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(4))
-      FactoryGirl.create(:user_skill, user: user, skill: Skill.last)
+      FactoryGirl.create(:user_skill, user: user, position: 10)
+      FactoryGirl.create(:user_skill, user: user, position: 11)
+      FactoryGirl.create(:user_skill, user: user, position: 12)
+      FactoryGirl.create(:user_skill, user: user, position: 13)
+      FactoryGirl.create(:user_skill, user: user, position: 14)
       user.save
       # nil added to the end to simulate the addition of further meta tags
-      expect(user.key_words).to eq(user.user_skills.by_position.limit(5).map(&:name) + [nil])
-    end 
 
+      keywords = user.user_skills.by_position.limit(5).map(&:name) + [nil]
+      expect(user.key_words).to eq(keywords)
+    end 
+  end
+
+  describe "website_url" do
+    it "should add http if missing" do
+      user.website_url = "instagram.com/username"
+      expect(user.website_url).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      user.website_url = "www.instagram.com/username"
+      expect(user.website_url).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      user.website_url = "foo"
+      expect(user.website_url).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
+  end
+
+  describe "instagram_url" do
+    it "should add http if missing" do
+      user.instagram_url = "instagram.com/username"
+      expect(user.instagram_url).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      user.instagram_url = "www.instagram.com/username"
+      expect(user.instagram_url).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      user.instagram_url = "foo"
+      expect(user.instagram_url).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:instagram_url) }
   end
 end

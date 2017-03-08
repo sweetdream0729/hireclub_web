@@ -123,4 +123,23 @@ RSpec.describe Company, type: :model do
     end
   end
 
+  describe "website_url" do
+    it "should add http if missing" do
+      company.website_url = "instagram.com/username"
+      expect(company.website_url).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      company.website_url = "www.instagram.com/username"
+      expect(company.website_url).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      company.website_url = "foo"
+      expect(company.website_url).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
+  end
+
 end

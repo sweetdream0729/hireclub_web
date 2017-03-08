@@ -1,0 +1,19 @@
+.container-fluid.mt-2.mb-5
+  .row
+    = render "conversation_list"
+    .col-sm-8
+      %h1
+        - @conversation.other_users(current_user).each do |user|
+          = link_to user.display_name, user
+
+      #messages{"data-conversation-id" => @conversation.id}
+        = render @conversation.messages.by_recent
+
+      = form_for @message do |f|
+        = f.hidden_field :conversation_id, value: @conversation.id
+        .row
+          .col-xs-9.col-sm-10
+            .form-group
+              = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off"
+          .col-xs-3.col-sm-2
+            = f.submit "Send", class: 'btn btn-primary btn-block'
