@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302194200) do
+ActiveRecord::Schema.define(version: 20170308141640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,23 @@ ActiveRecord::Schema.define(version: 20170302194200) do
     t.index ["added_by_id"], name: "index_companies_on_added_by_id", using: :btree
     t.index ["facebook_id"], name: "index_companies_on_facebook_id", unique: true, using: :btree
     t.index ["slug"], name: "index_companies_on_slug", unique: true, using: :btree
+  end
+
+  create_table "conversation_users", force: :cascade do |t|
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id", "user_id"], name: "index_conversation_users_on_conversation_id_and_user_id", unique: true, using: :btree
+    t.index ["conversation_id"], name: "index_conversation_users_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_conversation_users_on_user_id", using: :btree
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.string   "slug",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -333,6 +350,8 @@ ActiveRecord::Schema.define(version: 20170302194200) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "conversation_users", "conversations"
+  add_foreign_key "conversation_users", "users"
   add_foreign_key "likes", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"

@@ -1,0 +1,22 @@
+.container.mt-5.mb-5
+  %h1= title "Messages"
+
+  %table
+    %thead
+      %tr
+        %th Slug
+        %th
+        %th
+        %th
+
+    %tbody
+      - @conversations.each do |conversation|
+        %tr
+          %td= conversation.slug
+          %td= link_to 'Show', conversation
+          %td= link_to 'Edit', edit_conversation_path(conversation)
+          %td= link_to 'Destroy', conversation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  %br
+
+  = link_to 'New Conversation', new_conversation_path
