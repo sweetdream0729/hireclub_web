@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  let(:project) { FactoryGirl.build(:project, name: nil) }
+  let(:project) { FactoryGirl.build(:project, name: nil ) }
   let(:skill) { FactoryGirl.create(:skill) }
   let(:skill2) { FactoryGirl.create(:skill) }
+  let(:company) { FactoryGirl.create(:company)}
 
   subject { project }
 
@@ -59,6 +60,7 @@ RSpec.describe Project, type: :model do
   end
 
   describe "skills" do
+
     it "should be able to set skills as array" do
       project.skills = [skill.name, skill2.name]
       project.save
@@ -79,6 +81,20 @@ RSpec.describe Project, type: :model do
       expect(project.skills).to include(skill.name)
       expect(project.skills).to include(skill2.name)
       expect(project.skills_list).to eq "#{skill.name}, #{skill2.name}"
+    end
+
+  end
+
+
+  describe "key_words" do 
+
+    it "should return skills_list with added company as meta tags" do
+      project.company_id = Company.find(7).id
+      expect(project.key_words).to eq(project.skills_list + ", " + Company.find(project.company_id).name)
+    end
+
+    it "should return skills when company is nil" do
+      expect(project.key_words).to eq(project.skills_list)
     end
 
   end

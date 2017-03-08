@@ -63,7 +63,12 @@ class Project < ApplicationRecord
     end
   end
 
-  def next_project
+  def key_words
+    company = Company.find(self.company_id).name
+    self.skills_list + ", " + company 
+  end
+
+  def next_project 
     projects = user.projects.by_position
     index = projects.index(self)
     return projects[index + 1]

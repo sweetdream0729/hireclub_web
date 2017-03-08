@@ -27,7 +27,6 @@ class Company < ApplicationRecord
   #has_many :users, through: :milestones
   belongs_to :added_by, class_name: 'User'
 
-
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
