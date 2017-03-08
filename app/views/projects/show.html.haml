@@ -1,10 +1,10 @@
 - set_meta_tags title: "#{@project.try(:name)} By #{@project.user.display_name}"
+- set_meta_tags keywords: "#{@project.key_words}"
 
 .container.mt-5.mb-5
   .row
     .col-sm-8
       = image_tag(model_image(@project.image, 800, 600, true), alt: @project.name, class: "img-fluid")
-      / %img{:alt => project.name, :src => model_image(@project.image, 800, 600, true), width: "100%"}
     .col-sm-4
       %h1
         = @project.name

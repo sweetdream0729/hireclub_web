@@ -63,7 +63,13 @@ class Project < ApplicationRecord
     end
   end
 
-  def next_project
+  def key_words
+    keywords = skills_list.split(", ")
+    keywords << company.name if company.present?
+    return keywords.join(", ")
+  end
+
+  def next_project 
     projects = user.projects.by_position
     index = projects.index(self)
     return projects[index + 1]
