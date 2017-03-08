@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308141640) do
+ActiveRecord::Schema.define(version: 20170308145119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(version: 20170308141640) do
     t.string   "slug",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.citext   "key"
+    t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
