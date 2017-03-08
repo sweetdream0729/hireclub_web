@@ -134,6 +134,11 @@ class User < ApplicationRecord
     Koala::Facebook::API.new(get_fb_token)
   end
 
+  def key_words
+    self.user_roles.by_position.limit(3).map(&:name) + self.user_skills.by_position.limit(5).map(&:name) + [ self.location.try(:name_and_parent) ] 
+  end
+  
+
   def get_fb_token
     token = self.authentications.facebook.first.token if has_facebook?
   end

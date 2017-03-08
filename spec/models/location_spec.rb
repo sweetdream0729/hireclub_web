@@ -101,6 +101,7 @@ RSpec.describe Location, type: :model do
 
   describe "users_count" do
     let(:user) { FactoryGirl.create(:user) }
+
     it "should cache users count" do
       user.location = location
       user.save
@@ -109,5 +110,33 @@ RSpec.describe Location, type: :model do
       expect(location.users_count).to eq 1
     end
   end
+
+  describe "name_and_parent for meta-tags" do 
+    let(:user) { FactoryGirl.create(:user) }
+
+    it "should have city and state" do
+      Location.import_cities
+      user.location = Location.where(level: Location::CITY).last
+      user.save
+      expect(user.key_words).to eq([user.location.name_and_parent])
+    end
+
+    it "should return location name and parent" do 
+      Location.import_cities
+      user.location = Location.where(level: Location::CITY).last
+      user.save
+      expect(user.location.name_and_parent).to eq("Berkeley, California")
+    end 
+    
+    it "should return name and parent for location meta-tag" do
+      expect(location.name_and_parent).to eq("#{location.name}#{location.parent}")
+    end
+
+    it "should still return name if parent is nil for location meta-tag" do
+      location.parent = nil 
+      expect(location.name_and_parent).to eq("#{location.name}")
+    end
+
+  end 
 
 end

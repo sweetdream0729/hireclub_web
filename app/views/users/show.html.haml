@@ -1,4 +1,7 @@
-- set_meta_tags title: @user.name
+- set_meta_tags title: @user.display_name
+- set_meta_tags canonical: user_url(@user)
+- set_meta_tags keywords: @user.key_words
+- set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
 - set_meta_tags og: {type: "profile"}
 
 - if @user_completion.present?
@@ -20,7 +23,7 @@
         .media-body
           %h1.black
             - link = @user.website_url.present? ? @user.website_url : user_url(@user)
-            = link_to @user.name, link
+            = link_to @user.display_name, link
             - if @user.is_hiring
               %span.small
                 %i.fa.fa-bullseye.text-primary
