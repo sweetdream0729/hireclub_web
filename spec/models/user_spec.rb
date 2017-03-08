@@ -44,9 +44,6 @@ RSpec.describe User, type: :model do
     end
 
     it { is_expected.to allow_value("test.name", "5", "test_name", "test-name").for(:username) }
-
-    it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
-    it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
   end
 
   describe "facebook import" do
@@ -163,7 +160,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "website_url", focus: true do
+  describe "website_url" do
     it "should add http if missing" do
       user.website_url = "instagram.com/username"
       expect(user.website_url).to eq("http://instagram.com/username")
@@ -182,7 +179,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
   end
 
-  describe "instagram_url", focus: true do
+  describe "instagram_url" do
     it "should add http if missing" do
       user.instagram_url = "instagram.com/username"
       expect(user.instagram_url).to eq("http://instagram.com/username")

@@ -11,7 +11,12 @@ class Company < ApplicationRecord
   dragonfly_accessor :logo
   is_impressionable
 
-  #has_smart_url :instagram_url
+  include HasSmartUrl
+  has_smart_url :website_url
+  has_smart_url :twitter_url
+  has_smart_url :instagram_url
+  has_smart_url :facebook_url
+  has_smart_url :angellist_url
 
   auto_strip_attributes :name, squish: true
   nilify_blanks
@@ -37,20 +42,6 @@ class Company < ApplicationRecord
   validates :instagram_url, url: { allow_blank: true }
   validates :facebook_url,  url: { allow_blank: true }
   validates :angellist_url, url: { allow_blank: true }
-
-
-  def website_url=(_link)
-    if _link.present?
-      u=URI.parse(_link)
-
-      if (!u.scheme)
-          link = "http://" + _link
-      else
-          link = _link
-      end
-    end
-    super(link)
-  end
 
   def domain
     URI.parse(website_url).host.downcase if website_url.present?
