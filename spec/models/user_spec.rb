@@ -159,4 +159,53 @@ RSpec.describe User, type: :model do
       expect(activity.owner).to eq(user)
     end
   end
+
+  describe "keywords" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it "should have city and state" do
+      Location.import_cities
+      user.location = Location.where(level: Location::CITY).last
+      user.save
+
+      expect(user.key_words).to eq([user.location.name_and_parent])
+    end
+
+    it "should return location name and parent" do 
+      Location.import_cities
+      user.location = Location.where(level: Location::CITY).last
+      user.save
+      expect(user.location.name_and_parent).to eq("Berkeley, California")
+    end 
+
+    it "should return location name and parent" do 
+      Location.import_cities
+      user.location = Location.where(level: Location::CITY).last
+      user.save
+      expect(user.location.name_and_parent).to eq("Berkeley, California")
+    end 
+
+    it "should have roles by position" do
+      Role.seed
+      FactoryGirl.create(:user_role, user: user, role: Role.first, position: 0) 
+      FactoryGirl.create(:user_role, user: user, role: Role.last, position: 10)
+      FactoryGirl.create(:user_role, user: user, role: Role.find(11), position: 11)
+      user.save 
+      # nil added to the end to simulate the addition of further meta tags
+      expect(user.key_words).to eq(user.user_roles.by_position.limit(3).map(&:name) + [nil]) 
+    end
+
+    it "should have skills by position" do 
+      Skill.seed
+      FactoryGirl.create(:user_skill, user: user, skill: Skill.first)
+      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(2))
+      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(3))
+      FactoryGirl.create(:user_skill, user: user, skill: Skill.find(4))
+      FactoryGirl.create(:user_skill, user: user, skill: Skill.last)
+      user.save
+      # nil added to the end to simulate the addition of further meta tags
+      expect(user.key_words).to eq(user.user_skills.by_position.limit(5).map(&:name) + [nil])
+    end 
+
+  end
 end

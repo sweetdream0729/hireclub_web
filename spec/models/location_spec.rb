@@ -110,4 +110,17 @@ RSpec.describe Location, type: :model do
     end
   end
 
+  describe "name_and_parent for meta-tags" do 
+    
+    it "should return name and parent for location meta-tag" do
+      expect(location.name_and_parent).to eq("#{location.name}#{location.parent}")
+    end
+
+    it "should still return name if parent is nil for location meta-tag" do
+      location.parent = nil 
+      expect(location.name_and_parent).to eq("#{location.name}")
+    end
+
+  end 
+
 end
