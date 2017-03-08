@@ -3,7 +3,13 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @conversations = Conversation.all
+    @conversations = current_user.conversations
+  end
+
+  def between
+    users = User.find(params[:user_ids])
+    conversation = Conversation.between(users)
+    redirect_to conversation
   end
 
   # GET /conversations/1
@@ -48,7 +54,7 @@ class ConversationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_conversation
-      @conversation = Conversation.find(params[:id])
+      @conversation = Conversation.friendly.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

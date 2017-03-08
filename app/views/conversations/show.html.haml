@@ -1,9 +1,3 @@
-%p#notice= notice
+.container.mb-5
+  %h1= title @conversation.other_users(current_user).map(&:display_name).join(", ")
 
-%p
-  %b Slug:
-  = @conversation.slug
-
-= link_to 'Edit', edit_conversation_path(@conversation)
-\|
-= link_to 'Back', conversations_path

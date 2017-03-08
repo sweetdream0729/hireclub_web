@@ -1,0 +1,13 @@
+= cache [conversation, current_user] do
+  .media
+    - other_user = conversation.other_users(current_user).first
+    = link_to image_tag(model_image(other_user.avatar, 200, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), conversation
+    .media-body
+      %h5.mt-0
+        = link_to other_user.name, conversation
+      %small.text-muted
+        = time_ago_in_words(conversation.updated_at)
+        ago
+      %small
+        
+  %hr

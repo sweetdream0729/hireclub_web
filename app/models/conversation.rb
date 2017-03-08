@@ -28,6 +28,10 @@ class Conversation < ApplicationRecord
     self.key = Conversation.key_for_users(self.users)
   end
 
+  def other_users(user)
+    self.users - [user]
+  end
+
   def self.key_for_users(users)
     users.sort.map(&:id).join("_")
   end
