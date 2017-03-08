@@ -1,4 +1,8 @@
-- set_meta_tags title: @user.name
+
+- set_meta_tags title: @user.display_name
+- set_meta_tags canonical: user_url(@user)
+- set_meta_tags keywords: @user.key_words
+- set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
 - set_meta_tags og: {type: "profile"}
 
 - if @user_completion.present?
@@ -11,6 +15,7 @@
         .col-lg-3.col-md-4
           .progress
             .progress-bar.bg-success.user_progress{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "25", :role => "progressbar", :style => "width: #{@user_completion.percent_complete}%; height: 4px;"}
+>>>>>>> master
 
 .container.mt-5
   .row
@@ -20,7 +25,7 @@
         .media-body
           %h1.black
             - link = @user.website_url.present? ? @user.website_url : user_url(@user)
-            = link_to @user.name, link
+            = link_to @user.display_name, link
             - if @user.is_hiring
               %span.small
                 %i.fa.fa-bullseye.text-primary

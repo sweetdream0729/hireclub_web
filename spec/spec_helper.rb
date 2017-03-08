@@ -90,7 +90,7 @@ RSpec.configure do |config|
   # end of the spec run, to help surface which specs are running
   # particularly slow.
   config.profile_examples = 10
-
+  
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
   # test failures related to randomization by passing the same `--seed` value
@@ -103,3 +103,4 @@ RSpec.configure do |config|
     FileUtils.rm_rf(Dir["#{Rails.root}/public/system/dragonfly/test"])
   end
 end
+

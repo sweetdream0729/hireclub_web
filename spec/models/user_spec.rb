@@ -160,6 +160,33 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "key_words" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it "should have roles by position" do
+      FactoryGirl.create(:user_role, user: user, position: 0) 
+      FactoryGirl.create(:user_role, user: user, position: 10)
+      FactoryGirl.create(:user_role, user: user, position: 3)
+      user.save 
+      # nil added to the end to simulate the addition of further meta tags
+      keywords = user.user_roles.by_position.limit(3).map(&:name) + [nil]
+      expect(user.key_words).to eq(keywords) 
+    end
+
+    it "should have skills by position" do 
+      FactoryGirl.create(:user_skill, user: user, position: 10)
+      FactoryGirl.create(:user_skill, user: user, position: 11)
+      FactoryGirl.create(:user_skill, user: user, position: 12)
+      FactoryGirl.create(:user_skill, user: user, position: 13)
+      FactoryGirl.create(:user_skill, user: user, position: 14)
+      user.save
+      # nil added to the end to simulate the addition of further meta tags
+
+      keywords = user.user_skills.by_position.limit(5).map(&:name) + [nil]
+      expect(user.key_words).to eq(keywords)
+    end 
+  end
+
   describe "website_url" do
     it "should add http if missing" do
       user.website_url = "instagram.com/username"

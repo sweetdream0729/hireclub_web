@@ -48,8 +48,14 @@ class Location < ApplicationRecord
   def name_and_short
     return name if parent.nil?
     return "#{name}-#{parent.short}" if parent.short
-    return "#{name}-#{parent}.name"
+    return "#{name}-#{parent.name}"
   end
+
+  def name_and_parent
+    return name if parent.nil?
+    return "#{name}, #{parent.name}"
+  end
+
 
   def self.create_root
     root = Location.find_or_create_by(name: 'Anywhere', level: Location::ROOT, parent_id: nil)
