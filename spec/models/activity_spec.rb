@@ -8,4 +8,10 @@ RSpec.describe Activity, :type => :model do
   describe "associations" do
     it { is_expected.to have_many(:notifications).dependent(:destroy) }
   end
+
+  describe "privacy" do
+    it "should be public by default" do
+      expect(activity.private).to be false
+    end
+  end
 end

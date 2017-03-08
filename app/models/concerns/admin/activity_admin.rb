@@ -5,7 +5,7 @@ module Admin::ActivityAdmin
     rails_admin do
       
       list do
-        scopes [nil, :published, :unpublished]
+        scopes [nil, :published, :unpublished, :only_private]
         
         field :id
         field :key

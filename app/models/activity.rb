@@ -4,6 +4,9 @@ class Activity < PublicActivity::Activity
   scope :by_recent,    -> { order(created_at: :desc) }
   scope :unpublished,  -> { where(published: false) }
   scope :published,    -> { where(published: true) }
+  scope :only_public,  -> { where(private: false) }
+  scope :only_private, -> { where(private: true) }
+
 end
 
 PublicActivity::Activity.class_eval do
