@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308145119) do
+ActiveRecord::Schema.define(version: 20170308152929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,6 +165,16 @@ ActiveRecord::Schema.define(version: 20170308145119) do
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
     t.index ["parent_id"], name: "index_locations_on_parent_id", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.string   "text",            null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "milestones", force: :cascade do |t|
@@ -355,6 +365,8 @@ ActiveRecord::Schema.define(version: 20170308145119) do
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
