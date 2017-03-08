@@ -10,6 +10,7 @@ RSpec.describe Conversation, type: :model do
   describe "associations" do
     it { should have_many(:conversation_users).dependent(:destroy) }
     it { should have_many(:users).through(:conversation_users) }
+    it { should have_many(:messages).dependent(:destroy) }
   end
 
   describe 'validations' do

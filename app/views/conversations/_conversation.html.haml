@@ -5,6 +5,11 @@
     .media-body
       %h5.mt-0
         = link_to other_user.name, conversation
+      %p
+        - last_message = conversation.last_message
+        - if last_message.user == current_user
+          You:
+        = conversation.last_message.text
       %small.text-muted
         = time_ago_in_words(conversation.updated_at)
         ago

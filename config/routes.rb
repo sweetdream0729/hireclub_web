@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
-  resources :conversations, path: "messages" do
+  resources :messages, only: [:create]
+
+  resources :conversations do
     collection do
       get :between
     end

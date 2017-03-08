@@ -1,3 +1,14 @@
 .container.mb-5
   %h1= title @conversation.other_users(current_user).map(&:display_name).join(", ")
 
+  #messages{"data-conversation-id" => @conversation.id}
+    = render @conversation.messages.by_recent
+
+  = form_for @message do |f|
+    = f.hidden_field :conversation_id, value: @conversation.id
+    .row
+      .col-xs-9.col-sm-10
+        .form-group
+          = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off"
+      .col-xs-3.col-sm-2
+        = f.submit "Send", class: 'btn btn-primary btn-block'

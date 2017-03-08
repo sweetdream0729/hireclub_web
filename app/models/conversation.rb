@@ -4,6 +4,7 @@ class Conversation < ApplicationRecord
   friendly_id :slug
 
   # Associations
+  has_many :messages, dependent: :destroy
   has_many :conversation_users, dependent: :destroy
   has_many :users, through: :conversation_users
 
@@ -30,6 +31,11 @@ class Conversation < ApplicationRecord
 
   def other_users(user)
     self.users - [user]
+  end
+
+
+  def last_message
+    messages.by_recent.last
   end
 
   def self.key_for_users(users)

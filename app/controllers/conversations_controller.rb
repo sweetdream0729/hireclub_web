@@ -15,6 +15,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
+    @message = Message.new
   end
 
   # GET /conversations/new
