@@ -8,6 +8,16 @@ class User < ApplicationRecord
 
   include UnpublishableActivity
   include Searchable
+  include HasSmartUrl
+  has_smart_url :website_url
+  has_smart_url :twitter_url
+  has_smart_url :dribbble_url
+  has_smart_url :github_url
+  has_smart_url :medium_url
+  has_smart_url :facebook_url
+  has_smart_url :instagram_url
+  has_smart_url :linkedin_url
+
   extend FriendlyId
   friendly_id :username
   dragonfly_accessor :avatar
@@ -64,6 +74,7 @@ class User < ApplicationRecord
   validates :medium_url, url: { allow_blank: true }
   validates :facebook_url, url: { allow_blank: true }
   validates :instagram_url, url: { allow_blank: true }
+  validates :linkedin_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?

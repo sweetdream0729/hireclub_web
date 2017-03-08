@@ -162,4 +162,42 @@ RSpec.describe User, type: :model do
       expect(activity.owner).to eq(user)
     end
   end
+
+  describe "website_url", focus: true do
+    it "should add http if missing" do
+      user.website_url = "instagram.com/username"
+      expect(user.website_url).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      user.website_url = "www.instagram.com/username"
+      expect(user.website_url).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      user.website_url = "foo"
+      expect(user.website_url).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
+  end
+
+  describe "instagram_url", focus: true do
+    it "should add http if missing" do
+      user.instagram_url = "instagram.com/username"
+      expect(user.instagram_url).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      user.instagram_url = "www.instagram.com/username"
+      expect(user.instagram_url).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      user.instagram_url = "foo"
+      expect(user.instagram_url).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:instagram_url) }
+  end
 end
