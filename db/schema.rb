@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308152929) do
+ActiveRecord::Schema.define(version: 20170308164532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,10 +96,11 @@ ActiveRecord::Schema.define(version: 20170308152929) do
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.string   "slug",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "slug",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.citext   "key"
+    t.integer  "messages_count", default: 0, null: false
     t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end

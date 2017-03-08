@@ -37,11 +37,11 @@ en:
         other: almost %{count} years
       half_a_minute: half a minute
       less_than_x_minutes:
-        one: less than a minute
-        other: less than %{count} minutes
+        one: "%{count}m"
+        other: "%{count}m"
       less_than_x_seconds:
-        one: less than 1 second
-        other: less than %{count} seconds
+        one: "%{count}s"
+        other: "%{count}s"
       over_x_years:
         one: over 1yr
         other: over %{count}yrs
@@ -59,4 +59,4 @@ en:
         other: "%{count}yr"  
       x_seconds:
         one: 1s
-        other: "%{count}1s"
+        other: "%{count}s"

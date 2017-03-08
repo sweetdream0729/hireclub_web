@@ -1,10 +1,11 @@
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_conversations, only: [:index, :show]
   before_action :set_conversation, only: [:show, :edit, :update, :destroy]
 
   # GET /conversations
   def index
-    @conversations = current_user.conversations
+    redirect_to current_user.conversations.by_recent.first if current_user.conversations.any?
   end
 
   def between
@@ -54,6 +55,11 @@ class ConversationsController < ApplicationController
   end
 
   private
+    
+    def set_conversations
+      @conversations = current_user.conversations.by_recent
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_conversation
       @conversation = Conversation.friendly.find(params[:id])

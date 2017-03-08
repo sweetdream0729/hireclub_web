@@ -1,5 +1,6 @@
-.container.mb-5
-  %h1= title "Messages"
+.container-fluid.mt-2.mb-5
+  - title "Conversations"
 
-  = render @conversations
-  
+  .row
+    = render "conversation_list"
+    

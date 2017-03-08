@@ -3,6 +3,9 @@ class Conversation < ApplicationRecord
   extend FriendlyId
   friendly_id :slug
 
+  # Scopes
+  scope :by_recent, -> {order(updated_at: :desc)}
+
   # Associations
   has_many :messages, dependent: :destroy
   has_many :conversation_users, dependent: :destroy
