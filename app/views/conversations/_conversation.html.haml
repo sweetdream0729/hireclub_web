@@ -12,6 +12,7 @@
           ago
       %p.mb-0
         - last_message = conversation.last_message
-        - if last_message && last_message.user == current_user
-          You:
-        = conversation.last_message.text
+        - if last_message
+          - last_message.user == current_user
+            You:
+          = conversation.last_message.text
