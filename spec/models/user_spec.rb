@@ -160,36 +160,14 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "keywords" do
+  describe "keywords method for meta-tags" do
     let(:user) { FactoryGirl.create(:user) }
-
-    it "should have city and state" do
-      Location.import_cities
-      user.location = Location.where(level: Location::CITY).last
-      user.save
-
-      expect(user.key_words).to eq([user.location.name_and_parent])
-    end
-
-    it "should return location name and parent" do 
-      Location.import_cities
-      user.location = Location.where(level: Location::CITY).last
-      user.save
-      expect(user.location.name_and_parent).to eq("Berkeley, California")
-    end 
-
-    it "should return location name and parent" do 
-      Location.import_cities
-      user.location = Location.where(level: Location::CITY).last
-      user.save
-      expect(user.location.name_and_parent).to eq("Berkeley, California")
-    end 
 
     it "should have roles by position" do
       Role.seed
       FactoryGirl.create(:user_role, user: user, role: Role.first, position: 0) 
       FactoryGirl.create(:user_role, user: user, role: Role.last, position: 10)
-      FactoryGirl.create(:user_role, user: user, role: Role.find(11), position: 11)
+      FactoryGirl.create(:user_role, user: user, role: Role.find(2), position: 3)
       user.save 
       # nil added to the end to simulate the addition of further meta tags
       expect(user.key_words).to eq(user.user_roles.by_position.limit(3).map(&:name) + [nil]) 

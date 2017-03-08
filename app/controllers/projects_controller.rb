@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   def show
     impressionist(@project)
+    @company = Company.find(@project.company_id).name
   end
 
   # GET /projects/new

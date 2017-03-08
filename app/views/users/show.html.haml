@@ -1,6 +1,6 @@
 - set_meta_tags title: @user.display_name
 - set_meta_tags canonical: user_url(@user)
-- set_meta_tags keywords: @user.user_roles.by_position.limit(3).map(&:name) + @user.user_skills.by_position.limit(5).map(&:name) + [ @user.location.try(:name_and_parent) ] 
+- set_meta_tags keywords: @user.key_words
 - set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
 
 .container.mt-5
