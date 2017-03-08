@@ -2,7 +2,9 @@
   .row
     = render "conversation_list"
     .col-sm-8
-      %h1= title @conversation.other_users(current_user).map(&:display_name).join(", ")
+      %h1
+        - @conversation.other_users(current_user).each do |user|
+          = link_to user.display_name, user
 
       #messages{"data-conversation-id" => @conversation.id}
         = render @conversation.messages.by_recent
