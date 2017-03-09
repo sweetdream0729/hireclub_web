@@ -1,6 +1,8 @@
 class Resume < ApplicationRecord
   # Extensions
   dragonfly_accessor :file
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   # Scopes
   scope :by_newest,     -> { order(created_at: :desc)}
