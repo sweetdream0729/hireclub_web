@@ -1,4 +1,5 @@
 # README
+![codeship](https://codeship.com/projects/9b28edb0-e6b6-0134-2ae0-5e565a429ea0/status?branch=master)
 
 1. Clone to local
 2. cd hireclub_web
