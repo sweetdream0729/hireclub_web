@@ -1,6 +1,6 @@
 - title "#{@user.display_name}"
 .container
-  
+
   .row
     .column
       %h1.mb-0
@@ -49,11 +49,11 @@
                 = pluralize(user_skill.years, "year") if user_skill.years > 0
       %section
         %h6 Links
-        .mb-1
-          = link_display(user_url(@user))
         - if @user.website_url
           .mb-1
             = link_display(@user.website_url)
+        .mb-1
+          = link_display(user_url(@user))
         - if @user.linkedin_url
           .mb-1
             = link_display(@user.linkedin_url)
