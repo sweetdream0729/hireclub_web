@@ -1,4 +1,79 @@
 body {
+  margin: 24pt;
+  font-size: 1.2rem;
+  letter-spacing: .08em
+}
+.row .column.column-offset-5 {
+  margin-left: 5%;
+}
+.row .column.column-55 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 55%;
+  flex: 0 0 55%;
+  max-width: 55%
+}
+.row .column.column-35 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 35%;
+  flex: 0 0 35%;
+  max-width: 35%
+}
+
+@page {
+  size: letter portrait;
+}
+
+h1 {
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h5 {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+h6 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.text-muted {
+  opacity: 0.6;
+}
+.text-right {
+  text-align: right !important;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+
+.ml-1 {
+  margin-left: 1rem !important;
+}
+
+.ml-2 {
+  margin-left: 2rem !important;
+}
+
+.mt-3 {
+  margin-top: 3rem !important;
+}
+.mt-4 {
+  margin-top: 4rem !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+/*body {
   font-family: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   width: 100%;
@@ -7,28 +82,4 @@ body {
   background: #fff url(none);
   padding: 1in;
 }
-.two_thirds {
-  width: 66%;
-  float: left;
-}
-.one_third {
-  width: 33%;
-  float: left;
-}
-
-section {
-  margin-top: 28px;
-}
-
-h3 {
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 1px;
-  color: #4A4A4A;
-}
-.text-muted {
-  color: #9B9AAC;
-}
-.user_skill_year {
-  text-align: right;
-}
+*/
