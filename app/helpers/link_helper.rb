@@ -10,7 +10,6 @@ module LinkHelper
     return if url.blank?
     uri = URI.parse(url)
     uri = URI.parse("http://" + url) if uri.scheme.blank?
-    puts uri.inspect
     return uri.host.gsub("www.","") + uri.path
   end
 end
