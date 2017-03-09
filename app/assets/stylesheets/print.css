@@ -1,7 +1,8 @@
 body {
   margin: 24pt;
   font-size: 1.2rem;
-  letter-spacing: .08em
+  letter-spacing: .08em;
+  font-family: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .row .column.column-offset-5 {
   margin-left: 5%;
@@ -24,6 +25,7 @@ body {
 }
 
 h1 {
+  font-size: 3rem;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;

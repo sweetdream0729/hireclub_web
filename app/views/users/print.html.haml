@@ -3,7 +3,7 @@
   
   .row
     .column
-      %h1
+      %h1.mb-0
         = @user.display_name
   .row
     .column.column-55
@@ -12,13 +12,19 @@
           = user_role.name
           - comma = index < (@user.user_roles.count - 1) ? " · " : ""
           = comma
-      %h5.mt-3
-        = @user.bio
 
     .column.column-35.column-offset-10
       = @user.email
-      %br
-      = @user.website_url
+      - if @user.website_url
+        %br
+        = @user.website_url
+      - if @user.location
+        %br
+        = @user.location.display_name
+  .row
+    .column.column-55
+      %h5.mt-3
+        = @user.bio
   .row
     .column.column-55
       %section
