@@ -4,24 +4,27 @@
     .col-sm-6.offset-sm-3.col-lg-4.offset-lg-4
       / %h2 Log in
 
-      = link_to omniauth_authorize_path(resource, 'facebook'), class: "btn btn-primary btn-lg btn-block" do
+      = link_to omniauth_authorize_path(resource, 'facebook'), class: "btn btn-primary btn-lg btn-block btn_facebook" do
         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
         Login with Facebook
 
-      / = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-      /   .form-group
-      /     = f.label :email
-      /     = f.email_field :email, autofocus: true, class: 'form-control'
-      /   .form-group
-      /     = f.label :password
-      /     = f.password_field :password, autocomplete: "off", class: 'form-control'
-      /   - if devise_mapping.rememberable?
-      /     .checkbox
-      /       %label
-      /         = f.check_box :remember_me
-      /         Remember Me
-      /       / = f.label :remember_me
+      .text-center.mt-3
+        OR
+
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-group
+          = f.label :email
+          = f.email_field :email, autofocus: true, class: 'form-control'
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: 'form-control'
+        - if devise_mapping.rememberable?
+          .checkbox
+            %label
+              = f.check_box :remember_me
+              Remember Me
+            / = f.label :remember_me
         
-      /   = f.submit "Log in", class: "btn btn-primary"
-      / %hr
-      / = render "devise/shared/links"
+        = f.submit "Log in", class: "btn btn-primary btn-block"
+      %hr
+      = render "devise/shared/links"

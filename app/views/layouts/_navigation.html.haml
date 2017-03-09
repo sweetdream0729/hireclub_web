@@ -27,9 +27,8 @@
         %li.nav-item
           %a.nav-link{:href => omniauth_authorize_path(User, 'facebook')}
             %i.fa.fa-facebook-square.fa-lg.facebook_blue.mr-1{"aria-hidden" => "true"}
-            Sign In
-        / %li.nav-item
-        /   %a.nav-link{:href => new_user_registration_path} Sign Up
+        %li.nav-item
+          %a.nav-link{:href => new_user_registration_path} Sign Up
         / %li.nav-item
         /   %a.nav-link{:href => new_user_session_path} Login
       - else
