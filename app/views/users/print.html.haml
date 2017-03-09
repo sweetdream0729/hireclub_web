@@ -50,7 +50,7 @@
               = user_skill.name
             .column
               %small.text-muted
-                = pluralize(user_skill.years, "year")
+                = pluralize(user_skill.years, "year") if user_skill.years > 0
       %section
         %h6 Links
         - if @user.linkedin_url
