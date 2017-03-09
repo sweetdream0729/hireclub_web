@@ -28,6 +28,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def print
+    set_user
+    impressionist(@user)
+    render layout: "print"
+  end
+
   private
 
   def set_user
