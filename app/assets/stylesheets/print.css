@@ -3,6 +3,8 @@ body {
   font-size: 1.2rem;
   letter-spacing: .08em;
   font-family: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  color: #515b63;
 }
 .row .column.column-offset-5 {
   margin-left: 5%;
@@ -29,6 +31,7 @@ h1 {
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
+  color: #32393e;
 }
 
 h5 {
@@ -42,10 +45,11 @@ h6 {
   margin-top: 4rem;
   font-weight: bold;
   font-size: 1rem;
+  color: #788690;
 }
 
 .text-muted {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 .text-right {
   text-align: right !important;
