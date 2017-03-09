@@ -4,6 +4,10 @@ class Milestone < ApplicationRecord
   include UnpublishableActivity
   include ActsAsLikeable
   include PublicActivity::Model
+  include HasSmartUrl
+  has_smart_url :link
+  
+
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
   
   # Scopes

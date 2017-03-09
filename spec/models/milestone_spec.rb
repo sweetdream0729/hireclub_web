@@ -63,4 +63,24 @@ RSpec.describe Milestone, type: :model do
       expect(user_badge.name).to eq "Mile High Club"
     end
   end
+  
+    describe "link" do
+    it "should add http if missing" do
+      milestone.link = "instagram.com/username"
+      expect(milestone.link).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      milestone.link = "www.instagram.com/username"
+      expect(milestone.link).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      milestone.link = "foo"
+      expect(milestone.link).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:link) }
+  end
+
 end
