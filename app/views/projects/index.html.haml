@@ -5,6 +5,6 @@
     - else
       = title "Projects by #{@user.display_name}"
     %small
-      = link_to 'Add Project', new_user_project_path(current_user), class: "btn btn-primary btn-sm" if policy(Project).new?
+      = link_to 'Add Project', new_user_project_path(current_user), class: "btn btn-primary btn-sm" if user_signed_in? && current_user == @user
   .row
     = render @projects
