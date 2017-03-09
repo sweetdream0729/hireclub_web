@@ -56,6 +56,9 @@ Rails.application.routes.draw do
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
     resources :projects
+    member do
+      get :print
+    end
   end
 
   authenticated :user do

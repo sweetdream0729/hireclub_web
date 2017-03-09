@@ -76,6 +76,7 @@
           = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
         - else
           = link_to "Edit", edit_user_registration_path, class: "btn btn-primary btn-block"
+        = link_to "Print", print_user_path(current_user), class: "btn btn-info btn-block"
       - else
         = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-primary btn-block" if user_signed_in?
       - if current_user && current_user.is_admin
