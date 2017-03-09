@@ -26,4 +26,8 @@ class UserCompletion
 
     return percent
   end
+
+  def next_step
+    return "Set Username" if user.username.blank?
+  end
 end
