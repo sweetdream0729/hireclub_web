@@ -12,18 +12,14 @@
           = user_role.name
           - comma = index < (@user.user_roles.count - 1) ? " · " : ""
           = comma
-
     .column.column-35.column-offset-10
       = @user.email
-      - if @user.website_url
-        %br
-        = @user.website_url
       - if @user.location
         %br
         = @user.location.display_name
   .row
     .column.column-55
-      %h5.mt-3
+      %h5.mt-3.mb-1
         = @user.bio
   .row
     .column.column-55
@@ -53,6 +49,11 @@
                 = pluralize(user_skill.years, "year") if user_skill.years > 0
       %section
         %h6 Links
+        .mb-1
+          = link_display(user_url(@user))
+        - if @user.website_url
+          .mb-1
+            = link_display(@user.website_url)
         - if @user.linkedin_url
           .mb-1
             = link_display(@user.linkedin_url)
