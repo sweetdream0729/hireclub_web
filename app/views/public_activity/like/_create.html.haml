@@ -15,7 +15,7 @@
       = link_to like.likeable_name, user_path(likeable.user)
     - if like.likeable_type == "Milestone"
       milestone
-      = link_to like.likeable_name, like.likeable
+      = link_to(truncate(like.likeable_name,length:40), like.likeable)
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
     
