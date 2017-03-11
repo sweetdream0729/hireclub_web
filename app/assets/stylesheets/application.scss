@@ -13,6 +13,7 @@ $input-color-placeholder: #bbb;
 @import "users";
 @import "projects";
 @import "typeahead";
+@import "formValidation.min";
 
 .facebook_blue {
   color: #4e7ad9
@@ -27,11 +28,6 @@ $input-color-placeholder: #bbb;
   border: #1178b3;
 }
 
-.navbar-light .navbar-brand {
-  font-weight: 700;
-  font-size: 15px;
-  color: $brand-primary;
-}
 #nav_search {
   border-radius: 99px;
   background-image: url("icons/search.svg");
