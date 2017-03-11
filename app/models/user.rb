@@ -147,6 +147,17 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def update_without_password(params, *options)
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
+  end
+
   def self.from_omniauth(omniauth, signed_in_resource=nil)
     # get auth model from omniauth data
     auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
