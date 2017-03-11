@@ -9,7 +9,7 @@ $(document).ready ->
       'message[text]':
         validators:
           notEmpty: 
-            message: ''
+            message: 'What you trying to say?'
 
 
   )
