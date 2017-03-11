@@ -27,6 +27,10 @@
           .form-control-feedback
             - if resource.errors.any? && resource.errors[:password].present?
               = resource.errors[:password][0]
+          - if @minimum_password_length
+            %small.form-text.text-muted 
+              = @minimum_password_length
+              characters minimum.
         
         = f.submit "Sign up", class: "btn btn-primary btn-block"
       = render "devise/shared/links"
