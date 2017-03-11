@@ -76,8 +76,8 @@ rake docs:generate
 
 * Rebuild Search Index
 ```
-heroku run rake pg_search:multisearch:rebuild[Company]
-heroku run rake pg_search:multisearch:rebuild[User]
+heroku run rake pg_search:multisearch:rebuild[Company] -r production
+heroku run rake pg_search:multisearch:rebuild[User] -r production
 ```
 
 Contributing
