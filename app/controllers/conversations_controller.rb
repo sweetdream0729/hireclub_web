@@ -2,6 +2,7 @@ class ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversations, only: [:index, :show]
   before_action :set_conversation, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized, except: [:index]
 
   # GET /conversations
   def index
@@ -11,6 +12,7 @@ class ConversationsController < ApplicationController
   def between
     users = User.find(params[:user_ids])
     conversation = Conversation.between(users)
+    authorize conversation
     redirect_to conversation
   end
 
@@ -22,6 +24,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/new
   def new
     @conversation = Conversation.new
+    authorize @conversation
   end
 
   # GET /conversations/1/edit
@@ -31,6 +34,7 @@ class ConversationsController < ApplicationController
   # POST /conversations
   def create
     @conversation = Conversation.new(conversation_params)
+    authorize @conversation
 
     if @conversation.save
       redirect_to @conversation, notice: 'Conversation was successfully created.'
@@ -63,6 +67,7 @@ class ConversationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_conversation
       @conversation = Conversation.friendly.find(params[:id])
+      authorize @conversation
     end
 
     # Only allow a trusted parameter "white list" through.
