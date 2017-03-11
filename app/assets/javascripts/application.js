@@ -18,4 +18,5 @@
 //= require typeahead.bundle
 //= require mousetrap.min
 //= require cocoon
+//= require init
 //= require_tree .

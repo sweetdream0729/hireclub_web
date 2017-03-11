@@ -1,5 +1,4 @@
 $(document).ready ->
-  $('[data-toggle="tooltip"]').tooltip()
   el = document.getElementById('sortable_user_skills')
   sortable = Sortable.create(el, {
     handle: ".drag_handle",
@@ -10,6 +9,4 @@ $(document).ready ->
         url: '/user_skills/' + user_skill_id
         data: user_skill: position: event.newIndex
       return
-
-
   })
