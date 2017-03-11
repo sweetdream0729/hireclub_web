@@ -4,8 +4,8 @@
       %a.nav-link.active{"data-toggle" => "tab", :href => "#profile", :role => "tab"} Profile
     %li.nav-item
       %a.nav-link{"data-toggle" => "tab", :href => "#status", :role => "tab"} Status
-    %li.nav-item
-      %a.nav-link{"data-toggle" => "tab", :href => "#social", :role => "tab"} Social
+    / %li.nav-item
+    /   %a.nav-link{"data-toggle" => "tab", :href => "#social", :role => "tab"} Social
     %li.nav-item
       %a.nav-link{"data-toggle" => "tab", :href => "#account", :role => "tab"} Account
 
@@ -119,26 +119,26 @@
                 Internship
           
           
-          #social.tab-pane{:role => "tabpanel"}
-            %h2 Social
-            %hr
-              - if !resource.has_facebook?
-                = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn_facebook" do
-                  %i.fa.fa-facebook-square{"aria-hidden" => "true"}
-                  Add Facebook
-              - else
-                = link_to "", class: "btn btn-primary btn_facebook" do
-                  %i.fa.fa-facebook-square{"aria-hidden" => "true"}
-                  Facebook Connected
-              %p
-              - if !resource.has_linkedin?
-                = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn_linkedin" do
-                  %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
-                  Add LinkedIn
-              - else
-                = link_to "", class: "btn btn-primary btn_linkedin" do
-                  %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
-                  LinkedIn Connected
+          / #social.tab-pane{:role => "tabpanel"}
+          /   %h2 Social
+          /   %hr
+          /     - if !resource.has_facebook?
+          /       = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn_facebook" do
+          /         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
+          /         Add Facebook
+          /     - else
+          /       = link_to "", class: "btn btn-primary btn_facebook" do
+          /         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
+          /         Facebook Connected
+          /     %p
+          /     - if !resource.has_linkedin?
+          /       = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn_linkedin" do
+          /         %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
+          /         Add LinkedIn
+          /     - else
+          /       = link_to "", class: "btn btn-primary btn_linkedin" do
+          /         %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
+          /         LinkedIn Connected
 
           #account.tab-pane{:role => "tabpanel"}
             %h2 Account
