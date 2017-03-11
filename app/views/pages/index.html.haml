@@ -9,7 +9,7 @@
     %p.lead.mt-5
       HireClub is an invite only job referral network.
     %p.mt-5
-      = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn-lg" do
+      = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn-lg btn_facebook" do
         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
         Sign Up with Facebook
     - if user_signed_in? && !current_user.has_linkedin?
