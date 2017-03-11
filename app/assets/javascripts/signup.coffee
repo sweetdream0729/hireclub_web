@@ -42,12 +42,19 @@ $(document).ready ->
           name: 'q',
           validKey: 'available'
 
-  ).on 'success.validator.fv', (e, data) ->
+  ).on('success.validator.fv', (e, data) ->
     
     if data.field == "user[username]" && data.validator == "remote"
       hint = $('#username_hint')
       hint.text("hireclub.co/" + data.element.val())
     return
+  ).on('err.validator.fv', (e, data) ->
+    
+    if data.field == "user[username]" && data.validator == "remote"
+      hint = $('#username_hint')
+      hint.text("hireclub.co/" + data.element.val())
+    return
+  )
 
   return
 
