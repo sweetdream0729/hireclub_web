@@ -106,7 +106,27 @@
         .form-group
           = f.label "Instagram"
           = f.text_field :instagram_url, class: 'form-control', placeholder: "http://instagram.com/username"
-          
+        
+        %h2.mt-5 Social
+        %hr
+          - if !resource.has_facebook?
+            = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn_facebook" do
+              %i.fa.fa-facebook-square{"aria-hidden" => "true"}
+              Add Facebook
+          - else
+            = link_to "", class: "btn btn-primary btn_facebook" do
+              %i.fa.fa-facebook-square{"aria-hidden" => "true"}
+              Facebook Connected
+          %p
+          - if !resource.has_linkedin?
+            = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn_linkedin" do
+              %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
+              Add LinkedIn
+          - else
+            = link_to "", class: "btn btn-primary btn_linkedin" do
+              %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
+              LinkedIn Connected
+
         %h2.mt-5 Settings
         %hr
 

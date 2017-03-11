@@ -186,8 +186,16 @@ class User < ApplicationRecord
     auth.save
 
     user.import_facebook_omniauth(omniauth)
+    user.import_linkedin_omniauth(omniauth)
 
     return user
+  end
+
+  def import_linkedin_omniauth(omniauth)
+    return if omniauth["provider"] != "linkedin"
+    if self.linkedin_url.blank? && omniauth['info']["urls"]["public_profile"].present?
+      self.linkedin_url = omniauth['info']["urls"]["public_profile"]
+    end
   end
 
   def import_facebook_omniauth(omniauth)

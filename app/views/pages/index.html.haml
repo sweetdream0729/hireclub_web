@@ -14,7 +14,7 @@
         Sign Up with Facebook
     - if user_signed_in? && !current_user.has_linkedin?
       %p
-        = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn-lg" do
+        = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn-lg btn_linkedin" do
           %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
           Add LinkedIn
       / %a.btn.btn-info.btn-lg{:href => "http://facebook.com/groups/hireclub", :role => "button"} Apply To Join »
