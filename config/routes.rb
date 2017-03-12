@@ -65,5 +65,8 @@ Rails.application.routes.draw do
   authenticated :user do
     root :to => 'feed#index', as: :authenticated_root
   end
+
+  get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
+  
   root to: "pages#index"
 end
