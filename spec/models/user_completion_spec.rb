@@ -73,7 +73,7 @@ RSpec.describe UserCompletion, :type => :model do
     end
   end
 
-  context "appropriate message presented" do
+  context "next_step" do
     it "should return Set Username when no username" do
       expect(user_completion.next_step).to eq "Set Username"
     end
@@ -182,6 +182,120 @@ RSpec.describe UserCompletion, :type => :model do
       end
       user.website_url = "http://hireclub.co"
       expect(user_completion.next_step).to eq "Complete Profile"
+    end
+
+  end 
+
+  context "next_link" do 
+    it "should return /settings when no username" do
+      expect(user_completion.next_link).to eq "/settings"
+    end
+
+    it "should return /settings no location" do
+      user.username = "test"
+      expect(user_completion.next_link).to eq "/settings"
+    end
+
+    it "should return /settings when no bio" do
+      user.username = "test"
+      user.location = randomlocation
+      expect(user_completion.next_link).to eq "/settings"
+    end
+
+    it "should return /settings when no avatar" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      expect(user_completion.next_link).to eq "/settings"
+    end
+
+    it "should return /user_roles/new when no roles" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user.save
+      expect(user_completion.next_link).to eq "/user_roles/new"
+    end
+
+    it "should return /user_skills/new when less than 5 skills" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user_role = FactoryGirl.create(:user_role, user: user)
+      user.save
+      expect(user_completion.next_link).to eq "/user_skills/new"
+    end
+
+    it "should return /user_id/projects/new when less than 3 projects" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user_role = FactoryGirl.create(:user_role, user: user)
+      user.save
+      5.times do
+        FactoryGirl.create(:user_skill, user: user)
+      end
+      id = user.id
+      expect(user_completion.next_link).to eq "/#{id}/projects/new"
+    end
+
+    it "should return /milestones/new when less than 5 milestones" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user_role = FactoryGirl.create(:user_role, user: user)
+      user.save
+      5.times do
+        FactoryGirl.create(:user_skill, user: user)
+      end
+      3.times do
+        FactoryGirl.create(:project, user: user)
+      end
+      expect(user_completion.next_link).to eq "/milestones/new"
+    end
+
+    it "should return Add /settings when no website_url" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user_role = FactoryGirl.create(:user_role, user: user)
+      user.save
+      5.times do
+        FactoryGirl.create(:user_skill, user: user)
+      end
+      3.times do
+        FactoryGirl.create(:project, user: user)
+      end
+      5.times do
+        FactoryGirl.create(:milestone, user: user)
+      end
+
+      expect(user_completion.next_link).to eq "/settings"
+    end
+
+    it "should return # when profile complete" do
+      user.username = "test"
+      user.location = randomlocation
+      user.bio = "this is a bio"
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user_role = FactoryGirl.create(:user_role, user: user)
+      user.save
+      5.times do
+        FactoryGirl.create(:user_skill, user: user)
+      end
+      3.times do
+        FactoryGirl.create(:project, user: user)
+      end
+      5.times do
+        FactoryGirl.create(:milestone, user: user)
+      end
+      user.website_url = "http://hireclub.co"
+      expect(user_completion.next_link).to eq "#"
     end
 
   end 
