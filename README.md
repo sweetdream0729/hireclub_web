@@ -1,4 +1,5 @@
 # README
+![codeship](https://codeship.com/projects/9b28edb0-e6b6-0134-2ae0-5e565a429ea0/status?branch=master)
 
 1. Clone to local
 2. cd hireclub_web
@@ -75,8 +76,8 @@ rake docs:generate
 
 * Rebuild Search Index
 ```
-heroku run rake pg_search:multisearch:rebuild[Company]
-heroku run rake pg_search:multisearch:rebuild[User]
+heroku run rake pg_search:multisearch:rebuild[Company] -r production
+heroku run rake pg_search:multisearch:rebuild[User] -r production
 ```
 
 Contributing
@@ -107,7 +108,13 @@ Sidekiq handles all background jobs and mailers
 
 
 * Deployment instructions
+```
 git push production master && heroku run rake db:migrate -r production
+```
+* Deploy Branch
+```
+git push production +HEAD:master && heroku run rake db:migrate -r production
+```
 
 * Colors
 https://coolors.co/6070e9-9fd356-484041-434371-79aea3

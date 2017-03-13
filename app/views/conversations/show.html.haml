@@ -1,3 +1,4 @@
+- title @conversation.other_users(current_user).map(&:display_name).join(", ")
 .container-fluid.mt-2.mb-5
   .row
     = render "conversation_list"

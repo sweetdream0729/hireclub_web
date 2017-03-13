@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get "/about",   to: "pages#about",   as: :about
   get "/contact", to: "pages#contact", as: :contact
 
+  get 'users/username' => 'users#username'
   devise_for :users,
     path:        '',
     path_names:  {:sign_in => 'login', :sign_out => 'logout', :edit => 'settings', :sign_up => "signup"},
@@ -56,10 +57,16 @@ Rails.application.routes.draw do
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
     resources :projects
+    member do
+      get :print
+    end
   end
 
   authenticated :user do
     root :to => 'feed#index', as: :authenticated_root
   end
+
+  get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
+  
   root to: "pages#index"
 end

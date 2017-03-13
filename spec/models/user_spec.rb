@@ -24,6 +24,8 @@ RSpec.describe User, type: :model do
     it { should have_many(:badges).through(:user_badges) }
 
     it { should belong_to(:location)}
+
+    it { should have_many(:likes) }
   end
 
   describe 'validations' do
@@ -67,6 +69,28 @@ RSpec.describe User, type: :model do
       expect(auth).to be_valid
       expect(auth).to be_persisted
 
+    end
+
+    it "should import omniauth data from linkedin" do
+
+      json = '{"provider":"linkedin","uid":"Fs7-zkSDyL","info":{"name":"Ketan Anjaria","email":"fire@kidbombay.com","nickname":"Ketan Anjaria","first_name":"Ketan","last_name":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"description":"CTO at Up All Night SF","image":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","urls":{"public_profile":"https://www.linkedin.com/in/kidbombay"}},"credentials":{"token":"AQVARc5fzBsJzGNGX0GHGTEP8uQrVUUAyMlwib6PhO7rm5pWG3QkWjmUT2H6dLvDrQ7lsD1ChsSNIi5snVp4LDnAyefjOHYg6GKfpnKwimFCEopAwqyQqZk0dJN06JkJ_CrHwh0VEj0c98s8mwHpCNq8LY88w4F1nRjTDCmtAPv9tLwav28","expires_at":1492441756,"expires":true},"extra":{"raw_info":{"emailAddress":"fire@kidbombay.com","firstName":"Ketan","headline":"CTO at Up All Night SF","id":"Fs7-zkSDyL","industry":"Internet","lastName":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"pictureUrl":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","publicProfileUrl":"https://www.linkedin.com/in/kidbombay"}}}'
+      omniauth = JSON.parse(json)
+
+      user = User.from_omniauth(omniauth)
+
+      expect(user).to be_valid
+      expect(user).to be_persisted
+      expect(user.linkedin_url).to eq "https://www.linkedin.com/in/kidbombay"
+
+      expect(user.email).to eq("fire@kidbombay.com")
+      expect(user.name).to eq("Ketan Anjaria")
+      #expect(user.gender).to eq("male")
+      #expect(user.location).to be_present
+
+      auth = user.authentications.first
+      expect(auth).to be_present
+      expect(auth).to be_valid
+      expect(auth).to be_persisted
     end
   end
 

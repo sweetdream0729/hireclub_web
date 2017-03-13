@@ -28,6 +28,34 @@ class UsersController < ApplicationController
     end
   end
 
+  def print
+    set_user
+    impressionist(@user)
+
+    @milestones = @user.milestones.by_newest
+    render layout: "print"
+  end
+
+  def username
+    username = (params[:q] || "").downcase
+    scope = User.where('lower(username) = ?', username.downcase)
+    
+    if user_signed_in?
+      scope = scope.where.not(id: current_user.id)
+    end
+
+    available = !scope.exists?
+    
+    hash = {
+      :available => available,
+      :username => username
+    }
+
+    respond_to do |format|
+      format.json { render :json => hash.to_json }
+    end
+  end
+
   private
 
   def set_user

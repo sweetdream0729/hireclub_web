@@ -1,6 +1,8 @@
 - set_meta_tags title: "Choose Username"
 
-.container.mt-5.mb-5
+= render "nav"
+
+.container.mt-3.mb-5
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
       .progress.mb-4
@@ -10,9 +12,10 @@
 
       %p
         Your profile in HireClub highlights your milestones, skills and projects.
+        %br
         Relax, we'll walk you through it in the next few steps 👣.
 
-      = form_for @user, url: wizard_path, method: :put do |f|
+      = form_for @user, url: wizard_path, method: :put, html: {id: 'new_user'} do |f|
         .form-group{class: ('has-danger' if @user.errors.any?)}
           = f.text_field :username, class: 'form-control form-control-lg', placeholder: "johndoe"
           
@@ -20,8 +23,8 @@
             - username = "username"
             - if @user.errors.any? && @user.errors.details[:username].present?
               - username = @user.errors.details[:username][0][:value]
-            
-            = "hireclub.co/#{username}"
+            %span#username_hint
+              = "hireclub.co/#{username}"
 
             - if @user.errors.any?
               is not available
@@ -32,4 +35,4 @@
             %br
             You can change this at any time.
 
-        = f.submit "Next", class: "btn btn-primary btn-lg"
+        = f.submit "Next", class: "btn btn-primary btn-lg btn-block"

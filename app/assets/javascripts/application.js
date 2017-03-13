@@ -14,8 +14,11 @@
 //= require jquery_ujs
 //= require tether
 //= require bootstrap
+//= require formValidation.min
+//= require framework/bootstrap4.min
 //= require sortable.min
 //= require typeahead.bundle
 //= require mousetrap.min
 //= require cocoon
+//= require init
 //= require_tree .

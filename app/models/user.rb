@@ -52,6 +52,7 @@ class User < ApplicationRecord
   has_many :badges, through: :user_badges
 
   has_many :resumes, dependent: :destroy, inverse_of: :user
+  has_many :likes, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -147,6 +148,17 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def update_without_password(params, *options)
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
+  end
+
   def self.from_omniauth(omniauth, signed_in_resource=nil)
     # get auth model from omniauth data
     auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
@@ -175,8 +187,16 @@ class User < ApplicationRecord
     auth.save
 
     user.import_facebook_omniauth(omniauth)
+    user.import_linkedin_omniauth(omniauth)
 
     return user
+  end
+
+  def import_linkedin_omniauth(omniauth)
+    return if omniauth["provider"] != "linkedin"
+    if self.linkedin_url.blank? && omniauth['info']["urls"]["public_profile"].present?
+      self.linkedin_url = omniauth['info']["urls"]["public_profile"]
+    end
   end
 
   def import_facebook_omniauth(omniauth)

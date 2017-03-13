@@ -13,19 +13,24 @@ $input-color-placeholder: #bbb;
 @import "users";
 @import "projects";
 @import "typeahead";
+@import "formValidation.min";
 
 .facebook_blue {
   color: #4e7ad9
 }
-
-.navbar-light .navbar-brand {
-  font-weight: 700;
-  font-size: 15px;
-  color: $brand-primary;
+.btn_facebook {
+  background: #4e7ad9;
+  border: #4e7ad9;
 }
+
+.btn_linkedin {
+  background: #1178b3;
+  border: #1178b3;
+}
+
 #nav_search {
   border-radius: 99px;
-  background-image: url("icons/search.svg");
+  background-image: asset-url("icons/search.svg");
   padding-right: 2.25rem;
   background-repeat: no-repeat;
   background-position: center right .5625rem;

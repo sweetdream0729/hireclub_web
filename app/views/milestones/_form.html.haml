@@ -30,7 +30,7 @@
         = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]}
       .form-group
         = f.label :link
-        = f.url_field :link, class: "form-control"
+        = f.text_field :link, class: "form-control"
         %small.text-muted
           Optional - Where should the milestone link to?
 

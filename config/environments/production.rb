@@ -28,7 +28,9 @@ Rails.application.configure do
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = 'cdn.hireclub.co'
+  if Rails.application.secrets.asset_host.present?
+    config.action_controller.asset_host = Rails.application.secrets.asset_host
+  end
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -56,12 +58,12 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "hireclub_web_#{Rails.env}"
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'hireclub.co' }
+  config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
 
   ActionMailer::Base.smtp_settings = {
     :user_name => Rails.application.secrets.sendgrid_username,
     :password => Rails.application.secrets.sendgrid_password,
-    :domain => 'hireclub.co',
+    :domain => Rails.application.secrets.domain_name,
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :authentication => :plain,

@@ -1,6 +1,8 @@
 - set_meta_tags title: "What's your role?"
 
-.container.mt-5.mb-5
+= render "nav"
+
+.container.mt-3.mb-5
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
       .progress.mb-4
@@ -15,5 +17,5 @@
             %small.form-text.text-muted 
               You can add more roles later.
 
-        = f.submit "Next", class: "btn btn-primary btn-lg"
+        = f.submit "Next", class: "btn btn-primary btn-lg btn-block"
 
