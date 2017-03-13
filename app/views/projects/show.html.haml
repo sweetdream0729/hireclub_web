@@ -11,7 +11,7 @@
         = @project.name
       %hr
       .media.mb-4
-        = link_to image_tag(model_image(@project.user.avatar, 200, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
+        = link_to image_tag(model_avatar(@project.user.avatar, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
         .media-body
           = link_to @project.user.display_name, @project.user
       %hr
