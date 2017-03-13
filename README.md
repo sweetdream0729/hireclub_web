@@ -83,6 +83,13 @@ heroku run rake pg_search:multisearch:rebuild[User] -r production
 Contributing
 ------------
 
+Add the Heroku remote
+```
+heroku git:remote -a hireclub -r production
+heroku git:remote -a staging-hireclub -r staging
+```
+
+
 -   Create a branch with the issue name
 For example if the Issue is 134 Add Views Count To Invites
 
