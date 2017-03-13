@@ -5,6 +5,8 @@ RSpec.describe UserCompletion, :type => :model do
   let(:user_completion) { UserCompletion.new(user) }
   let(:location) { FactoryGirl.create(:location)}
   let(:username) { "testy" }
+  let(:location) { FactoryGirl.build(:location) }
+
   subject { user_completion }
 
   describe "associations" do
@@ -155,23 +157,6 @@ RSpec.describe UserCompletion, :type => :model do
       5.times do
         FactoryGirl.create(:user_skill, user: user)
       end
-      3.times do
-        FactoryGirl.create(:project, user: user)
-      end
-      5.times do
-        FactoryGirl.create(:milestone, user: user)
-      end
-
-      expect(user_completion.next_step).to eq UserCompletion::WEBSITE_STEP
-    end
-
+    end 
   end 
-
- end
-
-
-
-
-
-
-
+end 

@@ -41,7 +41,6 @@ class UserCompletion
 
   end
 
-
   def roles_complete?
     user.roles.any?
   end
@@ -63,7 +62,6 @@ class UserCompletion
   end
 
   def next_step
-
     return USERNAME_STEP if user.username.blank?
     return LOCATION_STEP if user.location.blank?
     return BIO_STEP if user.bio.blank?
@@ -73,10 +71,6 @@ class UserCompletion
     return PROJECTS_STEP if !projects_complete?
     return MILESTONES_STEP if !milestones_complete?
     return WEBSITE_STEP if !has_one_url?
-    
   end
-  
-
 
 end
-
