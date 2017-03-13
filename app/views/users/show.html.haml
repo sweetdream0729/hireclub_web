@@ -4,12 +4,16 @@
 - set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
 - set_meta_tags og: {type: "profile"}
 
-- if @user_completion.present?
+- if @user_completion.present? && @user_completion.percent < 100
   .alert.alert-info{:role => "alert"}
     .container.text-center
       Your Profile is
       %strong 
-        = "#{@user_completion.percent_complete}% Complete"
+        = "#{@user_completion.percent}% Complete"
+    .container.text-center
+      Next step:
+      %a.btn.btn-primary.btn-sm{href: @user_completion.link}
+        = "#{@user_completion.next_step}"
       .row.justify-content-center.mt-2
         .col-lg-3.col-md-4
           .progress
