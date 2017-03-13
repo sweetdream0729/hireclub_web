@@ -25,9 +25,14 @@
 
             .form-group
               = f.label :username, "Username"
-              = f.text_field :username, class: 'form-control'
-              %small.form-text.text-muted 
-                %span hireclub.co/username
+              = f.text_field :username, class: 'form-control', autocomplete: "off"
+              .form-control-feedback
+                - username = "username"
+                - if @user.errors.any? && @user.errors.details[:username].present?
+                  - username = @user.errors.details[:username][0][:value]
+                %small
+                  %span#username_hint
+                    = "hireclub.co/#{username}"
 
             .form-group
               = f.label :location
@@ -36,7 +41,7 @@
 
             .form-group
               = f.label :bio
-              = f.text_area :bio, class: 'form-control', rows: 3, maxlength: 255
+              = f.text_area :bio, class: 'form-control', rows: 3, maxlength: 140
 
             .form-group
               = f.label 'Profile Image'
