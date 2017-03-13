@@ -31,7 +31,7 @@
 
             .form-group
               = f.label :location
-              = f.text_field :location, class: 'form-control', value: @user.location.try(:display_name)
+              = f.text_field :location, class: 'form-control', value: @user.location.try(:display_name), autocomplete: "off"
               = f.hidden_field :location_id, value: @user.location_id
 
             .form-group
