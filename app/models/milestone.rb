@@ -13,6 +13,7 @@ class Milestone < ApplicationRecord
   # Scopes
   scope :by_oldest,     -> { order(start_date: :asc)}
   scope :by_newest,     -> { order(start_date: :desc)}
+  scope :printable,     -> { where(printable: :true)}
 
   # Associations
   belongs_to :user

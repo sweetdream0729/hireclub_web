@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     set_user
     impressionist(@user)
 
-    @milestones = @user.milestones.by_newest
+    @milestones = @user.milestones.printable.by_newest
     render layout: "print"
   end
 

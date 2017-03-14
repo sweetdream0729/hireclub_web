@@ -39,6 +39,14 @@
         = f.text_area :description, class: 'form-control', placeholder: "HireClub started with 25 friends. Now it's 9000+ people.", rows: 2
         %small.text-muted
           Optional short description to provide more details.
+
+      .form-check
+        %label.form-check-label
+          = f.check_box :printable, class: 'form-check-input'
+          Printable
+      %small.text-muted
+        Show this milestone in 
+        = link_to "Print Profile", print_user_path(current_user), target: "_blank"
        
 
     .col-1
