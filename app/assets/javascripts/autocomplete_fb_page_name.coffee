@@ -18,7 +18,7 @@ $(document).ready ->
     templates:
       empty: 'not found'
       suggestion: (el) ->
-        '<div class="test">' + '<img class="mr-2 rounded" src="' + el.picture.data.url + '" />' + '<strong>' + el.name + '</strong> ' + el.link + '</div>'
+        '<div>' + '<img class="mr-2 rounded" src="' + el.picture.data.url + '" />' + '<strong>' + el.name + '</strong> ' + el.link + '</div>'
   # company selected, set form value
   $('input#company_name').bind 'typeahead:select', (ev, company) ->
     $('input#company_facebook_url').val company.link

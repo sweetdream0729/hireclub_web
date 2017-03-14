@@ -15,6 +15,10 @@ $(document).ready ->
     source: companySearch
     display: (company) ->
       company.name
+    templates:
+      empty: 'not found'
+      suggestion: (el) ->
+        '<div>' + '<img class="mr-2 rounded" width="50" src="' + el.avatar_url + '" />' + '<strong>' + el.name + '</strong> ' + '</div>'
   # company selected, let's set hidden company_id field
   $('input#milestone_company').bind 'typeahead:select', (ev, company) ->
     # Set hidden form field of company_id
