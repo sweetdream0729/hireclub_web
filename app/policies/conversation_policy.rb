@@ -20,7 +20,7 @@ class ConversationPolicy < ApplicationPolicy
 
   def create?
     return false if user.nil?
-    true
+    user.is_admin || user.is_moderator
   end
   
   def update?

@@ -20,7 +20,7 @@ RSpec.describe ConversationPolicy do
   context 'being in the conversation' do
     let(:user) { user1 }
     it { should permit_action(:show) }
-    it { should permit_action(:create) }
+    # it { should permit_action(:create) }
     it { should permit_action(:update) }
     it { should permit_action(:destroy) }
   end
@@ -29,7 +29,7 @@ RSpec.describe ConversationPolicy do
     let(:user) { FactoryGirl.create(:user) }
 
     it { should forbid_action(:show) }
-    it { should permit_action(:create) }
+    # it { should permit_action(:create) }
     it { should forbid_action(:update) }
     it { should forbid_action(:destroy) }
   end
