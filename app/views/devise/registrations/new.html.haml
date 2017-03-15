@@ -14,7 +14,7 @@
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
         .form-group
           = f.label :name
-          = f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Jane Doe"
+          = f.text_field :name, class: 'form-control', placeholder: "Jane Doe"
         .form-group{class: ('has-danger' if resource.errors.any? && resource.errors[:email].present?)}
           = f.label :email, class: 'form-control-label'
           = f.email_field :email, class: 'form-control'
