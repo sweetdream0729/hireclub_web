@@ -7,7 +7,7 @@ $(document).ready ->
     return
 
   $('input#user_skill_skill').typeahead {
-    minLength: 1
+    minLength: 0
     hint: false
     highlight: true
   },
