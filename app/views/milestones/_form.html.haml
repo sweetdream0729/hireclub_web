@@ -13,7 +13,7 @@
 
       .form-group
         = f.label :title
-        = f.text_field :title, class: "form-control", placeholder: "Founded HireClub with 25 of my friends"
+        = f.text_field :title, class: "form-control", placeholder: "Founded HireClub with 25 of my friends",maxlength: 140
         %small.form-text.text-muted 
           Make them short, objective and interesting.
 
@@ -21,7 +21,7 @@
         = f.label :company
 
         = f.text_field :company, class: "form-control", value: @milestone.company.try(:name), placeholder: "HireClub", autocomplete: "off"
-        
+
         %small.form-text.text-muted 
           Which Company, School or Organization was this milestone for?
         = f.hidden_field :company_id, value: @milestone.company_id
