@@ -1,6 +1,6 @@
 body {
   margin: 24pt;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: .08em;
   font-family: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -80,6 +80,9 @@ h6 {
 
 .mb-0 {
   margin-bottom: 0 !important;
+}
+.mb-05 {
+  margin-bottom: .5rem !important;
 }
 .mb-1 {
   margin-bottom: 1rem !important;

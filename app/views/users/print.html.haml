@@ -41,7 +41,7 @@
       %section
         %h6 Skills
         - @user.user_skills.by_position.each do |user_skill|
-          .row
+          .row.mb-05
             .column.column-70
               = user_skill.name
             .column.column-30
