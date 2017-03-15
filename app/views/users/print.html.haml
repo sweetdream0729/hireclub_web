@@ -6,17 +6,19 @@
       %h1.mb-0
         = @user.display_name
   .row
-    .column.column-55
+    .column
       - @user.user_roles.by_position.each_with_index do |user_role, index|
         %span.user_role
           = user_role.name
           - comma = index < (@user.user_roles.count - 1) ? " · " : ""
           = comma
-    .column.column-35.column-offset-10
-      = @user.email
-      - if @user.location
-        %br
+      - if @user.location.present?
+        ·
         = @user.location.display_name
+      ·
+      = @user.email
+      %hr
+    
   .row
     .column.column-55
       %h5.mt-3.mb-1
