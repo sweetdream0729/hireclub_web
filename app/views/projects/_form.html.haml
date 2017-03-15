@@ -32,8 +32,9 @@
         = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
 
       .form-group
-        = f.label "Company"
-        = f.collection_select(:company_id, Company.alphabetical, :id, :name, {prompt: true}, {class: "form-control"})
+        = f.label :company
+        = f.text_field :company, class: "form-control autocomplete_company", value: @project.company.try(:name), placeholder: "HireClub", autocomplete: "off"
+        = f.hidden_field :company_id, value: @project.company_id, class: "autocomplete_company_id"
 
       .form-group
         = f.label :position

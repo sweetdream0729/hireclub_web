@@ -19,12 +19,11 @@
 
       .form-group
         = f.label :company
-
-        = f.text_field :company, class: "form-control", value: @milestone.company.try(:name), placeholder: "HireClub", autocomplete: "off"
+        = f.text_field :company, class: "form-control autocomplete_company", value: @milestone.company.try(:name), placeholder: "HireClub", autocomplete: "off"
 
         %small.form-text.text-muted 
           Which Company, School or Organization was this milestone for?
-        = f.hidden_field :company_id, value: @milestone.company_id
+        = f.hidden_field :company_id, value: @milestone.company_id, class: "autocomplete_company_id"
       .form-group
         = f.label "When did this happen?"
         %br

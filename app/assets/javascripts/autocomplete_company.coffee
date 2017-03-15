@@ -6,12 +6,12 @@ $(document).ready ->
     ), 'json'
     return
 
-  $('input#milestone_company').typeahead {
+  $('.autocomplete_company').typeahead {
     minLength: 1
     hint: false
     highlight: true
   },
-    name: 'company-search-results'
+    name: 'autocomplete_company'
     source: companySearch
     display: (company) ->
       company.name
@@ -20,9 +20,15 @@ $(document).ready ->
       suggestion: (el) ->
         '<div>' + '<img class="mr-2 rounded" width="50" src="' + el.avatar_url + '" />' + '<strong>' + el.name + '</strong> ' + '</div>'
   # company selected, let's set hidden company_id field
-  $('input#milestone_company').bind 'typeahead:select', (ev, company) ->
+  $('.autocomplete_company').bind 'typeahead:select', (ev, company) ->
     # Set hidden form field of company_id
-    $('input#milestone_company_id').val company.id
+    $('.autocomplete_company_id').val company.id
+    return
+  $('.autocomplete_company').bind 'typeahead:change', (ev, company) ->
+    # clear company id if no value
+    if company.length == 0
+        console.log("clear value")
+        $('.autocomplete_company_id').val null
     return
   return
 
