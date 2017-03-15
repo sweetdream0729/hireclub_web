@@ -29,10 +29,12 @@
             = link_to @user.display_name, link
             - if @user.is_hiring
               %span.small
-                %i.fa.fa-bullseye.text-primary
+                = link_to '', data: {toggle:"tooltip", placement: "bottom"}, title: "I am hiring" do
+                  %i.fa.fa-bullseye.text-primary
             - if @user.is_available
               %span.small
-                %i.fa.fa-briefcase.text-success
+                = link_to '', data: {toggle:"tooltip", placement: "bottom"}, title: "I am available to hire" do
+                  %i.fa.fa-briefcase.text-success
             
 
           - if @user.user_roles.any? || @user == current_user
