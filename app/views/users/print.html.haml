@@ -42,9 +42,9 @@
         %h6 Skills
         - @user.user_skills.by_position.each do |user_skill|
           .row.mb-05
-            .column.column-70
+            .column.column-75
               = user_skill.name
-            .column.column-30
+            .column.column-25
               %small.text-muted
                 = pluralize(user_skill.years, "year") if user_skill.years > 0
       %section

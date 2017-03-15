@@ -22,6 +22,19 @@ body {
   max-width: 35%
 }
 
+.row .column.column-70 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 70%;
+  flex: 0 0 70%;
+  max-width: 70%
+}
+.row .column.column-30 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 30%;
+  flex: 0 0 30%;
+  max-width: 30%
+}
+
 @page {
   size: 8.5in 11in;
 }
