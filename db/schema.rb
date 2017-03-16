@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314005452) do
+ActiveRecord::Schema.define(version: 20170316194439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,7 +192,9 @@ ActiveRecord::Schema.define(version: 20170314005452) do
     t.integer  "company_id"
     t.integer  "likes_count", default: 0,    null: false
     t.boolean  "printable",   default: true, null: false
+    t.string   "facebook_id"
     t.index ["company_id"], name: "index_milestones_on_company_id", using: :btree
+    t.index ["facebook_id"], name: "index_milestones_on_facebook_id", unique: true, using: :btree
     t.index ["printable"], name: "index_milestones_on_printable", using: :btree
     t.index ["start_date"], name: "index_milestones_on_start_date", using: :btree
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree

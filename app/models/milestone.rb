@@ -21,6 +21,7 @@ class Milestone < ApplicationRecord
 
   # Validations
   validates :title, presence: true
+  validates :facebook_id, uniqueness: true, allow_blank: true
 
   # Broadcasts
   after_initialize :subscribe_listeners
