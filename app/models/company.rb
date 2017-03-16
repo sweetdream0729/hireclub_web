@@ -55,7 +55,7 @@ class Company < ApplicationRecord
   end
 
   def self.import_facebook_url(url)
-    puts "import_facebook_url #{url}"
+    puts "Company.import_facebook_url #{url}"
     client = FacebookService.get_client
 
     begin
@@ -74,7 +74,7 @@ class Company < ApplicationRecord
       if company.nil? 
         company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
       end
-      company.name = name
+      company.name = name if company.name.blank?
       company.website_url = fb_page["website"] if company.website_url.nil? 
       company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
       company.tagline = fb_page["about"] if company.tagline.nil?
@@ -94,6 +94,44 @@ class Company < ApplicationRecord
       puts message
       puts "   errors = #{e.inspect}"
     end
+  end
+
+  def self.import_facebook_id(facebook_id)
+    puts "Company.import_facebook_id #{facebook_id}"
+    client = FacebookService.get_client
+    begin
+      # fb_page = FacebookService.facebook_client.get_object(url, {"fields"=>"id,name,description,phone,website,location,cover"}) 
+      fb_page = client.get_object(facebook_id, {fields: "id,username,name,website,link,about,description,founded,location,phone,emails,cover,picture.type(large)"})
+      puts fb_page.inspect
+      
+      name = fb_page["name"]
+      slug = fb_page["username"]
+      puts "name #{name}, slug #{slug}"
+      
+      company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
+
+      if company.nil? 
+        company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
+      end
+      company.name = name if company.name.blank?
+      # website = fb_page["website"]
+      # company.website_url = website if company.website_url.nil? 
+      company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
+      company.tagline = fb_page["about"] if company.tagline.nil?
+
+      if company.avatar_uid.nil? && !fb_page["picture"]["data"]["is_silhouette"]
+        picture_url = fb_page["picture"]["data"]["url"]
+        company.avatar_url = picture_url
+      end
+      
+      company.save
+      company
+    rescue Exception => e
+      message = "Cound not import facebook id: #{facebook_id}" 
+      puts message
+      puts "   errors = #{e.inspect}"
+    end
+
   end
 
   def self.import

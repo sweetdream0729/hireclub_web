@@ -44,6 +44,23 @@ RSpec.describe Company, type: :model do
     let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
     let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
 
+    it "should import company from facebook_id",focus: true do
+      expect(kidbombay_auth).to be_valid
+  
+      id = "32359482111"
+
+      company = Company.import_facebook_id(id)
+      expect(company).to be_present
+      expect(company).to be_valid
+      expect(company.name).to eq "The Evergreen State College"
+      expect(company.slug).to eq "TheEvergreenStateCollege"
+      expect(company.facebook_id).to eq "32359482111"
+      # expect(company.website_url).to eq "http://www.evergreen.edu/"
+      expect(company.facebook_url).to eq "https://www.facebook.com/TheEvergreenStateCollege/"
+      expect(company.tagline).to be_present
+      expect(company.avatar).to be_present
+      
+    end
     it "should import company from facebook_url" do
       expect(kidbombay_auth).to be_valid
   
