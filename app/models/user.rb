@@ -239,7 +239,7 @@ class User < ApplicationRecord
       type = item["type"]
       facebook_id = item["id"]
       puts item.inspect
-      if type == "College" && facebook_id.present?
+      if (type == "College" || type == "Graduate School") && facebook_id.present?
         
         year = item["year"]["name"] if item["year"].present?
         school = item["school"]["name"] if item["school"].present?
