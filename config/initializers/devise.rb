@@ -249,7 +249,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   config.omniauth :facebook, Rails.application.secrets.facebook_app_id, Rails.application.secrets.facebook_app_secret,
     :scope => "email, public_profile, user_friends, user_location, user_work_history, user_education_history, user_website",
-    :info_fields => "id, name, gender, locale, email, location, education",
+    :info_fields => "id, name, gender, locale, email, location, education, work",
     :image_size => "large"
 
   config.omniauth :linkedin, Rails.application.secrets.linkedin_client_id, Rails.application.secrets.linkedin_client_secret
