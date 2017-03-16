@@ -85,6 +85,7 @@ RSpec.describe User, type: :model do
       expect(milestone.title).to eq "Went to The Evergreen State College"
       expect(milestone.start_date.year).to eq 2000
       expect(milestone.facebook_id).to eq "10158330373725244"
+      
     end
 
     it "should import omniauth data from linkedin" do

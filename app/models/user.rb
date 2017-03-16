@@ -252,6 +252,15 @@ class User < ApplicationRecord
         milestone.start_date = Date.today if milestone.start_date.nil?
 
         milestone.title = "Went to #{school}" if milestone.title.blank?
+        school_facebook_id = item["school"]["id"]
+        
+        begin
+          company = Company.import_facebook_id(school_facebook_id)
+          milestone.company = company
+        rescue
+          puts "could not import education company #{school_facebook_id}"
+        end
+
         milestone.save
         
         puts milestone.inspect
