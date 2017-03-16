@@ -71,6 +71,22 @@ RSpec.describe User, type: :model do
 
     end
 
+    it "should import education history",focus: true do
+      json = '{"provider":"facebook","uid":"10158109415805244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/10158109415805244/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAAROPfhGmSQBAMk4iYc5p36VEW2uv95UgjSUEaOV3Gw6jHJcAJ3lU6r476r6apZCqKtykLpcG0xX9dnUWojyEPTs4XQlGZB5uIcnDMWiiYQuR510ui6hZCUwzVmW9FUMMIuG1uTbBi7E2D5TUH9pt9eXnWAZBNwZD","expires_at":1494876966,"expires":true},"extra":{"raw_info":{"id":"10158109415805244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"},"education":[{"school":{"id":"111584518860183","name":"West Springfield High"},"type":"High School","year":{"id":"137409666290034","name":"1995"},"id":"10150413024980244"},{"concentration":[{"id":"108170975877442","name":"Photography"}],"school":{"id":"32359482111","name":"The Evergreen State College"},"type":"College","id":"10158330373725244"}]}}}'
+      omniauth = JSON.parse(json)
+
+      user = User.from_omniauth(omniauth)
+
+      expect(user).to be_valid
+      expect(user).to be_persisted
+      
+      milestone = user.milestones.last
+      expect(milestone).to be_present
+      expect(milestone.title).to eq "Went to The Evergreen State College"
+      expect(milestone.start_date.year).to be_present
+      expect(milestone.facebook_id).to eq "10158330373725244"
+    end
+
     it "should import omniauth data from linkedin" do
 
       json = '{"provider":"linkedin","uid":"Fs7-zkSDyL","info":{"name":"Ketan Anjaria","email":"fire@kidbombay.com","nickname":"Ketan Anjaria","first_name":"Ketan","last_name":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"description":"CTO at Up All Night SF","image":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","urls":{"public_profile":"https://www.linkedin.com/in/kidbombay"}},"credentials":{"token":"AQVARc5fzBsJzGNGX0GHGTEP8uQrVUUAyMlwib6PhO7rm5pWG3QkWjmUT2H6dLvDrQ7lsD1ChsSNIi5snVp4LDnAyefjOHYg6GKfpnKwimFCEopAwqyQqZk0dJN06JkJ_CrHwh0VEj0c98s8mwHpCNq8LY88w4F1nRjTDCmtAPv9tLwav28","expires_at":1492441756,"expires":true},"extra":{"raw_info":{"emailAddress":"fire@kidbombay.com","firstName":"Ketan","headline":"CTO at Up All Night SF","id":"Fs7-zkSDyL","industry":"Internet","lastName":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"pictureUrl":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","publicProfileUrl":"https://www.linkedin.com/in/kidbombay"}}}'

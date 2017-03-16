@@ -225,7 +225,38 @@ class User < ApplicationRecord
 
     self.save
 
+    education = omniauth["extra"]["raw_info"]["education"]
+    import_education_from_facebook(education)
+
     return self
+  end
+
+  def import_education_from_facebook(education)
+    return if education.blank?
+    
+    education.each do |item|
+      
+      type = item["type"]
+      facebook_id = item["id"]
+      puts item.inspect
+      if type == "College" && facebook_id.present?
+        
+        year = item["year"]["name"] if item["year"].present?
+        school = item["school"]["name"] if item["school"].present?
+        break if school.blank?
+        
+        puts facebook_id, year, school
+
+        milestone = Milestone.where(user: self, facebook_id: facebook_id).first_or_initialize
+        milestone.start_date = Date.new(year.to_i) if milestone.start_date.nil? && year.present?
+        milestone.start_date = Date.today if milestone.start_date.nil?
+
+        milestone.title = "Went to #{school}" if milestone.title.blank?
+        milestone.save
+        
+        puts milestone.inspect
+      end
+    end
   end
 
 
