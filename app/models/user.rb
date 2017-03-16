@@ -244,7 +244,7 @@ class User < ApplicationRecord
         year = item["year"]["name"] if item["year"].present?
         school = item["school"]["name"] if item["school"].present?
         break if school.blank?
-        
+
         puts facebook_id, year, school
 
         milestone = Milestone.where(user: self, facebook_id: facebook_id).first_or_initialize

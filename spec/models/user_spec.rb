@@ -72,7 +72,7 @@ RSpec.describe User, type: :model do
     end
 
     it "should import education history",focus: true do
-      json = '{"provider":"facebook","uid":"10158109415805244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/10158109415805244/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAAROPfhGmSQBAMk4iYc5p36VEW2uv95UgjSUEaOV3Gw6jHJcAJ3lU6r476r6apZCqKtykLpcG0xX9dnUWojyEPTs4XQlGZB5uIcnDMWiiYQuR510ui6hZCUwzVmW9FUMMIuG1uTbBi7E2D5TUH9pt9eXnWAZBNwZD","expires_at":1494876966,"expires":true},"extra":{"raw_info":{"id":"10158109415805244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"},"education":[{"school":{"id":"111584518860183","name":"West Springfield High"},"type":"High School","year":{"id":"137409666290034","name":"1995"},"id":"10150413024980244"},{"concentration":[{"id":"108170975877442","name":"Photography"}],"school":{"id":"32359482111","name":"The Evergreen State College"},"type":"College","id":"10158330373725244"}]}}}'
+      json = '{"provider":"facebook","uid":"10158109415805244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/10158109415805244/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAAROPfhGmSQBAHf1NByZABYZCZAPIkQiJZA7WWHJt64OMBYHGGAoh9ernefABeKnkyz5KfwzIF8QtesIhJ5ux0vun8vm42IDd8UA22nttCnOxB1OUDNhSFymgOGqAQDpLUoZB7jWneEEZBs1eWacAHyZB0a8bg5sdAZD","expires_at":1494876966,"expires":true},"extra":{"raw_info":{"id":"10158109415805244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"},"education":[{"school":{"id":"111584518860183","name":"West Springfield High"},"type":"High School","year":{"id":"137409666290034","name":"1995"},"id":"10150413024980244"},{"concentration":[{"id":"108170975877442","name":"Photography"}],"school":{"id":"32359482111","name":"The Evergreen State College"},"type":"College","year":{"id":"143018465715205","name":"2000"},"id":"10158330373725244"}]}}}'
       omniauth = JSON.parse(json)
 
       user = User.from_omniauth(omniauth)
@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
       milestone = user.milestones.last
       expect(milestone).to be_present
       expect(milestone.title).to eq "Went to The Evergreen State College"
-      expect(milestone.start_date.year).to be_present
+      expect(milestone.start_date.year).to eq 2000
       expect(milestone.facebook_id).to eq "10158330373725244"
     end
 
