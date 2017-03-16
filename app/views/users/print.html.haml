@@ -47,8 +47,9 @@
             .column.column-70
               = user_skill.name
             .column.column-30
-              %small.text-muted.text-right
-                = pluralize(user_skill.years, "Year") if user_skill.years > 0
+              .text-right
+                %small.text-muted
+                  = pluralize(user_skill.years, "Year") if user_skill.years > 0
       %section
         %h6 Links
         - if @user.website_url
