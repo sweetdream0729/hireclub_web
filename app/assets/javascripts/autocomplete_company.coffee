@@ -26,10 +26,9 @@ $(document).ready ->
     return
   $('.autocomplete_company').bind 'typeahead:change', (ev, company) ->
     # clear company id if no value
-    if company.length == 0
+    if company == ""
         console.log("clear value")
-        $('.autocomplete_company_id').val null
-    return
+        $('.autocomplete_company_id').val ""
   return
 
 # ---
