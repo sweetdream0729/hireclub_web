@@ -61,7 +61,7 @@ RSpec.describe Company, type: :model do
       expect(company.avatar).to be_present
     end
 
-    it "should import company from facebook_id",focus: true do
+    it "should import company from facebook_id" do
       expect(kidbombay_auth).to be_valid
   
       id = "821365304544508"
@@ -73,6 +73,22 @@ RSpec.describe Company, type: :model do
       expect(company.slug).to eq "upallnightsf"
       expect(company.facebook_id).to eq "821365304544508"
       expect(company.facebook_url).to eq "https://www.facebook.com/upallnightsf/"
+      expect(company.tagline).to be_present
+      expect(company.avatar).to be_present
+    end
+
+    it "should import company from facebook_id" do
+      expect(kidbombay_auth).to be_valid
+  
+      id = "294554919629"
+
+      company = Company.import_facebook_id(id)
+      expect(company).to be_present
+      expect(company).to be_valid
+      expect(company.name).to eq "kidBombay"
+      expect(company.slug).to eq "kidbombay"
+      expect(company.facebook_id).to eq "294554919629"
+      expect(company.facebook_url).to eq "https://www.facebook.com/kidBombay-294554919629/"
       expect(company.tagline).to be_present
       expect(company.avatar).to be_present
     end

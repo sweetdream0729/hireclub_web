@@ -68,6 +68,14 @@ class Company < ApplicationRecord
 
       name = fb_page["name"]
       slug = fb_page["username"]
+
+      if slug.blank?
+        company = Company.new(name: name)
+        company.send(:set_slug)
+        slug = company.friendly_id
+      end
+      
+      puts "name #{name}, slug #{slug}"
       
       company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
 
@@ -106,8 +114,14 @@ class Company < ApplicationRecord
       
       name = fb_page["name"]
       slug = fb_page["username"]
-      puts "name #{name}, slug #{slug}"
       
+      if slug.blank?
+        company = Company.new(name: name)
+        company.send(:set_slug)
+        slug = company.friendly_id
+      end
+      
+      puts "name #{name}, slug #{slug}"
       company = Company.where('lower(slug) = ? OR facebook_id = ?', slug.downcase, facebook_id).take
 
       if company.nil? 
