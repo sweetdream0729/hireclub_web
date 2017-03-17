@@ -79,6 +79,8 @@ RSpec.describe User, type: :model do
 
       expect(user).to be_valid
       expect(user).to be_persisted
+
+      ImportFacebookHistoryJob.perform_now(user, omniauth)
       
       milestone = user.milestones.work.first
       expect(milestone).to be_present
@@ -99,6 +101,8 @@ RSpec.describe User, type: :model do
 
       expect(user).to be_valid
       expect(user).to be_persisted
+
+      ImportFacebookHistoryJob.perform_now(user, omniauth)
       
       milestone = user.milestones.education.last
       expect(milestone).to be_present

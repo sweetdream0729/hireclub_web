@@ -225,12 +225,8 @@ class User < ApplicationRecord
 
     self.save
 
-    education = omniauth["extra"]["raw_info"]["education"]
-    import_education_from_facebook(education)
-
-
-    work = omniauth["extra"]["raw_info"]["work"]
-    import_work_from_facebook(work)
+    ImportFacebookHistoryJob.perform_later(self, omniauth)
+    
     return self
   end
 
