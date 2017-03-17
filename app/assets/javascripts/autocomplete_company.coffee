@@ -22,14 +22,11 @@ $(document).ready ->
   # company selected, let's set hidden company_id field
   $('.autocomplete_company').bind 'typeahead:select', (ev, company) ->
     # Set hidden form field of company_id
-    console.log("select")
     $('.autocomplete_company_id').val company.id
     return
   $('.autocomplete_company').bind 'blur', (ev) ->
     # clear company id if no value
-    console.log("close")
     if ev.target.value == ""
-        console.log("clear value")
         $('.autocomplete_company_id').val ""
   return
 
