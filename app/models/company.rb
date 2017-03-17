@@ -83,7 +83,12 @@ class Company < ApplicationRecord
         company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
       end
       company.name = name if company.name.blank?
-      company.website_url = fb_page["website"] if company.website_url.nil? 
+      
+      website_url = fb_page["website"]
+      if company.website_url.nil? && website_url.present?
+        company.website_url = website_url unless website_url.match(/\s/)
+      end
+      
       company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
       company.tagline = fb_page["about"] if company.tagline.nil?
 
@@ -128,8 +133,12 @@ class Company < ApplicationRecord
         company = Company.create(name: name, slug: slug, facebook_id: facebook_id)
       end
       company.name = name if company.name.blank?
-      # website = fb_page["website"]
-      # company.website_url = website if company.website_url.nil? 
+      
+      website_url = fb_page["website"]
+      if company.website_url.nil? && website_url.present?
+        company.website_url = website_url unless website_url.match(/\s/)
+      end
+
       company.facebook_url = fb_page["link"] if company.facebook_url.nil? 
       company.tagline = fb_page["about"] if company.tagline.nil?
 
