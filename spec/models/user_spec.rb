@@ -71,6 +71,26 @@ RSpec.describe User, type: :model do
 
     end
 
+    it "should import work history",focus: true do
+      json = '{"provider":"facebook","uid":"10158109415805244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/10158109415805244/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAAROPfhGmSQBAI9Oaml4A3VSGo9jqaYxIn6MBGwyNpdoyY8JqSHO5dZAREh9HA3PFiOIZAO1K93WeJUQRTicRhgX5eOKxQRlbVKtRbGXqWgl0MfD2gJH33AGWqPF4O24h9usEtddBk98G6Wac6ZB9fyJCMvOMIZD","expires_at":1494876966,"expires":true},"extra":{"raw_info":{"id":"10158109415805244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"},"education":[{"school":{"id":"111584518860183","name":"West Springfield High"},"type":"High School","year":{"id":"137409666290034","name":"1995"},"id":"10150413024980244"},{"concentration":[{"id":"108170975877442","name":"Photography"}],"school":{"id":"32359482111","name":"The Evergreen State College"},"type":"College","year":{"id":"143018465715205","name":"2000"},"id":"10158330373725244"}],"work":[{"description":"Untz Untz UntZ","employer":{"id":"821365304544508","name":"Up All Night SF"},"location":{"id":"114952118516947","name":"San Francisco, California"},"position":{"id":"106275566077710","name":"Chief technology officer"},"start_date":"2014-09-30","id":"10156584882275244"},{"employer":{"id":"1412288385651374","name":"HireClub"},"position":{"id":"849873341726582","name":"Founder"},"start_date":"2011-12-31","id":"10157862976510244"},{"employer":{"id":"294554919629","name":"kidBombay"},"position":{"id":"130875350283931","name":"CEO \u0026 Founder"},"start_date":"1999-12-01","id":"10150413024965244"},{"description":"Lead all branding and design. Kicked ass.","end_date":"2013-10-15","employer":{"id":"265831417137","name":"Samba TV"},"location":{"id":"114952118516947","name":"San Francisco, California"},"position":{"id":"248173885259874","name":"Design Director"},"start_date":"2013-02-01","id":"10153326054595244"},{"end_date":"2013-03-01","employer":{"id":"490553880961257","name":"Network"},"location":{"id":"114952118516947","name":"San Francisco, California"},"position":{"id":"130875350283931","name":"CEO \u0026 Founder"},"start_date":"2012-07-01","id":"10151920581535244"},{"description":"Create \u0026 Share Digital Business Cards","end_date":"2013-03-01","employer":{"id":"172171216175008","name":"CardFlick"},"location":{"id":"114952118516947","name":"San Francisco, California"},"position":{"id":"107957955904825","name":"Founder (company)"},"start_date":"2011-05-01","id":"10150644885265244"}]}}}'
+      omniauth = JSON.parse(json)
+
+      user = User.from_omniauth(omniauth)
+
+      expect(user).to be_valid
+      expect(user).to be_persisted
+      
+      milestone = user.milestones.work.first
+      expect(milestone).to be_present
+      expect(milestone.title).to eq "Joined Up All Night SF as Chief technology officer"
+      expect(milestone.start_date.year).to eq 2014
+      expect(milestone.start_date.month).to eq 9
+      expect(milestone.start_date.day).to eq 30
+      expect(milestone.facebook_id).to eq "10156584882275244"
+      expect(milestone.description).to eq "Untz Untz UntZ"
+      expect(milestone.kind).to eq Milestone::WORK
+    end
+
     it "should import education history",focus: true do
       json = '{"provider":"facebook","uid":"10158109415805244","info":{"email":"fire@kidbombay.com","name":"Ketan Anjaria","image":"http://graph.facebook.com/v2.6/10158109415805244/picture?type=large","location":"San Francisco, California"},"credentials":{"token":"EAAROPfhGmSQBAHf1NByZABYZCZAPIkQiJZA7WWHJt64OMBYHGGAoh9ernefABeKnkyz5KfwzIF8QtesIhJ5ux0vun8vm42IDd8UA22nttCnOxB1OUDNhSFymgOGqAQDpLUoZB7jWneEEZBs1eWacAHyZB0a8bg5sdAZD","expires_at":1494876966,"expires":true},"extra":{"raw_info":{"id":"10158109415805244","name":"Ketan Anjaria","gender":"male","locale":"en_US","email":"fire@kidbombay.com","location":{"id":"114952118516947","name":"San Francisco, California"},"education":[{"school":{"id":"111584518860183","name":"West Springfield High"},"type":"High School","year":{"id":"137409666290034","name":"1995"},"id":"10150413024980244"},{"concentration":[{"id":"108170975877442","name":"Photography"}],"school":{"id":"32359482111","name":"The Evergreen State College"},"type":"College","year":{"id":"143018465715205","name":"2000"},"id":"10158330373725244"}]}}}'
       omniauth = JSON.parse(json)
@@ -80,16 +100,15 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
       expect(user).to be_persisted
       
-      milestone = user.milestones.last
+      milestone = user.milestones.education.last
       expect(milestone).to be_present
       expect(milestone.title).to eq "Went to The Evergreen State College"
       expect(milestone.start_date.year).to eq 2000
       expect(milestone.facebook_id).to eq "10158330373725244"
-      
+      expect(milestone.kind).to eq Milestone::EDUCATION
     end
 
     it "should import omniauth data from linkedin" do
-
       json = '{"provider":"linkedin","uid":"Fs7-zkSDyL","info":{"name":"Ketan Anjaria","email":"fire@kidbombay.com","nickname":"Ketan Anjaria","first_name":"Ketan","last_name":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"description":"CTO at Up All Night SF","image":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","urls":{"public_profile":"https://www.linkedin.com/in/kidbombay"}},"credentials":{"token":"AQVARc5fzBsJzGNGX0GHGTEP8uQrVUUAyMlwib6PhO7rm5pWG3QkWjmUT2H6dLvDrQ7lsD1ChsSNIi5snVp4LDnAyefjOHYg6GKfpnKwimFCEopAwqyQqZk0dJN06JkJ_CrHwh0VEj0c98s8mwHpCNq8LY88w4F1nRjTDCmtAPv9tLwav28","expires_at":1492441756,"expires":true},"extra":{"raw_info":{"emailAddress":"fire@kidbombay.com","firstName":"Ketan","headline":"CTO at Up All Night SF","id":"Fs7-zkSDyL","industry":"Internet","lastName":"Anjaria","location":{"country":{"code":"us"},"name":"San Francisco Bay Area"},"pictureUrl":"https://media.licdn.com/mpr/mprx/0_x6Xd1PH12k5_nYR3n6tFUXq-eKEYzxw3VGObv62-D8d0K7VgpGtW493-7n6Snfs3n6tWZPCt53Ix1U5g9v3zRb_Yh3IO1UYS9v3orQnPIhOtJS5AsXBkK-ZC8NAasUdyx95LBZmK9o7","publicProfileUrl":"https://www.linkedin.com/in/kidbombay"}}}'
       omniauth = JSON.parse(json)
 
@@ -101,8 +120,6 @@ RSpec.describe User, type: :model do
 
       expect(user.email).to eq("fire@kidbombay.com")
       expect(user.name).to eq("Ketan Anjaria")
-      #expect(user.gender).to eq("male")
-      #expect(user.location).to be_present
 
       auth = user.authentications.first
       expect(auth).to be_present

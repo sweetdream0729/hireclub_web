@@ -90,6 +90,7 @@ GEM
       xpath (~> 2.0)
     case_transform (0.2)
       activesupport
+    chronic (0.10.2)
     cloudinary (1.4.0)
       aws_cf_signer
       rest-client
@@ -387,6 +388,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha6)
   byebug
   capybara
+  chronic
   cloudinary
   cocoon
   counter_culture (~> 1.0)

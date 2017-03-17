@@ -1,4 +1,7 @@
 class Milestone < ApplicationRecord
+  WORK = "work"
+  EDUCATION = "education"
+
   # Extensions
   include Wisper::Publisher
   include UnpublishableActivity
@@ -11,9 +14,11 @@ class Milestone < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
   
   # Scopes
-  scope :by_oldest,     -> { order(start_date: :asc)}
-  scope :by_newest,     -> { order(start_date: :desc)}
-  scope :printable,     -> { where(printable: :true)}
+  scope :by_oldest,     -> { order(start_date: :asc) }
+  scope :by_newest,     -> { order(start_date: :desc) }
+  scope :printable,     -> { where(printable: :true) }
+  scope :work,          -> { where(kind: WORK) }
+  scope :education,     -> { where(kind: EDUCATION) }
 
   # Associations
   belongs_to :user

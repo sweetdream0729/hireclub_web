@@ -228,42 +228,90 @@ class User < ApplicationRecord
     education = omniauth["extra"]["raw_info"]["education"]
     import_education_from_facebook(education)
 
+
+    work = omniauth["extra"]["raw_info"]["work"]
+    import_work_from_facebook(work)
     return self
+  end
+
+  def import_work_from_facebook(work)
+    return if work.blank?
+    work.each do |item|
+      Rails.logger.info puts item.inspect
+      facebook_id = item["id"]
+      milestone = Milestone.where(user: self, facebook_id: facebook_id).first_or_initialize
+      milestone.description = item["description"] if milestone.description.blank?
+      
+      start_date = item["start_date"]
+      if milestone.start_date.nil?
+        if start_date.present?
+          milestone.start_date = Chronic.parse(start_date)
+        else
+          milestone.start_date = Date.today
+        end
+      end
+
+      end_date = item["end_date"]
+      if milestone.end_date.nil? && end_date.present?
+        milestone.end_date = Chronic.parse(end_date)
+      end
+
+      if milestone.title.blank?
+        company_name = item["employer"]["name"]
+        position = item["position"]["name"]
+        milestone.title = "Joined #{company_name}"
+        milestone.title += " as #{position}" if position.present?
+      end
+
+      company_facebook_id = item["employer"]["id"]
+        
+      if milestone.company.nil?
+        begin
+          company = Company.import_facebook_id(company_facebook_id)
+          milestone.company = company
+        rescue
+          Rails.logger.info puts "could not import company #{company_facebook_id}"
+        end
+      end
+      milestone.save
+    end
+
+    # {"description"=>"Untz Untz UntZ", "employer"=>{"id"=>"821365304544508", "name"=>"Up All Night SF"}, "location"=>{"id"=>"114952118516947", "name"=>"San Francisco, California"}, "position"=>{"id"=>"106275566077710", "name"=>"Chief technology officer"}, "start_date"=>"2014-09-30", "id"=>"10156584882275244"}
+
   end
 
   def import_education_from_facebook(education)
     return if education.blank?
     
     education.each do |item|
-      
       type = item["type"]
       facebook_id = item["id"]
-      puts item.inspect
+      Rails.logger.info puts item.inspect
       if (type == "College" || type == "Graduate School") && facebook_id.present?
         
         year = item["year"]["name"] if item["year"].present?
         school = item["school"]["name"] if item["school"].present?
         break if school.blank?
 
-        puts facebook_id, year, school
-
         milestone = Milestone.where(user: self, facebook_id: facebook_id).first_or_initialize
         milestone.start_date = Date.new(year.to_i) if milestone.start_date.nil? && year.present?
         milestone.start_date = Date.today if milestone.start_date.nil?
+        milestone.kind = Milestone::EDUCATION
 
         milestone.title = "Went to #{school}" if milestone.title.blank?
         school_facebook_id = item["school"]["id"]
         
-        begin
-          company = Company.import_facebook_id(school_facebook_id)
-          milestone.company = company
-        rescue
-          puts "could not import education company #{school_facebook_id}"
+        if milestone.company.nil?
+          begin
+            company = Company.import_facebook_id(school_facebook_id)
+            milestone.company = company
+          rescue
+            Rails.logger.info puts "could not import education company #{school_facebook_id}"
+          end
         end
 
         milestone.save
         
-        puts milestone.inspect
       end
     end
   end
