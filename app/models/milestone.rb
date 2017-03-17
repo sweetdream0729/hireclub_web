@@ -1,6 +1,10 @@
 class Milestone < ApplicationRecord
   WORK = "work"
   EDUCATION = "education"
+  KINDS = [
+    WORK,
+    EDUCATION
+  ]
 
   # Extensions
   include Wisper::Publisher

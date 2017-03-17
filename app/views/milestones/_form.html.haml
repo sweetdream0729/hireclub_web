@@ -7,7 +7,7 @@
           %li= msg
 
   .row
-    .col-6
+    .col-sm-6
       %p.lead
         Milestones are the remarkable things you accomplished in your work life.
 
@@ -40,6 +40,10 @@
         %small.text-muted
           Optional short description to provide more details.
 
+      .form-group
+        = f.label :type
+        = f.select :kind, Milestone::KINDS, {}, {class: 'form-control'}
+
       .form-check
         %label.form-check-label
           = f.check_box :printable, class: 'form-check-input'
@@ -49,8 +53,7 @@
         = link_to "Print Profile", print_user_path(current_user), target: "_blank"
        
 
-    .col-1
-    .col-5
+    .col-sm-5.offset-sm-1.hidden-xs-down
       %h6 Examples
       %p
         Joined Acme Inc as Senior Road Runner Chaser
