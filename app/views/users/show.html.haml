@@ -65,10 +65,10 @@
             ·
             - if @user == current_user
               = link_to new_user_skill_path do
-                = pluralize(@user.years_experience, "Year")
+                = display_years(@user.years_experience)
                 Experience
             - else
-              = pluralize(@user.years_experience, "Year")
+              = display_years(@user.years_experience)
               Experience
             - if @user.open_to_remote
               ·

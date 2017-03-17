@@ -1,4 +1,3 @@
-
 module UserHelper
   def next_user_completion_path(user_completion)
     step = user_completion.next_step
@@ -22,6 +21,10 @@ module UserHelper
     when UserCompletion::WEBSITE_STEP
       edit_user_registration_path
     end 
+  end
 
+  def display_years(years)
+    return pluralize(years, "Year") if years < 11
+    return "10+ Years"
   end
 end

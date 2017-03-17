@@ -6,7 +6,7 @@
   %span.semi_bold
     = link_to user_skill.name, user_projects_path(user_skill.user, skill: user_skill.name)
   %small
-    = pluralize(user_skill.years, "year") if user_skill.years > 0
+    = display_years(user_skill.years) if user_skill.years > 0
 
   - if policy(user_skill).edit?
     = link_to edit_user_skill_path(user_skill), class: "edit_user_skills ml-1 mr-1 display_none text-muted hover_primary" do
