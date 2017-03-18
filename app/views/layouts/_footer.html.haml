@@ -15,14 +15,11 @@
             = link_to "Badges", badges_path
           %li.list-inline-item
             = link_to "Apply", "http://facebook.com/groups/hireclub"
+          %li.list-inline-item
+            = link_to "Help", "mailto:help@hireclub.co"
           - if user_signed_in? && current_user.is_admin
             = link_to "Admin", rails_admin_path
       %p
-        HireClub is brought to you by
-        = link_to "Ketan Anjaria", "http://kidbombay.com"
-        aka 
-        = link_to "@kidbombay", "http://twitter.com/kidbombay"
-        %br
         © 2017 kidBombay. All rights reserved.
 
 :javascript
