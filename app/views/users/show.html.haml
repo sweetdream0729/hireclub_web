@@ -132,7 +132,7 @@
     .col-sm-8
       - @user.companies.distinct.each do |company|
 
-        = link_to image_tag(model_image(company.avatar, 200, 200, true), width: 50, height: 50, class:"rounded"), company, data: {toggle:"tooltip", placement: "bottom"}, title: company.name
+        = link_to image_tag(company_avatar(company.avatar, 200, true), width: 50, height: 50, class:"rounded"), company, data: {toggle:"tooltip", placement: "bottom"}, title: company.name
 
   .row
     .col-sm-8
