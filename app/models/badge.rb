@@ -109,6 +109,12 @@ class Badge < ApplicationRecord
       earned_by: "getting hired through HireClub."
     )
 
+    badge = Badge.where(name: "Team").first_or_create
+    badge.update_attributes(
+      description: "Hired by HireClub. Whoa.",
+      earned_by: "working for HireClub."
+    )
+
     # badge = Badge.where(name: "Mile High Club").first_or_create
     # badge.update_attributes(
     #   description: "Go on wit yo bad self",
