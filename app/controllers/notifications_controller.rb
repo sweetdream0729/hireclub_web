@@ -3,5 +3,7 @@ class NotificationsController < ApplicationController
   def index
     scope = current_user.notifications.published.recent
     @notifications = scope.page(params[:page]).per(10)
+
+    Notification.mark_as_read(scope.unread)
   end
 end

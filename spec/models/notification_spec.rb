@@ -22,6 +22,23 @@ RSpec.describe Notification, type: :model do
     it { should validate_uniqueness_of(:activity_id).scoped_to(:user_id) }
   end
 
+  context 'mark_as_read' do
+    it "should mark scope as read" do
+      user = FactoryGirl.build(:user)
+      3.times do
+        FactoryGirl.create(:notification, user: user)
+      end
+
+      notifications = user.notifications.published.recent
+
+      Notification.mark_as_read(notifications)
+
+      notifications.each do |notification|
+        expect(notification.read?).to be true
+      end
+    end
+  end
+
   context 'like.create' do
     let(:like) { FactoryGirl.create(:like) }
     it "should create notification for likeable user" do

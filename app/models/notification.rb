@@ -27,6 +27,10 @@ class Notification < ApplicationRecord
     self.activity_key = activity.key if activity
   end
 
+  def read?
+    read_at.present?
+  end
+
   def self.create_notifications_for_activity(activity_id)
     #puts "Notification.create_notifications_for_activity #{activity_id}"
     activity = Activity.where(id: activity_id).first
@@ -50,7 +54,7 @@ class Notification < ApplicationRecord
     return if activity.nil? || user.nil?
     return if Notification.where(activity: activity, user: user).exists?
 
-    puts "Notification.create_notification_for #{activity}, #{user}"
+    #puts "Notification.create_notification_for #{activity}, #{user}"
     Notification.create(activity: activity, user: user)
   end
 
@@ -60,19 +64,19 @@ class Notification < ApplicationRecord
 
   def self.get_recipients_for(activity)
     key = activity.key
-    puts "Notification.get_recipients_for #{key}"
+    #puts "Notification.get_recipients_for #{key}"
 
     class_name = key.titlecase.delete(".").delete(" ") + "Activity"
-    #puts "   class_name #{class_name}"
 
     klass = class_name.constantize
-    
-    
-    #puts "   #{klass}"
     
     return klass.get_recipients_for(activity) if klass && klass.respond_to?(:get_recipients_for)
     
     raise "Please implement notification for activity #{key}"
+  end
+
+  def self.mark_as_read(scope)
+    scope.unread.update_all(read_at: Time.now)
   end
 
   def self.enabled= (value)
