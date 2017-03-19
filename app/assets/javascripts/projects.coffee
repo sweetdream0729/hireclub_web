@@ -24,8 +24,7 @@ $(document).ready ->
           callback()
           return
         success: (response) ->
-          console.log(response)
-          callback response.slice(0, 10)
+          callback response
           return
       return
 
