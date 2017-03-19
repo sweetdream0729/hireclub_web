@@ -5,11 +5,11 @@ class SkillsController < ApplicationController
   # GET /skills
   def index
     
-    if user_signed_in?
-      scope = current_user.available_skills.by_name
-    else
+    # if user_signed_in?
+    #   scope = current_user.available_skills.by_name
+    # else
       scope = Skill.by_name
-    end
+    # end
 
     if params[:query]
       scope = scope.search_by_name(params[:query])

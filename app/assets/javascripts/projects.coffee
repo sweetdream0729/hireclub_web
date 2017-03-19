@@ -10,17 +10,21 @@ $(document).ready ->
     searchField: 'name'
     valueField: 'name'
     labelField: 'name'
+    selectOnTab: true
     create: false
     load: (query, callback) ->
       if !query.length
         return callback()
       $.ajax
-        url: '/skills.json?query=' + encodeURIComponent(query)
+        url: '/skills.json'
         type: 'GET'
+        data:
+          query: encodeURIComponent(query)
         error: ->
           callback()
           return
         success: (response) ->
+          console.log(response)
           callback response.slice(0, 10)
           return
       return
