@@ -19,6 +19,7 @@
 //= require sortable.min
 //= require typeahead.bundle
 //= require mousetrap.min
+//= require selectize.min
 //= require cocoon
 //= require init
 //= require_tree .
