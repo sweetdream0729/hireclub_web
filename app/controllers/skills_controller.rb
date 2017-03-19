@@ -3,13 +3,8 @@ class SkillsController < ApplicationController
   before_action :set_skill, only: [:show, :edit, :update, :destroy]
 
   # GET /skills
-  def index
-    
-    if user_signed_in?
-      scope = current_user.available_skills.by_name
-    else
-      scope = Skill.by_name
-    end
+  def index    
+    scope = Skill.by_name
 
     if params[:query]
       scope = scope.search_by_name(params[:query])
