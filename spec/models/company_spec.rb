@@ -33,6 +33,17 @@ RSpec.describe Company, type: :model do
     # end
   end
 
+  describe 'tags',focus: true do 
+    it "should let you add tags" do
+      company.tags_list = "foo, bar"
+      company.save
+
+      expect(company).to be_valid
+      expect(company.tags[0]).to eq "foo"
+      expect(company.tags[1]).to eq "bar"      
+    end 
+  end
+
   describe "domain" do
     it "should get domain from website_url" do
       company.website_url = "https://hireclub.co"
