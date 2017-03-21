@@ -47,7 +47,10 @@ class MilestonesController < ApplicationController
   # DELETE /milestones/1
   def destroy
     @milestone.destroy
-    redirect_to current_user, notice: 'Milestone deleted'
+    respond_to do |format|
+      format.js   { }
+      format.html { redirect_to current_user, notice: 'Milestone deleted' }
+    end
   end
 
   private
