@@ -33,7 +33,7 @@ RSpec.describe Company, type: :model do
     # end
   end
 
-  describe 'tags',focus: true do 
+  describe 'tags' do 
     it "should let you add tags" do
       company.tags_list = "foo, bar"
       company.save
