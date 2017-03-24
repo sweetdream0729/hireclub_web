@@ -7,5 +7,9 @@ class ImportFacebookHistoryJob < ApplicationJob
     
     work = omniauth["extra"]["raw_info"]["work"]
     user.import_work_from_facebook(work)
+
+    location = omniauth["extra"]["raw_info"]["location"]
+
+    Location.import_facebook_id(location["id"])
   end
 end
