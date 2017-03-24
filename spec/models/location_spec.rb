@@ -143,10 +143,13 @@ RSpec.describe Location, type: :model do
 
   describe "import" do
     let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
-    let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+    let!(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+
+    before do
+      Location.import_cities
+    end
 
     it "should import san francisco from facebook" do
-      Location.import_cities
       expect(kidbombay_auth).to be_valid
 
       facebook_location_id = "114952118516947"
@@ -161,7 +164,6 @@ RSpec.describe Location, type: :model do
     end
 
     it "should import Sri Lanka from facebook" do
-      Location.import_cities
       expect(kidbombay_auth).to be_valid
 
       facebook_location_id = "108602292505393"
@@ -175,8 +177,8 @@ RSpec.describe Location, type: :model do
       expect(location.short).to be_nil
       expect(location.parent).to be_present
     end
+    
     it "should import Bakersfield from facebook" do
-      Location.import_cities
       expect(kidbombay_auth).to be_valid
 
       facebook_location_id = "106152016081829"
@@ -186,6 +188,21 @@ RSpec.describe Location, type: :model do
       expect(location).to be_persisted
       expect(location.name).to eq "Bakersfield"
       expect(location.slug).to eq "bakersfield-ca"
+      expect(location.level).to eq Location::CITY
+      expect(location.short).to be_nil
+      expect(location.parent).to be_present
+    end
+
+    it "should import Melbourne from facebook",focus: true do
+      expect(kidbombay_auth).to be_valid
+
+      facebook_location_id = "116190411724975"
+
+      location = Location.import_facebook_id(facebook_location_id)
+
+      expect(location).to be_persisted
+      expect(location.name).to eq "Melbourne"
+      expect(location.slug).to eq "melbourne-au"
       expect(location.level).to eq Location::CITY
       expect(location.short).to be_nil
       expect(location.parent).to be_present

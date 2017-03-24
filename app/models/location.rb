@@ -115,7 +115,7 @@ class Location < ApplicationRecord
 
       fb_location = fb_page["location"]
       if fb_location.present?
-        #puts fb_location.inspect
+        puts fb_location.inspect
 
         location = Location.where(facebook_id: facebook_id).first_or_initialize
 
@@ -137,9 +137,17 @@ class Location < ApplicationRecord
               else
                 location.parent = state
               end
+            else
+              # state doesn't exist but country might
+              # happens in australia, uk
+              country = Location.where(short: country_code, level: COUNTRY).first
+              if country.present?
+                location.parent = country
+              end
             end
           else
-            # importing from non us city with no state
+
+            # importing from city with no state
             country = Location.where(short: country_code, level: COUNTRY).first
             if country.present?
               location.parent = country
