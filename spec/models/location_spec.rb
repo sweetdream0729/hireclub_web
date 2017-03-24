@@ -16,7 +16,9 @@ RSpec.describe Location, type: :model do
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name).scoped_to(:parent_id).case_insensitive}
 
-    it { should validate_inclusion_of(:level).in_array(Location::VALID_LEVELS) }    
+    it { should validate_inclusion_of(:level).in_array(Location::VALID_LEVELS) }
+
+    it { should validate_uniqueness_of(:facebook_id) }  
   end
 
   describe "slugs" do
@@ -138,5 +140,56 @@ RSpec.describe Location, type: :model do
     end
 
   end 
+
+  describe "import" do
+    let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
+    let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+
+    it "should import san francisco from facebook" do
+      Location.import_cities
+      expect(kidbombay_auth).to be_valid
+
+      facebook_location_id = "114952118516947"
+
+      location = Location.import_facebook_id(facebook_location_id)
+
+      expect(location).to be_persisted
+      expect(location.name).to eq "San Francisco"
+      expect(location.level).to eq Location::CITY
+      expect(location.short).to be_nil
+      expect(location.parent).to be_present
+    end
+
+    it "should import Sri Lanka from facebook" do
+      Location.import_cities
+      expect(kidbombay_auth).to be_valid
+
+      facebook_location_id = "108602292505393"
+
+      location = Location.import_facebook_id(facebook_location_id)
+
+      expect(location).to be_persisted
+      expect(location.name).to eq "Colombo"
+      expect(location.slug).to eq "colombo-lk"
+      expect(location.level).to eq Location::CITY
+      expect(location.short).to be_nil
+      expect(location.parent).to be_present
+    end
+    it "should import Bakersfield from facebook" do
+      Location.import_cities
+      expect(kidbombay_auth).to be_valid
+
+      facebook_location_id = "106152016081829"
+
+      location = Location.import_facebook_id(facebook_location_id)
+
+      expect(location).to be_persisted
+      expect(location.name).to eq "Bakersfield"
+      expect(location.slug).to eq "bakersfield-ca"
+      expect(location.level).to eq Location::CITY
+      expect(location.short).to be_nil
+      expect(location.parent).to be_present
+    end
+  end
 
 end

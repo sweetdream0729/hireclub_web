@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321232514) do
+ActiveRecord::Schema.define(version: 20170324134328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,8 @@ ActiveRecord::Schema.define(version: 20170321232514) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "users_count", default: 0, null: false
+    t.string   "facebook_id"
+    t.index ["facebook_id"], name: "index_locations_on_facebook_id", unique: true, using: :btree
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
     t.index ["parent_id"], name: "index_locations_on_parent_id", using: :btree
