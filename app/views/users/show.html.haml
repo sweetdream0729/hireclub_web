@@ -112,20 +112,13 @@
           = link_to @user.instagram_url, target: "_blank", data: {toggle:"tooltip", placement: "bottom"}, title: link_display(@user.instagram_url) do
             %i.fa.fa-instagram.ml-2
 
-
-    - if @user.bio.present?
-      %hr
-        %p.lead.mt-4
-          = @user.bio
-      %hr
-
-/ - if @user.bio
-/   .jumbotron.mt-4
-/     .container
-/       .row.justify-content-center
-/         .col-sm-10
-/           %p.lead
-/             = @user.bio
+  - if @user.bio.present?
+    .row
+      .col-12
+        %hr
+          %p.lead.mt-4.mb-4
+            = @user.bio
+        %hr
 
 .container.mb-5
   .row

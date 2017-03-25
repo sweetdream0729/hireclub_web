@@ -193,7 +193,7 @@ RSpec.describe Location, type: :model do
       expect(location.parent).to be_present
     end
 
-    it "should import Melbourne from facebook",focus: true do
+    it "should import Melbourne from facebook" do
       expect(kidbombay_auth).to be_valid
 
       facebook_location_id = "116190411724975"
