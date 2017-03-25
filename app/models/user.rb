@@ -22,6 +22,7 @@ class User < ApplicationRecord
   friendly_id :username
   dragonfly_accessor :avatar
   is_impressionable
+  include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
@@ -144,8 +145,17 @@ class User < ApplicationRecord
     token = self.authentications.facebook.first.token if has_facebook?
   end
   
+  def welcome!
+    create_activity_once :welcome, owner: self, private: true
+  end
+
+  # Devise methos
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def after_confirmation
+    welcome!
   end
 
   def update_without_password(params, *options)
@@ -159,6 +169,7 @@ class User < ApplicationRecord
     result
   end
 
+  # Class Methods
   def self.from_omniauth(omniauth, signed_in_resource=nil)
     # get auth model from omniauth data
     auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
