@@ -119,6 +119,13 @@ class User < ApplicationRecord
     return username
   end
 
+  def first_name
+    unless display_name.blank?
+      split = [display_name.split[0]]
+      split.empty? ? display_name : split.join(" ")
+    end
+  end
+
   def update_years_experience
     value = [user_skills.maximum(:years),0].compact.max
     self.update_attributes(years_experience: value)
