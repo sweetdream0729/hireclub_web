@@ -113,11 +113,11 @@
             %i.fa.fa-instagram.ml-2
 
 
-  - if @user.bio.present?
-    %hr
-      %p.lead.mt-4
-        = @user.bio
-    %hr
+    - if @user.bio.present?
+      %hr
+        %p.lead.mt-4
+          = @user.bio
+      %hr
 
 / - if @user.bio
 /   .jumbotron.mt-4
