@@ -113,18 +113,12 @@
             %i.fa.fa-instagram.ml-2
 
   - if @user.bio.present?
-    %hr
-      %p.lead.mt-4
-        = @user.bio
-    %hr
-
-/ - if @user.bio
-/   .jumbotron.mt-4
-/     .container
-/       .row.justify-content-center
-/         .col-sm-10
-/           %p.lead
-/             = @user.bio
+    .row
+      .col-12
+        %hr
+          %p.lead.mt-4.mb-4
+            = @user.bio
+        %hr
 
 .container.mb-5
   .row
