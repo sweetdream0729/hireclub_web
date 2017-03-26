@@ -1,14 +1,17 @@
 .nested-fields
   .row
-    .col-8
+    .col-7
       .form-group
         = f.label :skill
         = f.collection_select(:skill_id, Skill.by_name, :id, :name, {}, {class: "form-control"})
-    .col-4
+    .col-3
       .form-group
         = f.label :years
         = f.number_field :years, class: "form-control"
-  .row
-    .col-12
-      = link_to_remove_association "Remove Skill", f, class: "btn btn-danger btn-sm"
+    .col-1
+      .form-group
+        %label
+          &nbsp;
+        = link_to_remove_association f, class: "btn btn-danger" do
+          %i.fa.fa-trash-o
   %hr
