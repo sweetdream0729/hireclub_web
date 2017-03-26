@@ -73,4 +73,25 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  context 'user.welcome' do
+    let(:user) { FactoryGirl.create(:user) }
+    it "should create user.welcome notification" do
+      expect(user).to be_valid
+      user.welcome!
+
+      activity = user.activities.where(key: UserWelcomeActivity::KEY).first
+
+      Notification.create_notifications_for_activity(activity.id)
+
+      notification = Notification.last
+
+      expect(notification).to be_present
+      expect(notification.activity_key).to eq UserWelcomeActivity::KEY
+      expect(notification.user).to eq (user)
+
+      activity = notification.activity
+      expect(activity.owner).to eq(user)
+    end
+  end
+
 end
