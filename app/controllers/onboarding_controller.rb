@@ -26,11 +26,6 @@ class OnboardingController < ApplicationController
 
   def finish_wizard_path
     return user_path(current_user)
-    # if current_user.onboarded?
-    #   user_path(current_user)
-    # else
-    #   onboarding_path(:username)
-    # end
   end
 
   def user_params
