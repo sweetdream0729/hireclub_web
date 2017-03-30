@@ -214,27 +214,42 @@
           .user_badge.mb-2
             = link_to image_tag(model_image(badge.avatar, 200, 200, true), width: 50, class:"rounded"), badge
             = link_to badge.name, badge
-            
-  - if user_signed_in? && current_user.is_admin && @user.resumes.any?
-    .row
-      .col-sm-12
-        %hr
-          %h6.mt-4.mb-4
-            Resumes
-      .col-sm-12
-        %table.table
-          %thead
-            %tr
-              %th Name
-              %th Uploaded
-              %th
 
-          %tbody
-            - @user.resumes.each do |resume|
+.container.mb-5
+  - if user_signed_in? && @user == current_user 
+    - if !@user.resumes.any?
+
+      .row
+        .col-sm-12
+          %hr
+            %h6.mt-4.mb-4
+              Resumes
+
+            %a.btn.btn-primary{href: new_resume_path}
+              = "Upload Resume"
+    - else 
+      .row
+        .col-sm-12
+          %hr
+            %h6.mt-4.mb-4
+              Resumes
+        .col-sm-12
+          %table.table
+            %thead
               %tr
                 %td
-                  - if resume.file_uid.present?
-                    = link_to resume.file_name, resume.file.remote_url, class: "btn btn-primary"  
-                %td= link_to resume.created_at.strftime("%D %r"), resume
+                %th Name
+                %th Uploaded
+                %th
 
-          
+            %tbody
+              - @user.resumes.each do |resume|
+                %tr
+                  - if resume.file_uid.present?
+                    %td
+                      = link_to resume.file_name, resume.file.remote_url, class: "btn btn-primary"  
+                    %td
+                      = link_to resume.created_at.strftime("%D %r"), resume
+
+
+
