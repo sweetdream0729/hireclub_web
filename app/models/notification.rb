@@ -22,9 +22,18 @@ class Notification < ApplicationRecord
 
   # Callbacks
   before_validation :set_activity_key, on: :create
+  after_commit :send_email, on: :create
+
 
   def set_activity_key
     self.activity_key = activity.key if activity
+  end
+
+  def send_email
+    Rails.logger.tagged("notifications") { Rails.logger.info "send_email key #{activity.key}" }
+    
+    klass = Notification.get_activity_class(activity_key)
+    return klass.send_notification(self) if klass && klass.respond_to?(:send_notification)
   end
 
   def read?
@@ -63,16 +72,16 @@ class Notification < ApplicationRecord
   end
 
   def self.get_recipients_for(activity)
-    key = activity.key
-    #puts "Notification.get_recipients_for #{key}"
-
-    class_name = key.titlecase.delete(".").delete(" ") + "Activity"
-
-    klass = class_name.constantize
+    klass = Notification.get_activity_class(activity.key)
     
     return klass.get_recipients_for(activity) if klass && klass.respond_to?(:get_recipients_for)
     
     raise "Please implement notification for activity #{key}"
+  end
+
+  def self.get_activity_class(key)
+    class_name = key.titlecase.delete(".").delete(" ") + "Activity"
+    klass = class_name.constantize
   end
 
   def self.mark_as_read(scope)

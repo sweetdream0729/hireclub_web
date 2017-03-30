@@ -286,4 +286,29 @@ RSpec.describe User, type: :model do
 
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:instagram_url) }
   end
+
+  describe "welcome!" do
+    it "should create user.welcome activity" do
+      user.save
+      user.welcome!
+
+      activity = Activity.last
+
+      expect(activity.key).to eq UserWelcomeActivity::KEY
+      expect(activity.trackable).to eq user
+      expect(activity.owner).to eq user
+      expect(activity.private).to eq true
+    end
+
+    it "should only welcome once" do
+      user.save
+      user.welcome!
+      user.welcome!
+      user.welcome!
+
+      activities = Activity.where(key: UserWelcomeActivity::KEY)
+
+      expect(activities.count).to eq(1)
+    end
+  end
 end

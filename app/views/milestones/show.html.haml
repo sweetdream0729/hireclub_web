@@ -16,6 +16,9 @@
 
       %p.text-muted
         = @milestone.start_date.strftime("%b %Y")
+        - if @milestone.end_date      
+          = "-"
+          = @milestone.end_date.strftime("%b %Y")
 
       %p
         = @milestone.description  

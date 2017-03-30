@@ -3,7 +3,7 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username, :location, :status, :roles#, :skills
+  steps :username, :location, :status, :roles, :skills
 
   def show
     @user = current_user
@@ -26,11 +26,6 @@ class OnboardingController < ApplicationController
 
   def finish_wizard_path
     return user_path(current_user)
-    # if current_user.onboarded?
-    #   user_path(current_user)
-    # else
-    #   onboarding_path(:username)
-    # end
   end
 
   def user_params

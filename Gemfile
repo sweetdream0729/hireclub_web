@@ -41,6 +41,7 @@ group :development do
   gem 'terminal-notifier-guard', '~> 1.6.1'
   gem 'rails_layout'
   gem 'foreman'
+  gem 'letter_opener'
 end
 
 group :test do
