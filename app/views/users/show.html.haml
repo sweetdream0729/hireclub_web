@@ -217,7 +217,7 @@
 
 .container.mb-5
   - if user_signed_in? && @user == current_user 
-    - if !@user.resumes.any?
+    - if @user.resumes.empty?
 
       .row
         .col-sm-12
