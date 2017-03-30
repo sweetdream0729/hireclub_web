@@ -1,6 +1,7 @@
 - set_meta_tags title: "#{@project.try(:name)} By #{@project.user.display_name}"
 - set_meta_tags keywords: "#{@project.key_words}"
-- set_meta_tags og: {type: "article"}
+- set_meta_tags og: {type: "article", image: model_image(@project.image, 800, 600, true)}
+
 
 .container.mt-5.mb-5
   .row
