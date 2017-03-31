@@ -13,6 +13,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     authorize("linkedin")
   end
 
+  def google_oauth2
+    authorize("google_oauth2")
+  end
+
   def authorize(provider)
     omniauth = request.env["omniauth.auth"]
     

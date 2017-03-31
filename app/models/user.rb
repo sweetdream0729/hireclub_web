@@ -27,7 +27,7 @@ class User < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin]
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin, :google_oauth2]
 
   # Scope
   scope :admin,        -> { where(is_admin: true) }
@@ -206,6 +206,7 @@ class User < ApplicationRecord
 
     user.import_facebook_omniauth(omniauth)
     user.import_linkedin_omniauth(omniauth)
+    user.import_google_omniauth(omniauth)
 
     return user
   end
@@ -245,6 +246,20 @@ class User < ApplicationRecord
 
     ImportFacebookHistoryJob.perform_later(self, omniauth)
     
+    return self
+  end
+
+  def import_google_omniauth(omniauth)
+    return if omniauth["provider"] != Authentication::GOOGLE
+
+    if self.avatar.nil?
+      image_url = omniauth["extra"]["raw_info"]["picture"]
+      self.avatar_url = image_url
+    end
+    
+    self.gender = omniauth["extra"]["raw_info"]["gender"] if !omniauth["extra"]["raw_info"]["gender"].blank? && self.gender.blank?
+    self.save
+
     return self
   end
 
