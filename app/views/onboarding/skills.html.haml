@@ -16,7 +16,7 @@
           = f.fields_for :user_skills do |user_skill|
             = render 'user_skill_fields', f: user_skill
           .links
-            = link_to_add_association f, :user_skills, class: "btn btn-info" do
+            = link_to_add_association f, :user_skills, class: "btn btn-info btn-lg btn-block" do
               %i.fa.fa-plus.mr-1
               Add Skill
             %hr
