@@ -3,7 +3,7 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username, :location, :status, :roles, :skills
+  steps :username, :location, :status, :roles, :skills, :milestones
 
   def show
     @user = current_user
@@ -33,6 +33,7 @@ class OnboardingController < ApplicationController
       :is_available, :is_hiring,
       :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation,
       user_roles_attributes: [:id, :role_id], 
-      user_skills_attributes: [:id, :skill_id, :years, :_destroy])
+      user_skills_attributes: [:id, :skill_id, :years, :_destroy],
+      milestones_attributes: [:id, :title, :start_date])
   end
 end
