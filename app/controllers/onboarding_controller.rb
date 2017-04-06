@@ -14,7 +14,11 @@ class OnboardingController < ApplicationController
       end
     when :skills
       @user.user_skills.build if @user.user_skills.empty?
+    when :milestones
+      @user.milestones.build if @user.milestones.empty?
+
     end
+
     render_wizard
   end
 
@@ -34,6 +38,6 @@ class OnboardingController < ApplicationController
       :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation,
       user_roles_attributes: [:id, :role_id], 
       user_skills_attributes: [:id, :skill_id, :years, :_destroy],
-      milestones_attributes: [:id, :title, :start_date])
+      milestones_attributes: [:id, :title, :start_date, :_destroy])
   end
 end
