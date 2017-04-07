@@ -209,7 +209,7 @@
             = link_to badge.name, badge
 
 .container.mb-5
-  - if user_signed_in? && @user == current_user 
+  - if user_signed_in? && @user == current_user || @user.is_admin
     - if @user.resumes.empty?
 
       .row
