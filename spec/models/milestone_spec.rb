@@ -11,6 +11,7 @@ RSpec.describe Milestone, type: :model do
   end
 
   describe 'validations' do
+    it { should validate_presence_of(:user) }
     it { should validate_presence_of(:title) }
     it { should validate_uniqueness_of(:facebook_id) }
   end

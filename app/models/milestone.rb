@@ -29,6 +29,7 @@ class Milestone < ApplicationRecord
   belongs_to :company
 
   # Validations
+  validates :user, presence: true
   validates :title, presence: true
   validates :facebook_id, uniqueness: true, allow_blank: true
 
