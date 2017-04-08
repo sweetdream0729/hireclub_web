@@ -6,6 +6,11 @@ $brand-primary: #6070E9;
 $link-hover-decoration: none !default;
 $input-color-placeholder: #bbb;
 
+
+$btn-font-weight:                600 !default;
+
+$navbar-inverse-color: #FFF;
+
 @import "bootstrap";
 @import "bootstrap_overrides";
 @import "typography";
@@ -36,6 +41,7 @@ $input-color-placeholder: #bbb;
 }
 
 #nav_search {
+  border: none;
   border-radius: 99px;
   background-image: asset-url("icons/search.svg");
   padding-right: 2.25rem;
