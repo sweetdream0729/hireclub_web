@@ -20,9 +20,6 @@
     %ul.nav.navbar-nav
       - if !user_signed_in?
         %li.nav-item
-          %a.nav-link{:href => omniauth_authorize_path(User, 'facebook')}
-            %i.fa.fa-facebook-square.fa-lg.facebook_blue.mr-1{"aria-hidden" => "true"}
-        %li.nav-item
           %a.nav-link{:href => new_user_registration_path} Sign Up
         %li.nav-item
           %a.nav-link{:href => new_user_session_path} Login
@@ -33,7 +30,11 @@
               %i.fa.fa-comment-o{"aria-hidden" => "true"}
         %li.nav-item
           %a.nav-link.mr-3{:href => notifications_path}
-            %i.fa.fa-bell-o{"aria-hidden" => "true"}
+            - if current_user.notifications.unread.exists?
+              %i.fa.fa-bell{"aria-hidden" => "true"}
+              = current_user.notifications.unread.count
+            - else
+              %i.fa.fa-bell-o{"aria-hidden" => "true"}
         %li.nav-item
           %a.nav-link{:href => user_path(current_user)}
             = image_tag(model_avatar(current_user.avatar, 200, true), width: 25, class: 'mr-1 rounded-circle')
