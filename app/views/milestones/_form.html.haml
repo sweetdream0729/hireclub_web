@@ -12,7 +12,7 @@
         Milestones are the remarkable things you accomplished in your work life.
 
       .form-group
-        = f.label :title
+        = f.label :milestone
         = f.text_field :title, class: "form-control", placeholder: "Founded HireClub with 25 of my friends",maxlength: 140
         %small.form-text.text-muted 
           Make them short, objective and interesting.
@@ -27,7 +27,7 @@
       .form-group
         = f.label "When did this happen?"
         %br
-        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 20, discard_day: true, order: [:month,:year]}
+        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
       .form-group
         = f.label :link
         = f.text_field :link, class: "form-control"

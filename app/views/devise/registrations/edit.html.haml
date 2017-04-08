@@ -108,6 +108,10 @@
                 Remote
             .form-check
               %label.form-check-label
+                = f.check_box :open_to_relocation, class: 'form-check-input'
+                Relocation
+            .form-check
+              %label.form-check-label
                 = f.check_box :open_to_full_time, class: 'form-check-input'
                 Full Time
             .form-check

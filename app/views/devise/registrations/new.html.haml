@@ -4,9 +4,13 @@
     .col-sm-6.offset-sm-3.col-lg-4.offset-lg-4
       / %h2 Sign Up
 
-      = link_to omniauth_authorize_path(resource, 'facebook'), class: "btn btn-primary btn-lg btn-block btn_facebook" do
+      = link_to user_facebook_omniauth_authorize_path, class: "btn btn-primary btn-lg btn-block btn_facebook" do
         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
         Sign Up with Facebook
+
+      = link_to user_google_oauth2_omniauth_authorize_path, class: "btn btn-primary btn-lg btn-block btn_google" do
+        %i.fa.fa-google{"aria-hidden" => "true"}
+        Sign Up with Google
 
       .text-center.mt-3
         OR
