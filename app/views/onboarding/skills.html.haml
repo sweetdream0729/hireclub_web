@@ -10,7 +10,6 @@
 
       %h1 🔥 What are your skills?
 
-
       = form_for @user, url: wizard_path, method: :put do |f|
         = f.hidden_field :email
         #user_skills
@@ -23,6 +22,3 @@
             %hr
             
         = f.submit "Next", class: "btn btn-primary btn-lg btn-block"
-        
-
-          
