@@ -209,40 +209,34 @@
             = link_to badge.name, badge
 
 .container.mb-5
-  - if user_signed_in? && @user == current_user || @user.is_admin
-    - if @user.resumes.empty?
-
-      .row
-        .col-sm-12
-          %hr
-            %h6.mt-4.mb-4
-              Resumes
-
-            %a.btn.btn-primary{href: new_resume_path}
-              = "Upload Resume"
-    - else 
-      .row
-        .col-sm-12
-          %hr
-            %h6.mt-4.mb-4
-              Resumes
-        .col-sm-12
+  - if viewing_self?(@user) || is_admin?
+    .row
+      .col-sm-12
+        
+        %h6.mt-4.mb-4
+          Resumes
+    .row
+      .col-sm-12
+        - if @user.resumes.exists?
           %table.table
             %thead
               %tr
-                %td
                 %th Name
                 %th Uploaded
-                %th
 
             %tbody
-              - @user.resumes.each do |resume|
+              - @user.resumes.by_newest.each do |resume|
                 %tr
                   - if resume.file_uid.present?
                     %td
                       = link_to resume.file_name, resume.file.remote_url, class: "btn btn-primary"  
                     %td
                       = link_to resume.created_at.strftime("%D %r"), resume
+        - else
+          - if viewing_self?(@user)
+            %a.btn.btn-primary{href: new_resume_path}
+              = "Upload Resume"
+
 
 
 
