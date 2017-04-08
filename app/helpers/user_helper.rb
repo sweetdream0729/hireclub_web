@@ -27,4 +27,13 @@ module UserHelper
     return pluralize(years, "Year") if years < 11
     return "10+ Years"
   end
+
+  def viewing_self?(user)
+    current_user == user
+  end
+
+  def is_admin?
+    user_signed_in? && current_user.is_admin
+  end
+
 end
