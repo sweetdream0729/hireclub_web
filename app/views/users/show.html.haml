@@ -37,7 +37,7 @@
                   %i.fa.fa-briefcase.text-success
             
 
-          - if @user.user_roles.any? || @user == current_user
+          - if @user.user_roles.any? || viewing_self?(@user)
             %h5
               - @user.user_roles.by_position.each_with_index do |user_role, index|
                 %span.user_role
@@ -76,7 +76,7 @@
         
 
     .col-sm-3
-      - if @user == current_user
+      - if viewing_self?(@user)
         - unless @user.onboarded?
           = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
         - else
@@ -84,7 +84,8 @@
         = link_to "Print", print_user_path(current_user), class: "btn btn-info btn-block"
       - else
         = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-primary btn-block" if policy(Conversation).create?
-      - if current_user && current_user.is_admin
+      - if is_admin?
+        = link_to "Print", print_user_path(current_user), class: "btn btn-info btn-block"
         = link_to "Admin", rails_admin.edit_path(model_name: 'user', id: @user.id), class: "btn btn-danger btn-block"
       %p.mt-4
         - if @user.website_url.present?
@@ -129,14 +130,14 @@
 
   .row
     .col-sm-8
-      - if @user.milestones.any? || @user == current_user
+      - if @user.milestones.any? || viewing_self?(@user)
         %hr
         %h6.mt-4.mb-4
           Milestones
           - if @user == current_user
             %a.btn.btn-primary.btn-sm{href: new_milestone_path}
               %i.fa.fa-plus
-        - if @user == current_user && @user.milestones.count < 5
+        - if viewing_self?(@user) && @user.milestones.count < 5
           %p
             = link_to new_milestone_path, class: "btn btn-sm btn-warning" do
               Add at least
@@ -153,7 +154,7 @@
             = render @rest_milestones
           
     .col-sm-4
-      - if @user.user_skills.any? || @user == current_user
+      - if @user.user_skills.any? || viewing_self?(@user)
         %hr
         %h6.mt-4.mb-4
           Skills
@@ -161,7 +162,7 @@
             %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       
-      - if @user == current_user
+      - if viewing_self?(@user)
         - if @user.skills.count < 5
           %p
             = link_to new_user_skill_path, class: "btn btn-sm btn-warning" do
@@ -179,23 +180,23 @@
             = render @rest_skills
 
 
-  - if @user.projects.by_position.any? || @user == current_user
+  - if @user.projects.by_position.exists? || viewing_self?(@user)
     %hr
     %h6.mt-4.mb-4
       Projects
-      - if @user == current_user
+      - if viewing_self?(@user)
         %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
           %i.fa.fa-plus
 
-    - if @user == current_user && @user.projects.count < 3
+    - if viewing_self?(@user) && @user.projects.count < 3
       %p
         = link_to new_user_project_path(current_user), class: "btn btn-sm btn-warning" do
           Add at least
           = pluralize(3 - @user.projects.count, "more Project")
     
 
-  .row
-    = render @user.projects.by_position
+    .row
+      = render @user.projects.by_position
     
   - if @user.badges.any?
     .row

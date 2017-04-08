@@ -29,7 +29,7 @@ module UserHelper
   end
 
   def viewing_self?(user)
-    user_signed_in? && current_user == user
+    current_user == user
   end
 
   def is_admin?
