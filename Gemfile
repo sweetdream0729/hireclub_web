@@ -42,6 +42,7 @@ group :development do
   gem 'rails_layout'
   gem 'foreman'
   gem 'letter_opener'
+  gem 'derailed'
 end
 
 group :test do
