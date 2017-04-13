@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_smart_url :facebook_url
   has_smart_url :instagram_url
   has_smart_url :linkedin_url
+  has_smart_url :imdb_url
 
   extend FriendlyId
   friendly_id :username
@@ -78,6 +79,7 @@ class User < ApplicationRecord
   validates :facebook_url, url: { allow_blank: true }
   validates :instagram_url, url: { allow_blank: true }
   validates :linkedin_url, url: { allow_blank: true }
+  validates :imdb_url, url: { allow_blank: true }
 
   def onboarded?
     username.present? && location.present?
