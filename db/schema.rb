@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413213838) do
+ActiveRecord::Schema.define(version: 20170419231703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,14 @@ ActiveRecord::Schema.define(version: 20170413213838) do
     t.index ["user_id"], name: "index_resumes_on_user_id", using: :btree
   end
 
+  create_table "review_requests", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.text     "goal",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_review_requests_on_user_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",                    null: false
     t.citext   "slug",                    null: false
@@ -360,6 +368,7 @@ ActiveRecord::Schema.define(version: 20170413213838) do
     t.boolean  "is_moderator",           default: false, null: false
     t.boolean  "open_to_relocation",     default: false, null: false
     t.string   "imdb_url"
+    t.boolean  "is_reviewer",            default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["gender"], name: "index_users_on_gender", using: :btree
@@ -389,6 +398,7 @@ ActiveRecord::Schema.define(version: 20170413213838) do
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
   add_foreign_key "resumes", "users"
+  add_foreign_key "review_requests", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
   add_foreign_key "user_roles", "roles"
