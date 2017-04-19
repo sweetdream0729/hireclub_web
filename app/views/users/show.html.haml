@@ -85,7 +85,7 @@
         = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-primary btn-block" if policy(Conversation).create?
         
       - if viewing_self?(@user) || is_admin?
-        = link_to "Print", print_user_path(current_user), class: "btn btn-info btn-block"
+        = link_to "Print", print_user_path(@user), class: "btn btn-info btn-block"
       - if is_admin? 
         = link_to "Admin", rails_admin.edit_path(model_name: 'user', id: @user.id), class: "btn btn-danger btn-block"
       %p.mt-4
