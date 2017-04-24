@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   # Scope
   scope :admin,        -> { where(is_admin: true) }
+  scope :moderator,     -> { where(is_moderator: true) }
   scope :normal,       -> { where(is_admin: false) }
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
