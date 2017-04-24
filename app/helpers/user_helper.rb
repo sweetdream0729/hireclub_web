@@ -36,8 +36,4 @@ module UserHelper
     user_signed_in? && current_user.is_admin
   end
 
-  def is_moderator? 
-    user_signed_in? && current_user.is_moderator   
-  end
-
 end
