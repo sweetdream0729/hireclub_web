@@ -13,3 +13,4 @@ Allow: /skills/*
 Allow: /roles
 Allow: /roles/*
 
+SITEMAP: https://s3-us-west-1.amazonaws.com/hireclub-production/sitemaps/sitemap.xml.gz
