@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   get 'search' => 'search#index', as: :search
   get 'feed', to: "feed#index", as: :feed
 
-  resources :review_requests
+  resources :review_requests do
+    resources :comments, module: :review_requests
+  end
+  
   resources :messages, only: [:create]
 
   resources :conversations do

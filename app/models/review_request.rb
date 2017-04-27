@@ -6,6 +6,8 @@ class ReviewRequest < ApplicationRecord
 
   # Associations
   belongs_to :user
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :commenters, through: :comments, source: :user
 
   # Validations
   validates :user, presence: true

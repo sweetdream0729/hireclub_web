@@ -22,4 +22,7 @@
 
       %hr
       = link_to 'Cancel Review', @review_request, :method => :delete, :data => { :confirm => 'Are you sure you want to cancel your review?' }, class: "btn btn-danger btn-sm" if policy(@review_request).destroy?
+      %hr
+      = render partial: "comments/comments", locals: {commentable: @review_request}
+      = render partial: "comments/form", locals: {commentable: @review_request}
       
