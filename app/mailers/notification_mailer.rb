@@ -7,4 +7,11 @@ class NotificationMailer < ApplicationMailer
 
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
+
+  def review_request(notification)
+    @notification = Notification.find notification
+    @user = @notification.user
+
+    mail(to: @user.email, subject: 'Your Profile Review')
+  end
 end
