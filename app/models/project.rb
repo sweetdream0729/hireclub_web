@@ -23,6 +23,7 @@ class Project < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :company
+  has_many :comments, as: :commentable, dependent: :destroy
 
   # Validations
   validates :slug, uniqueness: { scope: :user_id, case_sensitive:false }

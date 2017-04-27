@@ -27,6 +27,7 @@ class Milestone < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :company
+  has_many :comments, as: :commentable, dependent: :destroy
 
   # Validations
   validates :user, presence: true
