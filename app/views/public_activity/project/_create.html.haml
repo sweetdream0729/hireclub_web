@@ -5,5 +5,5 @@
   .media-body
     = link_to user.display_name, user
     added
-    = link_to "project #{project.name}", user_project_path(user, project)
+    = link_to "project #{project.name}", project_path(project)
     = render partial: "/public_activity/time_ago", locals: {activity: activity}

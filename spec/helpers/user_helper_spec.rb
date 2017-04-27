@@ -64,7 +64,7 @@ describe UserHelper do
       FactoryGirl.create(:user_skill, user: user)
     end
   
-    expect(next_path).to eq new_user_project_path(user)
+    expect(next_path).to eq new_project_path
   end
 
   it "should return new user milestone path when less than 5 milestones" do

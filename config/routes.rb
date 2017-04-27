@@ -38,8 +38,13 @@ Rails.application.routes.draw do
   
   resources :user_roles
   resources :roles
+  
   resources :milestones do
     resources :comments, module: :milestones
+  end
+
+  resources :projects do
+    resources :comments, module: :projects
   end
 
   resources :user_skills
@@ -61,9 +66,7 @@ Rails.application.routes.draw do
   get "/members",   to: "users#index",   as: :members
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
-    resources :projects do
-      resources :comments, module: :projects
-    end
+    
     member do
       get :print
     end

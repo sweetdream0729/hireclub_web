@@ -2,18 +2,24 @@ class ProjectsController < ApplicationController
   before_action :sign_up_required, except: [:show]
   after_action :verify_authorized, except: [:index]
 
-  before_action :set_user
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   def index
-    scope = @user.projects.by_position
+    scope = Project.by_recent
+    @title = "Projects"
+    if params[:username]
+      @user = User.friendly.find(params[:username])
+      scope = @user.projects
+      @title = "#{@title} by #{@user.display_name}"
+    end
 
     if params[:skill]
       scope = scope.with_any_skills(params[:skill])
+      @title = "#{params[:skill]} #{@title}"
     end
 
-    @projects = scope
+    @projects = scope.page(params[:page])
   end
 
   # GET /projects/1
@@ -37,7 +43,7 @@ class ProjectsController < ApplicationController
     authorize @project
     
     if @project.save
-      redirect_to user_project_path(@project.user, @project), notice: 'Project added'
+      redirect_to project_path(@project), notice: 'Project added'
     else
       render :new
     end
@@ -46,7 +52,8 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to user_project_path(@project.user, @project), notice: 'Project updated'
+      @project.reload
+      redirect_to project_path(@project), notice: 'Project updated'
     else
       render :edit
     end
@@ -63,12 +70,8 @@ class ProjectsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.friendly.find(params[:user_id])
-    end
-
     def set_project
-      @project = @user.projects.friendly.find(params[:id])
+      @project = Project.friendly.find(params[:id])
       authorize @project
     end
 

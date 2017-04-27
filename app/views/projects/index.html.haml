@@ -1,10 +1,7 @@
 .container.mt-5.mb-5
   %h1
-    - if params[:skill].present?
-      = title "#{params[:skill]} Projects by #{@user.display_name}"
-    - else
-      = title "Projects by #{@user.display_name}"
-    %small
-      = link_to 'Add Project', new_user_project_path(current_user), class: "btn btn-primary btn-sm" if user_signed_in? && current_user == @user
+    = title @title
   .row
     = render @projects
+  .row
+    = paginate @projects

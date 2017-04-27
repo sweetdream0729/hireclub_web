@@ -4,7 +4,7 @@ class Project < ApplicationRecord
   include UnpublishableActivity
   include ActsAsLikeable
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :slug_candidates, use: :slugged
 
   dragonfly_accessor :image
   is_impressionable
@@ -16,6 +16,7 @@ class Project < ApplicationRecord
 
   # Scopes
   scope :by_position, -> { order(position: :asc) }
+  scope :by_recent,   -> { order(created_at: :desc) }
 
   # Extensions
   acts_as_taggable_array_on :skills
@@ -48,7 +49,13 @@ class Project < ApplicationRecord
   end
 
   def should_generate_new_friendly_id?
-    name_changed?
+    name_changed? || super
+  end
+
+  def slug_candidates
+    [
+      [:name, :id]
+    ]
   end
 
   def skills_list=(string)
