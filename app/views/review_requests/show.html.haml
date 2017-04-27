@@ -6,7 +6,7 @@
         - if current_user == @review_request.user
           Your Profile Review
         - else
-          #{@review_request.user.display_name}'s Review
+          #{@review_request.user.display_name}'s Profile Review
       %p
         %b Submitted:
         = @review_request.created_at
