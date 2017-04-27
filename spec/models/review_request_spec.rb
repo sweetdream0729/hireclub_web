@@ -13,5 +13,15 @@ RSpec.describe ReviewRequest, type: :model do
     it { should validate_presence_of(:user) }
     it { should validate_length_of(:goal).is_at_least(10) }
   end
-    
+  
+  describe 'activity' do
+    it "should create activity" do
+      review_request.save
+
+      activity = Activity.last
+      expect(activity.key).to eq ReviewRequestCreateActivity::KEY
+      expect(activity.trackable).to eq review_request
+      expect(activity.owner).to eq review_request.user
+    end
+  end
 end

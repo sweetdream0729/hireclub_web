@@ -1,4 +1,9 @@
 class ReviewRequest < ApplicationRecord
+  # Extensions
+  include UnpublishableActivity
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
+
   # Associations
   belongs_to :user
 
