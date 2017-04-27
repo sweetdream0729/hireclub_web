@@ -19,6 +19,10 @@
         - if @milestone.end_date      
           = "-"
           = @milestone.end_date.strftime("%b %Y")
+        - if policy(@milestone).edit?
+          = link_to edit_milestone_path(@milestone), class: "btn btn-primary btn-sm" do
+            %i.fa.fa-pencil.mr-1
+            Edit
 
       %p
         = @milestone.description  
@@ -29,9 +33,7 @@
             = link_to link_host(@milestone.link), @milestone.link, target: "_blank"
         .col-6
           .pull-right
-            = render partial: "/likes/like_button", locals: { likeable: @milestone }
+            = render partial: "/likes/like_button", locals: { likeable: @milestone }      
       %hr
-      - if policy(@milestone).edit?
-        = link_to edit_milestone_path(@milestone), class: "btn btn-primary btn-sm" do
-          %i.fa.fa-pencil.mr-1
-          Edit
+      = render partial: "comments/comments", locals: {commentable: @milestone}
+      = render partial: "comments/form", locals: {commentable: @milestone}

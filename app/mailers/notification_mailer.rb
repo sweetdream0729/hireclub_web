@@ -25,4 +25,12 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: subject, template_name: template_name)
   end
 
+  def comment_created(notification)
+    @notification = Notification.find notification
+    @user = @notification.user
+    @comment = @notification.activity.trackable
+    @commentable = @comment.commentable
+    mail(to: @user.email, subject: 'New Comment')
+  end
+  
 end
