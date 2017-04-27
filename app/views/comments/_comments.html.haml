@@ -1,0 +1,11 @@
+- commentable.comments.by_oldest.each do |comment|
+  .media
+    = link_to image_tag(model_avatar(comment.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), comment.user
+    .media-body
+      %h5.mt-0
+        = link_to comment.user.display_name, comment.user
+      = comment.text
+      %p
+        %small.text-muted
+          = time_ago_in_words(comment.created_at)
+      
