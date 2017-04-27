@@ -1,5 +1,6 @@
 class ReviewRequest < ApplicationRecord
   # Extensions
+  is_impressionable
   include UnpublishableActivity
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
@@ -16,6 +17,8 @@ class ReviewRequest < ApplicationRecord
   def status
     if comments.any?
       "Started"
+    elsif self.impressions.where.not(user_id: user.id).any?
+      "Viewed"
     else
       "Waiting for Review"
     end

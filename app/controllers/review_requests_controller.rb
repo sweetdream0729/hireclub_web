@@ -9,6 +9,7 @@ class ReviewRequestsController < ApplicationController
 
   # GET /review_requests/1
   def show
+    impressionist(@review_request)
   end
 
   # GET /review_requests/new
