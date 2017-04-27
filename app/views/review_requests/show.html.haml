@@ -3,7 +3,10 @@
     .col-sm-12
 
       %h1
-        Your Profile Review
+        - if current_user == @review_request.user
+          Your Profile Review
+        - else
+          #{@review_request.user.display_name}'s Review
       %p
         %b Submitted:
         = @review_request.created_at
@@ -18,5 +21,5 @@
         
 
       %hr
-      = link_to 'Cancel Review', @review_request, :method => :delete, :data => { :confirm => 'Are you sure you want to cancel your review?' }, class: "btn btn-danger btn-sm"
+      = link_to 'Cancel Review', @review_request, :method => :delete, :data => { :confirm => 'Are you sure you want to cancel your review?' }, class: "btn btn-danger btn-sm" if policy(@review_request).destroy?
       

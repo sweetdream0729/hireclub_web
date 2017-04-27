@@ -1,9 +1,10 @@
 class ReviewRequestsController < ApplicationController
+  after_action :verify_authorized, except: [:index]
   before_action :set_review_request, only: [:show, :edit, :update, :destroy]
 
   # GET /review_requests
   def index
-    @review_requests = ReviewRequest.all
+    @review_requests = current_user.review_requests
   end
 
   # GET /review_requests/1
@@ -13,6 +14,7 @@ class ReviewRequestsController < ApplicationController
   # GET /review_requests/new
   def new
     @review_request = ReviewRequest.new
+    authorize @review_request
   end
 
   # GET /review_requests/1/edit
@@ -22,7 +24,7 @@ class ReviewRequestsController < ApplicationController
   # POST /review_requests
   def create
     @review_request = current_user.review_requests.build(review_request_params)
-
+    authorize @review_request
     if @review_request.save
       redirect_to @review_request, notice: 'Your request has been submitted.'
     else
@@ -49,6 +51,7 @@ class ReviewRequestsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_review_request
       @review_request = ReviewRequest.find(params[:id])
+      authorize @review_request
     end
 
     # Only allow a trusted parameter "white list" through.

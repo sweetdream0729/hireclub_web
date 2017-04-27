@@ -11,5 +11,9 @@ FactoryGirl.define do
     factory :moderator do
       after(:build) {|user| user.is_moderator = true }
     end
+
+    factory :reviewer do
+      after(:build) {|user| user.is_reviewer = true }
+    end
   end
 end
