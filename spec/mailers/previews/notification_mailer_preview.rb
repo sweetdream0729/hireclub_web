@@ -7,4 +7,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(user: user, activity_key: UserWelcomeActivity::KEY).first
     NotificationMailer.user_welcome(notification)
   end
+
+  def comment_created
+    notification = Notification.where(activity_key: CommentCreateActivity::KEY).first
+    NotificationMailer.comment_created(notification)
+  end
 end
