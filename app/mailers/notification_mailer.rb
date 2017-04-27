@@ -11,7 +11,18 @@ class NotificationMailer < ApplicationMailer
   def review_request(notification)
     @notification = Notification.find notification
     @user = @notification.user
+    @activity = @notification.activity
+    @review_request = @activity.trackable
+    @owner = @review_request.user
 
-    mail(to: @user.email, subject: 'Your Profile Review')
+    if @owner == @user
+      subject = "Your Profile Review"
+      template_name = "review_request"
+    else
+      subject = "#{@owner.display_name} is asking for a profile review"
+      template_name = "review_request_reviewer"
+    end
+    mail(to: @user.email, subject: subject, template_name: template_name)
   end
+
 end

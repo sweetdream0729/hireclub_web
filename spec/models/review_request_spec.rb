@@ -16,6 +16,7 @@ RSpec.describe ReviewRequest, type: :model do
   
   describe 'activity' do
     it "should create activity" do
+      reviewer = FactoryGirl.create(:user, is_reviewer: true)
       review_request.save
 
       activity = Activity.last
