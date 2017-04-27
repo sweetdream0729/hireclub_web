@@ -65,8 +65,12 @@ class UserCompletion
     user.bio.present?
   end
 
+  def has_resume?
+    user.resumes.any?
+  end
+
   def can_request_review?
-    roles_complete? && skills_complete? && milestones_complete? && has_bio?
+    roles_complete? && skills_complete? && milestones_complete? && has_bio? && has_resume?
   end
 
   def next_step
