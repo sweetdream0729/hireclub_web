@@ -36,4 +36,4 @@
             = render partial: "/likes/like_button", locals: { likeable: @milestone }      
       %hr
       = render partial: "comments/comments", locals: {commentable: @milestone}
-      
+      = render partial: "comments/form", locals: {commentable: @milestone}
