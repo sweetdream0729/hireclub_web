@@ -189,12 +189,12 @@
     %h6.mt-4.mb-4
       Projects
       - if viewing_self?(@user)
-        %a.btn.btn-primary.btn-sm{href: new_user_project_path(current_user)}
+        %a.btn.btn-primary.btn-sm{href: new_project_path}
           %i.fa.fa-plus
 
     - if viewing_self?(@user) && @user.projects.count < 3
       %p
-        = link_to new_user_project_path(current_user), class: "btn btn-sm btn-warning" do
+        = link_to new_project_path, class: "btn btn-sm btn-warning" do
           Add at least
           = pluralize(3 - @user.projects.count, "more Project")
     

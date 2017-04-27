@@ -4,7 +4,7 @@
       %i.fa.fa-bars
 
   %span.semi_bold
-    = link_to user_skill.name, user_projects_path(user_skill.user, skill: user_skill.name)
+    = link_to user_skill.name, projects_path(username: user_skill.user.username, skill: user_skill.name)
   %small
     = display_years(user_skill.years) if user_skill.years > 0
 

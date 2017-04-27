@@ -17,7 +17,7 @@ module UserHelper
     when UserCompletion::MILESTONES_STEP
       new_milestone_path
     when UserCompletion::PROJECTS_STEP
-      new_user_project_path(user_completion.user)
+      new_project_path
     when UserCompletion::WEBSITE_STEP
       edit_user_registration_path
     end 
