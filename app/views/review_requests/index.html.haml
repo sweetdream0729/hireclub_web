@@ -8,7 +8,6 @@
         %thead
           %tr
             %th Status
-            %th Reviewer
             %th Submitted
             %th
             %th
@@ -18,9 +17,8 @@
             %tr
               %td
                 = link_to review_request.status, review_request
-              %td
               %td= review_request.created_at
               %td= link_to 'Cancel Request', review_request, :method => :delete, :data => { :confirm => 'Are you sure you want to cancel your review?' }, class: "btn btn-danger btn-sm"
 
       %hr
-      = link_to 'Request Additional Review', new_review_request_path, class: "btn btn-success"
+      = link_to 'Request Review', new_review_request_path, class: "btn btn-success" unless @review_requests.any?
