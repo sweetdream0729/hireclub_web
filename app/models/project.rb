@@ -24,6 +24,7 @@ class Project < ApplicationRecord
   belongs_to :user
   belongs_to :company
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :commenters, through: :comments, source: :user
 
   # Validations
   validates :slug, uniqueness: { scope: :user_id, case_sensitive:false }
