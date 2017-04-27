@@ -15,7 +15,9 @@
         = f.hidden_field :retained_image
         
         %small.form-text.text-muted
-          800x600 minimum. JPG or PNG.
+          800x600 minimum. JPG, PNG, or GIF.
+        %small.form-text.text-muted
+          10MB maximum file size.
       .form-group
         = f.label "Or Paste URL"
         = f.text_field :image_url, placeholder: "http://hireclub.co/logo.jpg", class: 'form-control'      
