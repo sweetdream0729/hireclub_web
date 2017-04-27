@@ -5,6 +5,8 @@ class CommentCreateActivity
     comment = activity.trackable
     commentable = comment.commentable
     # send out notifications to commentable user
-    recepients = [commentable.user] if commentable.user != comment.user
+    recepients = commentable.commenters - [comment.user]
+    recepients << commentable.user if commentable.user != comment.user
+    recepients
   end
 end

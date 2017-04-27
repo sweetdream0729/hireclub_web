@@ -9,6 +9,7 @@ RSpec.describe Milestone, type: :model do
     it { should belong_to(:user) }
     it { should belong_to(:company) }
     it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:commenters) }
   end
 
   describe 'validations' do
