@@ -14,6 +14,10 @@ class ReviewRequest < ApplicationRecord
   validates_length_of :goal, minimum: 10
 
   def status
-    "Waiting for Review"
+    if comments.any?
+      "Started"
+    else
+      "Waiting for Review"
+    end
   end
 end
