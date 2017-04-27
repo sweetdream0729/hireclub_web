@@ -61,6 +61,14 @@ class UserCompletion
     user.website_url.present? || user.linkedin_url.present? || user.twitter_url.present? || user.dribbble_url.present? || user.facebook_url.present? || user.github_url.present? || user.medium_url.present?
   end
 
+  def has_bio?
+    user.bio.present?
+  end
+
+  def can_request_review?
+    roles_complete? && skills_complete? && milestones_complete? && has_bio?
+  end
+
   def next_step
     return USERNAME_STEP if user.username.blank?
     return LOCATION_STEP if user.location.blank?
