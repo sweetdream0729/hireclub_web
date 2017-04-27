@@ -9,4 +9,9 @@ class CommentCreateActivity
     recepients << commentable.user if commentable.user != comment.user
     recepients
   end
+
+  def self.send_notification(notification)
+    NotificationMailer.delay.comment_created(notification)
+  end
+
 end
