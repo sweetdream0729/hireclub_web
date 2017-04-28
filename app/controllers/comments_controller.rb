@@ -10,13 +10,37 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
-    authorize @comment
+    set_comment
     @comment.destroy
     redirect_to @comment.commentable, alert: "Comment deleted."
   end
 
+  def like
+    set_comment
+    @comment.like!(current_user)
+    @comment.reload
+    respond_to do |format|
+      format.js {  render :like }
+      format.html { redirect_to @comment.commentable, notice: "Comment liked"}
+    end
+  end
+
+  def unlike
+    set_comment
+    @comment.unlike!(current_user)
+    @comment.reload
+    respond_to do |format|
+      format.js {  render :like }
+      format.html { redirect_to @comment.commentable, notice: "Comment unliked"}
+    end
+  end
+
   private
+    def set_comment
+      @comment = Comment.find(params[:id])
+      authorize @comment
+    end
+
     def comment_params
       params.require(:comment).permit(:text)
     end

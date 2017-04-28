@@ -3,7 +3,8 @@ class Comment < ApplicationRecord
   auto_strip_attributes :text, :squish => true
   nilify_blanks
   include UnpublishableActivity
-  include PublicActivity::Model  
+  include ActsAsLikeable
+  include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   # Scopes

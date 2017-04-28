@@ -39,7 +39,13 @@ Rails.application.routes.draw do
   resources :user_roles
   resources :roles
   
-  resources :comments, only: [:destroy]
+  resources :comments, only: [:destroy] do
+    member do
+      get :like
+      get :unlike
+    end
+  end
+  
   resources :milestones do
     resources :comments, module: :milestones
   end

@@ -23,4 +23,14 @@ class CommentPolicy < ApplicationPolicy
     return false if user.nil?
     record.user == user || user.is_admin || record.commentable.user == user
   end
+
+  def like?
+    return false if user.nil?
+    return true
+  end
+
+  def unlike?
+    return false if user.nil?
+    return true
+  end
 end
