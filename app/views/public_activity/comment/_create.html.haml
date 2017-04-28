@@ -10,6 +10,9 @@
     - if comment.commentable_type == "Milestone"
       milestone
       = link_to(truncate(commentable.title,length:40), commentable)
+    - if comment.commentable_type == "Project"
+      project
+      = link_to(truncate(commentable.name,length:40), commentable)
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
     
