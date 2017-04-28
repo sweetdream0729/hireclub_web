@@ -289,11 +289,11 @@ class User < ApplicationRecord
         milestone.end_date = Chronic.parse(end_date)
       end
 
-      if milestone.title.blank?
+      if milestone.name.blank?
         company_name = item["employer"]["name"]
         position = item["position"]["name"]
-        milestone.title = "Joined #{company_name}"
-        milestone.title += " as #{position}" if position.present?
+        milestone.name = "Joined #{company_name}"
+        milestone.name += " as #{position}" if position.present?
       end
 
       company_facebook_id = item["employer"]["id"]
@@ -331,7 +331,7 @@ class User < ApplicationRecord
         milestone.start_date = Date.today if milestone.start_date.nil?
         milestone.kind = Milestone::EDUCATION
 
-        milestone.title = "Went to #{school}" if milestone.title.blank?
+        milestone.name = "Went to #{school}" if milestone.name.blank?
         school_facebook_id = item["school"]["id"]
         
         if milestone.company.nil?

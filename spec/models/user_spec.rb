@@ -105,7 +105,7 @@ RSpec.describe User, type: :model do
       
       milestone = user.milestones.work.first
       expect(milestone).to be_present
-      expect(milestone.title).to eq "Joined Up All Night SF as Chief technology officer"
+      expect(milestone.name).to eq "Joined Up All Night SF as Chief technology officer"
       expect(milestone.start_date.year).to eq 2014
       expect(milestone.start_date.month).to eq 9
       expect(milestone.start_date.day).to eq 30
@@ -127,7 +127,7 @@ RSpec.describe User, type: :model do
       
       milestone = user.milestones.education.last
       expect(milestone).to be_present
-      expect(milestone.title).to eq "Went to The Evergreen State College"
+      expect(milestone.name).to eq "Went to The Evergreen State College"
       expect(milestone.start_date.year).to eq 2000
       expect(milestone.facebook_id).to eq "10158330373725244"
       expect(milestone.kind).to eq Milestone::EDUCATION

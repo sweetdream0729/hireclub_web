@@ -33,7 +33,7 @@ class Milestone < ApplicationRecord
 
   # Validations
   validates :user, presence: true
-  validates :title, presence: true
+  validates :name, presence: true
   validates :facebook_id, uniqueness: true, allow_blank: true
 
   # Broadcasts
