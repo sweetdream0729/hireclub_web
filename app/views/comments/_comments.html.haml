@@ -10,5 +10,5 @@
           = time_ago_in_words(comment.created_at)
           - if policy(comment).destroy?
             •
-            = link_to "Delete", comment_path(comment), method: :delete, data: { confirm: "Delete this comment?" }
+            = link_to "Delete", comment_path(comment), method: :delete, data: { confirm: "Delete this comment?" }, class: "text-muted"
       
