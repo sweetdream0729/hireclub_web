@@ -53,6 +53,6 @@ class LikesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def like_params
-      params.require(:like).permit(:user_id, :likeable_id, :likeable_type, :likeable)
+      params.require(:like).permit(:likeable_id, :likeable_type, :likeable)
     end
 end
