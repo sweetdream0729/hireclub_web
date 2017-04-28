@@ -6,6 +6,7 @@ class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
   auto_strip_attributes :name, :squish => true
+  auto_strip_attributes :link, :squish => true
 
   dragonfly_accessor :image
   is_impressionable
