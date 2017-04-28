@@ -18,6 +18,7 @@ class Project < ApplicationRecord
   # Scopes
   scope :by_position, -> { order(position: :asc) }
   scope :by_recent,   -> { order(created_at: :desc) }
+  scope :with_image,  -> { where.not(image_uid: nil) }
 
   # Extensions
   acts_as_taggable_array_on :skills

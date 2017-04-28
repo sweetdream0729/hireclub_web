@@ -6,7 +6,14 @@ class CommentsController < ApplicationController
     authorize @comment
     @comment.user = current_user
     @comment.save
-    redirect_to @commentable, notice: "Your comment was successfully posted."
+    redirect_to @commentable, notice: "Comment posted."
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    authorize @comment
+    @comment.destroy
+    redirect_to @comment.commentable, alert: "Comment deleted."
   end
 
   private
