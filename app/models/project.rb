@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   include ActsAsLikeable
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
+  auto_strip_attributes :name, :squish => true
 
   dragonfly_accessor :image
   is_impressionable
@@ -17,6 +18,7 @@ class Project < ApplicationRecord
   # Scopes
   scope :by_position, -> { order(position: :asc) }
   scope :by_recent,   -> { order(created_at: :desc) }
+  scope :with_image,  -> { where.not(image_uid: nil) }
 
   # Extensions
   acts_as_taggable_array_on :skills
@@ -28,7 +30,8 @@ class Project < ApplicationRecord
   has_many :commenters, through: :comments, source: :user
 
   # Validations
-  validates :slug, uniqueness: { scope: :user_id, case_sensitive:false }
+  validates :name, presence: true
+  validates :slug, uniqueness: { case_sensitive:false }
   validates_size_of :image, maximum: 5.megabytes
   validates_property :format, of: :image, in: ['jpeg', 'png', 'gif', 'jpg']
   validate :skills_exist

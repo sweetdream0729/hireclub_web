@@ -21,6 +21,6 @@ class CommentPolicy < ApplicationPolicy
 
   def destroy?
     return false if user.nil?
-    record.user == user || user.is_admin
+    record.user == user || user.is_admin || record.commentable.user == user
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427175538) do
+ActiveRecord::Schema.define(version: 20170428065815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20170427175538) do
 
   create_table "milestones", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",                        null: false
+    t.string   "name",                         null: false
     t.date     "start_date",                   null: false
     t.date     "end_date"
     t.string   "link"
@@ -243,8 +243,8 @@ ActiveRecord::Schema.define(version: 20170427175538) do
 
   create_table "projects", force: :cascade do |t|
     t.integer  "user_id",                   null: false
-    t.string   "name"
-    t.citext   "slug"
+    t.string   "name",                      null: false
+    t.citext   "slug",                      null: false
     t.integer  "position",     default: 0,  null: false
     t.string   "image_uid"
     t.string   "image_name"
@@ -259,7 +259,7 @@ ActiveRecord::Schema.define(version: 20170427175538) do
     t.integer  "company_id"
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
-    t.index ["user_id", "slug"], name: "index_projects_on_user_id_and_slug", unique: true, using: :btree
+    t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 

@@ -9,6 +9,7 @@
       = image_tag(model_image(@project.image, 800, 600, true), alt: @project.name, class: "img-fluid")
       %hr
       = render partial: "comments/comments", locals: {commentable: @project}
+      = render partial: "comments/form", locals: {commentable: @project}
     .col-sm-4
       %h1
         = @project.name

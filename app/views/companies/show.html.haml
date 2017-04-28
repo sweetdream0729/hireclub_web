@@ -53,7 +53,7 @@
               ·
 
               - if milestone.link.present?
-                = link_to milestone.title, milestone.link, target: "_blank"
+                = link_to milestone.name, milestone.link, target: "_blank"
               - else
-                = milestone.title
+                = milestone.name
 

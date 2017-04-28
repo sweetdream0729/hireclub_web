@@ -19,7 +19,6 @@ class Like < ApplicationRecord
   validates :user_id, uniqueness: { scope: [:likeable_id, :likeable_type]}
 
   def likeable_name
-    return likeable.title if likeable.respond_to?(:title)
     return likeable.name
   end
 end
