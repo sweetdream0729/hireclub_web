@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428063243) do
+ActiveRecord::Schema.define(version: 20170428064048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,8 +243,8 @@ ActiveRecord::Schema.define(version: 20170428063243) do
 
   create_table "projects", force: :cascade do |t|
     t.integer  "user_id",                   null: false
-    t.string   "name"
-    t.citext   "slug"
+    t.string   "name",                      null: false
+    t.citext   "slug",                      null: false
     t.integer  "position",     default: 0,  null: false
     t.string   "image_uid"
     t.string   "image_name"
