@@ -1,0 +1,41 @@
+- set_meta_tags canonical: job_url(@job)
+- set_meta_tags image_src: model_image(@job.company.avatar, 200, 200, true)
+- set_meta_tags description: @job.description
+- set_meta_tags og: {type: "article", image: model_image(@job.company.avatar, 200, 200, true)}
+
+.container.mt-5.mb-5
+  .row
+    .col-sm-12
+      .media
+        = image_tag(company_avatar(@job.company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded")
+        .media-body
+          %h1.black
+            = title @job.name
+          %p
+            = link_to @job.company.name, @job.company
+
+      %hr
+  .row
+    .col-sm-8
+      .media
+        = link_to image_tag(model_avatar(@job.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @job.user
+        .media-body
+          %h5.mt-0.mb-0
+            = link_to @job.user.display_name, @job.user
+            - if @job.user.is_hiring
+              %span.small
+                %i.fa.fa-bullseye.text-primary
+
+            - if @job.user.is_available
+              %small
+                %i.fa.fa-briefcase.text-success
+          %small
+            = @job.created_at
+          %p.mt-3
+            = @job.description
+          %p
+            = link_to link_display(@job.link), @job.link, target: "_blank"
+  
+    .col-sm-3
+      = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?
+      = link_to 'Delete', @job, :method => :delete, :data => { :confirm => 'Are you sure you want to delete this job post?' }, class: "btn btn-danger" if policy(@job).edit?

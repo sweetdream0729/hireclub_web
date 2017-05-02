@@ -26,6 +26,7 @@ RSpec.describe User, type: :model do
     it { should belong_to(:location)}
 
     it { should have_many(:likes) }
+    it { should have_many(:jobs) }
   end
 
   describe 'validations' do

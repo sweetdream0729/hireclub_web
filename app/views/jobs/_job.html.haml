@@ -1,0 +1,13 @@
+= cache [job] do
+  .media
+    = link_to image_tag(model_avatar(job.company.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded'), job
+    .media-body
+      %h5.mt-0.mb-1
+        = link_to job.name, job
+      %small
+        .media
+          - user = job.user
+          = link_to image_tag(model_avatar(user.avatar, 200, true), width: 24, class: 'd-flex mr-1 rounded-circle'), user
+          .media-body
+            = link_to user.display_name, user
+  %hr
