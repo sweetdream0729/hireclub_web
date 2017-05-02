@@ -39,6 +39,16 @@ RSpec.describe Job, type: :model do
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:link) }
   end
 
+  describe "activity" do
+    it "should have create activity" do
+      job.save
+      
+      activity = PublicActivity::Activity.where(key: JobCreateActivity::KEY).last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(job)
+      expect(activity.owner).to eq(job.user)
+    end
+  end
 
 
   # describe 'tags' do 

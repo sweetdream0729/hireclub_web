@@ -34,7 +34,7 @@
           %p.mt-3
             = @job.description
           %p
-            = link_to link_display(@job.link), @job.link, target: "_blank"
+            = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
   
     .col-sm-3
       = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?

@@ -7,6 +7,10 @@ class Job < ApplicationRecord
   has_smart_url :link
   is_impressionable
 
+  include UnpublishableActivity
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
+
   # Scopes
   scope :recent,       -> { order(created_at: :desc) }
 
