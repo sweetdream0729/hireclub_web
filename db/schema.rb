@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502213943) do
+ActiveRecord::Schema.define(version: 20170502230652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,15 +159,25 @@ ActiveRecord::Schema.define(version: 20170502213943) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.citext   "slug",        null: false
-    t.integer  "company_id",  null: false
-    t.integer  "user_id",     null: false
+    t.string   "name",                        null: false
+    t.citext   "slug",                        null: false
+    t.integer  "company_id",                  null: false
+    t.integer  "user_id",                     null: false
     t.text     "description"
     t.string   "link"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "full_time",   default: true,  null: false
+    t.boolean  "part_time",   default: false, null: false
+    t.boolean  "remote",      default: false, null: false
+    t.boolean  "contract",    default: false, null: false
+    t.boolean  "internship",  default: false, null: false
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
+    t.index ["contract"], name: "index_jobs_on_contract", using: :btree
+    t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
+    t.index ["internship"], name: "index_jobs_on_internship", using: :btree
+    t.index ["part_time"], name: "index_jobs_on_part_time", using: :btree
+    t.index ["remote"], name: "index_jobs_on_remote", using: :btree
     t.index ["slug"], name: "index_jobs_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_jobs_on_user_id", using: :btree
   end

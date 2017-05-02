@@ -13,6 +13,23 @@
             = title @job.name
           %p
             = link_to @job.company.name, @job.company
+            %br
+            - if @job.full_time
+              %span.badge.badge-primary
+                Full Time
+            - if @job.part_time
+              %span.badge.badge-default
+                Part Time
+            - if @job.contract
+              %span.badge.badge-info
+                Contract
+            - if @job.internship
+              %span.badge.badge-default
+                Internship
+            - if @job.remote
+              %span.badge.badge-success
+                %i.fa.fa-plane
+                Remote
 
       %hr
   .row

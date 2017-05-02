@@ -5,22 +5,48 @@
       %ul
         - @job.errors.full_messages.each do |msg|
           %li= msg
+  .row
+    .col-sm-8
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control', autocomplete: :off
+      .form-group
+        = f.label :company
+        = f.text_field :company, class: "form-control autocomplete_company", value: @job.company.try(:name), placeholder: "HireClub", autocomplete: "off"
+      
+        = f.hidden_field :company_id, value: @job.company_id, class: "autocomplete_company_id"
+      
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control', rows: 5
+      .form-group
+        = f.label :link
+        = f.text_field :link, class: 'form-control'
+    .col-sm-4
+      %h2 Options
+          
+      .form-check
+        %label.form-check-label
+          = f.check_box :full_time, class: 'form-check-input'
+          Full Time
+      .form-check
+        %label.form-check-label
+          = f.check_box :part_time, class: 'form-check-input'
+          Part Time
+      .form-check
+        %label.form-check-label
+          = f.check_box :contract, class: 'form-check-input'
+          Contract
+      .form-check
+        %label.form-check-label
+          = f.check_box :internship, class: 'form-check-input'
+          Internship
+      .form-check
+        %label.form-check-label
+          = f.check_box :remote, class: 'form-check-input'
+          %i.fa.fa-plane
+          Remote
 
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control', autocomplete: :off
-  .form-group
-    = f.label :company
-    = f.text_field :company, class: "form-control autocomplete_company", value: @job.company.try(:name), placeholder: "HireClub", autocomplete: "off"
-  
-    = f.hidden_field :company_id, value: @job.company_id, class: "autocomplete_company_id"
-  
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control', rows: 5
-  .form-group
-    = f.label :link
-    = f.text_field :link, class: 'form-control'
-  
+    
   = f.submit 'Save', class: "btn btn-lg btn-primary"
   = link_to 'Cancel', @job, class: "btn btn-lg btn-link" if @job.persisted?
