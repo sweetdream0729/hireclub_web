@@ -9,6 +9,7 @@ RSpec.describe Location, type: :model do
     it { should belong_to(:parent) }
     it { should have_many(:children) }
     it { should have_many(:users) }
+    it { should have_many(:jobs) }
     # it { should have_many(:users).through(:user_locations) }
   end
 

@@ -17,10 +17,12 @@ class Job < ApplicationRecord
   # Associations
   belongs_to :company
   belongs_to :user
+  belongs_to :location
 
   # Validations
   validates :user, presence: true
   validates :company, presence: true
+  validates :location, presence: true
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true

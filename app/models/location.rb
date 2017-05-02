@@ -18,6 +18,7 @@ class Location < ApplicationRecord
 
   # Associations
   has_many :users
+  has_many :jobs
   
   # Extensions
   include Searchable

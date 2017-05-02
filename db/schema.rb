@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502230652) do
+ActiveRecord::Schema.define(version: 20170502232142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,10 +172,12 @@ ActiveRecord::Schema.define(version: 20170502230652) do
     t.boolean  "remote",      default: false, null: false
     t.boolean  "contract",    default: false, null: false
     t.boolean  "internship",  default: false, null: false
+    t.integer  "location_id",                 null: false
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
     t.index ["internship"], name: "index_jobs_on_internship", using: :btree
+    t.index ["location_id"], name: "index_jobs_on_location_id", using: :btree
     t.index ["part_time"], name: "index_jobs_on_part_time", using: :btree
     t.index ["remote"], name: "index_jobs_on_remote", using: :btree
     t.index ["slug"], name: "index_jobs_on_slug", unique: true, using: :btree
@@ -425,6 +427,7 @@ ActiveRecord::Schema.define(version: 20170502230652) do
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
   add_foreign_key "jobs", "companies"
+  add_foreign_key "jobs", "locations"
   add_foreign_key "jobs", "users"
   add_foreign_key "likes", "users"
   add_foreign_key "messages", "conversations"
