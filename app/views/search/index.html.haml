@@ -7,5 +7,9 @@
       = render partial: "/companies/company", locals: {company: result.searchable}
     - elsif result.searchable_type == "User"
       = render partial: "/users/user", locals: {user: result.searchable}
+    - elsif result.searchable_type == "Project"
+      = render partial: "/search/project", locals: {project: result.searchable}      
 
   = paginate @results
+
+  

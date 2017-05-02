@@ -16,6 +16,9 @@ class Project < ApplicationRecord
 
   acts_as_list scope: :user, top_of_list: 0
 
+  include PgSearch
+  multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
+
   # Scopes
   scope :by_position, -> { order(position: :asc) }
   scope :by_recent,   -> { order(created_at: :desc) }
@@ -60,6 +63,18 @@ class Project < ApplicationRecord
     [
       [:name, :id]
     ]
+  end
+
+  def user_username
+    user.username
+  end
+
+  def user_display_name
+    user.display_name
+  end
+
+  def company_name
+    company.try(:name)
   end
 
   def skills_list=(string)
