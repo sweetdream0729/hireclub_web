@@ -8,6 +8,20 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.user_welcome(notification)
   end
 
+  def review_request_user
+    review_request = ReviewRequest.last
+    activity = Activity.where(trackable: review_request).first
+    notification = Notification.where(user: review_request.user, activity: activity).first
+    NotificationMailer.review_request(notification)
+  end
+
+  def review_request_reviewer
+    review_request = ReviewRequest.last
+    activity = Activity.where(trackable: review_request).first
+    notification = Notification.where(user: User.reviewers.last, activity: activity).first
+    NotificationMailer.review_request(notification)
+  end
+
   def comment_created
     notification = Notification.where(activity_key: CommentCreateActivity::KEY).first
     NotificationMailer.comment_created(notification)

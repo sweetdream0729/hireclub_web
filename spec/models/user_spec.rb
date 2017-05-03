@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:projects) }
     it { should have_many(:milestones) }
     it { should have_many(:resumes) }
+    it { should have_many(:review_requests) }
     it { should have_many(:companies).through(:milestones) }
     it { should have_many(:user_skills) }
     it { should have_many(:skills).through(:user_skills) }
