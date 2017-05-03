@@ -12,6 +12,8 @@ module HasSmartUrl
           if uri.host.present? && value.match(/\.\S+/)
             self.write_attribute(method, uri.to_s)
           end
+        else 
+          self.write_attribute(method, nil)
         end
       end
     end

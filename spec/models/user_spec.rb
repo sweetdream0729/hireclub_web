@@ -289,7 +289,7 @@ RSpec.describe User, type: :model do
       expect(user.website_url).to eq(nil)
     end
 
-    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username", nil).for(:website_url) }
   end
 
   describe "instagram_url" do
@@ -308,7 +308,7 @@ RSpec.describe User, type: :model do
       expect(user.instagram_url).to eq(nil)
     end
 
-    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:instagram_url) }
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username", nil).for(:instagram_url) }
   end
 
   describe "welcome!" do
