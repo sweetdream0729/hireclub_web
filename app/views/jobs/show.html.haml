@@ -57,7 +57,7 @@
               ·
               = @job.user.company.name
           %p.mt-3
-            = @job.description
+            = simple_format @job.description
           %p
             = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
   
