@@ -52,7 +52,7 @@
               %small
                 %i.fa.fa-briefcase.text-success
           %small
-            = @job.created_at
+            = @job.user.user_roles.by_position.first.name
           %p.mt-3
             = @job.description
           %p
