@@ -59,6 +59,11 @@
           %small    
             - if @user.username.present? 
               = link_to "@#{@user.username}", user_url(@user)
+              
+            - if @user.company.present?
+              ·
+              = link_to @user.company.name, @user.company
+              
             - if @user.location.present?
               ·
               = @user.location.name
