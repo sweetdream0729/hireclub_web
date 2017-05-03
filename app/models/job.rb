@@ -11,6 +11,9 @@ class Job < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
+  include PgSearch
+  multisearchable :against => [:name, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
+
   # Scopes
   scope :recent,       -> { order(created_at: :desc) }
 
@@ -38,7 +41,31 @@ class Job < ApplicationRecord
   end
 
   def company_name
-    return company.try(:name)
+    company.try(:name)
+  end
+
+  def location_name
+    location.try(:display_name)
+  end
+
+  def full_time_name
+    return "full time" if full_time
+  end
+
+  def part_time_name
+    return "part time" if part_time
+  end
+
+  def remote_name
+    return "remote" if remote
+  end
+
+  def contract_name
+    return "contract" if contract
+  end
+
+  def internship_name
+    return "internship" if internship
   end
 
 end

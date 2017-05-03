@@ -43,7 +43,9 @@ class Location < ApplicationRecord
   end
 
   def display_name
-    return "#{name}, #{parent.short.upcase}" if (level == CITY || level == STATE)
+    if parent.present? && (level == CITY || level == STATE) 
+      return "#{name}, #{parent.short.upcase}" 
+    end
     name
   end
 

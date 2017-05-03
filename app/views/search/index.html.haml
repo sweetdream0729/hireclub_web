@@ -7,6 +7,8 @@
       = render partial: "/companies/company", locals: {company: result.searchable}
     - elsif result.searchable_type == "User"
       = render partial: "/users/user", locals: {user: result.searchable}
+    - elsif result.searchable_type == "Job"
+      = render partial: "/jobs/job", locals: {job: result.searchable}
     - elsif result.searchable_type == "Project"
       = render partial: "/search/project", locals: {project: result.searchable}      
 
