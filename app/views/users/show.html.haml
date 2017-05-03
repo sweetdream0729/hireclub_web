@@ -56,12 +56,8 @@
                 %a.add_role_btn.btn.btn-primary.btn-sm{href: new_user_role_path}
                   %i.fa.fa-plus
             
-          %small    
-            - if @user.username.present? 
-              = link_to "@#{@user.username}", user_url(@user)
-              
+          %small
             - if @user.company.present?
-              ·
               = link_to @user.company.name, @user.company
               
             - if @user.location.present?

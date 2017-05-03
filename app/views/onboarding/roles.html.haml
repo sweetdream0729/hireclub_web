@@ -21,6 +21,8 @@
           = f.label :company
           = f.text_field :company, class: "form-control autocomplete_company", value: @user.company.try(:name), placeholder: "Acme Inc", autocomplete: "off"
           = f.hidden_field :company_id, value: @user.company_id, class: "autocomplete_company_id"
+          %small.form-text.text-muted 
+            Where do you currently work?
 
         = f.submit "Next", class: "btn btn-primary btn-lg btn-block"
 
