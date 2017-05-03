@@ -11,10 +11,10 @@
           .media-body
             = link_to user.display_name, user
             - if project.company
-              •
+              ·
               = link_to project.company.name, project.company
             - if project.skills_list.present?
-              •
+              ·
               = project.skills_list
               
 

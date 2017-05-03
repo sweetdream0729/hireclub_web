@@ -18,7 +18,7 @@
             ·
         - if user.company.present?
           = link_to user.company.name, user.company
-          •
+          ·
         = "#{user.location.name} · " if user.location.present?
         = "#{display_years(user.years_experience)} Experience"
         - if user.open_to_remote
