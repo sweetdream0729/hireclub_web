@@ -38,8 +38,13 @@
             %i.fa.fa-angellist.ml-2
   .row
     .col-sm-8
-      - if @company.milestones.any?
+      - if @company.jobs.any?
         %hr
+        %h6.mt-4.mb-4
+          Jobs
+        = render partial: "jobs/job", collection: @company.jobs.recent
+
+      - if @company.milestones.any?
         %h6.mt-4.mb-4
           Milestones
         - @company.milestones.by_newest.each do |milestone|
