@@ -2,7 +2,7 @@
 - set_meta_tags canonical: user_url(@user)
 - set_meta_tags keywords: @user.key_words
 - set_meta_tags image_src: model_image(@user.avatar, 200, 200, true)
-- set_meta_tags og: {type: "profile", image: model_image(@user.avatar, 200, 200, true)}
+- set_meta_tags og: {type: "profile", image: model_image(@user.avatar, 200, 200, true), url: user_url(@user) }
 
 - if @user_completion.present? && @user_completion.percent_complete < 90
   .alert.alert-info{:role => "alert"}
