@@ -33,7 +33,7 @@ class OnboardingController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :username, :location_id,
+    params.require(:user).permit(:name, :username, :location_id, :company_id,
       :is_available, :is_hiring,
       :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation,
       user_roles_attributes: [:id, :role_id], 

@@ -62,6 +62,8 @@ class User < ApplicationRecord
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
 
+  belongs_to :company
+
   # Nested
   accepts_nested_attributes_for :user_roles
   accepts_nested_attributes_for :user_skills, reject_if: :all_blank, allow_destroy: true

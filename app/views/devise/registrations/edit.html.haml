@@ -24,6 +24,11 @@
               = f.text_field :name, class: 'form-control', placeholder: "John Doe"
 
             .form-group
+              = f.label :company
+              = f.text_field :company, class: "form-control autocomplete_company", value: @user.company.try(:name), placeholder: "Acme Inc", autocomplete: "off"
+              = f.hidden_field :company_id, value: @user.company_id, class: "autocomplete_company_id"
+
+            .form-group
               = f.label :username, "Username"
               = f.text_field :username, class: 'form-control', autocomplete: "off"
               .form-control-feedback

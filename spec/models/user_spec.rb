@@ -25,6 +25,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:badges).through(:user_badges) }
 
     it { should belong_to(:location)}
+    it { should belong_to(:company)}
 
     it { should have_many(:likes) }
     it { should have_many(:jobs) }

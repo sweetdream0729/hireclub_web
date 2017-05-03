@@ -53,6 +53,9 @@
                 %i.fa.fa-briefcase.text-success
           %small
             = @job.user.user_roles.by_position.first.name
+            - if @job.user.company
+              •
+              = @job.user.company.name
           %p.mt-3
             = @job.description
           %p
