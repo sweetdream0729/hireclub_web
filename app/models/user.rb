@@ -32,8 +32,9 @@ class User < ApplicationRecord
 
   # Scope
   scope :admin,        -> { where(is_admin: true) }
-  scope :moderator,     -> { where(is_moderator: true) }
   scope :normal,       -> { where(is_admin: false) }
+  scope :moderators,   -> { where(is_moderator: true) }
+  scope :reviewers,    -> { where(is_reviewer: true) }
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
@@ -41,7 +42,7 @@ class User < ApplicationRecord
   # Associations
   has_many :conversation_users, dependent: :destroy, inverse_of: :user
   has_many :conversations, through: :conversation_users
-
+  has_many :review_requests, dependent: :destroy, inverse_of: :user
   has_many :notifications, dependent: :destroy, inverse_of: :user
   has_many :authentications, dependent: :destroy, inverse_of: :user
   has_many :projects, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :user

@@ -10,7 +10,9 @@
     - if comment.commentable_type == "Milestone"
       milestone
       = link_to(truncate(commentable.name,length:40), commentable)
-    - if comment.commentable_type == "Project"
+    - elsif comment.commentable_type == "ReviewRequest"
+      = link_to "profile review", commentable
+    - else comment.commentable_type == "Project"
       project
       = link_to(truncate(commentable.name,length:40), commentable)
     

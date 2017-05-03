@@ -7,7 +7,7 @@ module Admin::UserAdmin
       weight -1000
 
       list do
-        scopes [nil, :normal, :admin]
+        scopes [nil, :normal, :admin, :moderators, :reviewers]
         
         field :id
         field :avatar do

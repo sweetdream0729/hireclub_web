@@ -130,6 +130,11 @@
               %label.form-check-label
                 = f.check_box :open_to_internship, class: 'form-check-input'
                 Internship
+            - if current_user.is_admin || current_user.is_moderator
+              .form-check
+                %label.form-check-label
+                  = f.check_box :is_reviewer, class: 'form-check-input'
+                  Reviewing Profiles
           
           
           / #social.tab-pane{:role => "tabpanel"}
