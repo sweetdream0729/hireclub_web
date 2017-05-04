@@ -12,6 +12,8 @@
       = link_to(truncate(commentable.name,length:40), commentable)
     - elsif comment.commentable_type == "ReviewRequest"
       = link_to "profile review", commentable
+    - elsif comment.commentable_type == "Job"
+      = link_to "job", commentable    
     - else comment.commentable_type == "Project"
       project
       = link_to(truncate(commentable.name,length:40), commentable)

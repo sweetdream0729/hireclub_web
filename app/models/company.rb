@@ -30,6 +30,7 @@ class Company < ApplicationRecord
   # Associations
   has_many :milestones, dependent: :nullify
   has_many :projects, dependent: :nullify
+  has_many :jobs, dependent: :destroy
   #has_many :users, through: :milestones
   belongs_to :added_by, class_name: 'User'
 

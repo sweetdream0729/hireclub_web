@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428150404) do
+ActiveRecord::Schema.define(version: 20170503130022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,32 @@ ActiveRecord::Schema.define(version: 20170428150404) do
     t.index ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
     t.index ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
     t.index ["user_id"], name: "index_impressions_on_user_id", using: :btree
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "name",                        null: false
+    t.citext   "slug",                        null: false
+    t.integer  "company_id",                  null: false
+    t.integer  "user_id",                     null: false
+    t.text     "description"
+    t.string   "link"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "full_time",   default: true,  null: false
+    t.boolean  "part_time",   default: false, null: false
+    t.boolean  "remote",      default: false, null: false
+    t.boolean  "contract",    default: false, null: false
+    t.boolean  "internship",  default: false, null: false
+    t.integer  "location_id",                 null: false
+    t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
+    t.index ["contract"], name: "index_jobs_on_contract", using: :btree
+    t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
+    t.index ["internship"], name: "index_jobs_on_internship", using: :btree
+    t.index ["location_id"], name: "index_jobs_on_location_id", using: :btree
+    t.index ["part_time"], name: "index_jobs_on_part_time", using: :btree
+    t.index ["remote"], name: "index_jobs_on_remote", using: :btree
+    t.index ["slug"], name: "index_jobs_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_jobs_on_user_id", using: :btree
   end
 
   create_table "likes", force: :cascade do |t|
@@ -380,6 +406,8 @@ ActiveRecord::Schema.define(version: 20170428150404) do
     t.boolean  "open_to_relocation",     default: false, null: false
     t.string   "imdb_url"
     t.boolean  "is_reviewer",            default: false, null: false
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["gender"], name: "index_users_on_gender", using: :btree
@@ -400,6 +428,9 @@ ActiveRecord::Schema.define(version: 20170428150404) do
   add_foreign_key "comments", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "jobs", "companies"
+  add_foreign_key "jobs", "locations"
+  add_foreign_key "jobs", "users"
   add_foreign_key "likes", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
@@ -417,5 +448,6 @@ ActiveRecord::Schema.define(version: 20170428150404) do
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
+  add_foreign_key "users", "companies"
   add_foreign_key "users", "locations"
 end

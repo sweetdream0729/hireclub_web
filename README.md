@@ -79,6 +79,7 @@ rake docs:generate
 heroku run rake pg_search:multisearch:rebuild[Company] -r production
 heroku run rake pg_search:multisearch:rebuild[User] -r production
 heroku run rake pg_search:multisearch:rebuild[Project] -r production
+heroku run rake pg_search:multisearch:rebuild[Job] -r production
 ```
 
 Contributing

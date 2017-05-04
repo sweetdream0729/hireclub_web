@@ -57,9 +57,12 @@ class User < ApplicationRecord
 
   has_many :resumes, dependent: :destroy, inverse_of: :user
   has_many :likes, dependent: :destroy, inverse_of: :user
+  has_many :jobs, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
+
+  belongs_to :company
 
   # Nested
   accepts_nested_attributes_for :user_roles

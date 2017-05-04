@@ -25,8 +25,10 @@ RSpec.describe User, type: :model do
     it { should have_many(:badges).through(:user_badges) }
 
     it { should belong_to(:location)}
+    it { should belong_to(:company)}
 
     it { should have_many(:likes) }
+    it { should have_many(:jobs) }
   end
 
   describe 'validations' do
@@ -287,7 +289,7 @@ RSpec.describe User, type: :model do
       expect(user.website_url).to eq(nil)
     end
 
-    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username", nil).for(:website_url) }
   end
 
   describe "instagram_url" do
@@ -306,7 +308,7 @@ RSpec.describe User, type: :model do
       expect(user.instagram_url).to eq(nil)
     end
 
-    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:instagram_url) }
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username", nil).for(:instagram_url) }
   end
 
   describe "welcome!" do

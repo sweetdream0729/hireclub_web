@@ -9,7 +9,17 @@ Rails.application.routes.draw do
   
   get 'notifications' => 'notifications#index', as: :notifications
   get 'search' => 'search#index', as: :search
+  get 'search/jobs' => 'search#jobs'
+  get 'search/projects' => 'search#projects'
+  get 'search/members' => 'search#members'
+  get 'search/companies' => 'search#companies'
+
   get 'feed', to: "feed#index", as: :feed
+
+
+  resources :jobs do 
+    resources :comments, module: :jobs
+  end
 
   resources :review_requests do
     resources :comments, module: :review_requests

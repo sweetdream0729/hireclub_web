@@ -62,3 +62,21 @@ $navbar-inverse-color: #FFF;
 .like_comment {
   display: inline;
 }
+.sub_nav {
+  background: #DAE3E5;
+}
+.sub_nav .nav-pills > li {
+  margin-right: 2px;
+}
+.sub_nav .nav-pills > li > a {
+  color: #8e98ab;
+  font-weight: 600;
+  font-size: .9rem;
+  letter-spacing: 1px;
+}
+.sub_nav .nav-pills > li.active > a, .sub_nav .nav-pills > li.active > a:hover, .sub_nav .nav-pills > li.active > a:focus, .sub_nav .nav-pills > li > a:hover {
+  background-color: #DAE3E5;
+  border-bottom: 2px solid #04080F;
+  color: #04080F;
+  border-radius: 0;
+}

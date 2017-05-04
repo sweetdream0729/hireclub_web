@@ -18,6 +18,7 @@ class Location < ApplicationRecord
 
   # Associations
   has_many :users
+  has_many :jobs
   
   # Extensions
   include Searchable
@@ -42,7 +43,9 @@ class Location < ApplicationRecord
   end
 
   def display_name
-    return "#{name}, #{parent.short.upcase}" if (level == CITY || level == STATE)
+    if parent.present? && (level == CITY || level == STATE) 
+      return "#{name}, #{parent.short.upcase}" 
+    end
     name
   end
 

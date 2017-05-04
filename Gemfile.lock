@@ -235,6 +235,8 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    nav_lynx (1.1.1)
+      rails (>= 3.1.0)
     nested_form (0.3.2)
     netrc (0.11.0)
     newrelic_rpm (3.18.0.329)
@@ -455,6 +457,7 @@ DEPENDENCIES
   letter_opener
   memcachier
   meta-tags
+  nav_lynx
   newrelic_rpm
   nilify_blanks
   omniauth

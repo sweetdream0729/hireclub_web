@@ -10,6 +10,7 @@ RSpec.describe Company, type: :model do
     it { should respond_to(:logo) }
     it { should have_many(:milestones) }
     it { should have_many(:projects) }
+    it { should have_many(:jobs) }
     it { should belong_to(:added_by) }
     # it { should have_many(:users).through(:user_companys) }
   end
