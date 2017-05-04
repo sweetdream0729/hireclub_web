@@ -142,72 +142,72 @@ RSpec.describe Location, type: :model do
 
   end 
 
-  describe "import" do
-    let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
-    let!(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+  # describe "facebook import" do
+  #   let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
+  #   let!(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
 
-    before do
-      Location.import_cities
-    end
+    # before do
+    #   Location.import_cities
+    # end
 
-    it "should import san francisco from facebook" do
-      expect(kidbombay_auth).to be_valid
+    # it "should import san francisco from facebook" do
+    #   expect(kidbombay_auth).to be_valid
 
-      facebook_location_id = "114952118516947"
+    #   facebook_location_id = "114952118516947"
 
-      location = Location.import_facebook_id(facebook_location_id)
+    #   location = Location.import_facebook_id(facebook_location_id)
 
-      expect(location).to be_persisted
-      expect(location.name).to eq "San Francisco"
-      expect(location.level).to eq Location::CITY
-      expect(location.short).to be_nil
-      expect(location.parent).to be_present
-    end
+    #   expect(location).to be_persisted
+    #   expect(location.name).to eq "San Francisco"
+    #   expect(location.level).to eq Location::CITY
+    #   expect(location.short).to be_nil
+    #   expect(location.parent).to be_present
+    # end
 
-    it "should import Sri Lanka from facebook" do
-      expect(kidbombay_auth).to be_valid
+    # it "should import Sri Lanka from facebook" do
+    #   expect(kidbombay_auth).to be_valid
 
-      facebook_location_id = "108602292505393"
+    #   facebook_location_id = "108602292505393"
 
-      location = Location.import_facebook_id(facebook_location_id)
+    #   location = Location.import_facebook_id(facebook_location_id)
 
-      expect(location).to be_persisted
-      expect(location.name).to eq "Colombo"
-      expect(location.slug).to eq "colombo-lk"
-      expect(location.level).to eq Location::CITY
-      expect(location.short).to be_nil
-      expect(location.parent).to be_present
-    end
+    #   expect(location).to be_persisted
+    #   expect(location.name).to eq "Colombo"
+    #   expect(location.slug).to eq "colombo-lk"
+    #   expect(location.level).to eq Location::CITY
+    #   expect(location.short).to be_nil
+    #   expect(location.parent).to be_present
+    # end
     
-    it "should import Bakersfield from facebook" do
-      expect(kidbombay_auth).to be_valid
+    # it "should import Bakersfield from facebook" do
+    #   expect(kidbombay_auth).to be_valid
 
-      facebook_location_id = "106152016081829"
+    #   facebook_location_id = "106152016081829"
 
-      location = Location.import_facebook_id(facebook_location_id)
+    #   location = Location.import_facebook_id(facebook_location_id)
 
-      expect(location).to be_persisted
-      expect(location.name).to eq "Bakersfield"
-      expect(location.slug).to eq "bakersfield-ca"
-      expect(location.level).to eq Location::CITY
-      expect(location.short).to be_nil
-      expect(location.parent).to be_present
-    end
+    #   expect(location).to be_persisted
+    #   expect(location.name).to eq "Bakersfield"
+    #   expect(location.slug).to eq "bakersfield-ca"
+    #   expect(location.level).to eq Location::CITY
+    #   expect(location.short).to be_nil
+    #   expect(location.parent).to be_present
+    # end
 
-    it "should import Melbourne from facebook" do
-      expect(kidbombay_auth).to be_valid
+    # it "should import Melbourne from facebook" do
+    #   expect(kidbombay_auth).to be_valid
 
-      facebook_location_id = "116190411724975"
+    #   facebook_location_id = "116190411724975"
 
-      location = Location.import_facebook_id(facebook_location_id)
+    #   location = Location.import_facebook_id(facebook_location_id)
 
-      expect(location).to be_persisted
-      expect(location.name).to eq "Melbourne"
-      expect(location.slug).to eq "melbourne-au"
-      expect(location.level).to eq Location::CITY
-      expect(location.short).to be_nil
-      expect(location.parent).to be_present
-    end
-  end
+    #   expect(location).to be_persisted
+    #   expect(location.name).to eq "Melbourne"
+    #   expect(location.slug).to eq "melbourne-au"
+    #   expect(location.level).to eq Location::CITY
+    #   expect(location.short).to be_nil
+    #   expect(location.parent).to be_present
+    # end
+  # end
 
 end
