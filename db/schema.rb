@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503130022) do
+ActiveRecord::Schema.define(version: 20170504131741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -407,6 +407,7 @@ ActiveRecord::Schema.define(version: 20170503130022) do
     t.string   "imdb_url"
     t.boolean  "is_reviewer",            default: false, null: false
     t.integer  "company_id"
+    t.integer  "unread_messages_count",  default: 0,     null: false
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
