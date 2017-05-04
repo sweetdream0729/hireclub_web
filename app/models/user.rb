@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_smart_url :linkedin_url
   has_smart_url :imdb_url
 
+  acts_as_follower
   extend FriendlyId
   friendly_id :username
   dragonfly_accessor :avatar
