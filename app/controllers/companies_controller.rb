@@ -30,6 +30,29 @@ class CompaniesController < ApplicationController
     impressionist(@company)
   end
 
+  def follow
+    set_company
+    current_user.follow @company
+    @company.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @company }
+    end
+  end
+
+  def unfollow
+    set_company
+    
+    current_user.stop_following @company
+    @company.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @company }
+    end
+  end
+
   def refresh
     if @company.refresh
       notice = "Company Refreshed"

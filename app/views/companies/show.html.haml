@@ -18,9 +18,14 @@
             - @company.tags.each do |tag|
               %span.badge.badge-default
                 = tag
+            %br
+            = link_to_follow_company(@company, current_user)
+            %span.company_followers_count
+              = pluralize(@company.followers.count, "Follower")
+
     .col-sm-3
-      = link_to 'Edit', edit_company_path(@company), class: "btn btn-primary btn-block" if policy(@company).edit?
-      = link_to 'Refresh', refresh_company_path(@company), class: "btn btn-info btn-block" if policy(@company).refresh? && @company.facebook_url.present?
+      = link_to 'Edit', edit_company_path(@company), class: "btn btn-info btn-block" if policy(@company).edit?
+      = link_to 'Refresh', refresh_company_path(@company), class: "btn btn-secondary btn-block" if policy(@company).refresh? && @company.facebook_url.present?
       = link_to "Admin", rails_admin.edit_path(model_name: 'company', id: @company.id), class: "btn btn-danger btn-block" if current_user && current_user.is_admin
 
       %p.mt-4

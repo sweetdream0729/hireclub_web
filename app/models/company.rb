@@ -10,6 +10,10 @@ class Company < ApplicationRecord
   dragonfly_accessor :avatar
   dragonfly_accessor :logo
   is_impressionable
+  acts_as_followable
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
 
   include HasSmartUrl
   has_smart_url :website_url
