@@ -17,7 +17,10 @@ Rails.application.routes.draw do
   get 'feed', to: "feed#index", as: :feed
 
 
-  resources :jobs
+  resources :jobs do 
+    resources :comments, module: :jobs
+  end
+
   resources :review_requests do
     resources :comments, module: :review_requests
   end

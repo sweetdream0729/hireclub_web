@@ -21,6 +21,9 @@ class Job < ApplicationRecord
   belongs_to :company
   belongs_to :user
   belongs_to :location
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :commenters, through: :comments, source: :user
+
 
   # Validations
   validates :user, presence: true
