@@ -12,7 +12,7 @@ RSpec.describe Company, type: :model do
     it { should have_many(:projects) }
     it { should have_many(:jobs) }
     it { should belong_to(:added_by) }
-    # it { should have_many(:users).through(:user_companys) }
+    it { should have_many(:users)
   end
 
   describe 'validations' do

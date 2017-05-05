@@ -66,4 +66,9 @@
                 = link_to milestone.name, milestone.link, target: "_blank"
               - else
                 = milestone.name
+      - if @company.users.any?
+        %hr
+        %h6.mt-4.mb-4
+          Employees
+        = render partial: "users/user", collection: @company.users
 
