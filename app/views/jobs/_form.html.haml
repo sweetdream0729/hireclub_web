@@ -62,6 +62,10 @@
           = f.check_box :remote, class: 'form-check-input'
           %i.fa.fa-plane
           Remote
+      
+      .form-group
+        = f.label "Skills"
+        = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
 
     
   = f.submit 'Save', class: "btn btn-lg btn-primary"

@@ -21,6 +21,8 @@
             = time_ago_in_words(@job.created_at)
             ago
             %br
+            = @job.skills_list.split(",").join(" · ")
+            %br
             - if @job.full_time
               %span.badge.badge-primary
                 Full Time
@@ -37,7 +39,6 @@
               %span.badge.badge-success
                 %i.fa.fa-plane
                 Remote
-
 
   .row
     .col-sm-8

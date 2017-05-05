@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let(:job) { FactoryGirl.build(:job) }
+  let(:skill) { FactoryGirl.create(:skill) }
+  let(:skill2) { FactoryGirl.create(:skill) }
 
   subject { job }
 
@@ -23,6 +25,18 @@ RSpec.describe Job, type: :model do
     
     #it { should validate_uniqueness_of(:slug).case_insensitive }
     
+    it "should be valid only with approved skills" do
+      job.skills = [skill.name, skill2.name]
+      job.save
+
+      expect(job).to be_valid
+
+      job.skills = ["foo"]
+      expect(job).not_to be_valid
+
+      job.skills_list = "bar, dog"
+      expect(job).not_to be_valid
+    end
   end
 
   describe "link" do
@@ -56,16 +70,29 @@ RSpec.describe Job, type: :model do
   end
 
 
-  # describe 'tags' do 
-  #   it "should let you add tags" do
-  #     company.tags_list = "foo, bar"
-  #     company.save
+  describe "skills" do
+    it "should be able to set skills as array" do
+      job.skills = [skill.name, skill2.name]
+      job.save
 
-  #     expect(company).to be_valid
-  #     expect(company.tags[0]).to eq "foo"
-  #     expect(company.tags[1]).to eq "bar"      
-  #   end 
-  # end
+      expect(job.skills.count).to eq 2
+      expect(job.skills).to include(skill.name)
+      expect(job.skills).to include(skill2.name)
+
+      jobs = Job.with_any_skills(skill.name)
+      expect(jobs.count).to eq(1)
+    end
+
+    it "should be able to set skills as string" do
+      job.skills_list = "  #{skill.name},    #{skill2.name}  "
+      job.save
+
+      expect(job.skills.count).to eq 2
+      expect(job.skills).to include(skill.name)
+      expect(job.skills).to include(skill2.name)
+      expect(job.skills_list).to eq "#{skill.name}, #{skill2.name}"
+    end
+  end
 
 
 
