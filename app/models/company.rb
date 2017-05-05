@@ -10,6 +10,10 @@ class Company < ApplicationRecord
   dragonfly_accessor :avatar
   dragonfly_accessor :logo
   is_impressionable
+  acts_as_followable
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
 
   include HasSmartUrl
   has_smart_url :website_url
@@ -31,7 +35,7 @@ class Company < ApplicationRecord
   has_many :milestones, dependent: :nullify
   has_many :projects, dependent: :nullify
   has_many :jobs, dependent: :destroy
-  #has_many :users, through: :milestones
+  has_many :users
   belongs_to :added_by, class_name: 'User'
 
   # Validations

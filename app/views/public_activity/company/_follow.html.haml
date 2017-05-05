@@ -1,13 +1,12 @@
 - user = activity.owner
-- job = activity.trackable
+- company = activity.trackable
+
 .media.mb-2
   = render partial: "/public_activity/user_avatar", locals: {user: user}
   .media-body
     = link_to user.display_name, user
-    posted job
-    = link_to "#{truncate(job.name, length: 40)}", job
-    at
-    = link_to job.company.name, job.company
+    followed
+    = link_to company.name, company
     
     = render partial: "/public_activity/time_ago", locals: {activity: activity}
     

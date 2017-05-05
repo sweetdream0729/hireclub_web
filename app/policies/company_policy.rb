@@ -29,4 +29,13 @@ class CompanyPolicy < ApplicationPolicy
     return false if user.nil?
     user.is_moderator || user.is_admin
   end
+
+  def follow?
+    true
+  end
+
+  def unfollow?
+    return false if user.nil?
+    true
+  end
 end

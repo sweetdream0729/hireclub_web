@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   resources :companies do
     member do
       get :refresh
+      get :follow
+      get :unfollow
     end
   end
   

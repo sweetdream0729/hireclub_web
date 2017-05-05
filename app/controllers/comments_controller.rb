@@ -5,8 +5,12 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new comment_params
     authorize @comment
     @comment.user = current_user
-    @comment.save
-    redirect_to @commentable, notice: "Comment posted."
+    
+    if @comment.save 
+      redirect_to @commentable, notice: "Comment posted."
+    else
+      redirect_to @commentable
+    end
   end
 
   def destroy

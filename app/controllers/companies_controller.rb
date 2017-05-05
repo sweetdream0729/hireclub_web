@@ -30,6 +30,36 @@ class CompaniesController < ApplicationController
     impressionist(@company)
   end
 
+  def follow
+    set_company
+
+    unless user_signed_in?
+      # take us to sign up if we aren't logged in
+      store_location(follow_company_path(@company))
+      redirect_to(new_user_registration_path, format: :html) and return
+    end
+
+    current_user.follow @company
+    @company.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @company }
+    end
+  end
+
+  def unfollow
+    set_company
+    
+    current_user.stop_following @company
+    @company.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @company }
+    end
+  end
+
   def refresh
     if @company.refresh
       notice = "Company Refreshed"

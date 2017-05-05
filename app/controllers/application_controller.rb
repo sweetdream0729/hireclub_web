@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     if user.onboarded?
-      return root_path
+      stored_location_for(:user) || root_path
     else
       return onboarding_index_path
     end
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
 
   def sign_up_required
     redirect_to new_user_registration_url unless user_signed_in?
+  end
+
+  def store_location(path)
+    store_location_for(:user, path)
   end
   
   private

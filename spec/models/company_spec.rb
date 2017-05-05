@@ -12,7 +12,7 @@ RSpec.describe Company, type: :model do
     it { should have_many(:projects) }
     it { should have_many(:jobs) }
     it { should belong_to(:added_by) }
-    # it { should have_many(:users).through(:user_companys) }
+    it { should have_many(:users)
   end
 
   describe 'validations' do
@@ -52,114 +52,114 @@ RSpec.describe Company, type: :model do
     end
   end
 
-  describe "imports" do
-    let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
-    let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
+  # describe "imports" do
+  #   let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
+  #   let(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }
 
-    it "should import company from facebook_id" do
-      expect(kidbombay_auth).to be_valid
+  #   it "should import company from facebook_id" do
+  #     expect(kidbombay_auth).to be_valid
   
-      id = "32359482111"
+  #     id = "32359482111"
 
-      company = Company.import_facebook_id(id)
-      expect(company).to be_present
-      expect(company).to be_valid
-      expect(company.name).to eq "The Evergreen State College"
-      expect(company.slug).to eq "TheEvergreenStateCollege"
-      expect(company.facebook_id).to eq "32359482111"
-      # expect(company.website_url).to eq "http://www.evergreen.edu/"
-      expect(company.facebook_url).to eq "https://www.facebook.com/TheEvergreenStateCollege/"
-      expect(company.tagline).to be_present
-      expect(company.avatar).to be_present
-    end
+  #     company = Company.import_facebook_id(id)
+  #     expect(company).to be_present
+  #     expect(company).to be_valid
+  #     expect(company.name).to eq "The Evergreen State College"
+  #     expect(company.slug).to eq "TheEvergreenStateCollege"
+  #     expect(company.facebook_id).to eq "32359482111"
+  #     # expect(company.website_url).to eq "http://www.evergreen.edu/"
+  #     expect(company.facebook_url).to eq "https://www.facebook.com/TheEvergreenStateCollege/"
+  #     expect(company.tagline).to be_present
+  #     expect(company.avatar).to be_present
+  #   end
 
-    it "should import company from facebook_id" do
-      expect(kidbombay_auth).to be_valid
+  #   it "should import company from facebook_id" do
+  #     expect(kidbombay_auth).to be_valid
   
-      id = "821365304544508"
+  #     id = "821365304544508"
 
-      company = Company.import_facebook_id(id)
-      expect(company).to be_present
-      expect(company).to be_valid
-      expect(company.name).to eq "Up All Night SF"
-      expect(company.slug).to eq "upallnightsf"
-      expect(company.facebook_id).to eq "821365304544508"
-      expect(company.facebook_url).to eq "https://www.facebook.com/upallnightsf/"
-      expect(company.tagline).to be_present
-      expect(company.avatar).to be_present
-    end
+  #     company = Company.import_facebook_id(id)
+  #     expect(company).to be_present
+  #     expect(company).to be_valid
+  #     expect(company.name).to eq "Up All Night SF"
+  #     expect(company.slug).to eq "upallnightsf"
+  #     expect(company.facebook_id).to eq "821365304544508"
+  #     expect(company.facebook_url).to eq "https://www.facebook.com/upallnightsf/"
+  #     expect(company.tagline).to be_present
+  #     expect(company.avatar).to be_present
+  #   end
 
-    it "should import company from facebook_id" do
-      expect(kidbombay_auth).to be_valid
+  #   it "should import company from facebook_id" do
+  #     expect(kidbombay_auth).to be_valid
   
-      id = "294554919629"
+  #     id = "294554919629"
 
-      company = Company.import_facebook_id(id)
-      expect(company).to be_present
-      expect(company).to be_valid
-      expect(company.name).to eq "kidBombay"
-      expect(company.slug).to eq "kidbombay"
-      expect(company.facebook_id).to eq "294554919629"
-      expect(company.facebook_url).to eq "https://www.facebook.com/kidBombay-294554919629/"
-      expect(company.tagline).to be_present
-      expect(company.avatar).to be_present
-    end
+  #     company = Company.import_facebook_id(id)
+  #     expect(company).to be_present
+  #     expect(company).to be_valid
+  #     expect(company.name).to eq "kidBombay"
+  #     expect(company.slug).to eq "kidbombay"
+  #     expect(company.facebook_id).to eq "294554919629"
+  #     expect(company.facebook_url).to eq "https://www.facebook.com/kidBombay-294554919629/"
+  #     expect(company.tagline).to be_present
+  #     expect(company.avatar).to be_present
+  #   end
 
     
-    it "should import company from facebook_url" do
-      expect(kidbombay_auth).to be_valid
+  #   it "should import company from facebook_url" do
+  #     expect(kidbombay_auth).to be_valid
   
-      url = "https://www.facebook.com/HappyCoInc/"
+  #     url = "https://www.facebook.com/HappyCoInc/"
 
-      company = Company.import_facebook_url(url)
+  #     company = Company.import_facebook_url(url)
 
-      expect(company).to be_present
-      expect(company).to be_valid
-      expect(company.name).to eq "HappyCo"
-      expect(company.slug).to eq "HappyCoInc"
-      expect(company.facebook_id).to eq "1408344736131335"
-      expect(company.website_url).to eq "http://www.happyco.com"
-      expect(company.facebook_url).to eq "https://www.facebook.com/HappyCoInc/"
-      expect(company.tagline).to be_present
-      expect(company.avatar).to be_present
+  #     expect(company).to be_present
+  #     expect(company).to be_valid
+  #     expect(company.name).to eq "HappyCo"
+  #     expect(company.slug).to eq "HappyCoInc"
+  #     expect(company.facebook_id).to eq "1408344736131335"
+  #     expect(company.website_url).to eq "http://www.happyco.com"
+  #     expect(company.facebook_url).to eq "https://www.facebook.com/HappyCoInc/"
+  #     expect(company.tagline).to be_present
+  #     expect(company.avatar).to be_present
 
-      url = "https://www.facebook.com/OpenTable/"
+  #     url = "https://www.facebook.com/OpenTable/"
 
-      company = Company.import_facebook_url(url)
+  #     company = Company.import_facebook_url(url)
 
-      expect(company).to be_present
-      expect(company).to be_valid
-      expect(company.name).to eq "OpenTable"
-      expect(company.slug).to eq "OpenTable"
-      expect(company.facebook_id).to eq "47650308975"
-      expect(company.website_url).to eq "http://www.opentable.com"
-      expect(company.facebook_url).to eq "https://www.facebook.com/OpenTable/"
-      expect(company.tagline).to be_present
-      expect(company.avatar).to be_present
-    end
+  #     expect(company).to be_present
+  #     expect(company).to be_valid
+  #     expect(company.name).to eq "OpenTable"
+  #     expect(company.slug).to eq "OpenTable"
+  #     expect(company.facebook_id).to eq "47650308975"
+  #     expect(company.website_url).to eq "http://www.opentable.com"
+  #     expect(company.facebook_url).to eq "https://www.facebook.com/OpenTable/"
+  #     expect(company.tagline).to be_present
+  #     expect(company.avatar).to be_present
+  #   end
 
 
-    it "should import companies from companies.json" do
-      Company.destroy_all
+  #   it "should import companies from companies.json" do
+  #     Company.destroy_all
 
-      json = Company.import
-      expect(json).to be_present
+  #     json = Company.import
+  #     expect(json).to be_present
 
-      companies = Company.all
-      expect(companies.count).to be > 0
+  #     companies = Company.all
+  #     expect(companies.count).to be > 0
 
-      hireclub = companies.first
+  #     hireclub = companies.first
 
-      expect(hireclub).to be_present
-      expect(hireclub).to be_persisted
-      expect(hireclub.name).to eq "HireClub"
-      expect(hireclub.slug).to eq "hireclub"
-      expect(hireclub.twitter_url).to eq "https://twitter.com/hireclub"
-      expect(hireclub.website_url).to eq "http://hireclub.co"
-      expect(hireclub.facebook_url).to eq "https://facebook.com/hireclub"
-      expect(hireclub.tagline).to eq "Invite only job referrals."      
-    end
-  end
+  #     expect(hireclub).to be_present
+  #     expect(hireclub).to be_persisted
+  #     expect(hireclub.name).to eq "HireClub"
+  #     expect(hireclub.slug).to eq "hireclub"
+  #     expect(hireclub.twitter_url).to eq "https://twitter.com/hireclub"
+  #     expect(hireclub.website_url).to eq "http://hireclub.co"
+  #     expect(hireclub.facebook_url).to eq "https://facebook.com/hireclub"
+  #     expect(hireclub.tagline).to eq "Invite only job referrals."      
+  #   end
+  # end
 
   describe "search" do
     it "should search_by_name" do
