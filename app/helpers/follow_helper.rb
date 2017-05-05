@@ -15,7 +15,7 @@ module FollowHelper
       url = follow_company_path(company)
 
       options[:method] = :get
-      options[:remote] = true
+      options[:remote] = true if user.present?
       options[:class] += " company_follow_btn_#{company.id} btn btn-primary"
 
       link_to("Follow", url, options)

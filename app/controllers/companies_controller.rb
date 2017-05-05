@@ -32,6 +32,13 @@ class CompaniesController < ApplicationController
 
   def follow
     set_company
+
+    unless user_signed_in?
+      # take us to sign up if we aren't logged in
+      store_location(follow_company_path(@company))
+      redirect_to(new_user_registration_path, format: :html) and return
+    end
+
     current_user.follow @company
     @company.reload
     
