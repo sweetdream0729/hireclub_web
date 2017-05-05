@@ -20,6 +20,8 @@
         = f.label :location
         = f.text_field :location, class: "form-control autocomplete_location", value: @job.location.try(:display_name), placeholder: "My City, CA", autocomplete: "off"
         = f.hidden_field :location_id, value: @job.location_id, class: "autocomplete_location_id"
+        %small.form-text.text-muted 
+          Where is the job located? Use Anywhere for remote jobs.
       
       .form-group
         = f.label :description
