@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :sign_up_required, except: [:show]
+  before_action :sign_up_required, except: [:show, :index]
   after_action :verify_authorized, except: [:index]
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
