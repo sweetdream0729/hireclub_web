@@ -32,7 +32,7 @@ class Job < ApplicationRecord
   validates :role, presence: true
   validates :location, presence: true
   validates :name, presence: true
-  validates_length_of :name, minimum: 10, maximum: 50
+  validates_length_of :name, minimum: 6, maximum: 50
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
   
