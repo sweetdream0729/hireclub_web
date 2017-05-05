@@ -20,6 +20,7 @@ class Job < ApplicationRecord
   # Associations
   belongs_to :company
   belongs_to :user
+  belongs_to :role
   belongs_to :location
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
@@ -28,6 +29,7 @@ class Job < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :company, presence: true
+  validates :role, presence: true
   validates :location, presence: true
   validates :name, presence: true
   validates_length_of :name, minimum: 10, maximum: 50

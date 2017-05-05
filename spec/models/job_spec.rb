@@ -8,6 +8,7 @@ RSpec.describe Job, type: :model do
   describe "associations" do
     it { should belong_to(:user) }
     it { should belong_to(:company) }
+    it { should belong_to(:role) }
     it { should belong_to(:location) }
   end
 
@@ -16,6 +17,7 @@ RSpec.describe Job, type: :model do
     it { should validate_length_of(:name).is_at_least(10).is_at_most(50) }
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:company) }
+    it { should validate_presence_of(:role) }
     it { should validate_presence_of(:location) }
     it { should validate_presence_of(:description) }
     

@@ -4,7 +4,18 @@ class RolesController < ApplicationController
 
   # GET /roles
   def index
-    @roles = Role.by_name.page(params[:page]).per(20)
+    scope = Role.by_name
+
+    if params[:query]
+      scope = scope.search_by_name(params[:query])
+    end
+
+    @roles = scope.page(params[:page]).per(20)
+
+    respond_to do |format|
+      format.json { render json: @roles }
+      format.html
+    end
   end
 
   # GET /roles/1

@@ -13,6 +13,8 @@
             = title @job.name
           %p
             = link_to @job.company.name, @job.company
+            
+            = "· #{@job.role.name}" if @job.role
             ·
             = @job.location.display_name
             ·

@@ -4,6 +4,7 @@ FactoryGirl.define do
     company
     user
     location
+    role
     description "My Job Description"
   end
 end
