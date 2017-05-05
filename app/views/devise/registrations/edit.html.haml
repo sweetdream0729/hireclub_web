@@ -107,8 +107,13 @@
                 = f.check_box :is_available, class: 'form-check-input'
                 %i.fa.fa-briefcase.text-success
                 Available To Hire
+            .form-check
+              %label.form-check-label
+                = f.check_box :open_to_new_opportunities, class: 'form-check-input'
+                %i.fa.fa-handshake-o
+                New Opportunities
 
-            %h2 Open To
+            %h2.mt-4 Open To
             %hr
             .form-check
               %label.form-check-label
