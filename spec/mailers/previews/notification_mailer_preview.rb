@@ -26,4 +26,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: CommentCreateActivity::KEY).first
     NotificationMailer.comment_created(notification)
   end
+
+  def job_created
+    notification = Notification.where(activity_key: JobCreateActivity::KEY).first
+    NotificationMailer.job_created(notification)
+  end
 end
