@@ -13,6 +13,7 @@ RSpec.describe Job, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
+    it { should validate_length_of(:name).is_at_least(10).is_at_most(50) }
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:company) }
     it { should validate_presence_of(:location) }
