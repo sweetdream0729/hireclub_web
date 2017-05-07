@@ -22,4 +22,5 @@
 //= require selectize.min
 //= require cocoon
 //= require init
+//= require cable
 //= require_tree .

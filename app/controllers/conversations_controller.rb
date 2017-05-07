@@ -59,7 +59,7 @@ class ConversationsController < ApplicationController
   end
 
   private
-    
+
     def set_conversations
       @conversations = current_user.conversations.by_recent
     end

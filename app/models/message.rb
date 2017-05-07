@@ -18,6 +18,9 @@ class Message < ApplicationRecord
   validates :conversation, presence: true
   validates :text, presence: true
 
+  # Callbacks
+  after_create_commit { MessageBroadcastJob.perform_now(self) }
+
   def read_by!(read_by_user)
     return if read_by_user == self.user
     self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false

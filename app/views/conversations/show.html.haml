@@ -10,7 +10,7 @@
       #messages{"data-conversation-id" => @conversation.id}
         = render @conversation.messages.by_recent
 
-      = form_for @message do |f|
+      = form_for @message, url: '#' do |f|
         = f.hidden_field :conversation_id, value: @conversation.id
         .row
           .col-xs-9.col-sm-10

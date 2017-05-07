@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
 
+  # TODO - No need of create action now because we have moved this to
+  #        ActionCable and messages are being created via ConversationsChannel
   # POST /messages
   def create
     @message = Message.new(message_params)
