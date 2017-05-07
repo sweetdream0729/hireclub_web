@@ -6,19 +6,19 @@ $(document).ready ->
     ), 'json'
     return
 
-  $('input#user_location').typeahead {
+  $('.autocomplete_location').typeahead {
     minLength: 1
     hint: false
     highlight: true
   },
-    name: 'location-search-results'
+    name: 'autocomplete_location'
     source: locationSearch
     display: (location) ->
       location.display_name
   # location selected, let's set hidden location_id field
-  $('input#user_location').bind 'typeahead:select', (ev, location) ->
+  $('.autocomplete_location').bind 'typeahead:select', (ev, location) ->
     # Set hidden form field of location_id
-    $('input#user_location_id').val location.id
+    $('.autocomplete_location_id').val location.id
     return
   return
 

@@ -63,7 +63,6 @@ RSpec.describe Project, type: :model do
   end
 
   describe "skills" do
-
     it "should be able to set skills as array" do
       project.skills = [skill.name, skill2.name]
       project.save
@@ -85,7 +84,6 @@ RSpec.describe Project, type: :model do
       expect(project.skills).to include(skill2.name)
       expect(project.skills_list).to eq "#{skill.name}, #{skill2.name}"
     end
-
   end
 
 

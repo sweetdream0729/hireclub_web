@@ -15,6 +15,7 @@ class Project < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   acts_as_list scope: :user, top_of_list: 0
+  acts_as_taggable_array_on :skills
 
   include PgSearch
   multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
@@ -23,9 +24,6 @@ class Project < ApplicationRecord
   scope :by_position, -> { order(position: :asc) }
   scope :by_recent,   -> { order(created_at: :desc) }
   scope :with_image,  -> { where.not(image_uid: nil) }
-
-  # Extensions
-  acts_as_taggable_array_on :skills
 
   # Associations
   belongs_to :user

@@ -12,7 +12,9 @@ class Job < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   include PgSearch
-  multisearchable :against => [:name, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
+  multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
+
+  acts_as_taggable_array_on :skills
 
   # Scopes
   scope :recent,       -> { order(created_at: :desc) }
@@ -20,6 +22,7 @@ class Job < ApplicationRecord
   # Associations
   belongs_to :company
   belongs_to :user
+  belongs_to :role
   belongs_to :location
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
@@ -28,10 +31,13 @@ class Job < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :company, presence: true
+  validates :role, presence: true
   validates :location, presence: true
   validates :name, presence: true
+  validates_length_of :name, minimum: 6, maximum: 50
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
+  validate :skills_exist
   
   def should_generate_new_friendly_id?
     name_changed? || super
@@ -42,6 +48,23 @@ class Job < ApplicationRecord
       [:name, :company_name, :id]
     ]
   end
+
+  def skills_list=(string)
+    self.skills = string.split(",").map!(&:strip)
+  end
+
+  def skills_list
+    self.skills.join(", ")
+  end
+
+  def skills_exist
+    skills.each do |name|
+      if Skill.where('name ilike ?', name).empty?
+        errors.add(:skills, "#{name} isn't a valid skill")
+      end
+    end
+  end
+
 
   def user_display_name
     user.display_name
