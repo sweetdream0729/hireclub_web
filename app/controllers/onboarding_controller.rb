@@ -14,6 +14,10 @@ class OnboardingController < ApplicationController
       end
     when :skills
       @user.user_skills.build if @user.user_skills.empty?
+      @user_skill = current_user.user_skills.build
+
+      authorize @user_skill
+      @user_skills = policy_scope(UserSkill)
     when :milestones
       @user.milestones.build if @user.milestones.empty?
 
@@ -35,7 +39,7 @@ class OnboardingController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :username, :location_id, :company_id,
       :is_available, :is_hiring,
-      :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation, :open_to_new_opportunities,
+      :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation,
       user_roles_attributes: [:id, :role_id], 
       user_skills_attributes: [:id, :skill_id, :years, :_destroy],
       milestones_attributes: [:id, :name, :start_date, :_destroy])
