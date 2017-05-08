@@ -59,6 +59,11 @@
             - if @job.user.company
               ·
               = @job.user.company.name
+          
+          %hr
+          = render partial: "/likes/like_button", locals: { likeable: @job }
+          %hr
+
           %p.mt-3
             = markdown(@job.description)
 

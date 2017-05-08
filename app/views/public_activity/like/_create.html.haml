@@ -9,7 +9,10 @@
     = link_to "#{likeable.user.display_name}'s", likeable.user
     - if like.likeable_type == "Project"
       project
-      = link_to like.likeable_name, project_path(likeable)
+      = link_to like.likeable_name, likeable
+    - if like.likeable_type == "Job"
+      job
+      = link_to like.likeable_name, likeable
     - if like.likeable_type == "UserBadge"
       badge
       = link_to like.likeable_name, user_path(likeable.user)
