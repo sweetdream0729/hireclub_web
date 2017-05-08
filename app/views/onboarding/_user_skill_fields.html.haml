@@ -3,7 +3,7 @@
     .col-7
       .form-group
         = f.label :skill
-        = f.text_field :skills, class: "form-control autocomplete_skill", value: f.object.skill.present? ? f.object.skill.name : '', placeholder: "Design"
+        = f.text_field :skills, class: "form-control autocomplete_skill", value: f.object.skill.present? ? f.object.skill.name : '', placeholder: "Design", autocomplete: :off
         = f.hidden_field :skill_id, class: "autocomplete_skill_id", value: f.object.skill.present? ? f.object.skill_id : ''
 
     .col-3
