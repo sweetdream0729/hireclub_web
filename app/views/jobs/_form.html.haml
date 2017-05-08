@@ -39,7 +39,7 @@
         %small.text-muted
 
     .col-sm-4
-      %h2 Options
+      %h3 Options
           
       .form-check
         %label.form-check-label
@@ -62,9 +62,9 @@
           = f.check_box :remote, class: 'form-check-input'
           %i.fa.fa-plane
           Remote
-      
+
+      %h3.mt-3 Skills
       .form-group
-        = f.label "Skills"
         = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
 
     
