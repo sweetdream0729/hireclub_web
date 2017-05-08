@@ -1,0 +1,48 @@
+require 'rails_helper'
+
+RSpec.describe Story, type: :model do
+  let(:story) { FactoryGirl.build(:story) }
+
+  subject { story }
+
+  describe "associations" do
+    it { should belong_to(:user) }
+    it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:commenters) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of(:user) }
+    it { should validate_presence_of(:name) }
+  end
+
+
+  describe "activity" do
+    it "should have create activity" do
+      story.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(story)
+      expect(activity.owner).to eq(story.user)
+      expect(activity.private).to eq(true)
+    end
+  end
+
+  describe 'publish!' do
+    it "publishes the story" do
+      story.save
+      story.publish!
+
+      expect(story.published?).to eq(true)
+      expect(story.published_on).not_to be_nil
+
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.key).to eq StoryPublishActivity::KEY
+      expect(activity.trackable).to eq(story)
+      expect(activity.owner).to eq(story.user)
+      expect(activity.private).to eq(false)
+    end
+  end
+
+end
