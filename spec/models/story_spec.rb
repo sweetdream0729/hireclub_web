@@ -45,4 +45,15 @@ RSpec.describe Story, type: :model do
     end
   end
 
+  describe 'tags' do 
+    it "should let you add tags" do
+      story.tags_list = "foo, bar"
+      story.save
+
+      expect(story).to be_valid
+      expect(story.tags[0]).to eq "foo"
+      expect(story.tags[1]).to eq "bar"      
+    end 
+  end
+
 end

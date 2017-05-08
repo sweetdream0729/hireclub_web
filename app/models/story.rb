@@ -7,6 +7,7 @@ class Story < ApplicationRecord
   friendly_id :slug_candidates, use: :slugged
   auto_strip_attributes :name, :squish => true
   is_impressionable
+  acts_as_taggable_array_on :tags
 
   include PublicActivity::Model
   include PublicActivity::CreateActivityOnce
@@ -53,5 +54,13 @@ class Story < ApplicationRecord
 
   def unpublished?
     published_on.nil?
+  end
+
+  def tags_list=(string)
+    self.tags = string.split(",").map!(&:strip)
+  end
+
+  def tags_list
+    self.tags.join(", ")
   end
 end

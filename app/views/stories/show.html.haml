@@ -31,6 +31,9 @@
             - if @story.published?
               ·
               = local_time(@story.published_on)
+            - if @story.tags.any?
+              ·
+              = @story.tags_list
           
       %hr
         .row
