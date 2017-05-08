@@ -8,6 +8,7 @@ class Story < ApplicationRecord
   auto_strip_attributes :name, :squish => true
   is_impressionable
   acts_as_taggable_array_on :tags
+  dragonfly_accessor :cover
 
   include PublicActivity::Model
   include PublicActivity::CreateActivityOnce

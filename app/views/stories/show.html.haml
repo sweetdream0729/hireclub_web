@@ -2,7 +2,11 @@
 - set_meta_tags description: @story.content
 - set_meta_tags og: {type: "article", url: story_url(@story), description: @story.content}
 
-.container.mt-5.mb-5
+- if @story.cover_uid.present?
+  .jumbotron{style: "height: 65vh; background: url('#{model_image(@story.cover, 1920, 1080, true)}') no-repeat center center; border-radius:0"}
+    &nbsp;
+
+.container.mt-3.mb-5
   .row
     .col-sm-12
       %h1.black

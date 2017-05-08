@@ -15,6 +15,14 @@
         = f.label :content
         = f.text_area :content, class: 'form-control', rows: 10, placeholder: "Write here"
     .col.lg-5
+      .form-group
+        = f.label 'Cover Image'
+        %br
+        = image_tag(model_image(@story.cover, 1920, 1080, true), class: 'img-fluid mb-2')
+        %br
+        = f.file_field :cover
+        = f.hidden_field :retained_cover
+        = f.text_field :cover_url, class: 'form-control mt-2', placeholder: "http://site.com/image.jpg"
 
       .form-group
         = f.label "Tags"
