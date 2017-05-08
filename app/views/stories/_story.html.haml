@@ -19,6 +19,10 @@
             - if story.user.company
               ·
               = story.user.company.name
+
+          - if story.unpublished?
+            %span.badge.badge-warning
+              Draft
     .card-block
       %h4.card-title
         = link_to story.name, story

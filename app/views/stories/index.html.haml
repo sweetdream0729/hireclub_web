@@ -16,6 +16,9 @@
   %p
     %small
       = pluralize(Story.published.count, "story")
+      - if user_signed_in?
+        ·
+        = link_to pluralize(current_user.stories.drafts.count, "Draft"), drafts_stories_path
 
   .stories.mt-4
     = render @stories

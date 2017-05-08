@@ -15,6 +15,7 @@ class Story < ApplicationRecord
 
   # Scopes
   scope :published,       -> { where.not(published_on: nil) }
+  scope :drafts,          -> { where(published_on: nil) }
   scope :by_recent,       -> { order(published_on: :desc) }
   scope :by_oldest,       -> { order(published_on: :asc) }
   scope :by_popular,      -> { order(likes_count: :desc) }

@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :drafts]
   before_action :set_story, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
 
   # GET /stories
@@ -25,6 +25,11 @@ class StoriesController < ApplicationController
       format.json { render json: @stories }
       format.html
     end
+  end
+
+  def drafts
+    @stories = current_user.stories.drafts.page(params[:page]).per(10)
+    render :index
   end
 
   # GET /stories/1

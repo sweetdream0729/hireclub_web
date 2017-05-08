@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
 
   resources :stories do 
+    collection do
+      get :drafts
+    end
     member do
       get :publish
     end
