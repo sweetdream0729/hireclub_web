@@ -29,6 +29,7 @@ RSpec.describe User, type: :model do
 
     it { should have_many(:likes) }
     it { should have_many(:jobs) }
+    it { should have_many(:stories) }
   end
 
   describe 'validations' do

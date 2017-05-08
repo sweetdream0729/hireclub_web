@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505191532) do
+ActiveRecord::Schema.define(version: 20170508162658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20170505191532) do
     t.integer  "location_id",                 null: false
     t.integer  "role_id"
     t.string   "skills",      default: [],                 array: true
+    t.integer  "likes_count", default: 0,     null: false
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
@@ -344,6 +345,21 @@ ActiveRecord::Schema.define(version: 20170505191532) do
     t.index ["slug"], name: "index_skills_on_slug", unique: true, using: :btree
   end
 
+  create_table "stories", force: :cascade do |t|
+    t.integer  "user_id",                   null: false
+    t.string   "name",                      null: false
+    t.string   "slug",                      null: false
+    t.string   "cover_uid"
+    t.datetime "published_on"
+    t.text     "content"
+    t.integer  "likes_count",  default: 0,  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "tags",         default: [],              array: true
+    t.index ["tags"], name: "index_stories_on_tags", using: :gin
+    t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
+  end
+
   create_table "user_badges", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
@@ -461,6 +477,7 @@ ActiveRecord::Schema.define(version: 20170505191532) do
   add_foreign_key "projects", "users"
   add_foreign_key "resumes", "users"
   add_foreign_key "review_requests", "users"
+  add_foreign_key "stories", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
   add_foreign_key "user_roles", "roles"

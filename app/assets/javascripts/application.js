@@ -20,6 +20,7 @@
 //= require typeahead.bundle
 //= require mousetrap.min
 //= require selectize.min
+//= require local_time
 //= require cocoon
 //= require init
 //= require cable
