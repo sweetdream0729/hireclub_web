@@ -50,4 +50,8 @@ class Story < ApplicationRecord
   def published?
     published_on.present?
   end
+
+  def unpublished?
+    published_on.nil?
+  end
 end

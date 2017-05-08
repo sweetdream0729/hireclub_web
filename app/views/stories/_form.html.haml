@@ -9,9 +9,20 @@
   .form-group
     = f.label :name
     = f.text_field :name, class: 'form-control', placeholder: "Headline"
-  .form-group
-    = f.label :content
-    = f.text_area :content, class: 'form-control', rows: 10, placeholder: "Write here"
+  .row
+    .col-lg-7
+      .form-group
+        = f.label :content
+        = f.text_area :content, class: 'form-control', rows: 10, placeholder: "Write here"
+    .col.lg-5
+      - if current_user.is_admin
+        .form-group
+          = f.label :slug
+          = f.text_field :slug, class: 'form-control'
+        
+        .form-group
+          = f.label :published_on
+          = f.text_field :published_on, class: 'form-control'
   
   = f.submit 'Save', class: "btn btn-primary btn-lg"
   = link_to 'Cancel', @story, class: "btn btn-lg btn-link" if @story.persisted?
