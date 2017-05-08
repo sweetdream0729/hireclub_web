@@ -1,0 +1,12 @@
+- user = activity.owner
+- story = activity.trackable
+.media.mb-2
+  = render partial: "/public_activity/user_avatar", locals: {user: user}
+  .media-body
+    = link_to user.display_name, user
+    published a story
+    = link_to "#{truncate(story.name, length: 40)}", story
+    
+    = render partial: "/public_activity/time_ago", locals: {activity: activity}
+    
+    

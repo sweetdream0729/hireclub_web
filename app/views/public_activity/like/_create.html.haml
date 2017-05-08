@@ -19,6 +19,9 @@
     - if like.likeable_type == "Milestone"
       milestone
       = link_to(truncate(like.likeable_name,length:40), like.likeable)
+    - if like.likeable_type == "Story"
+      story
+      = link_to(truncate(like.likeable_name,length:40), like.likeable)
     - if like.likeable_type == "Comment"
       comment on
       = link_to(truncate(like.likeable.commentable.name,length:40), like.likeable.commentable)

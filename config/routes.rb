@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  
   get '/sitemap.xml', to: redirect("https://s3-us-west-1.amazonaws.com/hireclub-production/sitemaps/sitemap.xml.gz", status: 301)
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   authenticate :user, lambda { |u| u.is_admin } do
@@ -16,6 +17,16 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+
+  resources :stories do 
+    collection do
+      get :drafts
+    end
+    member do
+      get :publish
+    end
+    resources :comments, module: :jobs
+  end
 
   resources :jobs do 
     resources :comments, module: :jobs
