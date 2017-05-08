@@ -1,5 +1,12 @@
-.col-sm-4
+.col-sm-4.no-padding
   .list-group
-    = render @conversations
-  - if @conversations.empty?
-    %h5 No messages yet
+  .row
+    #custom-search-input
+      .input-group.col-md-12
+        %p
+          Conversations
+  .member_list
+    %ul.list-unstyled
+      = render @conversations
+    - if @conversations.empty?
+      %h5 No messages yet
