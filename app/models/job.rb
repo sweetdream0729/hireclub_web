@@ -4,6 +4,7 @@ class Job < ApplicationRecord
   friendly_id :slug_candidates, use: :slugged
   auto_strip_attributes :name, squish: true
   include HasSmartUrl
+  include ActsAsLikeable
   has_smart_url :link
   is_impressionable
 

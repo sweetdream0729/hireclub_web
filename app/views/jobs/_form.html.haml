@@ -39,7 +39,7 @@
         %small.text-muted
 
     .col-sm-4
-      %h2 Options
+      %h3 Options
           
       .form-check
         %label.form-check-label
@@ -62,11 +62,18 @@
           = f.check_box :remote, class: 'form-check-input'
           %i.fa.fa-plane
           Remote
-      
+
+      %h3.mt-3 Skills
       .form-group
-        = f.label "Skills"
         = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
 
     
   = f.submit 'Save', class: "btn btn-lg btn-primary"
   = link_to 'Cancel', @job, class: "btn btn-lg btn-link" if @job.persisted?
+
+- content_for :head do
+  %link{:href => "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css", :rel => "stylesheet"}/
+  %script{:src => "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"}
+
+:javascript
+  var simplemde = new SimpleMDE({ element: document.getElementById("job_description") });

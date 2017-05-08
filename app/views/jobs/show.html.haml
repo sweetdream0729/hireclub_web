@@ -18,8 +18,8 @@
             ·
             = @job.location.display_name
             ·
-            = time_ago_in_words(@job.created_at)
-            ago
+            = local_relative_time(@job.created_at, type: 'time-or-date')
+
             %br
             = @job.skills_list.split(",").join(" · ")
             %br
@@ -59,8 +59,14 @@
             - if @job.user.company
               ·
               = @job.user.company.name
+          
+          %hr
+          = render partial: "/likes/like_button", locals: { likeable: @job }
+          %hr
+
           %p.mt-3
-            = simple_format @job.description
+            = markdown(@job.description)
+
           %p
             = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
             

@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    scope = Project.by_recent
+    scope = Project.with_image.by_recent
     @title = "Projects"
     if params[:username]
       @user = User.friendly.find(params[:username])

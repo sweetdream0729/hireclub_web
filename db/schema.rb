@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505191532) do
+ActiveRecord::Schema.define(version: 20170508112614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20170505191532) do
     t.integer  "location_id",                 null: false
     t.integer  "role_id"
     t.string   "skills",      default: [],                 array: true
+    t.integer  "likes_count", default: 0,     null: false
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
