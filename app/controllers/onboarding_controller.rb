@@ -14,13 +14,8 @@ class OnboardingController < ApplicationController
       end
     when :skills
       @user.user_skills.build if @user.user_skills.empty?
-      @user_skill = current_user.user_skills.build
-
-      authorize @user_skill
-      @user_skills = policy_scope(UserSkill)
     when :milestones
       @user.milestones.build if @user.milestones.empty?
-
     end
 
     render_wizard
