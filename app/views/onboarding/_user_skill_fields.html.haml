@@ -3,8 +3,8 @@
     .col-7
       .form-group
         = f.label :skill
-        = f.text_field :skills, class: "form-control user_skill_list", value: f.object.skill.present? ? f.object.skill.name : '', placeholder: "Design"
-        = f.hidden_field :skill_id, class: "user_skill_list_id", value: f.object.skill.present? ? f.object.skill_id : ''
+        = f.text_field :skills, class: "form-control autocomplete_skill", value: f.object.skill.present? ? f.object.skill.name : '', placeholder: "Design"
+        = f.hidden_field :skill_id, class: "autocomplete_skill_id", value: f.object.skill.present? ? f.object.skill_id : ''
 
     .col-3
       .form-group
@@ -21,6 +21,6 @@
 
 :coffeescript
   if(window.initilize_typehead)
-    $('.user_skill_list').typeahead('destroy');
+    $('.autocomplete_skill').typeahead('destroy');
     window.initilize_typehead();
 

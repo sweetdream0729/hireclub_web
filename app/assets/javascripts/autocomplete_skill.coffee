@@ -17,7 +17,7 @@ $(document).ready ->
       skill.name
 
   window.initilize_typehead =  () ->
-    $('.user_skill_list').typeahead {
+    $('.autocomplete_skill').typeahead {
       minLength: 0
       hint: false
       highlight: true
@@ -31,9 +31,9 @@ $(document).ready ->
       # Set hidden form field of skill_id
       $('input#user_skill_skill_id').val skill.id
       return
-    $('.user_skill_list').bind 'typeahead:select', (ev, skill) ->
+    $('.autocomplete_skill').bind 'typeahead:select', (ev, skill) ->
   # Set hidden form field of skill_id
-      skill_id = $(this).parent().parent().find('.user_skill_list_id')[0];
+      skill_id = $(this).parent().parent().find('.autocomplete_skill_id')[0];
       console.log(skill_id);
       $(skill_id).val(skill.id);
       return
