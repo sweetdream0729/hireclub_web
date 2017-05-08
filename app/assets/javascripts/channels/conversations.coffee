@@ -26,7 +26,7 @@ $(document).ready ->
     $('#new_message').submit (e) ->
       $this = $(this)
       input = $this.find('#message_text')
-      if $.trim(input.val()).length > 1
+      if $.trim(input.val()).length > 0
         App.global_chat.send_message input.val(), messages.data('conversation-id')
         input.val('')
       e.preventDefault()
