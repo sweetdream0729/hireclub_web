@@ -226,6 +226,8 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
+    local_time (1.0.3)
+      coffee-rails
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -465,6 +467,7 @@ DEPENDENCIES
   kaminari
   koala
   letter_opener
+  local_time
   memcachier
   meta-tags
   nav_lynx

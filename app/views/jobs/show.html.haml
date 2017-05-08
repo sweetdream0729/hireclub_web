@@ -18,8 +18,8 @@
             ·
             = @job.location.display_name
             ·
-            = time_ago_in_words(@job.created_at)
-            ago
+            = local_relative_time(@job.created_at, type: 'time-or-date')
+
             %br
             = @job.skills_list.split(",").join(" · ")
             %br

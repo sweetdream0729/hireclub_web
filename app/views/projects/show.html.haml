@@ -18,6 +18,8 @@
         = link_to image_tag(model_avatar(@project.user.avatar, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
         .media-body
           = link_to @project.user.display_name, @project.user
+          %br
+          = local_time(@project.created_at)
       %hr
       = render partial: "/likes/like_button", locals: { likeable: @project }
       %hr
