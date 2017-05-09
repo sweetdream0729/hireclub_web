@@ -1,5 +1,3 @@
-#= require turbolinks
-
 $(document).ready ->
   messages = $('#messages')
 

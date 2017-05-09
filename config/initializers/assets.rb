@@ -11,4 +11,4 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( normalize.css )
 Rails.application.config.assets.precompile += %w( milligram.min.css )
-Rails.application.config.assets.precompile += %w( print.css channels/conversations.js )
+Rails.application.config.assets.precompile += %w( print.css )
