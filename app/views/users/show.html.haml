@@ -78,6 +78,10 @@
             - if @user.open_to_remote
               ·
               %i.fa.fa-plane.text-muted
+          %br
+            = link_to_follow_user(@user, current_user)
+            %span.user_followers_count
+              = pluralize(@user.followers.count, "Follower")
         
 
     .col-sm-3

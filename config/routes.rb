@@ -99,9 +99,10 @@ Rails.application.routes.draw do
   get "/members",   to: "users#index",   as: :members
 
   resources :users, :only => [:show, :update], :path => '/', :constraints => { :id => /[\w\.\-]+/ }, :format => false do
-    
     member do
       get :print
+      get :follow
+      get :unfollow
     end
   end
 

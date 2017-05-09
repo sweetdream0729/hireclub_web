@@ -1,0 +1,13 @@
+- user = activity.owner
+- following = activity.trackable
+
+.media.mb-2
+  = render partial: "/public_activity/user_avatar", locals: {user: user}
+  .media-body
+    = link_to user.display_name, user
+    followed
+    = link_to following.name, following
+    
+    = render partial: "/public_activity/time_ago", locals: {activity: activity}
+    
+    
