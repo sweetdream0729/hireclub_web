@@ -22,6 +22,7 @@ RSpec.describe ConversationUser, type: :model do
     it "should calculate unread_messages_count" do
       message1 = FactoryGirl.create(:message, user: user, conversation: conversation)
       message2 = FactoryGirl.create(:message, user: other_user, conversation: conversation)
+      message3 = FactoryGirl.create(:message, user: user, conversation: conversation)
 
       expect(conversation.conversation_users.count).to eq(2)
       
