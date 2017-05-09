@@ -19,7 +19,26 @@ class Message < ApplicationRecord
   validates :text, presence: true
 
   # Callbacks
-  after_create_commit { MessageBroadcastJob.perform_now(self) }
+  after_commit :create_conversation_user, on: :create
+  after_commit :update_unread_counts, on: :create
+  after_commit :broadcast_job, on: :create
+
+  def create_conversation_user
+    conversation_user = conversation.conversation_users.where(user: user, conversation: conversation).first_or_create
+  end
+
+  def update_unread_counts
+    # update other conversation_user unread count by 1
+    cus = conversation.conversation_users.where.not(user: user)
+    cus.find_each do |cu|
+      cu.increment(:unread_messages_count)
+      cu.save
+    end
+  end
+
+  def broadcast_job
+    MessageBroadcastJob.perform_now(self) unless Rails.env.test?
+  end
 
   def read_by!(read_by_user)
     return if read_by_user == self.user
