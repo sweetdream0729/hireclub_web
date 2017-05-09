@@ -1,7 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ConversationUser, type: :model do
-  let(:conversation_user) { FactoryGirl.build(:conversation_user) }
+  let(:user) { FactoryGirl.build(:user) }
+  let(:conversation_user) { FactoryGirl.build(:conversation_user, user: user) }
+  let(:conversation) { conversation_user.conversation}
   
   subject { conversation_user }
 
@@ -10,9 +12,25 @@ RSpec.describe ConversationUser, type: :model do
     it { should belong_to(:conversation) }
   end
 
-  describe 'validations' do
+  describe "validations" do
     it { should validate_uniqueness_of(:user_id).scoped_to(:conversation_id) }
   end
 
+  describe "unread_messages_count",focus: true do
+    let(:other_user) { FactoryGirl.create(:user) }
+    
+    it "should calculate unread_messages_count" do
+      message1 = FactoryGirl.create(:message, user: user, conversation: conversation)
+      message2 = FactoryGirl.create(:message, user: other_user, conversation: conversation)
+
+      expect(conversation.conversation_users.count).to eq(2)
+      
+      conversation_user = conversation.conversation_users.first
+      expect(conversation_user.unread_messages_count).to eq(1)
+
+      other_conversation_user = conversation.conversation_users.last
+      expect(other_conversation_user.unread_messages_count).to eq(1)
+    end
+  end
  
 end
