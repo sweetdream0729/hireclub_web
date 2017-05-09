@@ -1,5 +1,6 @@
 - title @conversation.other_users(current_user).map(&:display_name).join(", ")
-.container-fluid.mt-2.mb-5
+= javascript_include_tag 'channels/conversations'
+.container-fluid.mb-5
   .row
     = render "conversation_list"
     .col-sm-8.message_section

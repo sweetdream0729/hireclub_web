@@ -23,4 +23,4 @@
 //= require cocoon
 //= require init
 //= require cable
-//= require_tree .
+//= require_directory .

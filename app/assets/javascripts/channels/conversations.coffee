@@ -1,8 +1,12 @@
+#= require turbolinks
+
 $(document).ready ->
   messages = $('#messages')
 
   if $('#messages').length > 0
-    messages_to_bottom = -> messages.scrollTop(messages.prop("scrollHeight"))
+    messages_to_bottom = ->
+      chat = $('.chat_area')
+      chat.scrollTop(chat.prop("scrollHeight"))
 
     messages_to_bottom()
 

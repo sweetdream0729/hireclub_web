@@ -114,6 +114,7 @@
   }
   ul {
     border: 1px solid #dddddd;
+    border-right: none;
   }
 }
 
@@ -273,4 +274,25 @@ div#custom-search-input {
 
 .member_list .list-group-item:first-child {
   border-radius: 0;
+}
+.mr_0{
+  margin-top: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-button {
+  background-color: #eee;
+}
+::-webkit-scrollbar-corner {
+  background-color: black;
+}
+.media-body.text-right{
+  padding-right: 15px;
 }
