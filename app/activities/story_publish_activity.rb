@@ -3,7 +3,7 @@ class StoryPublishActivity
 
   def self.get_recipients_for(activity)
     # Story User followers
-    recepients = activity.trackable.user.followers + User.admin
+    recepients = activity.trackable.user.followers + User.admin - [activity.trackable.user]
   end
 
   def self.send_notification(notification)
