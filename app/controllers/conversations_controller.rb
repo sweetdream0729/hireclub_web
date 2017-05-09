@@ -19,6 +19,10 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   def show
     @message = Message.new
+    @messages = @conversation.messages.by_recent
+    @messages.find_each do |m|
+      m.read_by!(current_user)
+    end
   end
 
   # GET /conversations/new

@@ -12,7 +12,7 @@
                 = link_to user.display_name, user
         .chat_area
           #messages{"data-conversation-id" => @conversation.id}
-            = render @conversation.messages.by_recent
+            = render @messages
         .message_write
           = form_for @message, url: '#' do |f|
             = f.hidden_field :conversation_id, value: @conversation.id
