@@ -26,14 +26,7 @@ class Message < ApplicationRecord
   end
 
   def update_unread_counts
-    create_conversation_user
-    # update other conversation_user unread count by 1
-    cus = conversation.conversation_users.where.not(user: user)
-    cus.find_each do |cu|
-      cu.increment(:unread_messages_count)
-      cu.save
-    end
-
+    create_conversation_user.update_unread_messages_count
     broadcast_job
   end
 
@@ -42,8 +35,8 @@ class Message < ApplicationRecord
   end
 
   def read_by!(read_by_user)
-    return if read_by_user == self.user
-    self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false, private: true
+    return if read_by_user == user
+    self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false, private: true, recipient: conversation
   end
 
   def is_read?

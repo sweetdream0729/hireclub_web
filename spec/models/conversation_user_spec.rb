@@ -32,9 +32,20 @@ RSpec.describe ConversationUser, type: :model do
       other_conversation_user = conversation.conversation_users.last
       expect(other_conversation_user.unread_messages_count).to eq(1)
 
+      conversation_user.update_unread_messages_count
+      expect(conversation_user.unread_messages_count).to eq(1)
+
+      message1.read_by!(other_user)
       message2.read_by!(user)
+
       conversation_user.update_unread_messages_count
       expect(conversation_user.unread_messages_count).to eq(0)
+
+      expect(other_conversation_user.unread_messages_count).to eq(1)
+
+      message3.read_by!(other_user)
+      other_conversation_user.update_unread_messages_count
+      expect(other_conversation_user.unread_messages_count).to eq(0)
     end
   end
  
