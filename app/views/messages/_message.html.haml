@@ -1,4 +1,4 @@
-.media
+.media{class: ("current_user" if current_user == message.user)}
   -# message.read_by!(current_user)
 
   = image_tag(model_avatar(message.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle')
