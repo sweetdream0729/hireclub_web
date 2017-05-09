@@ -41,6 +41,14 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
 
+  def story_published(notification)
+    @notification = Notification.find notification
+    @user = @notification.user
+    @story = @notification.activity.trackable
+
+    mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
+  end
+
   def user_followed(notification)
     @notification = Notification.find notification
     @user = @notification.user

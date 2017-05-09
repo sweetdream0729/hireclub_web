@@ -18,6 +18,7 @@ RSpec.describe Story, type: :model do
 
 
   describe "activity" do
+
     it "should have create activity" do
       story.save
       activity = PublicActivity::Activity.last
@@ -30,6 +31,9 @@ RSpec.describe Story, type: :model do
 
   describe 'publish!' do
     it "publishes the story" do
+      other_user = FactoryGirl.create(:user)
+      other_user.follow(story.user)
+
       story.save
       story.publish!
 
@@ -42,6 +46,14 @@ RSpec.describe Story, type: :model do
       expect(activity.trackable).to eq(story)
       expect(activity.owner).to eq(story.user)
       expect(activity.private).to eq(false)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(1)
+      
+      notification = notifications.first
+      expect(notification.user).to eq other_user
     end
   end
 
