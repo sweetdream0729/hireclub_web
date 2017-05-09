@@ -20,9 +20,11 @@ class ConversationsController < ApplicationController
   def show
     @message = Message.new
     @messages = @conversation.messages.by_recent
-    @messages.find_each do |m|
+    @messages.each do |m|
       m.read_by!(current_user)
     end
+
+    @messages.last.create_conversation_user.update_unread_messages_count
   end
 
   # GET /conversations/new
