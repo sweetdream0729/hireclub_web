@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protect_from_forgery with: :exception
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def store_location(path)
     store_location_for(:user, path)
   end
-  
+
   private
 
   def user_not_authorized
