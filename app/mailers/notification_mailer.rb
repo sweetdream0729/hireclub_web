@@ -40,5 +40,14 @@ class NotificationMailer < ApplicationMailer
     @company = @job.company
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
+
+  def user_followed(notification)
+    @notification = Notification.find notification
+    @user = @notification.user
+    @follower = notification.activity.owner
+
+    @subject = "#{@follower.display_name} followed you on HireClub"
+    mail(to: @user.email, subject: @subject)
+  end
   
 end
