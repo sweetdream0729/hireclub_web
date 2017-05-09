@@ -46,4 +46,8 @@ class Message < ApplicationRecord
     return if read_by_user == self.user
     self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false
   end
+
+  def is_read?
+    activities.where(key: MessageReadActivity::KEY).any?
+  end
 end

@@ -6,8 +6,7 @@
     %small.text-muted
       = time_ago_in_words(message.created_at)
       ago
-      - read_activities = message.activities.where(key: MessageReadActivity::KEY)
-      - if read_activities.any?
+      - if message.is_read?
         ·
         Read
 
