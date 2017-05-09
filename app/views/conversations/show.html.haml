@@ -12,7 +12,13 @@
                 = link_to user.display_name, user
         .chat_area
           #messages{"data-conversation-id" => @conversation.id}
-            = render @messages
+            =# render @messages
+            - @messages.each do |message|
+              - if current_user.id == message.user_id
+                = render 'messages/current_user_message', message: message
+              - else
+                = render 'messages/message', message: message
+
         .message_write
           = form_for @message, url: '#' do |f|
             = f.hidden_field :conversation_id, value: @conversation.id
@@ -27,3 +33,7 @@
   $('.member_list').height($(window).height() - 147);
   $('.chat_area').height($(window).height() - 227);
   $('body').css('overflow-y', 'hidden');
+
+  $(function(){
+    App.global_chat.current_user_id = #{current_user.id};
+  })

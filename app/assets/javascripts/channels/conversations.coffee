@@ -18,8 +18,16 @@ $(document).ready ->
       disconnected: ->
         # Called when the subscription has been terminated by the server
 
+      current_user_id: ->
+        # Passed the current logged in userid
+
       received: (data) ->
-        messages.append data['message']
+        current_user_id = App.global_chat.current_user_id
+        message_user_id = data.user_id
+        if current_user_id == data.user_id
+          messages.append data['curret_user_message']
+        else
+          messages.append data['message']
         messages_to_bottom()
 
       send_message: (text, conversation_id) ->
