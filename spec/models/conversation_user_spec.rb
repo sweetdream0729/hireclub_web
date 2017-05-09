@@ -16,7 +16,7 @@ RSpec.describe ConversationUser, type: :model do
     it { should validate_uniqueness_of(:user_id).scoped_to(:conversation_id) }
   end
 
-  describe "unread_messages_count",focus: true do
+  describe "unread_messages_count" do
     let(:other_user) { FactoryGirl.create(:user) }
     
     it "should calculate unread_messages_count" do
@@ -31,6 +31,10 @@ RSpec.describe ConversationUser, type: :model do
 
       other_conversation_user = conversation.conversation_users.last
       expect(other_conversation_user.unread_messages_count).to eq(1)
+
+      message2.read_by!(user)
+      conversation_user.update_unread_messages_count
+      expect(conversation_user.unread_messages_count).to eq(0)
     end
   end
  

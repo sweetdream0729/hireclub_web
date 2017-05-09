@@ -20,7 +20,6 @@ class Message < ApplicationRecord
 
   # Callbacks
   after_commit :update_unread_counts, on: :create
-  #after_commit :broadcast_job, on: :create
 
   def create_conversation_user
     conversation_user = conversation.conversation_users.where(user: user, conversation: conversation).first_or_create
@@ -44,10 +43,14 @@ class Message < ApplicationRecord
 
   def read_by!(read_by_user)
     return if read_by_user == self.user
-    self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false
+    self.create_activity_once key: MessageReadActivity::KEY, owner: read_by_user, published: false, private: true
   end
 
   def is_read?
     activities.where(key: MessageReadActivity::KEY).any?
+  end
+
+  def is_read_by?(read_by_user)
+    activities.where(key: MessageReadActivity::KEY, owner: read_by_user).any?
   end
 end
