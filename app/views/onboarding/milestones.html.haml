@@ -18,11 +18,11 @@
       %p
         Increased Sales by 75% at Google Adwords
       %hr
-
+      
       = form_for @user, url: wizard_path, method: :put do |f|
         = f.hidden_field :email
         #milestones
-          = f.fields_for :milestones do |milestone|
+          = f.fields_for :milestones, f.object.milestones.order("start_date DESC") do |milestone|
             = render 'milestone_fields', f: milestone
           .links
             = link_to_add_association f, :milestones, class: "btn btn-info btn-lg btn-block" do
