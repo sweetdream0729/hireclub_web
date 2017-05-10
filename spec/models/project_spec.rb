@@ -113,12 +113,23 @@ RSpec.describe Project, type: :model do
   end
 
   describe "activity" do
-    it "should have create activity" do
+    it "should have create activity",focus: true do
+      other_user = FactoryGirl.create(:user)
+      other_user.follow(project.user)
+
       project.save
       activity = PublicActivity::Activity.last
       expect(activity).to be_present
       expect(activity.trackable).to eq(project)
       expect(activity.owner).to eq(project.user)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(1)
+      
+      notification = notifications.first
+      expect(notification.user).to eq other_user
     end
   end
 
