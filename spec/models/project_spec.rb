@@ -113,7 +113,7 @@ RSpec.describe Project, type: :model do
   end
 
   describe "activity" do
-    it "should have create activity",focus: true do
+    it "should have create activity" do
       other_user = FactoryGirl.create(:user)
       other_user.follow(project.user)
 

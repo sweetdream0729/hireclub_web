@@ -5,10 +5,13 @@
 
 %h4.card-title
   = link_to story.name, story
-= link_to story do
-  = image_tag model_image(story.cover, 1920, 1080, true), class: "card-img", width: "100%"
+
+- if story.cover_uid.present?
+  = link_to story do
+    = image_tag model_image(story.cover, 1920, 1080, true), class: "card-img", width: "100%"
+
 %p.card-text
-  = markdown(truncate(story.content, length: 120))
+  = markdown(truncate(story.content, length: 200))
   %small
     = link_to "Read more...", story, class: "text-muted"
 
