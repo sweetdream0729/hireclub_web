@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
       @title = "#{params[:skill]} #{@title}"
     end
 
-    @projects = scope.page(params[:page])
+    @projects = scope.page(params[:page]).per(12)
   end
 
   # GET /projects/1
