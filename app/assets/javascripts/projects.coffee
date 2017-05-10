@@ -30,7 +30,6 @@ $(document).ready ->
 
   # Configure infinite scroll
   $('.infinite-projects').infinitePages
-    buffer: 400
     loading: ->
       $(this).text('Loading...')
     error: ->
