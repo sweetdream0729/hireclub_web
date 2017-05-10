@@ -10,7 +10,9 @@
       = link_to following.display_name, following
       %small
         = render partial: "/users/icons", locals: {user: following}
-    = following.user_roles.by_position.first.name
+        
+    - if following.user_roles.any?
+      = user.user_roles.by_position.first.name
 
     - if following.company.present?
       ·
