@@ -22,8 +22,11 @@ class Project < ApplicationRecord
 
   # Scopes
   scope :by_position, -> { order(position: :asc) }
+  scope :by_likes,    -> { order(likes_count: :desc) }
   scope :by_recent,   -> { order(created_at: :desc) }
+  scope :by_oldest,   -> { order(created_at: :asc) }
   scope :with_image,  -> { where.not(image_uid: nil) }
+  scope :by_user,     -> (user) { where(user: user) }
 
   # Associations
   belongs_to :user

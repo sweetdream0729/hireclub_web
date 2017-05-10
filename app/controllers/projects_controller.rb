@@ -6,11 +6,20 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    scope = Project.with_image.by_recent
+    scope = Project.with_image
     @title = "Projects"
+
+    if params[:sort_by] == "popular"
+      scope = scope.by_likes
+    elsif params[:sort_by] == "oldest"
+      scope = scope.by_oldest
+    else
+      scope = scope.by_recent
+    end
+
     if params[:username]
       @user = User.friendly.find(params[:username])
-      scope = @user.projects
+      scope = scope.by_user(@user)
       @title = "#{@title} by #{@user.display_name}"
     end
 
