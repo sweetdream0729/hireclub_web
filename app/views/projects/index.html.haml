@@ -1,7 +1,10 @@
 .container.mt-5.mb-5
   %h1
     = title @title
-  .row
-    = render @projects
-  .row
-    = paginate @projects
+  .infinite-projects
+    .row.projects
+      = render @projects
+    .row
+      .col-sm-12
+        %p.pagination
+          = link_to_next_page(@projects, 'Next Page', :remote => true)
