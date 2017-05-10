@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
   nilify_blanks
   include UnpublishableActivity
   include ActsAsLikeable
+  include FeedDisplayable
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 

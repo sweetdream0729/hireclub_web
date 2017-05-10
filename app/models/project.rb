@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   include Wisper::Publisher
   include UnpublishableActivity
   include ActsAsLikeable
+  include FeedDisplayable
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
   auto_strip_attributes :name, :squish => true

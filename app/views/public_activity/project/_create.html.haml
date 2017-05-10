@@ -10,5 +10,5 @@
   - if project.name.present?
     = link_to project.name, project
 
-.card-text
+%p.card-text
   = render partial: "/likes/like_button", locals: { likeable: project }

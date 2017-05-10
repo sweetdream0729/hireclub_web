@@ -5,6 +5,7 @@ class Job < ApplicationRecord
   auto_strip_attributes :name, squish: true
   include HasSmartUrl
   include ActsAsLikeable
+  include FeedDisplayable
   has_smart_url :link
   is_impressionable
 

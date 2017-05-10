@@ -28,4 +28,8 @@ class UserBadge < ApplicationRecord
   def broadcast_update
     broadcast(:update_user_badge, self)
   end
+
+  def feed_display_class
+    "badge"
+  end
 end
