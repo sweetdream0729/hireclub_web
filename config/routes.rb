@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     member do
       get :publish
     end
-    resources :comments, module: :jobs
+    resources :comments, module: :stories
   end
 
   resources :jobs do 
