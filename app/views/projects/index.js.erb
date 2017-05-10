@@ -7,5 +7,5 @@ $("<%=j render(@projects) %>")
   $('.pagination').html("That's all, folks!");
 <% else %>
   $('.pagination')
-    .html("<%=j link_to_next_page(@projects, 'Next Page', :remote => true) %>");
+    .html("<%=j link_to_next_page(@projects, 'Next Page', :remote => true, params: params.permit(:page, :sort_by)) %>");
 <% end %>
