@@ -1,9 +1,14 @@
 - user = activity.owner
 - project = activity.trackable
-.media.mb-2
-  = render partial: "/public_activity/user_avatar", locals: {user: user}
-  .media-body
-    = link_to user.display_name, user
-    added
-    = link_to "project #{project.name}", project_path(project)
-    = render partial: "/public_activity/time_ago", locals: {activity: activity}
+
+= render partial: "/public_activity/header", locals: {activity: activity, text: "added a project"}
+
+= link_to project_path(project) do
+  %img{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%",data: {toggle:"tooltip", placement: "bottom"}, title: truncate(project.description, length: 160) }
+
+.card-title.mt-2
+  - if project.name.present?
+    = link_to project.name, project
+
+.card-text
+  = render partial: "/likes/like_button", locals: { likeable: project }

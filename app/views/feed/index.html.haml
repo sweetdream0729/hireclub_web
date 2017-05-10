@@ -1,4 +1,8 @@
 - set_meta_tags title: "Feed"
 .container.mt-5.mb-5
-  = render_activities(@activities)
-  = paginate(@activities)
+  .row
+    .col-md-6
+      = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
+  .row
+    .col-sm-12
+      = paginate(@activities)

@@ -1,13 +1,25 @@
 - user = activity.owner
 - following = activity.trackable
 
-.media.mb-2
-  = render partial: "/public_activity/user_avatar", locals: {user: user}
+= render partial: "/public_activity/header", locals: {activity: activity, text: "followed #{link_to following.display_name, following}"}
+
+.media
+  = link_to image_tag(model_avatar(following.avatar, 200, true), width: 100, class: "d-flex align-self-center mr-3 rounded-circle"), following
   .media-body
-    = link_to user.display_name, user
-    followed
-    = link_to following.display_name, following
-    
-    = render partial: "/public_activity/time_ago", locals: {activity: activity}
-    
-    
+    %h5.mt-0
+      = link_to following.display_name, following
+      %small
+        = render partial: "/users/icons", locals: {user: following}
+    = following.user_roles.by_position.first.name
+
+    - if following.company.present?
+      ·
+      = following.company.name
+
+    - if following.location.present?
+      ·
+      = following.location.name
+    = "· #{display_years(user.years_experience)} Experience"
+
+    %p.mt-3
+      = link_to_follow_user(following, active_user)
