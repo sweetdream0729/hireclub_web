@@ -24,7 +24,7 @@
             .row
               .col-xs-9.col-sm-10
                 .form-group
-                  = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off"
+                  = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off", autofocus: true
               .col-xs-3.col-sm-2
                 = f.submit "Send", class: 'btn btn-primary btn-block'
 
