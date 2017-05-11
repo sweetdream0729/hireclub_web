@@ -66,6 +66,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def followers
+    set_user
+    @scope = @user.user_followers
+    @users = @scope.page(params[:page]).per(20)
+  end
+
+  def following
+    set_user
+    @scope = @user.follows_scoped
+    @following = @scope.page(params[:page]).per(20)
+  end
+
 
   def username
     username = (params[:q] || "").downcase

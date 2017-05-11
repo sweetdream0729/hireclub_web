@@ -105,6 +105,8 @@ Rails.application.routes.draw do
       get :print
       get :follow
       get :unfollow
+      get :followers
+      get :following
     end
   end
 

@@ -81,8 +81,13 @@
           %br
             - unless viewing_self?(@user)
               = link_to_follow_user(@user, current_user)
-            %span.user_followers_count
-              = pluralize(@user.followers.count, "Follower")
+            = link_to followers_user_path(@user) do
+              %span.user_followers_count
+                = pluralize(@user.followers.count, "Follower")
+            ·
+            = link_to following_user_path(@user) do
+              = @user.follows_scoped.count
+              Following
         
 
     .col-sm-3
