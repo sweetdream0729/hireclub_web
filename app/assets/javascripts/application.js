@@ -24,4 +24,5 @@
 //= require jquery.infinite-pages
 //= require cocoon
 //= require init
+//= require cable
 //= require_tree .

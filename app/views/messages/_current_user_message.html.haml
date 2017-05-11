@@ -1,7 +1,6 @@
-.media.chat_media
-  = image_tag(model_avatar(message.user.avatar, 200, true), width: 32, class: 'd-flex mr-3 rounded-circle')
+.media.text-right
   .media-body
-    %p.chat_bubble
+    %p.chat_bubble.chat_bubble_mine
       = Rinku.auto_link(message.text, :all, 'target="_blank"').html_safe
     %p.chat_time
       %small.text-muted

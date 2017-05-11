@@ -8,4 +8,5 @@
       = render 'layouts/messages'
       = yield
 
-    = render 'layouts/footer'
+    - unless controller_name == 'conversations' && action_name == 'show'
+      = render 'layouts/footer'

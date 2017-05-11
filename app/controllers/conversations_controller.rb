@@ -19,6 +19,12 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   def show
     @message = Message.new
+    @messages = @conversation.messages.by_recent
+    @messages.each do |m|
+      m.read_by!(current_user)
+    end
+
+    @messages.last.create_conversation_user.update_unread_messages_count if @messages.any?
   end
 
   # GET /conversations/new
@@ -59,7 +65,7 @@ class ConversationsController < ApplicationController
   end
 
   private
-    
+
     def set_conversations
       @conversations = current_user.conversations.by_recent
     end

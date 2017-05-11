@@ -175,6 +175,10 @@ class User < ApplicationRecord
     primary_role.try(:name)
   end
 
+  def display_notifications
+    notifications.published.not_message_create
+  end
+
   # Devise methos
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

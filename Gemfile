@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.4.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -24,6 +24,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'pry-byebug'
   # gem 'guard'
   # gem 'guard-bundler', require: false
   # gem 'guard-rspec', require: false
@@ -43,6 +44,11 @@ group :development do
   gem 'foreman'
   gem 'letter_opener'
   gem 'derailed'
+
+  gem 'capistrano', '~> 3.7', '>= 3.7.1'
+  gem 'capistrano-rails', '~> 1.2'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rvm'
 end
 
 group :test do
@@ -63,7 +69,7 @@ gem 'sidekiq'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
-end 
+end
 gem 'friendly_id', '~> 5.1.0'
 gem 'devise'
 gem 'pundit'
@@ -105,3 +111,4 @@ gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'redcarpet'
 gem 'local_time'
 gem 'jquery-infinite-pages'
+gem 'rinku'
