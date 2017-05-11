@@ -3,7 +3,9 @@ class MessageBroadcastJob < ApplicationJob
 
   def perform(message)
     ActionCable.server.broadcast "conversations_#{message.conversation_id}_channel",
-                                 message: render_message(message), curret_user_message: render_current_user_message(message), user_id: message.user_id
+                                 message: render_message(message),
+                                 curret_user_message: render_current_user_message(message),
+                                 user_id: message.user_id
   end
 
   private

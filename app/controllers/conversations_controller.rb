@@ -24,7 +24,7 @@ class ConversationsController < ApplicationController
       m.read_by!(current_user)
     end
 
-    @messages.last.create_conversation_user.update_unread_messages_count
+    @messages.last.create_conversation_user.update_unread_messages_count if @messages.any?
   end
 
   # GET /conversations/new
