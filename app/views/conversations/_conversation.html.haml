@@ -4,16 +4,17 @@
 %div{id: "conversation_#{conversation.id}"}
   = link_to conversation_path(conversation), class: classes do
     .media
-      = image_tag(model_avatar(other_user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle')
+      = image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex mr-3 rounded-circle')
       .media-body
-        %h5
+        %strong
           = other_user.display_name
-          %small
-            = time_ago_in_words(conversation.updated_at)
-            ago
+        %small
+          = local_time(conversation.updated_at, "%l:%M%P")
+          
         %p.mb-0
-          - last_message = conversation.last_message
-          - if last_message
-            - if last_message.user == current_user
-              You:
-            = truncate(conversation.last_message.text, length: 25)
+          %small
+            - last_message = conversation.last_message
+            - if last_message
+              - if last_message.user == current_user
+                You:
+              = truncate(conversation.last_message.text, length: 25)
