@@ -29,5 +29,14 @@ class FacebookService
     User.where(id: users)
   end
 
+  def self.mutual_follow_facebook_friends(user)
+    users = self.facebook_friends_users(user)
+    users.each do |u|
+      user.follow(u)
+      u.follow(user)
+    end
+  end
+
+
   
 end
