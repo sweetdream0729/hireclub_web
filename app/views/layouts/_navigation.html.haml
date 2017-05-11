@@ -37,9 +37,9 @@
                 = unread_messages_count
         %li.nav-item
           %a.nav-link.mr-3{:href => notifications_path}
-            - if current_user.notifications.published.unread.exists?
+            - if current_user.display_notifications.unread.exists?
               %i.fa.fa-bell{"aria-hidden" => "true"}
-              = current_user.notifications.published.unread.count
+              = current_user.display_notifications.unread.count
             - else
               %i.fa.fa-bell-o{"aria-hidden" => "true"}
         %li.nav-item
