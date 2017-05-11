@@ -5,9 +5,10 @@ class Notification < ApplicationRecord
     "user.create"
   ]
   # Scopes
-  scope :published,        -> { where(published: true) }
-  scope :unread,           -> { where(read_at: nil) }
-  scope :recent,           -> { order(created_at: :desc) }
+  scope :published,          -> { where(published: true) }
+  scope :unread,             -> { where(read_at: nil) }
+  scope :recent,             -> { order(created_at: :desc) }
+  scope :not_message_create, -> { where.not(activity_key: MessageCreateActivity::KEY) }
 
   # Associations
   belongs_to :activity

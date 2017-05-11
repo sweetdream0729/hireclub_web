@@ -1,0 +1,3 @@
+- user_badge = activity.trackable
+
+= render partial: "/public_activity/header", locals: {activity: activity, text: "earned badge #{link_to user_badge.badge.name, user_badge.badge}"}
