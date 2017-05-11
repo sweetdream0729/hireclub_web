@@ -296,3 +296,20 @@ div#custom-search-input {
 .media.text-right{
   padding-right: 25px;
 }
+.chat_bubble {
+  background : #f1f0f0;
+  border-radius: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+  margin-bottom: 0;
+}
+.chat_bubble_mine {
+  background: #0084ff;
+  color: white;
+}
+.chat_time {
+  padding-left: 12px;
+}
