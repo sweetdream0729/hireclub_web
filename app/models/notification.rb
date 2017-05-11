@@ -2,8 +2,7 @@ class Notification < ApplicationRecord
   @@enabled = true
 
   SKIP_ACTIVITIES = [
-    "user.create",
-    "project.create"
+    "user.create"
   ]
   # Scopes
   scope :published,        -> { where(published: true) }

@@ -10,6 +10,7 @@ class Milestone < ApplicationRecord
   include Wisper::Publisher
   include UnpublishableActivity
   include ActsAsLikeable
+  include FeedDisplayable
   include PublicActivity::Model
   include HasSmartUrl
   has_smart_url :link

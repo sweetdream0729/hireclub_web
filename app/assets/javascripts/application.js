@@ -21,6 +21,7 @@
 //= require mousetrap.min
 //= require selectize.min
 //= require local_time
+//= require jquery.infinite-pages
 //= require cocoon
 //= require init
 //= require cable

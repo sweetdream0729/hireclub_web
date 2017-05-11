@@ -31,4 +31,19 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: JobCreateActivity::KEY).first
     NotificationMailer.job_created(notification)
   end
+
+  def user_followed
+    notification = Notification.where(activity_key: UserFollowActivity::KEY).first
+    NotificationMailer.user_followed(notification)
+  end
+
+  def story_published
+    notification = Notification.where(activity_key: StoryPublishActivity::KEY).first
+    NotificationMailer.story_published(notification)
+  end
+
+  def project_created
+    notification = Notification.where(activity_key: ProjectCreateActivity::KEY).first
+    NotificationMailer.project_created(notification)
+  end
 end

@@ -28,3 +28,9 @@ $(document).ready ->
           return
       return
 
+  # Configure infinite scroll
+  $('.infinite-projects').infinitePages
+    loading: ->
+      $(this).text('Loading...')
+    error: ->
+      $(this).button('There was an error, please try again')

@@ -52,3 +52,8 @@
 
     .col-sm-12.col-lg-7
       = markdown(@story.content)
+
+      %hr
+      = render partial: "comments/comments", locals: { commentable: @story }
+      = render partial: "comments/form", locals: { commentable: @story } 
+

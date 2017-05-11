@@ -36,6 +36,37 @@ class UsersController < ApplicationController
     render layout: "print"
   end
 
+  def follow
+    set_user
+
+    unless user_signed_in?
+      # take us to sign up if we aren't logged in
+      store_location(follow_user_path(@user))
+      redirect_to(new_user_registration_path, format: :html) and return
+    end
+
+    current_user.follow @user
+    @user.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @user }
+    end
+  end
+
+  def unfollow
+    set_user
+    
+    current_user.stop_following @user
+    @user.reload
+    
+    respond_to do |format|
+      format.js { render :follow}
+      format.html { redirect_to @user }
+    end
+  end
+
+
   def username
     username = (params[:q] || "").downcase
     scope = User.where('lower(username) = ?', username.downcase)

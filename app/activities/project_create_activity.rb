@@ -1,13 +1,13 @@
-class StoryPublishActivity
-  KEY = "story.publish"
+class ProjectCreateActivity
+  KEY = "project.create"
 
   def self.get_recipients_for(activity)
-    # Story User followers
+    # User followers except person who createed project
     recepients = activity.trackable.user.followers + User.admin - [activity.trackable.user]
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.story_published(notification)
+    NotificationMailer.delay.project_created(notification)
   end
 
 end
