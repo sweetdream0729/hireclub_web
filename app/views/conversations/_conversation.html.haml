@@ -1,18 +1,19 @@
 - other_user = conversation.other_users(current_user).first
 - classes = "list-group-item list-group-item-action"
-- classes += " active" if conversation.id == @conversation.id
-= link_to conversation_path(conversation), class: classes do
-  .media
-    = image_tag(model_avatar(other_user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle')
-    .media-body
-      %h5
-        = other_user.display_name
-        %small
-          = time_ago_in_words(conversation.updated_at)
-          ago
-      %p.mb-0
-        - last_message = conversation.last_message
-        - if last_message
-          - if last_message.user == current_user
-            You:
-          = truncate(conversation.last_message.text, length: 25)
+- classes += " active" if conversation.id == conversation_id
+%div{id: "conversation_#{conversation.id}"}
+  = link_to conversation_path(conversation), class: classes do
+    .media
+      = image_tag(model_avatar(other_user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle')
+      .media-body
+        %h5
+          = other_user.display_name
+          %small
+            = time_ago_in_words(conversation.updated_at)
+            ago
+        %p.mb-0
+          - last_message = conversation.last_message
+          - if last_message
+            - if last_message.user == current_user
+              You:
+            = truncate(conversation.last_message.text, length: 25)

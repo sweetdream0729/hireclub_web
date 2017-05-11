@@ -1,6 +1,5 @@
 $(document).ready ->
   messages = $('#messages')
-  conversation_list = $('#conversations');
 
   if $('#messages').length > 0
     messages_to_bottom = ->
@@ -25,11 +24,19 @@ $(document).ready ->
       received: (data) ->
         current_user_id = App.global_chat.current_user_id
         message_user_id = data.user_id
+        div_id = '#conversation_'+ data.conversation_id
+        text   = data.text
+        time   = data.created_at
+        unread_message_count = if data.unread_count == 0 then 1 else data.unread_count
         if current_user_id == data.user_id
           messages.append data['curret_user_message']
+          $(div_id).find('p.mb-0').text 'You: ' + text + ''
+          #$(div_id).find('.notification-alert').html ''
         else
           messages.append data['message']
-        #conversation_list.html data['conversation_list']
+          $(div_id).find('p.mb-0').text '' + text + ''
+          #$(div_id).find('.notification-alert').html '<div class="notification-icon"><span class="glyphicon glyphicon-envelope"></span><span class="badge">' + unread_message_count + '</span></div>'
+        $(div_id).find('small').text '' + time + ''
         messages_to_bottom()
 
       send_message: (text, conversation_id) ->
