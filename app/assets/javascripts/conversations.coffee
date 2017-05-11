@@ -1,4 +1,6 @@
 $(document).ready ->
+  OneSignal.showHttpPrompt()
+  
   $('#new_message').formValidation(
     framework: 'bootstrap4'
     icon:
