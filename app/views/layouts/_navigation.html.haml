@@ -48,6 +48,11 @@
           .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdownMenuLink"}
             %a.dropdown-item{:href => edit_user_registration_path} Settings
             %a.dropdown-item{:href => resumes_path } Resumes
+
+            - if user_signed_in? && current_user.is_admin
+              .dropdown-divider
+              %a.dropdown-item{:href => rails_admin_path } Admin
+              
             .dropdown-divider
             %a.dropdown-item{:href => destroy_user_session_path} Logout
   
