@@ -1,1 +1,2 @@
-= render partial: "/public_activity/header", locals: {activity: activity, text: "posted job #{link_to activity.trackable.name, activity.trackable}"}
+- job = activity.trackable
+= render partial: "/notifications/item", locals: {activity: activity, verb: "posted job", object: job.name, link: url_for(job)}

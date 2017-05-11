@@ -2,10 +2,13 @@
 - likeable = like.likeable
 
 - if like.likeable_type == "UserBadge"
-  - link = link_to like.likeable_name, user_path(likeable.user)
+  - object = like.likeable_name
+  - link = user_path(likeable.user)
 - elsif like.likeable_type == "Comment"
-  - link = link_to(truncate(like.likeable.commentable.name,length:40), like.likeable.commentable)
+  - object = like.likeable.commentable.name
+  - link = url_for(like.likeable.commentable)
 - else
-  - link = link_to likeable.name, likeable
+  - object = like.likeable.name
+  - link = url_for(likeable)
 
-= render partial: "/public_activity/header", locals: {activity: activity, text: "liked #{link}"}
+= render partial: "/notifications/item", locals: {activity: activity, verb: "liked", object: object, link: link}

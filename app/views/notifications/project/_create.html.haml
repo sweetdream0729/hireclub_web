@@ -1,3 +1,2 @@
 - project = activity.trackable
-
-= render partial: "/public_activity/header", locals: {activity: activity, text: "added project #{link_to project.name, project}"}
+= render partial: "/notifications/item", locals: {activity: activity, verb: "added project", object: project.name, link: url_for(project)}
