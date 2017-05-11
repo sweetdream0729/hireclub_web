@@ -1,7 +1,7 @@
 .media.text-right
   .media-body
     %p.chat_bubble.chat_bubble_mine
-      = Rinku.auto_link(message.text).html_safe
+      = Rinku.auto_link(message.text, :all, 'target="_blank"').html_safe
     %p.chat_time
       %small.text-muted
         = time_ago_in_words(message.created_at)
