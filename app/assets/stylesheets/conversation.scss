@@ -308,6 +308,10 @@ div#custom-search-input {
   padding-bottom: 4px;
   display: inline-block;
   margin-bottom: 0;
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 }
 .chat_bubble_mine {
   background: #0084ff;

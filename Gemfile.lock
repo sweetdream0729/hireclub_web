@@ -361,6 +361,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rinku (2.0.2)
     rollbar (2.14.0)
       multi_json
     rspec-core (3.5.4)
@@ -504,6 +505,7 @@ DEPENDENCIES
   rails_layout
   redcarpet
   redis
+  rinku
   rollbar
   rspec-rails
   sass-rails (~> 5.0)
