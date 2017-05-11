@@ -1,8 +1,8 @@
 - title @conversation.other_users(current_user).map(&:display_name).join(", ")
 
 .container-fluid.mb-5
-  .row
-    = render "conversation_list"
+  .row#conversation_list
+    = render "conversation_list", conversations: @conversations, conversation_id: @conversation.id
     .col-sm-8.message_section
       .row
         .new_message_head

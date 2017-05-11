@@ -1,5 +1,6 @@
 $(document).ready ->
   messages = $('#messages')
+  conversation_list = $('#conversations');
 
   if $('#messages').length > 0
     messages_to_bottom = ->
@@ -28,10 +29,12 @@ $(document).ready ->
           messages.append data['curret_user_message']
         else
           messages.append data['message']
+        #conversation_list.html data['conversation_list']
         messages_to_bottom()
 
       send_message: (text, conversation_id) ->
         @perform 'send_message', text: text, conversation_id: conversation_id
+
 
     $('#new_message').submit (e) ->
       $this = $(this)

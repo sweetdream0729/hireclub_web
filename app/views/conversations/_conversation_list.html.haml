@@ -6,7 +6,8 @@
         %p
           Conversations
   .member_list
-    %ul.list-unstyled
-      = render @conversations
-    - if @conversations.empty?
+    %ul.list-unstyled#conversations
+      = render partial: 'conversations/conversations', locals: {conversations: conversations, conversation_id: conversation_id}
+
+    - if conversations.empty?
       %h5 No messages yet

@@ -17,4 +17,11 @@ class MessageBroadcastJob < ApplicationJob
   def render_current_user_message(message)
   	MessagesController.render partial: 'messages/current_user_message', locals: {message: message}
   end
+
+  def render_conversation_list(message)
+    ApplicationController.render partial: 'conversations/conversations', locals: {conversations: message.user.conversations.by_recent,
+                                                                                  conversation_id: message.conversation_id,
+                                                                                  message: message
+                                                                                }
+  end
 end
