@@ -12,12 +12,13 @@ class Activity < PublicActivity::Activity
     LikeCreateActivity::KEY
   ]
 
-  scope :by_recent,      -> { order(created_at: :desc) }
-  scope :unpublished,    -> { where(published: false) }
-  scope :published,      -> { where(published: true) }
-  scope :only_public,    -> { where(private: false) }
-  scope :only_private,   -> { where(private: true) }
-  scope :public_display, -> { where(key: PUBLIC_DISPLAY) }
+
+  scope :by_recent,          -> { order(created_at: :desc) }
+  scope :unpublished,        -> { where(published: false) }
+  scope :published,          -> { where(published: true) }
+  scope :only_public,        -> { where(private: false) }
+  scope :only_private,       -> { where(private: true) }
+  scope :public_display,     -> { where(key: PUBLIC_DISPLAY) }
 
 end
 

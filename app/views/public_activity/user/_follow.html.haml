@@ -20,7 +20,7 @@
     - if following.location.present?
       ·
       = following.location.name
-    = "· #{display_years(user.years_experience)} Experience"
+    = "· #{display_years(following.years_experience)} Experience"
 
     %p.mt-3
       = link_to_follow_user(following, active_user)

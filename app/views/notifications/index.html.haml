@@ -2,6 +2,7 @@
   %h1= title "Notifications"
   .row
     .col-md-8.col-lg-6
-      = render @notifications, locals: { active_user: current_user}
+      %ul.list-group
+        = render @notifications
 
   = paginate @notifications
