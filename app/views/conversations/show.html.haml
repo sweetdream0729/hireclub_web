@@ -7,9 +7,8 @@
       .row
         .new_message_head
           .pull-left
-            %button
-              - @conversation.other_users(current_user).each do |user|
-                = link_to user.display_name, user
+            - @conversation.other_users(current_user).each do |user|
+              = link_to user.display_name, user
         .chat_area
           #messages{"data-conversation-id" => @conversation.id}
             =# render @messages

@@ -15,7 +15,7 @@
               %small
                 %i.fa.fa-briefcase.text-success
           %small
-            = story.user.user_roles.by_position.first.name
+            = story.user.primary_role_name
             - if story.user.company
               ·
               = story.user.company.name

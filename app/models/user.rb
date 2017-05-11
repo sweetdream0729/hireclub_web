@@ -167,6 +167,14 @@ class User < ApplicationRecord
     create_activity_once :welcome, owner: self, private: true
   end
 
+  def primary_role
+    user_roles.by_position.first
+  end
+
+  def primary_role_name
+    primary_role.try(:name)
+  end
+
   # Devise methos
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

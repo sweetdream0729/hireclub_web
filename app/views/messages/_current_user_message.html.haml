@@ -1,12 +1,11 @@
 .media.text-right
   .media-body
-    %p
+    %p.chat_bubble.chat_bubble_mine
       = message.text
-    %small.text-muted
-      = time_ago_in_words(message.created_at)
-      ago
-      - if message.is_read?
-        ·
-        Read
-
-%hr
+    %p.chat_time
+      %small.text-muted
+        = time_ago_in_words(message.created_at)
+        ago
+        - if message.is_read?
+          ·
+          Read

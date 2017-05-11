@@ -10,8 +10,7 @@
       %small
         = render partial: "/users/icons", locals: {user: user}
 
-    - if user.user_roles.any?
-      = user.user_roles.by_position.first.name
+    = user.primary_role_name
 
     - if user.company.present?
       ·

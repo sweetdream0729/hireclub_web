@@ -55,7 +55,7 @@
               %small
                 %i.fa.fa-briefcase.text-success
           %small
-            = @job.user.user_roles.by_position.first.name
+            = @job.user.primary_role_name
             - if @job.user.company
               ·
               = @job.user.company.name
