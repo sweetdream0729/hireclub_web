@@ -23,4 +23,8 @@ class ReviewRequest < ApplicationRecord
       "Waiting for Review"
     end
   end
+
+  def name
+    "review request"
+  end
 end
