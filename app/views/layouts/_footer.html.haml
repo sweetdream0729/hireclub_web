@@ -38,5 +38,6 @@
   ga('send', 'pageview');
 
 - if user_signed_in?
-  :javascript
-    OneSignal.push(["sendTags", {user_id: "#{current_user.id}"}]);
+  :coffeescript
+    $(document).ready ->
+      OneSignal.push(["sendTags", {user_id: "#{current_user.id}"}]);
