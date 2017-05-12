@@ -12,7 +12,7 @@ module ApplicationHelper
     if image
       image.remote_url(width: size, height: size, crop: :fill, secure: use_https, gravity: :north, format: "jpg", quality: 80)
     else
-      cl_image_path("default_avatar.png")
+      cl_image_path("default_avatar.png", {secure: use_https})
     end
   end
 
@@ -20,7 +20,7 @@ module ApplicationHelper
     if image
       image.remote_url(width: size, height: size, crop: :fill, secure: use_https, gravity: :north, format: "jpg", quality: 80)
     else
-      cl_image_path("default_company_avatar.png")
+      cl_image_path("default_company_avatar.png", {secure: use_https})
     end
   end
 
