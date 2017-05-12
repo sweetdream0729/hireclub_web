@@ -299,6 +299,7 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    one_signal (1.2.0)
     orm_adapter (0.5.0)
     pg (0.20.0)
     pg_search (2.0.1)
@@ -517,6 +518,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-linkedin-oauth2!
+  one_signal
   pg (~> 0.18)
   pg_search
   pry-byebug

@@ -40,6 +40,19 @@ class Notification < ApplicationRecord
     read_at.present?
   end
 
+  def payload
+    return {
+      id: id,
+      user_id: user_id,
+      activity_id: activity_id,
+      activity_key: activity.key,
+      is_read: read?,
+      read_at: read_at.to_i,
+      created_at: created_at.to_i,
+      updated_at: updated_at.to_i
+    }
+  end
+
   def self.create_notifications_for_activity(activity_id)
     #puts "Notification.create_notifications_for_activity #{activity_id}"
     activity = Activity.where(id: activity_id).first
