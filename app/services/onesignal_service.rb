@@ -14,6 +14,7 @@ class OnesignalService
     puts "OnesignalService.create_notification #{params.inspect}"
     begin
       response = OneSignal::Notification.create(params: params)
+      Rails.logger.info(response.body.inspect)
       notification_id = JSON.parse(response.body)["id"]
     rescue OneSignal::OneSignalError => e
       puts "--- OneSignalError  :"
