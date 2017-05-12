@@ -6,6 +6,11 @@ class MessageCreateActivity
     recepients = message.conversation.users - [message.user]
   end
 
+  def self.send_notification(notification)
+    #NotificationMailer.delay.user_followed(notification)
+    self.send_push(notification)
+  end
+
   def self.send_push(notification)
     return unless notification.present?
     message = notification.activity.trackable
