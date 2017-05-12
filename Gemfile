@@ -15,7 +15,7 @@ gem 'jquery-rails'
 # gem 'turbolinks', '~> 5'
 
 group :production do
-  gem 'heroku-deflater'
+  #gem 'heroku-deflater'
 end
 
 group :development, :test do
