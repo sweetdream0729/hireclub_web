@@ -130,10 +130,32 @@ class User < ApplicationRecord
     return username
   end
 
+  def short_display_name
+    result = first_name
+    result += " #{last_name[0]}" if !last_name.blank?
+    return result
+  end
+
   def first_name
     unless display_name.blank?
       split = [display_name.split[0]]
       split.empty? ? display_name : split.join(" ")
+    end
+  end
+
+  def last_name
+    unless display_name.blank?
+      fragments = display_name.split.reject { |fragment| %(Jr. Jr Sr. Sr).include? fragment }
+      if fragments.length == 1
+        ""
+      else
+        # If the last fragment is a number, use all fragments but the first
+        if fragments.last =~ /\d/
+          fragments[1..fragments.length].join(' ')
+        else
+          fragments.last
+        end
+      end
     end
   end
 

@@ -53,7 +53,7 @@ RSpec.describe OnesignalService, type: :service do
   context "notifications" do
     let(:user2) { FactoryGirl.create(:user, name: 'Testy') }
 
-    it "should send notification for follow user" do
+    it "should send notification for user.follow" do
       user
       user2.follow(user)
      
@@ -66,6 +66,21 @@ RSpec.describe OnesignalService, type: :service do
 
       notification = notifications.first
       UserFollowActivity.send_push(notification)
+    end
+
+    it "should send notification for message.create" do
+      conversation = Conversation.between([user, user2])
+      message = FactoryGirl.create(:message, user: user, conversation: conversation, text: "Hey! It's really great to meet you. I'm looking forward to our lunch.")
+
+      activity = PublicActivity::Activity.where(key: MessageCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      CreateNotificationJob.perform_now(activity.id)
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(1)
+
+      notification = notifications.first
+      MessageCreateActivity.send_push(notification)
     end
 
   end
