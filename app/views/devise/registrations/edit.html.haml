@@ -140,11 +140,20 @@
               %label.form-check-label
                 = f.check_box :open_to_internship, class: 'form-check-input'
                 Internship
+                
             - if current_user.is_admin || current_user.is_moderator
               .form-check
                 %label.form-check-label
                   = f.check_box :is_reviewer, class: 'form-check-input'
                   Reviewing Profiles
+
+            %h2.mt-4 Work Authorization
+            %hr
+            %label.form-check-label
+              = f.check_box :is_us_work_authorized, class: 'form-check-input'
+              Legally authorized to work in the United States?
+
+
           
           
           / #social.tab-pane{:role => "tabpanel"}

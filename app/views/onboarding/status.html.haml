@@ -43,7 +43,7 @@
           %i.fa.fa-handshake-o
           to let people know you are open to new opportunities.
 
-        %h2.mt-5 Open To
+        %h2.mt-4 Open To
         %hr
         .form-check
           %label.form-check-label
@@ -72,6 +72,13 @@
           %label.form-check-label
             = f.check_box :open_to_internship, class: 'form-check-input'
             Internship
+            
+        %h2.mt-4 Work Authorization
+        %hr
+        .form-check
+          %label.form-check-label
+            = f.check_box :is_us_work_authorized, class: 'form-check-input'
+            Legally authorized to work in the United States?
 
         %hr
         %small.form-text.text-muted 

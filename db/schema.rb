@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514135821) do
+ActiveRecord::Schema.define(version: 20170514190804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -444,6 +444,7 @@ ActiveRecord::Schema.define(version: 20170514135821) do
     t.integer  "company_id"
     t.integer  "unread_messages_count",     default: 0,     null: false
     t.boolean  "open_to_new_opportunities", default: false, null: false
+    t.boolean  "is_us_work_authorized"
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -451,6 +452,7 @@ ActiveRecord::Schema.define(version: 20170514135821) do
     t.index ["is_admin"], name: "index_users_on_is_admin", using: :btree
     t.index ["is_available"], name: "index_users_on_is_available", using: :btree
     t.index ["is_hiring"], name: "index_users_on_is_hiring", using: :btree
+    t.index ["is_us_work_authorized"], name: "index_users_on_is_us_work_authorized", using: :btree
     t.index ["location_id"], name: "index_users_on_location_id", using: :btree
     t.index ["open_to_contract"], name: "index_users_on_open_to_contract", using: :btree
     t.index ["open_to_full_time"], name: "index_users_on_open_to_full_time", using: :btree
