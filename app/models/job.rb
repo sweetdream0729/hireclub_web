@@ -17,6 +17,8 @@ class Job < ApplicationRecord
   multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
 
   acts_as_taggable_array_on :skills
+  include HasTagsList
+  has_tags_list :skills
 
   # Scopes
   scope :recent,       -> { order(created_at: :desc) }
@@ -49,14 +51,6 @@ class Job < ApplicationRecord
     [
       [:name, :company_name, :id]
     ]
-  end
-
-  def skills_list=(string)
-    self.skills = string.split(",").map!(&:strip)
-  end
-
-  def skills_list
-    self.skills.join(", ")
   end
 
   def skills_exist

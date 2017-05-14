@@ -9,6 +9,8 @@ class Story < ApplicationRecord
   auto_strip_attributes :name, :squish => true
   is_impressionable
   acts_as_taggable_array_on :tags
+  include HasTagsList
+  has_tags_list :tags
   dragonfly_accessor :cover
 
   include PublicActivity::Model
@@ -59,11 +61,4 @@ class Story < ApplicationRecord
     published_on.nil?
   end
 
-  def tags_list=(string)
-    self.tags = string.split(",").map!(&:strip)
-  end
-
-  def tags_list
-    self.tags.join(", ")
-  end
 end

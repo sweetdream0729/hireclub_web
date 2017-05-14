@@ -25,6 +25,8 @@ class Company < ApplicationRecord
   auto_strip_attributes :name, squish: true
   nilify_blanks
   acts_as_taggable_array_on :tags
+  include HasTagsList
+  has_tags_list :tags
 
   # Scopes
   scope :recent,       -> { order(created_at: :desc) }
@@ -58,14 +60,6 @@ class Company < ApplicationRecord
       return true
     end
     return false
-  end
-
-  def tags_list=(string)
-    self.tags = string.split(",").map!(&:strip)
-  end
-
-  def tags_list
-    self.tags.join(", ")
   end
 
   def self.import_facebook_url(url)

@@ -17,6 +17,8 @@ class Project < ApplicationRecord
 
   acts_as_list scope: :user, top_of_list: 0
   acts_as_taggable_array_on :skills
+  include HasTagsList
+  has_tags_list :skills
 
   include PgSearch
   multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
@@ -78,14 +80,6 @@ class Project < ApplicationRecord
 
   def company_name
     company.try(:name)
-  end
-
-  def skills_list=(string)
-    self.skills = string.split(",").map!(&:strip)
-  end
-
-  def skills_list
-    self.skills.join(", ")
   end
 
   def skills_exist

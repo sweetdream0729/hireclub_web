@@ -11,6 +11,8 @@ class Milestone < ApplicationRecord
   include ActsAsLikeable
   include FeedDisplayable
   acts_as_taggable_array_on :skills
+  include HasTagsList
+  has_tags_list :skills
   
   include HasSmartUrl
   has_smart_url :link
@@ -50,14 +52,6 @@ class Milestone < ApplicationRecord
 
   def broadcast_update
     broadcast(:update_milestone, self)
-  end
-
-  def skills_list=(string)
-    self.skills = string.split(",").map!(&:strip)
-  end
-
-  def skills_list
-    self.skills.join(", ")
   end
 
   def skills_exist
