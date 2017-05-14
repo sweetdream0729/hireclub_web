@@ -84,7 +84,7 @@ class Project < ApplicationRecord
 
   def skills_exist
     skills.each do |name|
-      if Skill.where('name ilike ?', name).empty?
+      if Skill.search_by_exact_name(name).empty?
         errors.add(:skills, "#{name} isn't a valid skill")
       end
     end
