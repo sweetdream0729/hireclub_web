@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514190804) do
+ActiveRecord::Schema.define(version: 20170514192126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -398,12 +398,12 @@ ActiveRecord::Schema.define(version: 20170514190804) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                     default: "",    null: false
-    t.string   "encrypted_password",        default: "",    null: false
+    t.string   "email",                        default: "",    null: false
+    t.string   "encrypted_password",           default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",             default: 0,     null: false
+    t.integer  "sign_in_count",                default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -412,15 +412,15 @@ ActiveRecord::Schema.define(version: 20170514190804) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "name"
-    t.boolean  "is_admin",                  default: false, null: false
+    t.boolean  "is_admin",                     default: false, null: false
     t.citext   "username"
     t.string   "avatar_uid"
     t.integer  "location_id"
     t.string   "gender"
-    t.integer  "years_experience",          default: 0,     null: false
+    t.integer  "years_experience",             default: 0,     null: false
     t.string   "bio"
     t.string   "website_url"
     t.string   "twitter_url"
@@ -429,22 +429,23 @@ ActiveRecord::Schema.define(version: 20170514190804) do
     t.string   "medium_url"
     t.string   "facebook_url"
     t.string   "linkedin_url"
-    t.boolean  "is_available",              default: false, null: false
-    t.boolean  "is_hiring",                 default: false, null: false
-    t.boolean  "open_to_remote",            default: false, null: false
-    t.boolean  "open_to_full_time",         default: false, null: false
-    t.boolean  "open_to_part_time",         default: false, null: false
-    t.boolean  "open_to_contract",          default: false, null: false
-    t.boolean  "open_to_internship",        default: false, null: false
+    t.boolean  "is_available",                 default: false, null: false
+    t.boolean  "is_hiring",                    default: false, null: false
+    t.boolean  "open_to_remote",               default: false, null: false
+    t.boolean  "open_to_full_time",            default: false, null: false
+    t.boolean  "open_to_part_time",            default: false, null: false
+    t.boolean  "open_to_contract",             default: false, null: false
+    t.boolean  "open_to_internship",           default: false, null: false
     t.string   "instagram_url"
-    t.boolean  "is_moderator",              default: false, null: false
-    t.boolean  "open_to_relocation",        default: false, null: false
+    t.boolean  "is_moderator",                 default: false, null: false
+    t.boolean  "open_to_relocation",           default: false, null: false
     t.string   "imdb_url"
-    t.boolean  "is_reviewer",               default: false, null: false
+    t.boolean  "is_reviewer",                  default: false, null: false
     t.integer  "company_id"
-    t.integer  "unread_messages_count",     default: 0,     null: false
-    t.boolean  "open_to_new_opportunities", default: false, null: false
+    t.integer  "unread_messages_count",        default: 0,     null: false
+    t.boolean  "open_to_new_opportunities",    default: false, null: false
     t.boolean  "is_us_work_authorized"
+    t.boolean  "requires_us_visa_sponsorship"
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -459,6 +460,7 @@ ActiveRecord::Schema.define(version: 20170514190804) do
     t.index ["open_to_internship"], name: "index_users_on_open_to_internship", using: :btree
     t.index ["open_to_part_time"], name: "index_users_on_open_to_part_time", using: :btree
     t.index ["open_to_remote"], name: "index_users_on_open_to_remote", using: :btree
+    t.index ["requires_us_visa_sponsorship"], name: "index_users_on_requires_us_visa_sponsorship", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end

@@ -11,7 +11,7 @@
 
 .container.mt-5.mb-5
   .row
-    .col-sm-6.offset-sm-3.col-lg-4.offset-lg-4
+    .col-sm-6.offset-sm-3
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
         = devise_error_messages!
         .tab-content
@@ -140,7 +140,7 @@
               %label.form-check-label
                 = f.check_box :open_to_internship, class: 'form-check-input'
                 Internship
-                
+
             - if current_user.is_admin || current_user.is_moderator
               .form-check
                 %label.form-check-label
@@ -152,6 +152,9 @@
             %label.form-check-label
               = f.check_box :is_us_work_authorized, class: 'form-check-input'
               Legally authorized to work in the United States?
+            %label.form-check-label
+              = f.check_box :requires_us_visa_sponsorship, class: 'form-check-input'
+              Do you require sponsorship for a US employment visa (e.g. H-1B)?
 
 
           

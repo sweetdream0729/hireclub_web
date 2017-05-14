@@ -72,13 +72,16 @@
           %label.form-check-label
             = f.check_box :open_to_internship, class: 'form-check-input'
             Internship
-            
+
         %h2.mt-4 Work Authorization
         %hr
-        .form-check
+        .form-check 
           %label.form-check-label
             = f.check_box :is_us_work_authorized, class: 'form-check-input'
             Legally authorized to work in the United States?
+          %label.form-check-label
+            = f.check_box :requires_us_visa_sponsorship, class: 'form-check-input'
+            Do you require sponsorship for a US employment visa (e.g. H-1B)?
 
         %hr
         %small.form-text.text-muted 
