@@ -28,6 +28,11 @@
         = f.label "When did this happen?"
         %br
         = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
+      
+      .form-group
+        = f.label "Skills"
+        = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
+
       .form-group
         = f.label :link
         = f.text_field :link, class: "form-control"

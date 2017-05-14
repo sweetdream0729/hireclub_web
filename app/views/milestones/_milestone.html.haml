@@ -11,7 +11,12 @@
     - if policy(milestone).destroy?
       = link_to milestone_path(milestone), method: :delete, data: { confirm: "Remove this milestone?" }, remote: true, class: "delete_user_milestones display_none text-muted hover_danger" do
         %i.fa.fa-trash-o
-    - if milestone.description.present?
+    - if milestone.description.present? || milestone.skills.any?
       %p.milestone_description.display_none
+        - if milestone.skills.any?
+          - milestone.skills.each do |skill|
+            %span.badge.badge-info
+              = skill
+          %br
         %small
           = milestone.description

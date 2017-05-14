@@ -8,14 +8,15 @@ class Milestone < ApplicationRecord
 
   # Extensions
   include Wisper::Publisher
-  include UnpublishableActivity
   include ActsAsLikeable
   include FeedDisplayable
-  include PublicActivity::Model
+  acts_as_taggable_array_on :skills
+  
   include HasSmartUrl
   has_smart_url :link
-  
 
+  include UnpublishableActivity
+  include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
   
   # Scopes
@@ -36,6 +37,7 @@ class Milestone < ApplicationRecord
   validates :user, presence: true
   validates :name, presence: true
   validates :facebook_id, uniqueness: true, allow_blank: true
+  validate :skills_exist
 
   # Broadcasts
   after_initialize :subscribe_listeners
@@ -48,5 +50,21 @@ class Milestone < ApplicationRecord
 
   def broadcast_update
     broadcast(:update_milestone, self)
+  end
+
+  def skills_list=(string)
+    self.skills = string.split(",").map!(&:strip)
+  end
+
+  def skills_list
+    self.skills.join(", ")
+  end
+
+  def skills_exist
+    skills.each do |name|
+      if Skill.where('name ilike ?', name).empty?
+        errors.add(:skills, "#{name} isn't a valid skill")
+      end
+    end
   end
 end

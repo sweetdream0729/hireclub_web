@@ -10,3 +10,12 @@
   color: $brand-primary;
   letter-spacing: 0.5px;
 }
+
+.badge {
+  border-radius: 10rem;
+  letter-spacing: .02rem;
+  font-weight: 600;
+  a {
+    color: #fff;
+  }
+}

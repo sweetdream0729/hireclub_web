@@ -27,10 +27,9 @@
       - if @project.skills_list.present?
         %h6 Skills
         %p
-          - @project.skills.each_with_index do |skill, index|
-            = link_to skill, projects_path(username: @project.user.username, skill: skill)
-            - delimiter = index < (@project.skills.count - 1) ? " · " : ""
-            = delimiter
+          - @project.skills.each do |skill|
+            %span.badge.badge-info
+              = link_to skill, projects_path(username: @project.user.username, skill: skill)
           
 
       - if @project.company

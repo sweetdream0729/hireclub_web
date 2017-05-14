@@ -19,6 +19,9 @@ $btn-font-weight:                600 !default;
 
 $navbar-inverse-color: #FFF;
 
+$badge-padding-x: .6rem;
+$badge-padding-y: .4rem;
+
 @import "bootstrap";
 @import "bootstrap_overrides";
 @import "typography";

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Milestone, type: :model do
   let(:milestone) { FactoryGirl.build(:milestone) }
+  let(:skill) { FactoryGirl.create(:skill) }
+  let(:skill2) { FactoryGirl.create(:skill) }
 
   subject { milestone }
 
@@ -16,6 +18,18 @@ RSpec.describe Milestone, type: :model do
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:facebook_id) }
+    it "should be valid only with approved skills" do
+      milestone.skills = [skill.name, skill2.name]
+      milestone.save
+
+      expect(milestone).to be_valid
+
+      milestone.skills = ["foo"]
+      expect(milestone).not_to be_valid
+
+      milestone.skills_list = "bar, dog"
+      expect(milestone).not_to be_valid
+    end
   end
 
 
@@ -85,6 +99,30 @@ RSpec.describe Milestone, type: :model do
     end
 
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:link) }
+  end
+
+  describe "skills" do
+    it "should be able to set skills as array" do
+      milestone.skills = [skill.name, skill2.name]
+      milestone.save
+
+      expect(milestone.skills.count).to eq 2
+      expect(milestone.skills).to include(skill.name)
+      expect(milestone.skills).to include(skill2.name)
+
+      milestones = Milestone.with_any_skills(skill.name)
+      expect(milestones.count).to eq(1)
+    end
+
+    it "should be able to set skills as string" do
+      milestone.skills_list = "  #{skill.name},    #{skill2.name}  "
+      milestone.save
+
+      expect(milestone.skills.count).to eq 2
+      expect(milestone.skills).to include(skill.name)
+      expect(milestone.skills).to include(skill2.name)
+      expect(milestone.skills_list).to eq "#{skill.name}, #{skill2.name}"
+    end
   end
 
 end

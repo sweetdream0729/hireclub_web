@@ -24,6 +24,13 @@
             %i.fa.fa-pencil.mr-1
             Edit
 
+      - if @milestone.skills_list.present?
+        %h6 Skills
+        %p
+          - @milestone.skills.each do |skill|
+            %span.badge.badge-info
+              = skill
+          
       %p
         = @milestone.description  
       %hr
