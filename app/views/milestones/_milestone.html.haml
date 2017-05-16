@@ -15,7 +15,7 @@
       %p.milestone_description.display_none
         - if milestone.skills.any?
           - milestone.skills.each do |skill|
-            %span.badge.badge-info
+            %span.badge.badge-pill.badge-info
               = skill
           %br
         %small

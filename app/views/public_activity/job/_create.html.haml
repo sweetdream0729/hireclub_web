@@ -15,19 +15,19 @@
       = job.skills_list.split(",").join(" · ")
       %br
       - if job.full_time
-        %span.badge.badge-primary
+        %span.badge.badge-pill.badge-primary
           Full Time
       - if job.part_time
-        %span.badge.badge-default
+        %span.badge.badge-pill.badge-default
           Part Time
       - if job.contract
-        %span.badge.badge-info
+        %span.badge.badge-pill.badge-info
           Contract
       - if job.internship
-        %span.badge.badge-default
+        %span.badge.badge-pill.badge-default
           Internship
       - if job.remote
-        %span.badge.badge-success
+        %span.badge.badge-pill.badge-success
           %i.fa.fa-plane
           Remote
 
