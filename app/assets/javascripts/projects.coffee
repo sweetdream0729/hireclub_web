@@ -6,6 +6,7 @@ $(document).ready ->
     document.getElementById("next_project").click()
     return
   $('#project_skills_list').selectize
+    plugins: ['remove_button']
     delimiter: ','
     searchField: 'name'
     valueField: 'name'

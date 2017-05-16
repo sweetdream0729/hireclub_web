@@ -1,5 +1,6 @@
 $(document).ready ->
   $('#milestone_skills_list').selectize
+    plugins: ['remove_button']
     delimiter: ','
     searchField: 'name'
     valueField: 'name'
