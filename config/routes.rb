@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :companies do
+  resources :companies, :constraints => { :id => /[\w\.\-]+/ }, :format => false do
     member do
       get :refresh
       get :follow
