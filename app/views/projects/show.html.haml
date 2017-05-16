@@ -40,7 +40,7 @@
       - if @project.description.present?
         %h6 Description
         %p
-          = @project.description
+          = markdown(@project.description)
 
       - if @project.link.present?
         %h6 Link
