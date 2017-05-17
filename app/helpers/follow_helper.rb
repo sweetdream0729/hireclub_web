@@ -1,11 +1,7 @@
 module FollowHelper
   
   def link_to_follow_company(company, user, options = {})
-    if options[:class].blank?
-      options[:class] = "" 
-    else
-      options["data-class"] = options[:class]
-    end
+    options[:class] = "" if options[:class].blank?
     
     if user && user.following?(company)
       url = unfollow_company_path(company)
