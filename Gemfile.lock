@@ -209,6 +209,7 @@ GEM
       railties (>= 4.0.1)
     hashie (3.4.6)
     heapy (0.1.2)
+    hirefire-resource (0.4.1)
     html2haml (2.1.0)
       erubis (~> 2.7.0)
       haml (~> 4.0)
@@ -502,6 +503,7 @@ DEPENDENCIES
   friendly_id (~> 5.1.0)
   haml-rails (~> 0.9)
   hashie (~> 3.4.6)
+  hirefire-resource
   impressionist
   jquery-infinite-pages
   jquery-rails
