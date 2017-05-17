@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
   nilify_blanks
   include UnpublishableActivity
   include ActsAsLikeable
+  include ActsAsMentionable
   include FeedDisplayable
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
@@ -20,4 +21,17 @@ class Comment < ApplicationRecord
   validates :user, presence: true
   validates :commentable, presence: true
   validates :text, presence: true
+
+  # Callbacks
+  after_commit :create_mentions, on: :create
+
+  def create_mentions
+    mentioned_users.find_each do |mentioned|
+      Mention.where(user: mentioned, mentionable: self, sender: user).first_or_create
+    end
+  end
+
+  def mentioned_users
+    @mentioned_users ||= User.where(username: mentions_text(text))
+  end
 end

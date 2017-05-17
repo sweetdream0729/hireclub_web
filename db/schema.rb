@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514192126) do
+ActiveRecord::Schema.define(version: 20170517185849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,19 @@ ActiveRecord::Schema.define(version: 20170514192126) do
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
     t.index ["parent_id"], name: "index_locations_on_parent_id", using: :btree
+  end
+
+  create_table "mentions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "mentionable_type"
+    t.integer  "mentionable_id"
+    t.integer  "sender_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["mentionable_type", "mentionable_id"], name: "index_mentions_on_mentionable_type_and_mentionable_id", using: :btree
+    t.index ["sender_id"], name: "index_mentions_on_sender_id", using: :btree
+    t.index ["user_id", "mentionable_type", "mentionable_id"], name: "user_mentions", unique: true, using: :btree
+    t.index ["user_id"], name: "index_mentions_on_user_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -474,6 +487,8 @@ ActiveRecord::Schema.define(version: 20170514192126) do
   add_foreign_key "jobs", "roles"
   add_foreign_key "jobs", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "mentions", "users"
+  add_foreign_key "mentions", "users", column: "sender_id"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "milestones", "companies"
