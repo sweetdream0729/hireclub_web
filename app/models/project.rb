@@ -111,4 +111,21 @@ class Project < ApplicationRecord
     return projects[index - 1]
   end
   
+  def self.privatize_projects_without_image
+    activities = Activity.only_public.where(key: "project.create")
+    activities.find_each do |a|
+      if a.trackable.present? && a.trackable.image.nil?
+        a.private = true
+        a.save
+      end
+    end
+
+    activities = Activity.only_public.where(key: "like.create")
+    activities.find_each do |a|
+      if a.trackable.present? && a.trackable.likeable_type == "Project" && a.trackable.likeable.image.nil?
+        a.private = true
+        a.save
+      end
+    end
+  end
 end
