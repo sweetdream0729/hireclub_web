@@ -1,6 +1,6 @@
 .col-sm-6.col-md-4.project
   .card.mb-4
-    = cache [project] do
+    = cache [project, current_user] do
       .card-block
         = link_to project_path(project) do
           %img{:alt => project.name, :src => model_image(project.image, 800, 600, true), width: "100%",data: {toggle:"tooltip", placement: "bottom"}, title: truncate(project.description, length: 160) }
