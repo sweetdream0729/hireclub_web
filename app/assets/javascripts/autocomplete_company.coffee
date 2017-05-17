@@ -1,6 +1,6 @@
 $(document).ready ->
   companySearch = (query, syncResults, asyncResults) ->
-    $.get '/companies.json', { query: query }, ((data) ->
+    $.get '/companies', { query: query }, ((data) ->
       asyncResults data
       cacheCompanies data
       return
