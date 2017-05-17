@@ -24,12 +24,13 @@ class Project < ApplicationRecord
   multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
 
   # Scopes
-  scope :by_position, -> { order(position: :asc) }
-  scope :by_likes,    -> { order(likes_count: :desc) }
-  scope :by_recent,   -> { order(created_at: :desc) }
-  scope :by_oldest,   -> { order(created_at: :asc) }
-  scope :with_image,  -> { where.not(image_uid: nil) }
-  scope :by_user,     -> (user) { where(user: user) }
+  scope :by_position,    -> { order(position: :asc) }
+  scope :by_likes,       -> { order(likes_count: :desc) }
+  scope :by_recent,      -> { order(created_at: :desc) }
+  scope :by_oldest,      -> { order(created_at: :asc) }
+  scope :with_image,     -> { where.not(image_uid: nil) }
+  scope :without_image,  -> { where(image_uid: nil) }
+  scope :by_user,        -> (user) { where(user: user) }
 
   # Associations
   belongs_to :user
