@@ -39,6 +39,7 @@ class Project < ApplicationRecord
 
   # Validations
   validates :name, presence: true
+  validates :image, presence: true
   validates :slug, uniqueness: { case_sensitive:false }
   validates :position, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates_size_of :image, maximum: 5.megabytes
