@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @users = scope.page(params[:page]).per(10)
 
     respond_to do |format|
-      format.json { render json: @users.map(&:username) }
+      format.json { render json: @users, each_serializer: UserSerializer }
       format.html { render :index }
     end
   end
