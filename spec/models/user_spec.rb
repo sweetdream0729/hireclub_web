@@ -337,7 +337,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "suggested username",focus: true do
+  describe "suggested username" do
     it "should suggest usernames by name" do
       user.name = "Ketan Anjaria"
       expect(user.suggested_username).to eq "ketananjaria"
