@@ -37,6 +37,7 @@ class User < ApplicationRecord
   scope :normal,       -> { where(is_admin: false) }
   scope :moderators,   -> { where(is_moderator: true) }
   scope :reviewers,    -> { where(is_reviewer: true) }
+  scope :has_username, -> { where.not(username: nil) }
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
@@ -371,7 +372,7 @@ class User < ApplicationRecord
 
   # Class Methods
   def self.search_name_and_username(query)
-    where("users.username ILIKE ? OR users.name ILIKE ?", "%#{query}%","%#{query}%")
+    has_username.where("users.username ILIKE ? OR users.name ILIKE ?", "%#{query}%","%#{query}%")
   end
 
   def self.from_omniauth(omniauth, signed_in_resource=nil)
