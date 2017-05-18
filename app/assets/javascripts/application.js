@@ -20,6 +20,8 @@
 //= require typeahead.bundle
 //= require mousetrap.min
 //= require selectize.min
+//= require caret.min
+//= require jquery.atwho.min
 //= require local_time
 //= require jquery.infinite-pages
 //= require cocoon

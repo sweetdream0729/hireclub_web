@@ -221,41 +221,6 @@ class User < ApplicationRecord
     result
   end
 
-  # Class Methods
-  def self.from_omniauth(omniauth, signed_in_resource=nil)
-    # get auth model from omniauth data
-    auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
-
-    if auth.present?
-      # auth exists, update it
-      user = auth.user      
-    elsif signed_in_resource
-      # user exists, no auth exists
-      user = signed_in_resource
-      auth = user.authentications.build
-    end
-
-    if user.nil?
-      email = omniauth["info"]["email"]
-      # see if user exists with match auth email
-      user = User.find_by_email(email)
-      if user.nil?
-        # user doesn't exist, create one
-        user = User.create(:email => email, :password => Devise.friendly_token[0, 20], name: omniauth["info"]["name"])
-      end
-      auth = user.authentications.build
-    end
-
-    auth.from_omniauth(omniauth)
-    auth.save
-
-    user.import_facebook_omniauth(omniauth)
-    user.import_linkedin_omniauth(omniauth)
-    user.import_google_omniauth(omniauth)
-
-    return user
-  end
-
   def import_linkedin_omniauth(omniauth)
     return if omniauth["provider"] != "linkedin"
     if self.linkedin_url.blank? && omniauth['info']["urls"]["public_profile"].present?
@@ -402,5 +367,44 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise/issues/1513
   def remember_me
     (super == nil) ? '1' : super
+  end
+
+  # Class Methods
+  def self.search_name_and_username(query)
+    where("users.username ILIKE ? OR users.name ILIKE ?", "%#{query}%","%#{query}%")
+  end
+
+  def self.from_omniauth(omniauth, signed_in_resource=nil)
+    # get auth model from omniauth data
+    auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+
+    if auth.present?
+      # auth exists, update it
+      user = auth.user      
+    elsif signed_in_resource
+      # user exists, no auth exists
+      user = signed_in_resource
+      auth = user.authentications.build
+    end
+
+    if user.nil?
+      email = omniauth["info"]["email"]
+      # see if user exists with match auth email
+      user = User.find_by_email(email)
+      if user.nil?
+        # user doesn't exist, create one
+        user = User.create(:email => email, :password => Devise.friendly_token[0, 20], name: omniauth["info"]["name"])
+      end
+      auth = user.authentications.build
+    end
+
+    auth.from_omniauth(omniauth)
+    auth.save
+
+    user.import_facebook_omniauth(omniauth)
+    user.import_linkedin_omniauth(omniauth)
+    user.import_google_omniauth(omniauth)
+
+    return user
   end
 end
