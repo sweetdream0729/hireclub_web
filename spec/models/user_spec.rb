@@ -336,4 +336,30 @@ RSpec.describe User, type: :model do
       expect(activities.count).to eq(1)
     end
   end
+
+  describe "suggested username" do
+    it "should suggest usernames by name" do
+      user.name = "Ketan Anjaria"
+      expect(user.suggested_username).to eq "ketananjaria"
+    end
+
+    it "should use username if present" do
+      user.username = "kidbombay"
+      expect(user.suggested_username).to eq "kidbombay"
+    end
+
+    it "should suggest usernames by email" do
+      email = "ketan@kidbombay.com"
+      user.email = email
+      user.name = nil
+      expect(user.suggested_username).to eq email.split("@")[0]
+    end
+
+    it "should append numbers to username" do
+      other_user = FactoryGirl.create(:user, username: "ketananjaria")
+
+      user.name = "Ketan Anjaria"
+      expect(user.suggested_username).to eq "ketananjaria1"
+    end
+  end
 end

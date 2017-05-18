@@ -32,4 +32,28 @@ RSpec.describe Comment, type: :model do
       expect(notification.user).to eq comment.commentable.user
     end
   end
+
+  describe "mentions" do
+    let(:kidbombay) {FactoryGirl.create(:user, username: "kidbombay")}
+    let(:other_user) {FactoryGirl.create(:user, username: "test.user3")}
+    
+    it "should let you mention users by username" do
+      comment.text = "hey @#{kidbombay.username} you should meet @#{other_user.username}"
+
+      expect(comment.mentioned_users.size).to eq(2)
+      expect(comment.mentioned_users[0]).to eq(kidbombay)
+      expect(comment.mentioned_users[1]).to eq(other_user)
+    end
+
+    it "should create mentions on save" do
+      comment.text = "hey @#{kidbombay.username} you should meet @#{other_user.username}"
+      comment.save
+
+      expect(comment.mentions.size).to eq(2)
+      mention = comment.mentions.first
+      expect(mention.user).to eq(kidbombay)
+      expect(mention.sender).to eq(comment.user)
+      expect(mention.mentionable).to eq(comment)
+    end
+  end
 end

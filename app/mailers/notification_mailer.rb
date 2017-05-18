@@ -33,6 +33,14 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'New Comment')
   end
 
+  def comment_mentioned(notification)
+    @notification = Notification.find notification
+    @user = @notification.user
+    @comment = @notification.activity.trackable.mentionable
+    @commentable = @comment.commentable
+    mail(to: @user.email, subject: 'New Mention')
+  end
+
   def job_created(notification)
     @notification = Notification.find notification
     @user = @notification.user

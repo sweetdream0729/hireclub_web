@@ -17,10 +17,10 @@
 
       = form_for @user, url: wizard_path, method: :put, html: {id: 'new_user'} do |f|
         .form-group{class: ('has-danger' if @user.errors.any?)}
-          = f.text_field :username, class: 'form-control form-control-lg', placeholder: "johndoe"
+          - username = @user.username.present? ? @user.username : @user.suggested_username
+          = f.text_field :username, class: 'form-control form-control-lg', placeholder: "johndoe", value: username
           
           .form-control-feedback
-            - username = "username"
             - if @user.errors.any? && @user.errors.details[:username].present?
               - username = @user.errors.details[:username][0][:value]
             %span#username_hint

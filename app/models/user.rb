@@ -37,6 +37,7 @@ class User < ApplicationRecord
   scope :normal,       -> { where(is_admin: false) }
   scope :moderators,   -> { where(is_moderator: true) }
   scope :reviewers,    -> { where(is_reviewer: true) }
+  scope :has_username, -> { where.not(username: nil) }
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
@@ -221,41 +222,6 @@ class User < ApplicationRecord
     result
   end
 
-  # Class Methods
-  def self.from_omniauth(omniauth, signed_in_resource=nil)
-    # get auth model from omniauth data
-    auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
-
-    if auth.present?
-      # auth exists, update it
-      user = auth.user      
-    elsif signed_in_resource
-      # user exists, no auth exists
-      user = signed_in_resource
-      auth = user.authentications.build
-    end
-
-    if user.nil?
-      email = omniauth["info"]["email"]
-      # see if user exists with match auth email
-      user = User.find_by_email(email)
-      if user.nil?
-        # user doesn't exist, create one
-        user = User.create(:email => email, :password => Devise.friendly_token[0, 20], name: omniauth["info"]["name"])
-      end
-      auth = user.authentications.build
-    end
-
-    auth.from_omniauth(omniauth)
-    auth.save
-
-    user.import_facebook_omniauth(omniauth)
-    user.import_linkedin_omniauth(omniauth)
-    user.import_google_omniauth(omniauth)
-
-    return user
-  end
-
   def import_linkedin_omniauth(omniauth)
     return if omniauth["provider"] != "linkedin"
     if self.linkedin_url.blank? && omniauth['info']["urls"]["public_profile"].present?
@@ -402,5 +368,63 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise/issues/1513
   def remember_me
     (super == nil) ? '1' : super
+  end
+
+  def suggested_username
+    if username.present?
+      source = username
+    elsif name.present?
+      source = name
+    elsif email.present?
+      source = email.split("@")[0]
+    else
+      return nil
+    end
+
+    suggested = ActiveSupport::Inflector.parameterize(source, separator: '')
+    
+    user_count = User.where(username: suggested).size
+    return suggested if user_count == 0
+
+    return "#{suggested}#{user_count}"
+  end
+
+  # Class Methods
+  def self.search_name_and_username(query)
+    has_username.where("users.username ILIKE ? OR users.name ILIKE ?", "%#{query}%","%#{query}%")
+  end
+
+  def self.from_omniauth(omniauth, signed_in_resource=nil)
+    # get auth model from omniauth data
+    auth = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
+
+    if auth.present?
+      # auth exists, update it
+      user = auth.user      
+    elsif signed_in_resource
+      # user exists, no auth exists
+      user = signed_in_resource
+      auth = user.authentications.build
+    end
+
+    if user.nil?
+      email = omniauth["info"]["email"]
+      # see if user exists with match auth email
+      user = User.find_by_email(email)
+      if user.nil?
+        # user doesn't exist, create one
+        user = User.create(:email => email, :password => Devise.friendly_token[0, 20], name: omniauth["info"]["name"])
+      end
+      auth = user.authentications.build
+    end
+
+    auth.from_omniauth(omniauth)
+    auth.save
+
+    user.import_facebook_omniauth(omniauth)
+    user.import_linkedin_omniauth(omniauth)
+    user.import_google_omniauth(omniauth)
+
+    return user
   end
 end

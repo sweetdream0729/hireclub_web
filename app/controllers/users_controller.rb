@@ -8,7 +8,17 @@ class UsersController < ApplicationController
     else
       scope = scope.recent
     end
+
+    if params[:query]
+      scope = scope.search_name_and_username(params[:query])
+    end
+
     @users = scope.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.json { render json: @users, each_serializer: UserSerializer }
+      format.html { render :index }
+    end
   end
 
   def show
