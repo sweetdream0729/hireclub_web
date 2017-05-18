@@ -370,6 +370,25 @@ class User < ApplicationRecord
     (super == nil) ? '1' : super
   end
 
+  def suggested_username
+    if username.present?
+      source = username
+    elsif name.present?
+      source = name
+    elsif email.present?
+      source = email.split("@")[0]
+    else
+      return nil
+    end
+
+    suggested = ActiveSupport::Inflector.parameterize(source, separator: '')
+    
+    user_count = User.where(username: suggested).size
+    return suggested if user_count == 0
+
+    return "#{suggested}#{user_count}"
+  end
+
   # Class Methods
   def self.search_name_and_username(query)
     has_username.where("users.username ILIKE ? OR users.name ILIKE ?", "%#{query}%","%#{query}%")
