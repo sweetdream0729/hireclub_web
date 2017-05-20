@@ -21,6 +21,15 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
       active_conversation.append(partial)
       App.conversations.scrollToBottom
 
+    conversation_list_item = $("#conversation_#{data.conversation_id}")
+    console.log(conversation_list_item)
+    if conversation_list_item.length > 0
+        preview = conversation_list_item.find(".conversation_preview")
+        console.log(preview)
+        preview.text(data.message["text"])
+
+    
+
   send_message: (conversation_id, text) ->
     # Calls ConversationsChannel.send_messsage
     @perform "send_message", {conversation_id: conversation_id, text: text}

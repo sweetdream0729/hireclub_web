@@ -10,7 +10,7 @@
       %small
         = local_time(conversation.updated_at, "%l:%M%P")
       %p.mb-0
-        %small
+        %small.conversation_preview
           - last_message = conversation.last_message
           - if last_message
             - if last_message.user == current_user
