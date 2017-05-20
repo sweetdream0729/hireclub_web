@@ -26,12 +26,14 @@
                 - if other_user.location.present?
                   · 
                   = other_user.location.name
-      #messages_container
+
+      #messages_container{ data: {behavior: "messages", "conversation-id": @conversation.id}}
         = render @messages
+
       #messages_input
-        = form_for @message, url: '#' do |f|
+        = form_for @message do |f|
           = f.hidden_field :conversation_id, value: @conversation.id
-          = f.text_area :text, class: 'form-control', placeholder: "Message", autocomplete: "off", autofocus: true, rows: 1
+          = f.text_area :text, class: 'form-control', placeholder: "Type your message", autocomplete: "off", autofocus: true, rows: 1
 
 
 

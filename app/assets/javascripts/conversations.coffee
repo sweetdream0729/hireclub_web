@@ -1,18 +1,19 @@
 $(document).ready ->  
-  $('#new_message').formValidation(
-    framework: 'bootstrap4'
-    icon:
-      valid: 'fa fa-check'
-      invalid: 'fa fa-times'
-      validating: 'fa fa-refresh'
-    fields:
-      'message[text]':
-        validators:
-          notEmpty: 
-            message: 'What you trying to say?'
+  # submit message on enter
+  $("#new_message").on "keypress", (e) ->
+    if e && e.keyCode == 13
+      e.preventDefault()
+      $(this).submit()
 
+  $("#new_message").on "submit", (e) ->
+    e.preventDefault()
 
-  )
+    conversation_id = $("#message_conversation_id").val()
+    text_field = $("#message_text")
+
+    App.conversations.send_message(conversation_id, text_field.val())
+
+    text_field.val("")
 
   return
 
