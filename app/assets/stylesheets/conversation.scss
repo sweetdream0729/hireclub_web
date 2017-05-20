@@ -21,12 +21,42 @@
   border-right: solid 1px #EAEEF1;
 }
 
+#messages_container {
+  padding: 10px;
+}
+
 #messages_header {
   height: 72px;
   padding: 10px;
   border-bottom: solid 1px #EAEEF1;
 }
 
+.message {
+  margin-bottom: 4px;
+}
+
+.my_message {
+  text-align: right;
+  .message_bubble {
+    background: #449DD1;
+    color: white;
+  }
+}
+
+.message_bubble {
+  background : #EAEEF1;
+  border-radius: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+  margin-bottom: 0;
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
 
 // .chat-head-info {
 //   background: #6070e9;

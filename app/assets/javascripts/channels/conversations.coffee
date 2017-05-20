@@ -16,6 +16,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
       App.conversations.scrollToBottom
 
   send_message: (conversation_id, text) ->
+    # Calls ConversationsChannel.send_messsage
     @perform "send_message", {conversation_id: conversation_id, text: text}
 
   scrollToBottom: ->
@@ -35,6 +36,7 @@ $(document).ready ->
       e.preventDefault()
       $(this).submit()
 
+  # Use Channel to send message
   $("#new_message").on "submit", (e) ->
     e.preventDefault()
 
