@@ -12,9 +12,39 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     if active_conversation.length > 0
       # Insert the message
       active_conversation.append("<div><strong>#{data.username}:</strong> #{data.text}</div>")
+      App.conversations.scrollToBottom
 
   send_message: (conversation_id, text) ->
     @perform "send_message", {conversation_id: conversation_id, text: text}
+
+  scrollToBottom: ->
+    chat = $('body')
+    console.log(chat)
+    scrollHeight = chat.prop("scrollHeight")
+    console.log(scrollHeight)
+    chat.scrollTop(scrollHeight)
+
+$(document).ready ->  
+  # Scroll to bottom when starting conversation
+  App.conversations.scrollToBottom
+  
+  # submit message on enter
+  $("#new_message").on "keypress", (e) ->
+    if e && e.keyCode == 13
+      e.preventDefault()
+      $(this).submit()
+
+  $("#new_message").on "submit", (e) ->
+    e.preventDefault()
+
+    conversation_id = $("#message_conversation_id").val()
+    text_field = $("#message_text")
+
+    App.conversations.send_message(conversation_id, text_field.val())
+
+    text_field.val("")
+
+  return
 
 # $(document).ready ->
 #   messages = $('#messages')
