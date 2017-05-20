@@ -10,8 +10,9 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
     console.log(active_conversation)
     if active_conversation.length > 0
+      # if we are viewing this conversation id
       # Insert the message
-      active_conversation.append("<div><strong>#{data.username}:</strong> #{data.text}</div>")
+      active_conversation.append(data.message_partial)
       App.conversations.scrollToBottom
 
   send_message: (conversation_id, text) ->
@@ -27,7 +28,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 $(document).ready ->  
   # Scroll to bottom when starting conversation
   App.conversations.scrollToBottom
-  
+
   # submit message on enter
   $("#new_message").on "keypress", (e) ->
     if e && e.keyCode == 13
