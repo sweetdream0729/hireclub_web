@@ -1,6 +1,4 @@
 .conversations_container {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
 }
 
 .conversations_show {
@@ -18,15 +16,16 @@
 }
 #conversations_header {
   height: 72px;
-  padding: 16px;
+  padding: 10px;
   border-right: solid 1px #EAEEF1;
 }
 
-
-.no-padding {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+#messages_header {
+  height: 72px;
+  padding: 10px;
+  border-bottom: solid 1px #EAEEF1;
 }
+
 
 .no-margin {
   margin-left: -15px !important;

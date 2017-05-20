@@ -18,6 +18,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
+    @other_users = @conversation.other_users(current_user)
     @message = Message.new
     @messages = @conversation.messages.by_recent
     @messages.each do |m|
