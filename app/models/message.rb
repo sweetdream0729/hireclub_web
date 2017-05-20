@@ -27,11 +27,6 @@ class Message < ApplicationRecord
 
   def update_unread_counts
     create_conversation_user.update_unread_messages_count
-    broadcast_job
-  end
-
-  def broadcast_job
-    MessageBroadcastJob.perform_now(self) unless Rails.env.test?
   end
 
   def read_by!(read_by_user)

@@ -1,3 +1,28 @@
+.conversations_container {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.conversations_show {
+  footer {
+    display: none;
+  }
+  .list-group-item {
+    border-radius: 0;
+  }
+  .list-group-item.active {
+    color: inherit;
+    background-color: #EAEEF1;
+    border-color: #EAEEF1;
+  }
+}
+#conversations_header {
+  height: 72px;
+  padding: 16px;
+  border-right: solid 1px #EAEEF1;
+}
+
+
 .no-padding {
   padding-left: 0px !important;
   padding-right: 0px !important;
@@ -278,21 +303,21 @@ div#custom-search-input {
 .mr_0{
   margin-top: 0 !important;
 }
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background-color: #eee;
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-::-webkit-scrollbar-button {
-  background-color: #eee;
-}
-::-webkit-scrollbar-corner {
-  background-color: black;
-}
+// ::-webkit-scrollbar {
+//   width: 4px;
+// }
+// ::-webkit-scrollbar-track {
+//   background-color: #eee;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background-color: rgba(0, 0, 0, 0.2);
+// }
+// ::-webkit-scrollbar-button {
+//   background-color: #eee;
+// }
+// ::-webkit-scrollbar-corner {
+//   background-color: black;
+// }
 .media.text-right{
   padding-right: 25px;
 }

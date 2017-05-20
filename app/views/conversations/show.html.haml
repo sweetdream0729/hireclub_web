@@ -1,38 +1,48 @@
 - title @conversation.other_users(current_user).map(&:display_name).join(", ")
 
-.container-fluid.mb-5
-  .row#conversation_list
-    = render "conversation_list", conversations: @conversations, conversation_id: @conversation.id
-    .col-sm-8.message_section
-      .row
-        .new_message_head
-          .pull-left
-            - @conversation.other_users(current_user).each do |user|
-              = link_to user.display_name, user
-        .chat_area
-          #messages{"data-conversation-id" => @conversation.id}
-            =# render @messages
-            - @messages.each do |message|
-              - if current_user.id == message.user_id
-                = render 'messages/current_user_message', message: message
-              - else
-                = render 'messages/message', message: message
+.container-fluid.conversations_container
+  .row
+    .col-sm-3
+      #conversations_header
+        .text-center
+          Messages
+      #conversations_list
+        .list-group#conversations
+          = render @conversations
+    .col-sm-9
+/ .container-fluid.mb-5
+/   .row#conversation_list
+/     = render "conversation_list", conversations: @conversations, conversation_id: @conversation.id
+/     .col-sm-8.message_section
+/       .row
+/         .new_message_head
+/           .pull-left
+/             - @conversation.other_users(current_user).each do |user|
+/               = link_to user.display_name, user
+/         .chat_area
+/           #messages{"data-conversation-id" => @conversation.id}
+/             =# render @messages
+/             - @messages.each do |message|
+/               - if current_user.id == message.user_id
+/                 = render 'messages/current_user_message', message: message
+/               - else
+/                 = render 'messages/message', message: message
 
-        .message_write
-          = form_for @message, url: '#' do |f|
-            = f.hidden_field :conversation_id, value: @conversation.id
-            .row
-              .col-xs-9.col-sm-10
-                .form-group
-                  = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off", autofocus: true
-              .col-xs-3.col-sm-2
-                = f.submit "Send", class: 'btn btn-primary btn-block'
+/         .message_write
+/           = form_for @message, url: '#' do |f|
+/             = f.hidden_field :conversation_id, value: @conversation.id
+/             .row
+/               .col-xs-9.col-sm-10
+/                 .form-group
+/                   = f.text_field :text, class: 'form-control', placeholder: "Message", autocomplete: "off", autofocus: true
+/               .col-xs-3.col-sm-2
+/                 = f.submit "Send", class: 'btn btn-primary btn-block'
 
-:javascript
-  $('.member_list').height($(window).height() - 147);
-  $('.chat_area').height($(window).height() - 227);
-  $('body').css('overflow-y', 'hidden');
+/ :javascript
+/   $('.member_list').height($(window).height() - 147);
+/   $('.chat_area').height($(window).height() - 227);
+/   $('body').css('overflow-y', 'hidden');
 
-  $(function(){
-    App.global_chat.current_user_id = #{current_user.id};
-  })
+/   $(function(){
+/     App.global_chat.current_user_id = #{current_user.id};
+/   })

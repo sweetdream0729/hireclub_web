@@ -141,3 +141,4 @@ git push staging +HEAD:master && heroku run rake db:migrate -r staging
 
 * Colors
 https://coolors.co/6070e9-9fd356-484041-434371-79aea3
+https://coolors.co/eaeef1-8783d1-8e9aaf-78c0e0-449dd1

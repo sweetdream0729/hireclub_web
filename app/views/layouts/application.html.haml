@@ -1,12 +1,11 @@
 !!!
 %html
   = render 'layouts/head'
-  %body
+  %body{ class: "#{controller_name}_#{action_name}"}
     %header
       = render 'layouts/navigation'
     %main{:role => "main"}
       = render 'layouts/messages'
       = yield
 
-    - unless controller_name == 'conversations' && action_name == 'show'
-      = render 'layouts/footer'
+    = render 'layouts/footer'

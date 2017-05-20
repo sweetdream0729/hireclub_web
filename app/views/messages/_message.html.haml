@@ -1,12 +1,17 @@
-.media.chat_media
-  = image_tag(model_avatar(message.user.avatar, 200, true), width: 32, class: 'd-flex mr-3 rounded-circle')
-  .media-body
-    %p.chat_bubble
-      = Rinku.auto_link(message.text, :all, 'target="_blank"').html_safe
-    %p.chat_time
-      %small.text-muted
-        = time_ago_in_words(message.created_at)
-        ago
-        - if message.is_read?
-          ·
-          Read
+/ .media.chat_media
+/   = image_tag(model_avatar(message.user.avatar, 200, true), width: 32, class: 'd-flex mr-3 rounded-circle')
+/   .media-body
+/     %p.chat_bubble
+/       = Rinku.auto_link(message.text, :all, 'target="_blank"').html_safe
+/     %p.chat_time
+/       %small.text-muted
+/         = time_ago_in_words(message.created_at)
+/         ago
+/         - if message.is_read?
+/           ·
+/           Read
+
+.message
+  %strong
+    = message.user.display_name
+  = message.text
