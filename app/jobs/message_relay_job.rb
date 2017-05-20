@@ -4,6 +4,7 @@ class MessageRelayJob < ApplicationJob
   def perform(message)
     ActionCable.server.broadcast "conversations:#{message.conversation.id}", {
       conversation_id: message.conversation.id,
+      user_id: message.user.id,
       message: message.to_json,
       message_partial: render_message(message)
     }
@@ -12,7 +13,7 @@ class MessageRelayJob < ApplicationJob
   # private
 
   def render_message(message)
-    MessagesController.render partial: 'messages/message', locals: {message: message}
+    MessagesController.render partial: 'messages/message', locals: {message: message, current_user: nil}
   end
 
   # def render_current_user_message(message)

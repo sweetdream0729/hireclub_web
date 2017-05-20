@@ -6,13 +6,19 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    console.log(data)
+    # console.log(data)
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
-    console.log(active_conversation)
-    if active_conversation.length > 0
-      # if we are viewing this conversation id
+    # if we are viewing this conversation id
+
+    if active_conversation.length > 0  
+      partial = data.message_partial
+      
+      # If the message is coming current user append my_message class
+      if data.user_id.toString() == App.currentUser.toString()
+        partial = data.message_partial.replace("<div class='message'>", "<div class='message my_message'>");
+
       # Insert the message
-      active_conversation.append(data.message_partial)
+      active_conversation.append(partial)
       App.conversations.scrollToBottom
 
   send_message: (conversation_id, text) ->
@@ -26,9 +32,11 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     console.log(scrollHeight)
     chat.scrollTop(scrollHeight)
 
+
 $(document).ready ->  
   # Scroll to bottom when starting conversation
   App.conversations.scrollToBottom
+  
 
   # submit message on enter
   $("#new_message").on "keypress", (e) ->
