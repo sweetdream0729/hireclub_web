@@ -3,7 +3,10 @@
 - classes += " active" if conversation.id == @conversation.id
 = link_to conversation_path(conversation), class: classes, id: "conversation_#{conversation.id}" do
   .media
-    = image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex mr-3 rounded-circle')
+    .presence_container.mr-3
+      = image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex rounded-circle')
+      .presence{data: {behavior: "presence", "user-id": other_user.id}}
+        &nbsp;
     .media-body
       %strong
         = other_user.display_name

@@ -14,6 +14,7 @@ class ConversationsChannel < ApplicationCable::Channel
     @conversation = Conversation.find(data["conversation_id"])
     message   = @conversation.messages.create(text: data["text"], user: current_user)
     MessageRelayJob.perform_later(message)
+    UserPresenceJob.perform_later(current_user.id, "active")
   end
 
 

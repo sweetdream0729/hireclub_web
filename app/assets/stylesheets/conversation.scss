@@ -94,173 +94,23 @@
   }
 }
 
-// .chat-head-info {
-//   background: #6070e9;
-//   position: fixed;
-//   width: 100%;
-//   margin-bottom: 60px;
-//   overflow: hidden;
-//   top: 3px;
-// }
+.presence_container {
+  width: 48px;
+  height: 48px;
+}
 
+.presence {
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  bottom: 12px;
+  left: 36px;
+  background: #EAEEF1;
+  position: relative;
+  box-sizing: border-box;
+  border: 2px solid white;
+}
 
-
-
-
-// .member_list .chat-body {
-//   margin-left: 47px;
-//   margin-top: 0;
-// }
-
-
-
-// .member_list {
-//   .contact_sec {
-//     margin-top: 3px;
-//   }
-//   li {
-//     padding: 6px;
-//   }
-//   ul {
-//     border: 1px solid #dddddd;
-//     border-right: none;
-//   }
-// }
-
-// .chat-img img {
-//   height: 34px;
-//   width: 34px;
-// }
-
-// .member_list {
-//   li {
-//     border-bottom: 1px solid #dddddd;
-//     padding: 6px;
-//     &:last-child {
-//       border-bottom: none;
-//     }
-//   }
-//   height: 380px;
-//   overflow-x: hidden;
-//   overflow-y: auto;
-// }
-
-
-// .new_message_head {
-//   background: #fff;
-//   color: #555;
-//   float: left;
-//   font-weight: normal;
-//   padding: 14px 10px;
-//   width: 100%;
-//   font-size: 24px;
-//   border-bottom: 1px solid #e2e2e2;
-//   a{
-//     color: #555;
-//   }
-// }
-
-// .message_section {
-//   border: 1px solid #dddddd;
-// }
-
-// .chat_area {
-//   float: left;
-//   height: 300px;
-//   overflow-x: hidden;
-//   overflow-y: auto;
-//   width: 100%;
-//   li {
-//     padding: 14px 14px 0;
-//     .chat-img1 img {
-//       height: 40px;
-//       width: 40px;
-//     }
-//   }
-//   .chat-body1 {
-//     margin-left: 50px;
-//   }
-// }
-
-// .chat-body1 p {
-//   background: #fbf9fa none repeat scroll 0 0;
-//   padding: 10px;
-// }
-
-// .chat_area {
-//   .admin_chat .chat-body1 {
-//     margin-left: 0;
-//     margin-right: 50px;
-//   }
-//   li:last-child {
-//     padding-bottom: 10px;
-//   }
-// }
-
-// .message_write {
-//   background: #eaedf3 none repeat scroll 0 0;
-//   float: left;
-//   padding: 15px;
-//   width: 100%;
-//   padding-top: 20px;
-//   padding-bottom: 6px;
-//   textarea.form-control {
-//     height: 70px;
-//     padding: 10px;
-//   }
-// }
-
-// .chat_bottom {
-//   float: left;
-//   margin-top: 13px;
-//   width: 100%;
-// }
-
-
-
-// .member_list li:hover {
-//   background: #428bca none repeat scroll 0 0;
-//   color: #fff;
-//   cursor: pointer;
-// }
-
-// .chat_area .media {
-//   padding-left: 10px;
-//   &:first-child {
-//     margin-top: 20px;
-//   }
-// }
-
-// .new_message_head button a {
-//   font-size: 20px;
-//   text-transform: capitalize;
-//   color: #fff;
-// }
-
-
-// .media.text-right{
-//   padding-right: 25px;
-// }
-
-// .chat_bubble {
-//   background : #f1f0f0;
-//   border-radius: 16px;
-//   padding-left: 12px;
-//   padding-right: 12px;
-//   padding-top: 4px;
-//   padding-bottom: 4px;
-//   display: inline-block;
-//   margin-bottom: 0;
-//   a {
-//     color: inherit;
-//     text-decoration: underline;
-//   }
-// }
-// .chat_bubble_mine {
-//   background: #0084ff;
-//   color: white;
-// }
-// .chat_time {
-//   padding-left: 12px;
-//   padding-right: 12px;
-// }
+.presence_active {
+  background: #7ED321;
+}

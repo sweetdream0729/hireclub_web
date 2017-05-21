@@ -10,14 +10,11 @@ class MessageRelayJob < ApplicationJob
     }
   end
 
-  # private
+  private
 
   def render_message(message)
     MessagesController.render partial: 'messages/message', locals: {message: message, current_user: nil}
   end
 
-  # def render_current_user_message(message)
-  # 	MessagesController.render partial: 'messages/current_user_message', locals: {message: message}
-  # end
 
 end
