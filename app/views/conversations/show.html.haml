@@ -7,8 +7,9 @@
         #conversations_header
           .text-center
             Messages
-        .list-group#conversations
-          = render @conversations
+        #conversation_list
+          .list-group#conversations
+            = render @conversations
     .col-sm-9.px-0
       #messages_container
         #messages_header
