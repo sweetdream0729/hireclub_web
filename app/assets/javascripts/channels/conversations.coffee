@@ -5,9 +5,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
   disconnected: ->
     # Called when the subscription has been terminated by the server
 
-  received: (data) ->
-    # console.log(data)
-    
+  received: (data) ->    
     text = data.message.text
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
     # if we are viewing this conversation id

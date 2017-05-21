@@ -34,7 +34,6 @@ $(document).ready ->
     $('.autocomplete_skill').bind 'typeahead:select', (ev, skill) ->
   # Set hidden form field of skill_id
       skill_id = $(this).parent().parent().find('.autocomplete_skill_id')[0];
-      console.log(skill_id);
       $(skill_id).val(skill.id);
       return
     return

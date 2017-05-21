@@ -16,7 +16,6 @@ App.typing = App.cable.subscriptions.create "TypingChannel",
     return
 
   is_typing: (conversation_id, is_typing) ->
-    console.log(conversation_id, is_typing)
     @perform "is_typing", {conversation_id: conversation_id, is_typing: is_typing}
     return
 
