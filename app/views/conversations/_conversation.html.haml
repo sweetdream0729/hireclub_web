@@ -7,7 +7,7 @@
     .media-body
       %strong
         = other_user.display_name
-      %small
+      %small.conversation_time.text-muted
         = local_time(conversation.updated_at, "%l:%M%P")
       %p.mb-0
         %small.conversation_preview

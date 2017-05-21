@@ -3,10 +3,10 @@
 .container-fluid.conversations_container.px-0
   .row.m-0
     .col-sm-3.px-0
-      #conversations_header
-        .text-center
-          Messages
-      #conversations_list
+      #conversations_container
+        #conversations_header
+          .text-center
+            Messages
         .list-group#conversations
           = render @conversations
     .col-sm-9.px-0
