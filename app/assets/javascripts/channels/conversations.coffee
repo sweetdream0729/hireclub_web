@@ -20,6 +20,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         text = "You: " + text
 
       # Insert the message
+      App.typing.showTypingIndicator(false)
       active_conversation.append(partial)
       App.conversations.scrollToBottom()
 
