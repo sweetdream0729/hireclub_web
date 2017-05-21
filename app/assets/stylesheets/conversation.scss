@@ -8,6 +8,7 @@
 
   .list-group-item {
     border-radius: 0;
+    border-right: none;
   }
   
   .list-group-item.active {
@@ -20,12 +21,13 @@
 #conversations_header {
   height: 72px;
   padding: 10px;
-  border-right: solid 1px #EAEEF1;
 }
 
 #messages_container {
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 56px);
+  border-left: solid 1px #EAEEF1;
 }
 
 #messages_header {
@@ -36,7 +38,8 @@
 
 #messages {
   padding: 10px;
-  height: 300px;
+  // height: 300px;
+  flex-grow:1;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -44,6 +47,13 @@
 #messages_input {
   height: 48px;
 }
+
+#message_text {
+  border-radius: 0;
+  border: none;
+  border-top: solid 1px #EAEEF1;
+}
+
 
 .message {
   margin-bottom: 4px;
