@@ -1,13 +1,15 @@
-.conversations_container {
-}
 
 .conversations_show {
+  overflow-y: hidden;
+
   footer {
     display: none;
   }
+
   .list-group-item {
     border-radius: 0;
   }
+  
   .list-group-item.active {
     color: inherit;
     background-color: #EAEEF1;
@@ -22,13 +24,25 @@
 }
 
 #messages_container {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 #messages_header {
   height: 72px;
   padding: 10px;
   border-bottom: solid 1px #EAEEF1;
+}
+
+#messages {
+  padding: 10px;
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#messages_input {
+  height: 48px;
 }
 
 .message {
