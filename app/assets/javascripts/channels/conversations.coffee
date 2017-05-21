@@ -61,4 +61,14 @@ $(document).ready ->
 
     text_field.val("")
 
+  $("#message_text").idle
+    onIdle: ->
+      console.log("idle")
+      return
+    onActive: ->
+      console.log("active")
+      App.presence.setCurrentUserActive()
+      return
+    idle: 3000
+    events: "keydown"
   return

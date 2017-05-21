@@ -22,6 +22,7 @@
 //= require selectize.min
 //= require caret.min
 //= require jquery.atwho.min
+//= require jquery.idle.min
 //= require local_time
 //= require jquery.infinite-pages
 //= require cocoon

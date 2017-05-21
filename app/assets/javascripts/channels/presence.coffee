@@ -19,4 +19,7 @@ App.presence = App.cable.subscriptions.create('PresenceChannel',
       else
         user_presence.removeClass("presence_active")
     return
+
+  setCurrentUserActive: ->
+    @perform 'user_present'
 )
