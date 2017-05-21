@@ -5,7 +5,7 @@ class MessageRelayJob < ApplicationJob
     ActionCable.server.broadcast "conversations:#{message.conversation.id}", {
       conversation_id: message.conversation.id,
       user_id: message.user.id,
-      message: message.to_json,
+      message: message,
       message_partial: render_message(message)
     }
   end

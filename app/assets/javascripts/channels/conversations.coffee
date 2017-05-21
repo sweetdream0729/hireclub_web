@@ -7,26 +7,26 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
   received: (data) ->
     # console.log(data)
+    
+    text = data.message.text
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
     # if we are viewing this conversation id
-
     if active_conversation.length > 0  
       partial = data.message_partial
       
       # If the message is coming current user append my_message class
       if data.user_id.toString() == App.currentUser.toString()
         partial = data.message_partial.replace("<div class='message'>", "<div class='message my_message'>");
+        text = "You: " + text
 
       # Insert the message
       active_conversation.append(partial)
       App.conversations.scrollToBottom
 
     conversation_list_item = $("#conversation_#{data.conversation_id}")
-    console.log(conversation_list_item)
     if conversation_list_item.length > 0
         preview = conversation_list_item.find(".conversation_preview")
-        console.log(preview)
-        preview.text(data.message["text"])
+        preview.text(text)
 
     
 
