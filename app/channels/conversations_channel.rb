@@ -17,5 +17,4 @@ class ConversationsChannel < ApplicationCable::Channel
     UserPresenceJob.perform_later(current_user.id, "active")
   end
 
-
 end

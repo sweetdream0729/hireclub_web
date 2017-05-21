@@ -28,17 +28,15 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         preview = conversation_list_item.find(".conversation_preview")
         preview.text(text)
 
-    
-
   send_message: (conversation_id, text) ->
     # Calls ConversationsChannel.send_messsage
+    App.typing.showTypingIndicator(false)
     @perform "send_message", {conversation_id: conversation_id, text: text}
 
   scrollToBottom: ->
     chat = $('#messages')
     scrollHeight = chat.prop("scrollHeight")
     chat.scrollTop(scrollHeight)
-
 
 $(document).ready ->  
   # Scroll to bottom when starting conversation
@@ -61,14 +59,4 @@ $(document).ready ->
 
     text_field.val("")
 
-  $("#message_text").idle
-    onIdle: ->
-      console.log("idle")
-      return
-    onActive: ->
-      console.log("active")
-      App.presence.setCurrentUserActive()
-      return
-    idle: 3000
-    events: "keydown"
   return

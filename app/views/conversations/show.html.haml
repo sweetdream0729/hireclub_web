@@ -31,7 +31,10 @@
 
         #messages{ data: {behavior: "messages", "conversation-id": @conversation.id}}
           = render @messages
-
+          #typing_indicator
+            .message
+              .message_bubble
+                •••
         #messages_input
           = form_for @message do |f|
             = f.hidden_field :conversation_id, value: @conversation.id
