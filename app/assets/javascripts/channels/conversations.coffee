@@ -17,6 +17,17 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         partial = data.message_partial.replace("<div class='message'>", "<div class='message my_message'>");
         text = "You: " + text
 
+      if document.hidden
+        unread_cell = $(".unread_cell")
+        if unread_cell.length == 0
+          active_conversation.append("<div class='unread_cell'>Unread</div>")
+        else
+          active_conversation.append(unread_cell)
+          unread_cell.show()
+
+      else
+        App.last_read.update(data.conversation_id)
+
       # Insert the message
       App.typing.showTypingIndicator(false)
       active_conversation.append(partial)
@@ -37,7 +48,15 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     scrollHeight = chat.prop("scrollHeight")
     chat.scrollTop(scrollHeight)
 
-$(document).ready ->  
+  handleVisiblityChange: ->
+    $unread_cell = $(".unread_cell")
+    if $unread_cell.length > 0
+      chatroom_id = $("[data-behavior='messages']").data("conversation-id")
+      App.last_read.update(chatroom_id)
+      $unread_cell.hide()
+
+$(document).ready -> 
+  $(document).on "click", App.conversations.handleVisiblityChange
   # Scroll to bottom when starting conversation
   App.conversations.scrollToBottom()
   

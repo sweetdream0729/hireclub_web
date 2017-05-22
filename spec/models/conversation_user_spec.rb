@@ -16,6 +16,13 @@ RSpec.describe ConversationUser, type: :model do
     it { should validate_uniqueness_of(:user_id).scoped_to(:conversation_id) }
   end
 
+  describe "update_last_read_at" do
+    it "should update_last_read_at" do
+      conversation_user.update_last_read_at
+      expect(conversation_user.last_read_at).to be_present
+    end
+  end
+
   describe "unread_messages_count" do
     let(:other_user) { FactoryGirl.create(:user) }
     

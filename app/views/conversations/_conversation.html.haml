@@ -19,3 +19,4 @@
             - if last_message.user == current_user
               You:
             = truncate(conversation.last_message.text, length: 25)
+        / = conversation.unread_messages_count(current_user)

@@ -71,6 +71,27 @@
   margin-bottom: 4px;
 }
 
+.day_cell {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 8px;
+  margin-bottom: 8px;    
+  letter-spacing: 1px;
+  font-size: 75%;
+  color: #A9BCD0;
+}
+
+.unread_cell {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 8px;
+  margin-bottom: 8px;    
+  letter-spacing: 1px;
+  color: #8783D1;
+  font-size: 75%;
+  font-weight: 600;
+}
+
 .my_message {
   text-align: right;
   .message_bubble {

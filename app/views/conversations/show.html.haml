@@ -30,7 +30,23 @@
                     = other_user.location.name
 
         #messages{ data: {behavior: "messages", "conversation-id": @conversation.id}}
-          = render @messages
+          - if @messages.any?
+            - last_message = nil
+            - unread = false
+            - @messages.each do |message|
+              - if last_message.nil?
+                .day_cell
+                  = local_time_ago(message.created_at)
+              - elsif message.created_at.to_date != last_message.created_at.to_date
+                .day_cell
+                  = local_time_ago(last_message.created_at)
+              - if !unread && !message.is_read_by?(current_user)
+                - unread = true
+                .unread_cell
+                  Unread
+              = render message
+              - last_message = message
+
           #typing_indicator
             .message
               .message_bubble
