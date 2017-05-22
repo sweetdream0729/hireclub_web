@@ -9,8 +9,9 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     text = data.message.text
     text = text.substring(0,25)
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
+
     # if we are viewing this conversation id
-    if active_conversation.length > 0  
+    if active_conversation.length > 0
       partial = data.message_partial
       
       # If the message is coming current user append my_message class
@@ -38,6 +39,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     if conversation_list_item.length > 0
         preview = conversation_list_item.find(".conversation_preview")
         preview.text(text)
+        conversation_list_item.addClass("unread")
 
   send_message: (conversation_id, text) ->
     # Calls ConversationsChannel.send_messsage

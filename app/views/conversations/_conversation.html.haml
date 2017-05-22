@@ -1,5 +1,5 @@
 - other_user = conversation.other_users(current_user).first
-- classes = "list-group-item list-group-item-action"
+- classes = "list-group-item list-group-item-action conversation_cell"
 - classes += " active" if conversation.id == @conversation.id
 = link_to conversation_path(conversation), class: classes, id: "conversation_#{conversation.id}" do
   .media
@@ -8,8 +8,7 @@
       .presence{data: {behavior: "presence", "user-id": other_user.id}}
         &nbsp;
     .media-body
-      %strong
-        = other_user.display_name
+      = other_user.short_display_name
       %small.conversation_time.text-muted
         = local_time(conversation.updated_at, "%l:%M%P")
       %p.mb-0

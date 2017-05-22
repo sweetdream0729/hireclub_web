@@ -21,6 +21,15 @@
     background-color: #EAEEF1;
     border-color: #EAEEF1;
   }
+  .conversation_cell {
+    font-weight: inherit;
+  }
+  .unread {
+    font-weight: bold;
+    .conversation_preview {
+      font-weight: bold;
+    }
+  }
 }
 
 #conversations_header {
