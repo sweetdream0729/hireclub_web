@@ -7,6 +7,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
   received: (data) ->    
     text = data.message.text
+    text = text.substring(0,25)
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
     # if we are viewing this conversation id
     if active_conversation.length > 0  
