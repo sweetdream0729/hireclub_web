@@ -133,7 +133,7 @@ class User < ApplicationRecord
 
   def short_display_name
     result = first_name
-    result += " #{last_name[0]}" if !last_name.blank?
+    result += " #{last_name[0]}." if !last_name.blank?
     return result
   end
 
