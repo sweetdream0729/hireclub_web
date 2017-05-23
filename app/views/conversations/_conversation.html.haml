@@ -11,6 +11,11 @@
       = other_user.short_display_name
       %small.conversation_time.text-muted
         = local_time(conversation.updated_at, "%l:%M%P")
+        - unread_count = conversation.unread_messages_count(current_user)
+        - if unread_count > 0
+          %span.badge.badge-primary.text-right
+            = unread_count
+          
       %p.mb-0
         %small.conversation_preview
           - last_message = conversation.last_message
@@ -18,4 +23,6 @@
             - if last_message.user == current_user
               You:
             = truncate(conversation.last_message.text, length: 25)
-        / = conversation.unread_messages_count(current_user)
+
+        
+        
