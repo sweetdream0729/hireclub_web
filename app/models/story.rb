@@ -5,7 +5,7 @@ class Story < ApplicationRecord
   include Searchable
   include FeedDisplayable
   extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :history]
   auto_strip_attributes :name, :squish => true
   is_impressionable
   acts_as_taggable_array_on :tags
