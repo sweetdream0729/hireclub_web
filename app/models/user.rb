@@ -41,6 +41,7 @@ class User < ApplicationRecord
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
+  scope :by_followers, -> { order(followers_count: :desc) }
 
   # Associations
   has_many :conversation_users, dependent: :destroy, inverse_of: :user

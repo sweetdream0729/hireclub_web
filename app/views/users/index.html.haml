@@ -9,6 +9,7 @@
         Recent
     .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
       %a.dropdown-item{href: members_path } Recent
+      %a.dropdown-item{href: members_path(sort_by: "popular")} Popular
       %a.dropdown-item{href: members_path(sort_by: "alphabetical")} Alphabetical
       %a.dropdown-item{href: members_path(sort_by: "oldest")} Oldest
   %p
