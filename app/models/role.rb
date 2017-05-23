@@ -7,8 +7,11 @@ class Role < ApplicationRecord
   acts_as_tree order: "name"
 
   # Scopes
-  scope :by_name,        -> { order('name ASC') }
-  scope :without_parent, -> { where(parent_id: nil) }
+  scope :by_users,            -> { order(users_count: :desc) }
+  scope :recent,              -> { order(created_at: :desc) }
+  scope :oldest,              -> { order(created_at: :asc) }
+  scope :alphabetical,        -> { order(name: :asc) }
+  scope :without_parent,      -> { where(parent_id: nil) }
 
   # Associations
   has_many :user_roles, dependent: :destroy

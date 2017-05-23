@@ -18,7 +18,7 @@
       .col-6
         .form-group
           = f.label :role
-          = f.collection_select(:role_id, current_user.available_roles.by_name, :id, :name, {}, {class: "form-control"})
+          = f.collection_select(:role_id, current_user.available_roles.alphabetical, :id, :name, {}, {class: "form-control"})
     .col-6
       .form-group
         = f.label :position

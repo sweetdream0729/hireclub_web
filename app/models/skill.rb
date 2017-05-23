@@ -6,7 +6,10 @@ class Skill < ApplicationRecord
   friendly_id :name, use: :slugged
 
   # Scopes
-  scope :by_name, -> { order('name ASC') }
+  scope :by_users,     -> { order(users_count: :desc) }
+  scope :recent,       -> { order(created_at: :desc) }
+  scope :oldest,       -> { order(created_at: :asc) }
+  scope :alphabetical, -> { order(name: :asc) }
 
   # Associations
   has_many :user_skills, dependent: :destroy
