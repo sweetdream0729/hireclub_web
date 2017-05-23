@@ -3,8 +3,19 @@ class RolesController < ApplicationController
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
   # GET /roles
+
   def index
-    scope = Role.by_name
+    scope = Role.all
+
+    if params[:sort_by] == "popular"
+      scope = scope.by_users
+    elsif params[:sort_by] == "alphabetical"
+      scope = scope.alphabetical
+    elsif params[:sort_by] == "oldest"
+      scope = scope.oldest
+    else
+      scope = scope.recent
+    end
 
     if params[:query]
       scope = scope.search_by_name(params[:query])
