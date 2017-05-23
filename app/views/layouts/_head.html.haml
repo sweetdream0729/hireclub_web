@@ -48,4 +48,5 @@
   %meta{:content => image_path("favicon/mstile-310x150.png"), :name => "msapplication-wide310x150logo"}
   %meta{:content => image_path("favicon/mstile-310x310.png"), :name => "msapplication-square310x310logo"}
 
+  %meta{:name => "currentUser", :content => current_user.try(:id)}
   = yield :head

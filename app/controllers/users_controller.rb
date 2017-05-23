@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   def index
     scope = User.all
-    if params[:sort_by] == "alphabetical"
+    if params[:sort_by] == "popular"
+      scope = scope.by_followers
+    elsif params[:sort_by] == "alphabetical"
       scope = scope.alphabetical
     elsif params[:sort_by] == "oldest"
       scope = scope.oldest

@@ -13,5 +13,5 @@
     :javascript
       try{Typekit.load({ async: false });}catch(e){}
       
-  %body
+  %body{ class: "#{controller_name}_#{action_name}"}
     = yield

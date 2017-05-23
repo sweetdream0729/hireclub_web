@@ -23,6 +23,10 @@ module Admin::UserAdmin
         field :created_at
         field :updated_at
       end
+
+      edit do
+        exclude_fields :milestones, :follows, :skills, :impressions, :conversations, :notifications, :roles, :companies
+      end
     end
   end
 end

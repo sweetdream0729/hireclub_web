@@ -1,20 +1,21 @@
 - other_user = conversation.other_users(current_user).first
-- classes = "list-group-item list-group-item-action"
-- classes += " active" if conversation.id == conversation_id
-%div{id: "conversation_#{conversation.id}"}
-  = link_to conversation_path(conversation), class: classes do
-    .media
-      = image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex mr-3 rounded-circle')
-      .media-body
-        %strong
-          = other_user.display_name
-        %small
-          = local_time(conversation.updated_at, "%l:%M%P")
-          
-        %p.mb-0
-          %small
-            - last_message = conversation.last_message
-            - if last_message
-              - if last_message.user == current_user
-                You:
-              = truncate(conversation.last_message.text, length: 25)
+- classes = "list-group-item list-group-item-action conversation_cell"
+- classes += " active" if conversation.id == @conversation.id
+= link_to conversation_path(conversation), class: classes, id: "conversation_#{conversation.id}" do
+  .media
+    .presence_container.mr-3
+      = image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex rounded-circle')
+      .presence{data: {behavior: "presence", "user-id": other_user.id}}
+        &nbsp;
+    .media-body
+      = other_user.short_display_name
+      %small.conversation_time.text-muted
+        = local_time(conversation.updated_at, "%l:%M%P")
+      %p.mb-0
+        %small.conversation_preview
+          - last_message = conversation.last_message
+          - if last_message
+            - if last_message.user == current_user
+              You:
+            = truncate(conversation.last_message.text, length: 25)
+        / = conversation.unread_messages_count(current_user)

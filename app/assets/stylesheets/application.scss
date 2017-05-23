@@ -8,12 +8,13 @@ $brand-info:            #2EC0F9;
 $brand-warning:         #F0AD4E;
 $brand-danger:          #F2545B;
 
+$gray-light: #8E9AAF;
+
 $alert-success-bg:      $brand-success;
 $alert-success-text:    #FFF !default;
 
 $link-hover-decoration: none !default;
 $input-color-placeholder: #bbb;
-
 
 $btn-font-weight:                600 !default;
 
@@ -21,6 +22,8 @@ $navbar-inverse-color: #FFF;
 
 $badge-padding-x: .6rem;
 $badge-padding-y: .4rem;
+
+
 
 @import "bootstrap";
 @import "bootstrap_overrides";

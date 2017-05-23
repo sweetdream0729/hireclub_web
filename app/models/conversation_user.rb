@@ -22,4 +22,12 @@ class ConversationUser < ApplicationRecord
     activities.where(key: MessageReadActivity::KEY)
   end
 
+  def update_last_read_at
+    read_at = Time.zone.now
+    update(last_read_at: read_at)
+    other_messages.where("created_at < ?", read_at).find_each do |message|
+      message.read_by!(user)
+    end
+  end
+
 end

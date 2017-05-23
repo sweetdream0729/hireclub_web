@@ -36,9 +36,12 @@ class Conversation < ApplicationRecord
     self.users - [user]
   end
 
-
   def last_message
     messages.by_recent.last
+  end
+
+  def unread_messages_count(user)
+    conversation_users.where(user: user).first.try(:unread_messages_count)
   end
 
   def self.key_for_users(users)
