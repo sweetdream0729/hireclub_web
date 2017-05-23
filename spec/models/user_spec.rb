@@ -312,6 +312,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username", nil).for(:instagram_url) }
   end
 
+
   describe "welcome!" do
     it "should create user.welcome activity" do
       user.save
