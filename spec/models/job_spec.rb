@@ -66,6 +66,39 @@ RSpec.describe Job, type: :model do
       expect(activity).to be_present
       expect(activity.trackable).to eq(job)
       expect(activity.owner).to eq(job.user)
+      expect(activity.private).to eq(true)
+    end
+  end
+
+  describe 'publish!' do
+    it "publishes the story" do
+      company_follower = FactoryGirl.create(:user)
+      company_follower.follow(job.company)
+      company_follower.follow(job.user)
+
+      user_follower = FactoryGirl.create(:user)
+      user_follower.follow(job.user)
+
+      job.save
+      job.publish!
+
+      expect(job.published?).to eq(true)
+      expect(job.published_on).not_to be_nil
+
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.key).to eq JobPublishActivity::KEY
+      expect(activity.trackable).to eq(job)
+      expect(activity.owner).to eq(job.user)
+      expect(activity.private).to eq(false)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(2)
+      
+      notification = notifications.first
+      expect(notification.user).to eq company_follower
     end
   end
 

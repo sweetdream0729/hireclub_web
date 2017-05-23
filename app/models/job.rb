@@ -106,7 +106,7 @@ class Job < ApplicationRecord
     unless published?
       self.published_on = DateTime.now
       self.save
-      create_activity_once :publish, owner: self.user
+      create_activity_once :publish, owner: self.user, private: false
     end
   end
 

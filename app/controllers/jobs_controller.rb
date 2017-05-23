@@ -30,6 +30,7 @@ class JobsController < ApplicationController
     authorize @job
 
     if @job.save
+      @job.publish!
       redirect_to @job, notice: 'Job was successfully created.'
     else
       render :new
