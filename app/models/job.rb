@@ -11,7 +11,8 @@ class Job < ApplicationRecord
 
   include UnpublishableActivity
   include PublicActivity::Model
-  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
+  include PublicActivity::CreateActivityOnce
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
   multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
@@ -21,7 +22,10 @@ class Job < ApplicationRecord
   has_tags_list :skills
 
   # Scopes
-  scope :recent,       -> { order(created_at: :desc) }
+  scope :recent,          -> { order(created_at: :desc) }
+  scope :published,       -> { where.not(published_on: nil) }
+  scope :drafts,          -> { where(published_on: nil) }
+
 
   # Associations
   belongs_to :company
@@ -96,6 +100,22 @@ class Job < ApplicationRecord
 
   def internship_name
     return "internship" if internship
+  end
+
+  def publish!
+    unless published?
+      self.published_on = DateTime.now
+      self.save
+      create_activity_once :publish, owner: self.user
+    end
+  end
+
+  def published?
+    published_on.present?
+  end
+
+  def unpublished?
+    published_on.nil? 
   end
 
 end
