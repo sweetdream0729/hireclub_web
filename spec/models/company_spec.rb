@@ -204,4 +204,16 @@ RSpec.describe Company, type: :model do
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:website_url) }
   end
 
+  describe "followers_count" do
+    it "should cache followers_count" do
+      3.times do
+        user = FactoryGirl.create(:user)
+        user.follow(company)
+      end
+      company.reload
+
+      expect(company.followers.count).to eq(3)
+      expect(company.followers_count).to eq(3)
+    end
+  end
 end
