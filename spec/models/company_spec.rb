@@ -215,7 +215,7 @@ RSpec.describe Company, type: :model do
     end
   end
 
-  describe "scopes",focus: true do
+  describe "scopes" do
     it "should sort by_followers" do
       user1 = FactoryGirl.create(:user)
       user2 = FactoryGirl.create(:user)
