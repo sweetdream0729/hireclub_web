@@ -41,7 +41,7 @@ class User < ApplicationRecord
   scope :recent,       -> { order(created_at: :desc) }
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
-  scope :by_followers, -> { order(followers_count: :desc) }
+  scope :by_followers, -> { order(followers_count_cache: :desc) }
 
   # Associations
   has_many :conversation_users, dependent: :destroy, inverse_of: :user
@@ -188,7 +188,7 @@ class User < ApplicationRecord
   end
   
   def welcome!
-    create_activity_once :welcome, owner: self, private: true
+    create_activity_once :welcome, owner: self, private: false
   end
 
   def primary_role
