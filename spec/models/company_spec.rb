@@ -18,12 +18,8 @@ RSpec.describe Company, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name).case_insensitive }
-
     it { should validate_uniqueness_of(:slug).case_insensitive }
     it { should validate_uniqueness_of(:facebook_id) }
-
-    it { is_expected.to allow_value("http://kidbombay.com", "https://kidbombay.com").for(:website_url) }
-    # it { is_expected.not_to allow_value("kidbombay.com", "foo").for(:website_url) }
   end
 
   describe 'seed' do
@@ -206,6 +202,7 @@ RSpec.describe Company, type: :model do
 
   describe "followers_count" do
     it "should cache followers_count" do
+      updated_at = company.updated_at
       3.times do
         user = FactoryGirl.create(:user)
         user.follow(company)
@@ -214,6 +211,7 @@ RSpec.describe Company, type: :model do
 
       expect(company.followers.count).to eq(3)
       expect(company.followers_count).to eq(3)
+      expect(company.updated_at).to be > updated_at
     end
   end
 end
