@@ -9,9 +9,10 @@ class Follow < ActiveRecord::Base
   # NOTE: Follows belong to the "followable" and "follower" interface
   belongs_to :followable, polymorphic: true
   counter_culture :followable, touch: true,
-    column_name: proc {|model| model.blocked? ? nil : "followers_count" },
+    column_name: proc {|model| model.blocked? ? nil : "followers_count_cache" },
     column_names: {
-      ["follows.followable_type = ?", 'User'] => 'followers_count',
+      ["follows.followable_type = ?", 'User'] => 'followers_count_cache',
+      ["follows.followable_type = ?", 'Company'] => 'followers_count_cache',
     }
 
   belongs_to :follower,   polymorphic: true

@@ -21,7 +21,7 @@
             %br
             = link_to_follow_company(@company, current_user)
             %span{class: "company_#{@company.id}_followers_count"}
-              = pluralize(@company.followers.count, "Follower")
+              = pluralize(@company.followers_count_cache, "Follower")
             
 
     .col-sm-3
