@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523121330) do
+ActiveRecord::Schema.define(version: 20170523221748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,29 +174,31 @@ ActiveRecord::Schema.define(version: 20170523121330) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "name",                        null: false
-    t.citext   "slug",                        null: false
-    t.integer  "company_id",                  null: false
-    t.integer  "user_id",                     null: false
+    t.string   "name",                         null: false
+    t.citext   "slug",                         null: false
+    t.integer  "company_id",                   null: false
+    t.integer  "user_id",                      null: false
     t.text     "description"
     t.string   "link"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "full_time",   default: true,  null: false
-    t.boolean  "part_time",   default: false, null: false
-    t.boolean  "remote",      default: false, null: false
-    t.boolean  "contract",    default: false, null: false
-    t.boolean  "internship",  default: false, null: false
-    t.integer  "location_id",                 null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "full_time",    default: true,  null: false
+    t.boolean  "part_time",    default: false, null: false
+    t.boolean  "remote",       default: false, null: false
+    t.boolean  "contract",     default: false, null: false
+    t.boolean  "internship",   default: false, null: false
+    t.integer  "location_id",                  null: false
     t.integer  "role_id"
-    t.string   "skills",      default: [],                 array: true
-    t.integer  "likes_count", default: 0,     null: false
+    t.string   "skills",       default: [],                 array: true
+    t.integer  "likes_count",  default: 0,     null: false
+    t.datetime "published_on"
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
     t.index ["internship"], name: "index_jobs_on_internship", using: :btree
     t.index ["location_id"], name: "index_jobs_on_location_id", using: :btree
     t.index ["part_time"], name: "index_jobs_on_part_time", using: :btree
+    t.index ["published_on"], name: "index_jobs_on_published_on", using: :btree
     t.index ["remote"], name: "index_jobs_on_remote", using: :btree
     t.index ["role_id"], name: "index_jobs_on_role_id", using: :btree
     t.index ["skills"], name: "index_jobs_on_skills", using: :gin

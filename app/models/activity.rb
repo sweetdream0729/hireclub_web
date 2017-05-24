@@ -6,6 +6,7 @@ class Activity < PublicActivity::Activity
     UserBadgeCreateActivity::KEY,
     StoryPublishActivity::KEY,
     JobCreateActivity::KEY,
+    JobPublishActivity::KEY,
     ProjectCreateActivity::KEY,
     CommentCreateActivity::KEY,
     CompanyFollowActivity::KEY,
