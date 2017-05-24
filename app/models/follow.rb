@@ -7,7 +7,7 @@ class Follow < ActiveRecord::Base
   extend ActsAsFollower::FollowScopes
 
   # NOTE: Follows belong to the "followable" and "follower" interface
-  belongs_to :followable, polymorphic: true, counter_cache: "followers_count"
+  belongs_to :followable, polymorphic: true, counter_cache: "followers_count", touch: true
   belongs_to :follower,   polymorphic: true
 
   # Callbacks
