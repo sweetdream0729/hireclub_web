@@ -25,7 +25,7 @@ module Admin::UserAdmin
       end
 
       edit do
-        exclude_fields :milestones, :follows, :skills, :impressions, :conversations, :notifications, :roles, :companies
+        exclude_fields :milestones, :follows, :skills, :impressions, :conversations, :notifications, :roles, :companies, :followings, :jobs, :likes, :resumes, :badges
       end
     end
   end
