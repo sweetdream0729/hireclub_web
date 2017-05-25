@@ -19,15 +19,18 @@ class Message < ApplicationRecord
   validates :text, presence: true
 
   # Callbacks
-  after_commit :update_unread_counts, on: :create
+  # after_commit :update_unread_counts, on: :create
 
-  def create_conversation_user
-    conversation_user = conversation.conversation_users.where(user: user, conversation: conversation).first_or_create
-  end
-
-  def update_unread_counts
-    create_conversation_user.update_unread_messages_count
-  end
+  # def create_conversation_user
+  #  conversation_user = conversation.conversation_users.where(user: user, conversation: conversation).first_or_create
+  # end
+  #update unread_message_count for all the user in the conversation
+  # def update_unread_counts
+  #    #create_conversation_user.update_unread_messages_count
+  #   conversation.conversation_users.where(conversation: conversation).each do |conversation_user|
+  #     conversation_user.update_unread_messages_count
+  #   end
+  # end
 
   def read_by!(read_by_user)
     return if read_by_user == user

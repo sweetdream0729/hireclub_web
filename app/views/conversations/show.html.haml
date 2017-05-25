@@ -26,7 +26,7 @@
                     ·
                     = other_user.company.name
                   - if other_user.location.present?
-                    · 
+                    ·
                     = other_user.location.name
 
         #messages{ data: {behavior: "messages", "conversation-id": @conversation.id}}
@@ -40,7 +40,7 @@
               - elsif message.created_at.to_date != last_message.created_at.to_date
                 .day_cell
                   = local_time_ago(last_message.created_at)
-              - if !unread && !message.is_read_by?(current_user)
+              - if !unread && !message.is_read_by?(current_user) && message.user != current_user
                 - unread = true
                 .unread_cell
                   Unread
