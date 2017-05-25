@@ -93,3 +93,7 @@ $badge-padding-y: .4rem;
   color: #04080F;
   border-radius: 0;
 }
+
+.has-danger .form_image {
+  border: solid 1px red;
+}

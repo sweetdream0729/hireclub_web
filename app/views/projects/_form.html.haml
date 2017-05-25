@@ -1,19 +1,23 @@
 = form_for @project, html: {class: "project_form"} do |f|
-  - if @project.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      %ul
-        - @project.errors.full_messages.each do |msg|
-          %li= msg
+  / - if @project.errors.any?
+  /   #error_explanation
+  /     %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+  /     %ul
+  /       - @project.errors.each_with_index do |msg, i|
+  /         %li= msg[1]
   .row
     .col-sm-6
-      .form-group
-        = f.label 'Image'
+      .form-group{class: ("has-danger" if @project.errors[:image_uid].present?)}
+        = f.label 'Image', class: "form-control-label"
         %br
         = f.hidden_field :image_uid
-        = image_tag(model_image(@project.image, 800, 600, true), width: "100%", id: "image_preview", class: "mb-4 rounded open_uploader")
+        = image_tag(model_image(@project.image, 800, 600, true), width: "100%", id: "image_preview", class: "rounded open_uploader form_image")
+        - if @project.errors[:image_uid].present?
+          .form-control-feedback
+            %small
+              Image is Required
         %p
-          = link_to "Upload Image", "javascript:void(0)", class: "btn btn-secondary btn-block open_uploader", id: "upload_widget_opener"
+          = link_to "Upload Image", "javascript:void(0)", class: "mt-3 btn btn-secondary btn-block open_uploader", id: "upload_widget_opener"
         %p
           %small.form-text.text-muted
             800x600 minimum. JPG, PNG, or GIF. 10MB maximum file size.
