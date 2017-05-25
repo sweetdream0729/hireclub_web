@@ -8,19 +8,22 @@
   .row
     .col-6
       .form-group
+        = link_to "Upload Image", "#", class: "btn btn-primary", id: "upload_widget_opener"
         = f.label 'Image Upload'
-        %br
-        = image_tag(model_image(@project.image, 800, 600, true), width: 300)
-        = f.file_field :image, class: 'form-control-file mt-2'
-        = f.hidden_field :retained_image
+        = f.hidden_field :image_uid
+
+        / %br
+        / = image_tag(model_image(@project.image, 800, 600, true), width: 300)
+        / = f.file_field :image, class: 'form-control-file mt-2'
+        / = f.hidden_field :retained_image
         
         %small.form-text.text-muted
           800x600 minimum. JPG, PNG, or GIF.
         %small.form-text.text-muted
           10MB maximum file size.
-      .form-group
-        = f.label "Or Paste URL to Image"
-        = f.text_field :image_url, placeholder: "http://hireclub.co/logo.jpg", class: 'form-control'      
+      / .form-group
+      /   = f.label "Or Paste URL to Image"
+      /   = f.text_field :image_url, placeholder: "http://hireclub.co/logo.jpg", class: 'form-control'      
       
     .col-6
       .form-group
@@ -59,3 +62,19 @@
 
 :javascript
   var simplemde = new SimpleMDE({ element: document.getElementById("project_description") });
+
+%script{:src => "//widget.cloudinary.com/global/all.js", :type => "text/javascript"}
+:javascript
+  document.getElementById("upload_widget_opener").addEventListener("click", function() {
+    console.log("click")
+    cloudinary.openUploadWidget({ cloud_name: "#{Rails.application.secrets.cloudinary_name}", upload_preset: 'project_upload'}, 
+      function(error, result) { 
+      console.log(error, result)
+        if(result) {
+          image_uid = result[0].public_id;
+          console.log("image_uid:"+image_uid)
+          $('#project_image_uid').val(image_uid);
+        }
+      });
+
+  }, false);
