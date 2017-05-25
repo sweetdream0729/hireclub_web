@@ -67,7 +67,10 @@
 :javascript
   document.getElementById("upload_widget_opener").addEventListener("click", function() {
     console.log("click")
-    cloudinary.openUploadWidget({ cloud_name: "#{Rails.application.secrets.cloudinary_name}", upload_preset: 'project_upload'}, 
+    cloudinary.openUploadWidget({ 
+      cloud_name: "#{Rails.application.secrets.cloudinary_name}", 
+      upload_preset: 'project_upload',
+      cropping: 'server'}, 
       function(error, result) { 
       console.log(error, result)
         if(result) {
