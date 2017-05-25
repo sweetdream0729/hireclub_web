@@ -8,12 +8,12 @@
   .row
     .col-6
       .form-group
-        = link_to "Upload Image", "#", class: "btn btn-primary", id: "upload_widget_opener"
+        = link_to "Upload Image", "javascript:void(0)", class: "btn btn-primary open_uploader", id: "upload_widget_opener"
         = f.label 'Image Upload'
         = f.hidden_field :image_uid
 
         %br
-        = image_tag(model_image(@project.image, 800, 600, true), width: 300, id: "image_preview")
+        = image_tag(model_image(@project.image, 800, 600, true), width: 300, id: "image_preview", class: 'open_uploader')
         / = f.file_field :image, class: 'form-control-file mt-2'
         / = f.hidden_field :retained_image
         
@@ -65,8 +65,11 @@
 
 %script{:src => "//widget.cloudinary.com/global/all.js", :type => "text/javascript"}
 :javascript
-  document.getElementById("upload_widget_opener").addEventListener("click", function() {
-    console.log("click")
+  elems = document.getElementsByClassName("open_uploader");
+  for (var i = 0; i < elems.length; i++) {
+    elems[i].addEventListener('click', showUploader ,false);
+  }
+  function showUploader(){
     cloudinary.openUploadWidget({ 
       cloud_name: "#{Rails.application.secrets.cloudinary_name}", 
       upload_preset: 'project_upload',
@@ -86,5 +89,4 @@
           $('#image_preview').attr("src", image_url)
         }
       });
-
-  }, false);
+  }
