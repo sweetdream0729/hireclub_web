@@ -70,14 +70,13 @@
       resource_type: "image",
       multiple: false}, 
       function(error, result) { 
-      console.log(error, result)
+        console.log(error, result);
         if(result) {
           image_uid = result[0].public_id;
           image_url = result[0].secure_url;
-          console.log("image_uid:"+image_uid)
-          console.log("image_url:"+image_url)
           $('#project_image_uid').val(image_uid);
           $('#image_preview').attr("src", image_url)
         }
-      });
+      }
+    );
   }
