@@ -70,7 +70,9 @@
     cloudinary.openUploadWidget({ 
       cloud_name: "#{Rails.application.secrets.cloudinary_name}", 
       upload_preset: 'project_upload',
-      cropping: 'server'}, 
+      cropping: 'server',
+      cropping_aspect_ratio: 1.333333333333333,
+      multiple: false}, 
       function(error, result) { 
       console.log(error, result)
         if(result) {
