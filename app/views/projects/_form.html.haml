@@ -6,26 +6,19 @@
         - @project.errors.full_messages.each do |msg|
           %li= msg
   .row
-    .col-6
+    .col-sm-6
       .form-group
-        = link_to "Upload Image", "javascript:void(0)", class: "btn btn-primary open_uploader", id: "upload_widget_opener"
-        = f.label 'Image Upload'
-        = f.hidden_field :image_uid
-
+        = f.label 'Image'
         %br
-        = image_tag(model_image(@project.image, 800, 600, true), width: 300, id: "image_preview", class: 'open_uploader')
-        / = f.file_field :image, class: 'form-control-file mt-2'
-        / = f.hidden_field :retained_image
-        
-        %small.form-text.text-muted
-          800x600 minimum. JPG, PNG, or GIF.
-        %small.form-text.text-muted
-          10MB maximum file size.
-      / .form-group
-      /   = f.label "Or Paste URL to Image"
-      /   = f.text_field :image_url, placeholder: "http://hireclub.co/logo.jpg", class: 'form-control'      
+        = f.hidden_field :image_uid
+        = image_tag(model_image(@project.image, 800, 600, true), width: "100%", id: "image_preview", class: "mb-4 rounded open_uploader")
+        %p
+          = link_to "Upload Image", "javascript:void(0)", class: "btn btn-secondary btn-block open_uploader", id: "upload_widget_opener"
+        %p
+          %small.form-text.text-muted
+            800x600 minimum. JPG, PNG, or GIF. 10MB maximum file size.
       
-    .col-6
+    .col-sm-6
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
@@ -49,8 +42,6 @@
         = f.label :description
         = f.text_area :description, class: 'form-control', placeholder: "Describe the project...", rows: 4
 
-    
-    
 
       %hr
       = f.submit 'Save', class: "btn btn-primary btn-lg"
