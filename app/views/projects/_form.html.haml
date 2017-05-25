@@ -22,9 +22,7 @@
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
-      .form-group
-        = f.label "Link To"
-        = f.text_field :link, class: 'form-control', placeholder: "http://"
+
       .form-group
         = f.label "Skills"
         = f.text_field :skills_list, placeholder: "Design, Rails, Marketing"
@@ -35,12 +33,17 @@
         = f.hidden_field :company_id, value: @project.company_id, class: "autocomplete_company_id"
 
       .form-group
-        = f.label :position
-        = f.number_field :position, class: 'form-control', min: 0
-
+        = f.label "Link To"
+        = f.text_field :link, class: 'form-control', placeholder: "http://"
+      
       .form-group
         = f.label :description
         = f.text_area :description, class: 'form-control', placeholder: "Describe the project...", rows: 4
+
+      .form-group
+        = f.label :position
+        = f.number_field :position, class: 'form-control', min: 0
+
 
 
       %hr
