@@ -6,7 +6,7 @@
         - @project.errors.full_messages.each do |msg|
           %li= msg
   .row
-    .col-6
+    .col-sm-6
       .form-group
         = f.label 'Image'
         %br
@@ -20,7 +20,7 @@
           %small.form-text.text-muted
             10MB maximum file size.
       
-    .col-6
+    .col-sm-6
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
@@ -44,8 +44,6 @@
         = f.label :description
         = f.text_area :description, class: 'form-control', placeholder: "Describe the project...", rows: 4
 
-    
-    
 
       %hr
       = f.submit 'Save', class: "btn btn-primary btn-lg"
