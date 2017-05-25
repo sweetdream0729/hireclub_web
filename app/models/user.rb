@@ -382,12 +382,17 @@ class User < ApplicationRecord
       return nil
     end
 
-    suggested = ActiveSupport::Inflector.parameterize(source, separator: '')
-    
+    base = ActiveSupport::Inflector.parameterize(source, separator: '') 
+    suggested = base
     user_count = User.where(username: suggested).size
-    return suggested if user_count == 0
-
-    return "#{suggested}#{user_count}"
+    count = 1
+    while user_count > 0
+      suggested = "#{base}#{count}"
+      user_count = User.where(username: suggested).size
+      count+=1
+    end
+    
+    return suggested
   end
 
   # Class Methods

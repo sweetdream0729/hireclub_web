@@ -361,6 +361,12 @@ RSpec.describe User, type: :model do
 
       user.name = "Ketan Anjaria"
       expect(user.suggested_username).to eq "ketananjaria1"
+
+      other_user2 = FactoryGirl.create(:user, username: "ketananjaria1")
+      expect(user.suggested_username).to eq "ketananjaria2"
+
+      other_user3 = FactoryGirl.create(:user, username: "ketananjaria2")
+      expect(user.suggested_username).to eq "ketananjaria3"
     end
   end
 end
