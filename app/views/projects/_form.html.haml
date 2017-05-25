@@ -12,8 +12,8 @@
         = f.label 'Image Upload'
         = f.hidden_field :image_uid
 
-        / %br
-        / = image_tag(model_image(@project.image, 800, 600, true), width: 300)
+        %br
+        = image_tag(model_image(@project.image, 800, 600, true), width: 300, id: "image_preview")
         / = f.file_field :image, class: 'form-control-file mt-2'
         / = f.hidden_field :retained_image
         
@@ -72,13 +72,17 @@
       upload_preset: 'project_upload',
       cropping: 'server',
       cropping_aspect_ratio: 1.333333333333333,
+      cropping_show_dimensions: true,
       multiple: false}, 
       function(error, result) { 
       console.log(error, result)
         if(result) {
           image_uid = result[0].public_id;
+          image_url = result[0].secure_url;
           console.log("image_uid:"+image_uid)
+          console.log("image_url:"+image_url)
           $('#project_image_uid').val(image_uid);
+          $('#image_preview').attr("src", image_url)
         }
       });
 
