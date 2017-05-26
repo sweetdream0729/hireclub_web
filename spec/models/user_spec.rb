@@ -323,7 +323,7 @@ RSpec.describe User, type: :model do
       expect(activity.key).to eq UserWelcomeActivity::KEY
       expect(activity.trackable).to eq user
       expect(activity.owner).to eq user
-      expect(activity.private).to eq true
+      expect(activity.private).to eq false
     end
 
     it "should only welcome once" do
