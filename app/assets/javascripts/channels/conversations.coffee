@@ -70,7 +70,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     countElement = $("#conversation_#{chatroom_id}").find('.badge')
     if $unread_cell.length > 0
       App.last_read.update(chatroom_id)
-      $unread_cell.hide()
+      $unread_cell.remove()
     if countElement.length > 0
       countElement.remove()
 
