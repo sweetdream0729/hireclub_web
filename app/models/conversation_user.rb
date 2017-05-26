@@ -28,13 +28,7 @@ class ConversationUser < ApplicationRecord
     other_messages.where("created_at < ?", read_at).find_each do |message|
       message.read_by!(user)
     end
-    update_unread_counts
-  end
-
-  def update_unread_counts
-    conversation.conversation_users.each do |conversation_user|
-      conversation_user.update_unread_messages_count
-    end
+    conversation.update_unread_counts
   end
 
 end
