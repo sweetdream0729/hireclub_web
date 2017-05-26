@@ -24,10 +24,6 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         unread_cell = $(".unread_cell")
         if unread_cell.length == 0
           active_conversation.append("<div class='unread_cell'>Unread</div>")
-        #else
-        #  active_conversation.append(unread_cell)
-        #  unread_cell.show()
-
       else
         App.last_read.update(data.conversation_id)
 
