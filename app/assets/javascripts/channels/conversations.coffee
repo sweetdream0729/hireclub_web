@@ -65,11 +65,11 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     chat.scrollTop(scrollHeight)
 
   handleVisiblityChange: ->
-    chatroom_id = $("[data-behavior='messages']").data("conversation-id")
+    conversation_id = $("[data-behavior='messages']").data("conversation-id")
     $unread_cell = $(".unread_cell")
-    countElement = $("#conversation_#{chatroom_id}").find('.badge')
+    countElement = $("#conversation_#{conversation_id}").find('.badge')
     if $unread_cell.length > 0
-      App.last_read.update(chatroom_id)
+      App.last_read.update(conversation_id)
       $unread_cell.remove()
     if countElement.length > 0
       countElement.remove()

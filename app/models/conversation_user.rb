@@ -32,7 +32,7 @@ class ConversationUser < ApplicationRecord
   end
 
   def update_unread_counts
-    conversation.conversation_users.where(conversation: conversation).each do |conversation_user|
+    conversation.conversation_users.each do |conversation_user|
       conversation_user.update_unread_messages_count
     end
   end
