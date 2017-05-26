@@ -5,17 +5,18 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
   disconnected: ->
     # Called when the subscription has been terminated by the server
 
-  received: (data) ->    
+  received: (data) ->
     text = data.message.text
     text = text.substring(0,25)
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
+    current_user_id = App.currentUser #is used to retrieve count of unread message from hash
 
     # if we are viewing this conversation id
     if active_conversation.length > 0
       partial = data.message_partial
-      
+
       # If the message is coming current user append my_message class
-      if data.user_id.toString() == App.currentUser.toString()
+      if data.user_id.toString() == current_user_id.toString()
         partial = data.message_partial.replace("<div class='message'>", "<div class='message my_message'>");
         text = "You: " + text
 
@@ -23,12 +24,9 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         unread_cell = $(".unread_cell")
         if unread_cell.length == 0
           active_conversation.append("<div class='unread_cell'>Unread</div>")
-        else
-          active_conversation.append(unread_cell)
-          unread_cell.show()
-
       else
         App.last_read.update(data.conversation_id)
+
 
       # Insert the message
       App.typing.showTypingIndicator(false)
@@ -40,6 +38,17 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         preview = conversation_list_item.find(".conversation_preview")
         preview.text(text)
         conversation_list_item.addClass("unread")
+        if active_conversation.length == 0 || document.hidden #if conversation is not open or document is hidden we need to update the count in the list
+          App.conversations.update_conversation_list_count(conversation_list_item,data.unread_message_hash[current_user_id])
+
+ #Function for updating count of unread messages in conversation list
+  update_conversation_list_count: (conversation_list_item,unread_count) ->
+    countElement = conversation_list_item.find('.badge')
+    if countElement.length > 0 && unread_count > 0 #if there is unread message already in the conversation
+      countElement.html(unread_count)
+    else if unread_count > 0 #first unread message
+      conversation_list_item.find('.conversation_time').append("<span class='badge badge-primary text-right'></span>")
+      conversation_list_item.find('.badge').html(unread_count)
 
   send_message: (conversation_id, text) ->
     # Calls ConversationsChannel.send_messsage
@@ -52,17 +61,23 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     chat.scrollTop(scrollHeight)
 
   handleVisiblityChange: ->
+    conversation_id = $("[data-behavior='messages']").data("conversation-id")
     $unread_cell = $(".unread_cell")
+    countElement = $("#conversation_#{conversation_id}").find('.badge')
     if $unread_cell.length > 0
-      chatroom_id = $("[data-behavior='messages']").data("conversation-id")
-      App.last_read.update(chatroom_id)
-      $unread_cell.hide()
+      App.last_read.update(conversation_id)
+      $unread_cell.remove()
+    if countElement.length > 0
+      countElement.remove()
 
-$(document).ready -> 
+$(document).ready ->
   $(document).on "click", App.conversations.handleVisiblityChange
+  $('.conversation_cell').click (e) ->
+    e.stopPropagation()
+    return
   # Scroll to bottom when starting conversation
   App.conversations.scrollToBottom()
-  
+
   # submit message on enter
   $("#new_message").on "keypress", (e) ->
     if e && e.keyCode == 13
