@@ -68,6 +68,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     if $unread_cell.length > 0
       App.last_read.update(conversation_id)
       $unread_cell.remove()
+      $("#conversation_#{conversation_id}").removeClass("unread")
     if countElement.length > 0
       countElement.remove()
 
