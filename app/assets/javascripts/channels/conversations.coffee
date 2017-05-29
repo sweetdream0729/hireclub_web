@@ -40,6 +40,8 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
         conversation_list_item.addClass("unread")
         if active_conversation.length == 0 || document.hidden #if conversation is not open or document is hidden we need to update the count in the list
           App.conversations.update_conversation_list_count(conversation_list_item,data.unread_message_hash[current_user_id])
+    #update total count on title bar
+    @perform "update_title_count"
 
  #Function for updating count of unread messages in conversation list
   update_conversation_list_count: (conversation_list_item,unread_count) ->
