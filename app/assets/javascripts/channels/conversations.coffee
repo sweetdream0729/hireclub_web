@@ -7,7 +7,8 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
   received: (data) ->
     text = data.message.text
-    text = text.substring(0,25)
+    if text.length > 25
+      text = text.substring(0,22) + "..."
     active_conversation = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
     current_user_id = App.currentUser #is used to retrieve count of unread message from hash
 
