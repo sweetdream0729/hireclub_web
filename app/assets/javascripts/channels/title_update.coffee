@@ -18,3 +18,13 @@ App.title_update = App.cable.subscriptions.create 'TitleUpdateChannel',
       if titleText.includes(')')
         titleText = titleText.split(')')[1]
         $('title').html titleText
+
+    #for displaying count on navbar
+    navCountDisplayElement = $('#total-unread-count-display').find('span')
+    if navCountDisplayElement.length > 0 #if some unread message is already there
+      if count > 0 #if more read message then update the count
+        navCountDisplayElement.html count
+      else  #if no unread message remove the span element
+        navCountDisplayElement.remove()
+    else #if the span element is not there
+      $('#total-unread-count-display').append("<span>#{count}</span>")
