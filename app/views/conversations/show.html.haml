@@ -1,4 +1,7 @@
 - title @other_users.map(&:display_name).join(", ")
+/for appending count before title
+- total_unread_msg_count = current_user.unread_messages_count
+- title "(#{total_unread_msg_count})" + title if total_unread_msg_count > 0
 
 .container-fluid.conversations_container.px-0
   .row.m-0
