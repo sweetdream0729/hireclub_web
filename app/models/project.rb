@@ -20,6 +20,9 @@ class Project < ApplicationRecord
   include HasTagsList
   has_tags_list :skills
 
+  include HasSmartUrl
+  has_smart_url :link
+
   include PgSearch
   multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
 
