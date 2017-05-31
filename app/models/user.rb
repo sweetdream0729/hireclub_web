@@ -434,8 +434,9 @@ class User < ApplicationRecord
     return user
   end
 
- # returns count of total unread messages for a user
-  def total_unread_msg_count
-    conversation_users.sum(:unread_messages_count)
+  # update unread_messages_count field for user
+  def update_total_unread_msg_count
+    update_attribute(:unread_messages_count, conversation_users.sum(:unread_messages_count))
   end
+
 end
