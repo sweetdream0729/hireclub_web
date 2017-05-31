@@ -6,8 +6,8 @@ App.title_update = App.cable.subscriptions.create 'TitleUpdateChannel',
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
+    count = data.total_count
     if $('.conversations_container').length > 0
-      count = data.total_count
       titleText = $('title').text();
       if count > 0 #when count is increased it should be updated on title bar
         if titleText.includes(')')
@@ -19,3 +19,10 @@ App.title_update = App.cable.subscriptions.create 'TitleUpdateChannel',
         if titleText.includes(')')
           titleText = titleText.split(')')[1]
           $('title').html titleText
+
+    #for displaying count on navbar
+    navCountDisplayElement = $('#nav_unread_messages_count')
+    if count > 0 #if more read message then update the count
+      navCountDisplayElement.html(count)
+    else  #if no unread message remove the span element
+      navCountDisplayElement.html('')
