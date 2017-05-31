@@ -34,7 +34,7 @@
             %a.nav-link{:href => conversations_path}
               %i.fa.fa-comment-o{"aria-hidden" => "true"}
               - unread_messages_count = current_user.total_unread_msg_count
-              %span#total-unread-count-display
+              %span#nav_unread_messages_count
                 -if unread_messages_count > 0
                   = unread_messages_count
         %li.nav-item

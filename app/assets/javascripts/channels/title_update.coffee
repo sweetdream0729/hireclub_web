@@ -20,7 +20,7 @@ App.title_update = App.cable.subscriptions.create 'TitleUpdateChannel',
         $('title').html titleText
 
     #for displaying count on navbar
-    navCountDisplayElement = $('#total-unread-count-display')
+    navCountDisplayElement = $('#nav_unread_messages_count')
     if count > 0 #if more read message then update the count
       navCountDisplayElement.html(count)
     else  #if no unread message remove the span element
