@@ -1,0 +1,96 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f5f8fa; min-width: 340px; font-size: 1px; line-height: normal;">
+  <tr>
+    <td align="center" valign="top">        
+      <!--[if (gte mso 9)|(IE)]>
+         <table border="0" cellspacing="0" cellpadding="0">
+         <tr><td align="center" valign="top" width="750"><![endif]-->
+      <table cellpadding="0" cellspacing="0" border="0" width="750" class="table750" style="width: 100%; max-width: 750px; min-width: 340px; background: #f5f8fa;">
+        <tr>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+          <td align="center" valign="top" style="background: #ffffff;">
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100% !important; min-width: 100%; max-width: 100%; background: #f5f8fa;">
+                     <tr>
+                        <td align="right" valign="top">
+                           <div class="top_pad" style="height: 25px; line-height: 25px; font-size: 23px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <%= render partial: "/email/shared/logo" %>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
+                     <tr>
+                        <td align="center" valign="top">
+                           <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
+                              <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;"><%= @follower.display_name %> followed you on HireClub!</span>
+                           </font>
+                           <div class="top_pad3" style="height: 30px; line-height: 30px; font-size: 28px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="65%" style="width: 65% !important; min-width: 270px; max-width: 65%; border-width: 1px; border-style: solid; border-color: #e5e5e5; border-radius: 5px;">
+                     <tr>
+                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">&nbsp;</td>
+                        <td align="center" valign="top">
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
+                           
+                           <a href="<%= user_url(@follower) %>" style="display: block; max-width: 100px;">
+                              <img src="<%= model_avatar(@follower.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 100px; />
+                           </a>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
+
+                           <a href="<%= user_url(@follower) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                              <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                                 <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;"><%= @follower.display_name %></span>
+                              </font>
+                           </a>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
+
+                           <a href="<%= user_url(@follower) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">   
+                              <font face="'Source Sans Pro', sans-serif" color="#5E5E5E" style="font-size: 19px; line-height: 22px; text-decoration: none;">
+                                 <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
+                                    <%- if @follower.primary_role.present? %>
+                                       <%= @follower.primary_role_name %>
+                                    <% end %>
+                                    <%- if @follower.company.present? %>
+                                       ·
+                                       <%= @follower.company.try(:name) %>
+                                    <% end %>
+                                 </span>
+                              </font>
+                           </a>
+                           
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
+
+                           <%= render partial: "/email/elements/button", locals: { url: follow_user_url(@follower), text: "Follow #{@follower.first_name}"} %>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 18} %>
+
+                           <%= render partial: "/email/elements/button_link", locals: { url: user_url(@follower), text: "View Profile"} %>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>
+
+                        </td>
+                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">&nbsp;</td>
+                     </tr>
+                  </table>
+
+                  <div class="top_pad2" style="height: 70px; line-height: 70px; font-size: 68px;">&nbsp;</div>
+
+                  <%= render partial: "/email/shared/footer" %>
+
+               </td>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+            </tr>
+         </table>
+         <!--[if (gte mso 9)|(IE)]>
+         </td></tr>
+         </table><![endif]-->
+      </td>
+   </tr>
+</table>
