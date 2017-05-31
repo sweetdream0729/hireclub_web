@@ -60,6 +60,7 @@ class NotificationMailer < ApplicationMailer
   def project_created(notification)
     @notification = Notification.find notification
     @user = @notification.user
+    @current_user = @user
     @project = @notification.activity.trackable
 
     mail(to: @user.email, subject: "#{@project.user.display_name} added project #{@project.name}")
