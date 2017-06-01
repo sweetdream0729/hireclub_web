@@ -26,7 +26,7 @@ end
 PublicActivity::Activity.class_eval do
   has_many :notifications, dependent: :destroy
 
-  after_commit :create_notifications, on: :create, unless: Proc.new { |activity| activity.key == "message.create" }
+  after_commit :create_notifications, on: :create
 
   def create_notifications
     CreateNotificationJob.perform_later(self.id) if Notification.enabled
