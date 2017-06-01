@@ -7,7 +7,7 @@ $(document).ready ->
     return
 
   $('.autocomplete_location').typeahead {
-    minLength: 1
+    minLength: 0
     hint: false
     highlight: true
   },
