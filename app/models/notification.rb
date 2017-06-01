@@ -31,7 +31,7 @@ class Notification < ApplicationRecord
 
   def send_email
     Rails.logger.tagged("notifications") { Rails.logger.info "send_email key #{activity.key}" }
-    
+
     klass = Notification.get_activity_class(activity_key)
     return klass.send_notification(self) if klass && klass.respond_to?(:send_notification)
   end
@@ -54,18 +54,16 @@ class Notification < ApplicationRecord
   end
 
   def self.create_notifications_for_activity(activity_id)
-    #puts "Notification.create_notifications_for_activity #{activity_id}"
     activity = Activity.where(id: activity_id).first
     return false if activity.nil? || skip_notifications?(activity)
 
-    #puts "   #{activity.inspect}"
     users = self.get_recipients_for(activity)
 
     if users.is_a? Array
       users.each do |recipient|
         create_notification_for(activity, recipient)
       end
-    else 
+    else
       users.find_each do |recipient|
         create_notification_for(activity, recipient)
       end
@@ -76,7 +74,6 @@ class Notification < ApplicationRecord
     return if activity.nil? || user.nil?
     return if Notification.where(activity: activity, user: user).exists?
 
-    #puts "Notification.create_notification_for #{activity}, #{user}"
     Notification.create(activity: activity, user: user)
   end
 
@@ -86,9 +83,9 @@ class Notification < ApplicationRecord
 
   def self.get_recipients_for(activity)
     klass = Notification.get_activity_class(activity.key)
-    
+
     return klass.get_recipients_for(activity) if klass && klass.respond_to?(:get_recipients_for)
-    
+
     raise "Please implement notification for activity #{key}"
   end
 

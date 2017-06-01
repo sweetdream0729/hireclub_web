@@ -18,6 +18,13 @@ class ConversationsChannel < ApplicationCable::Channel
     UserPresenceJob.perform_later(current_user.id, "active")
   end
 
+  #for sending notification to user if he hasn't read the message
+  def send_notification(data)
+    activity = Activity.where(trackable_id: data['message_id'],key: "message.create").first
+    user = User.find(data['user_id'])
+    Notification.create_notification_for(activity,user)
+  end
+
   def update_title_count
     TitleCountJob.perform_later(current_user)
   end
