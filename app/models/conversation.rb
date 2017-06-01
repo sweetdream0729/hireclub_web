@@ -60,7 +60,6 @@ class Conversation < ApplicationRecord
   def update_unread_counts
     conversation_users.each do |conversation_user|
       conversation_user.update_unread_messages_count #updating unread count for one conversation
-      conversation_user.user.update_total_unread_msg_count #updating total under unread count for user
     end
   end
 end
