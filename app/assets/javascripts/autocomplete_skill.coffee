@@ -13,6 +13,7 @@ $(document).ready ->
   },
     name: 'skill-search-results'
     source: skillSearch
+    limit: 8
     display: (skill) ->
       skill.name
 
@@ -24,6 +25,7 @@ $(document).ready ->
     },
       name: 'skill-search-results'
       source: skillSearch
+      limit: 8
       display: (skill) ->
         skill.name
     # skill selected, let's set hidden skill_id field

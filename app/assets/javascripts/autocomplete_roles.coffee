@@ -13,6 +13,7 @@ $(document).ready ->
   },
     name: 'autocomplete_role'
     source: roleSearch
+    limit: 8
     display: (role) ->
       role.name
   # role selected, let's set hidden role_id field
