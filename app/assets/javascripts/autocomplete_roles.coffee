@@ -1,6 +1,6 @@
 $(document).ready ->
   roleSearch = (query, syncResults, asyncResults) ->
-    $.get '/roles.json', { query: query, sort_by: "popular"  }, ((data) ->
+    $.get '/roles.json', { query: query, sort_by: "popular" }, ((data) ->
       asyncResults data
       return
     ), 'json'
