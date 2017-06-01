@@ -1,0 +1,74 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f5f8fa; min-width: 340px; font-size: 1px; line-height: normal;">
+  <tr>
+    <td align="center" valign="top">        
+      <!--[if (gte mso 9)|(IE)]>
+         <table border="0" cellspacing="0" cellpadding="0">
+         <tr><td align="center" valign="top" width="750"><![endif]-->
+      <table cellpadding="0" cellspacing="0" border="0" width="750" class="table750" style="width: 100%; max-width: 750px; min-width: 340px; background: #f5f8fa;">
+        <tr>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+          <td align="center" valign="top" style="background: #ffffff;">
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100% !important; min-width: 100%; max-width: 100%; background: #f5f8fa;">
+                     <tr>
+                        <td align="right" valign="top">
+                           <div class="top_pad" style="height: 25px; line-height: 25px; font-size: 23px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <%= render partial: "/email/shared/logo" %>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
+                     <tr>
+                        <td align="left" valign="top">
+                           <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
+                              <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
+                                 Welcome To HireClub!
+                              </span>
+                           </font>
+
+                           <div class="min_pad" style="height: 32px; line-height: 32px; font-size: 30px;">&nbsp;</div>
+
+                           <%= render partial: "/email/elements/p", locals: { text: "I'm #{link_to 'Ketan Anjaria', 'https://hireclub.co/kidbombay'} and I'm the founder of HireClub.<br/>When I started HireClub in 2011 with 25 of my friends, I had no idea it would grow to over 10,000 people!<br/><strong>Our goal is to help friends find jobs.</strong>"} %>
+
+                           <%= render partial: "/email/elements/h2", locals: { text: "Pick One Role"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Even if you wear a lot of hats, we suggest adding only one role based on recruiter feedback."} %>
+
+                           <%= render partial: "/email/elements/h2", locals: { text: "Add Your Top 5 Skills"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "You really don't need more than 10 skills. You can also reorder your skills on your profile page just by dragging them around."} %>
+
+                           <%= render partial: "/email/elements/h2", locals: { text: "Show Off Your Projects"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Even if you aren't a designer, you can screenshot the websites or emails, or whatever else you worked on. Don't forget to tag which skills you used for each project as hiring managers love to know the details."} %>
+
+                           <%= render partial: "/email/elements/h2", locals: { text: "Milestones Are Key"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Milestones are how you stand out to hiring managers. The design and format is based on hundreds of interviews with hiring managers to help you get seen."} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Use numbers, metrics, and accomplishments #humblebrag."} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Don't just put what you did, but how you did it better."} %>
+
+                           <%= render partial: "/email/elements/h2", locals: { text: "Send Me Feedback"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "I love hearing your feedback! Email me at #{link_to 'ketan@hireclub.co', 'mailto:ketan@hireclub.co'}. <br/><strong>I read every email you send.</td>"} %>
+
+                           <div style="height: 48px; line-height: 48px; font-size: 46px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <%= render partial: "/email/elements/v_spacer", locals: { height: 24} %>
+
+                  <%= render partial: "/email/elements/button", locals: { url: user_url(@user), text: "View Your Profile"} %>
+
+                  <%= render partial: "/email/elements/v_spacer", locals: { height: 56} %>                
+
+                  <%= render partial: "/email/shared/footer" %>
+
+               </td>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+            </tr>
+         </table>
+         <!--[if (gte mso 9)|(IE)]>
+         </td></tr>
+         </table><![endif]-->
+      </td>
+   </tr>
+</table>
