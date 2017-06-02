@@ -86,13 +86,14 @@ class NotificationMailer < ApplicationMailer
         campaign_id: @notification.activity_key,
         metadata: {
           notification_id: @notification.id,
-          user_id: @user.id
+          user_id: @user.id,
+          activity_id: @notification.activity.id
         }
       }
       headers['X-MSYS-API'] = data.to_json
     end
 
-    Rails.logger.info headers.inspect
+    #Rails.logger.info headers.inspect
   end
   
 end
