@@ -27,6 +27,7 @@ RSpec.describe Conversation, type: :model do
       expect(conversation).to be_persisted
       expect(conversation.users).to include(user1)
       expect(conversation.users).to include(user2)
+      expect(conversation.key).to eq("#{user1.id}_#{user2.id}")
     end
 
     it "should not duplicate conversation between users" do
