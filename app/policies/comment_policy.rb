@@ -10,8 +10,7 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    return true
+    user_present?
   end
   
   def update?
@@ -25,12 +24,10 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def like?
-    return false if user.nil?
-    return true
+    user_present?
   end
 
   def unlike?
-    return false if user.nil?
-    return true
+    user_present?
   end
 end
