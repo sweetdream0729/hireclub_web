@@ -38,11 +38,11 @@
             - unread = false
             - @messages.each do |message|
               - if last_message.nil?
-                .day_cell
-                  = local_time_ago(message.created_at)
+                .day_cell{"data-datetime" => "#{message.created_at}"}
+                  = local_relative_time(message.created_at, 'weekday-or-date')
               - elsif message.created_at.to_date != last_message.created_at.to_date
-                .day_cell
-                  = local_time_ago(last_message.created_at)
+                .day_cell{"data-datetime" => "#{message.created_at}"}
+                  = local_relative_time(message.created_at, 'weekday-or-date')
               /condition to check whether message by other users are read by current user
               - if message.user != current_user && !unread && !message.is_read_by?(current_user)
                 - unread = true
