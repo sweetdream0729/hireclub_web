@@ -46,6 +46,10 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     #update total count on title bar
     @perform "update_title_count"
 
+    #for sending push notification
+    if data.user_id.toString() != current_user_id.toString() && (active_conversation.length == 0 || document.hidden)
+      @perform "send_unread_notification", {message_id: data.message.id,user_id: current_user_id}
+
  #Function for updating count of unread messages in conversation list
   update_conversation_list_count: (conversation_list_item,unread_count) ->
     countElement = conversation_list_item.find('.badge')

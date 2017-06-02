@@ -18,6 +18,13 @@ class ConversationsChannel < ApplicationCable::Channel
     UserPresenceJob.perform_later(current_user.id, "active")
   end
 
+  #for creating message.unread activity which will send push notification to user
+  def send_unread_notification(data)
+    message = Message.find( data['message_id'])
+    user = User.find(data['user_id'])
+    message.create_activity_once key: MessageUnreadActivity::KEY, owner: user, published: true, private: true, recipient: message.conversation
+  end
+
   def update_title_count
     TitleCountJob.perform_later(current_user)
   end
