@@ -239,6 +239,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
+    json (1.8.6)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -430,6 +431,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    simple_spark (1.0.5)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     sitemap_generator (5.3.1)
       builder (~> 3.0)
     slop (3.6.0)
@@ -550,6 +554,7 @@ DEPENDENCIES
   sendgrid-ruby
   shoulda-matchers
   sidekiq
+  simple_spark
   sitemap_generator
   spring
   spring-commands-rspec

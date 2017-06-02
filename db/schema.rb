@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524150824) do
+ActiveRecord::Schema.define(version: 20170602082149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 20170524150824) do
     t.index ["published"], name: "index_activities_on_published", using: :btree
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+  end
+
+  create_table "analytics_events", force: :cascade do |t|
+    t.string   "event_id",                null: false
+    t.citext   "key",                     null: false
+    t.jsonb    "data",       default: {}, null: false
+    t.datetime "timestamp",               null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["event_id"], name: "index_analytics_events_on_event_id", unique: true, using: :btree
+    t.index ["key"], name: "index_analytics_events_on_key", using: :btree
+    t.index ["timestamp"], name: "index_analytics_events_on_timestamp", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|

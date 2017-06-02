@@ -63,6 +63,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy, inverse_of: :user
   has_many :jobs, dependent: :destroy, inverse_of: :user
   has_many :stories, dependent: :destroy, inverse_of: :user
+  has_many :comments, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -434,8 +435,4 @@ class User < ApplicationRecord
     return user
   end
 
- # returns count of total unread messages for a user
-  def total_unread_msg_count
-    conversation_users.sum(:unread_messages_count)
-  end
 end

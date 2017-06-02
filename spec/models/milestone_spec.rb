@@ -82,7 +82,7 @@ RSpec.describe Milestone, type: :model do
     end
   end
   
-    describe "link" do
+  describe "link" do
     it "should add http if missing" do
       milestone.link = "instagram.com/username"
       expect(milestone.link).to eq("http://instagram.com/username")

@@ -30,6 +30,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:likes) }
     it { should have_many(:jobs) }
     it { should have_many(:stories) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -106,7 +107,7 @@ RSpec.describe User, type: :model do
   #     expect(user).to be_persisted
 
   #     ImportFacebookHistoryJob.perform_now(user, omniauth)
-      
+
   #     milestone = user.milestones.work.first
   #     expect(milestone).to be_present
   #     expect(milestone.name).to eq "Joined Up All Night SF as Chief technology officer"
@@ -128,7 +129,7 @@ RSpec.describe User, type: :model do
   #     expect(user).to be_persisted
 
   #     ImportFacebookHistoryJob.perform_now(user, omniauth)
-      
+
   #     milestone = user.milestones.education.last
   #     expect(milestone).to be_present
   #     expect(milestone.name).to eq "Went to The Evergreen State College"
@@ -222,7 +223,7 @@ RSpec.describe User, type: :model do
 
       expect(results).not_to be_nil
       expect(results.count).to eq 1
-      expect(results.first).to eq user      
+      expect(results.first).to eq user
     end
 
     it "should search_by_exact_name" do
@@ -233,7 +234,7 @@ RSpec.describe User, type: :model do
 
       expect(results).not_to be_nil
       expect(results.count).to eq 1
-      expect(results.first).to eq user      
+      expect(results.first).to eq user
     end
   end
 
@@ -251,16 +252,16 @@ RSpec.describe User, type: :model do
     let(:user) { FactoryGirl.create(:user) }
 
     it "should have roles by position" do
-      FactoryGirl.create(:user_role, user: user, position: 0) 
+      FactoryGirl.create(:user_role, user: user, position: 0)
       FactoryGirl.create(:user_role, user: user, position: 10)
       FactoryGirl.create(:user_role, user: user, position: 3)
-      user.save 
+      user.save
       # nil added to the end to simulate the addition of further meta tags
       keywords = user.user_roles.by_position.limit(3).map(&:name) + [nil]
-      expect(user.key_words).to eq(keywords) 
+      expect(user.key_words).to eq(keywords)
     end
 
-    it "should have skills by position" do 
+    it "should have skills by position" do
       FactoryGirl.create(:user_skill, user: user, position: 10)
       FactoryGirl.create(:user_skill, user: user, position: 11)
       FactoryGirl.create(:user_skill, user: user, position: 12)
@@ -271,7 +272,7 @@ RSpec.describe User, type: :model do
 
       keywords = user.user_skills.by_position.limit(5).map(&:name) + [nil]
       expect(user.key_words).to eq(keywords)
-    end 
+    end
   end
 
   describe "website_url" do
@@ -367,6 +368,61 @@ RSpec.describe User, type: :model do
 
       other_user3 = FactoryGirl.create(:user, username: "ketananjaria2")
       expect(user.suggested_username).to eq "ketananjaria3"
+    end
+  end
+
+describe "unread_messages_count" do
+    let(:first_user) { FactoryGirl.create(:user) }
+    let(:second_user) { FactoryGirl.create(:user) }
+    let(:third_user) { FactoryGirl.create(:user) }
+
+    it "should calculate unread_messages_count" do
+      first_conversation = Conversation.between([first_user,second_user])
+      second_conversation = Conversation.between([first_user,third_user])
+      message1 = FactoryGirl.create(:message, user: first_user, conversation: first_conversation)
+      message2 = FactoryGirl.create(:message, user: second_user, conversation: first_conversation)
+      message3 = FactoryGirl.create(:message, user: first_user, conversation: second_conversation)
+      message4 = FactoryGirl.create(:message, user: third_user, conversation: second_conversation)
+
+      first_conversation_first_user = first_conversation.conversation_users.first
+      first_conversation_first_user.update_unread_messages_count
+      first_user.reload #the counter_cache is getting update in database directly
+      expect(first_user.unread_messages_count).to eq(1)
+
+      second_conversation_first_user = second_conversation.conversation_users.first
+      second_conversation_first_user.update_unread_messages_count
+      first_user.reload
+      expect(first_user.unread_messages_count).to eq(2)
+
+      first_conversation_second_user = first_conversation.conversation_users.last
+      first_conversation_second_user.update_unread_messages_count
+      second_user.reload
+      expect(second_user.unread_messages_count).to eq(1)
+
+      second_conversation_third_user = second_conversation.conversation_users.last
+      second_conversation_third_user.update_unread_messages_count
+      third_user.reload
+      expect(third_user.unread_messages_count).to eq(1)
+
+      message1.read_by!(second_user)
+      first_conversation_second_user.update_unread_messages_count
+      second_user.reload
+      expect(second_user.unread_messages_count).to eq(0)
+
+      message2.read_by!(first_user)
+      first_conversation_first_user.update_unread_messages_count
+      first_user.reload
+      expect(first_user.unread_messages_count).to eq(1)
+
+      message3.read_by!(third_user)
+      second_conversation_third_user.update_unread_messages_count
+      third_user.reload
+      expect(third_user.unread_messages_count).to eq(0)
+
+      message4.read_by!(first_user)
+      second_conversation_first_user.update_unread_messages_count
+      first_user.reload
+      expect(first_user.unread_messages_count).to eq(0)
     end
   end
 end

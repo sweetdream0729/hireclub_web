@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe ConversationUser, type: :model do
   let(:user) { FactoryGirl.build(:user) }
-  let(:conversation_user) { FactoryGirl.build(:conversation_user, user: user) }
-  let(:conversation) { conversation_user.conversation}
+  let(:conversation) { Conversation.between([user]) }
+  let(:conversation_user) { conversation.conversation_users.first }
 
   subject { conversation_user }
 

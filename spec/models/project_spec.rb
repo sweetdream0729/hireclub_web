@@ -17,7 +17,7 @@ RSpec.describe Project, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:position) }
-    it { should validate_presence_of(:image_uid) }
+    it { should validate_presence_of(:image) }
     #it { should validate_uniqueness_of(:slug).case_insensitive }
 
     it "should be valid only with approved skills" do
@@ -211,5 +211,24 @@ RSpec.describe Project, type: :model do
         expect(project.liked_by?(user)).to be false
       end
     end
+  end
+
+  describe "link" do
+    it "should add http if missing" do
+      project.link = "instagram.com/username"
+      expect(project.link).to eq("http://instagram.com/username")
+    end
+
+    it "should add http if missing ignoring subdomains" do
+      project.link = "www.instagram.com/username"
+      expect(project.link).to eq("http://www.instagram.com/username")
+    end
+
+    it "should ignore invalid urls" do
+      project.link = "foo"
+      expect(project.link).to eq(nil)
+    end
+
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:link) }
   end
 end

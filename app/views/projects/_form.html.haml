@@ -7,12 +7,12 @@
   /         %li= msg[1]
   .row
     .col-sm-6
-      .form-group{class: ("has-danger" if @project.errors[:image_uid].present?)}
+      .form-group{class: ("has-danger" if @project.errors[:image].present?)}
         = f.label 'Image', class: "form-control-label"
         %br
         = f.hidden_field :image_uid
         = image_tag(model_image(@project.image, 800, 600, true), width: "100%", id: "image_preview", class: "rounded open_uploader form_image")
-        - if @project.errors[:image_uid].present?
+        - if @project.errors[:image].present?
           .form-control-feedback
             %small
               Image is Required

@@ -31,6 +31,8 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
       # Insert the message
       App.typing.showTypingIndicator(false)
+      #for appending day cell if required
+      @add_day_cell(data.message.created_at,active_conversation)
       active_conversation.append(partial)
       App.conversations.scrollToBottom()
 
@@ -77,6 +79,14 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
       $("#conversation_#{conversation_id}").removeClass("unread")
     if countElement.length > 0
       countElement.remove()
+
+  #Function to add day cell for first message of conversation or first message of the day
+  add_day_cell: (created_at,conversation) ->
+    last_day_cell = $('.day_cell').last()
+    message_date = new Date(created_at)
+    #condition to check if it is the first message of the conversation or day
+    if last_day_cell.length == 0 || LocalTime.relativeDate(new Date(last_day_cell.data('datetime'))) != LocalTime.relativeDate(message_date)
+      conversation.append("<div class='day_cell' data-datetime='#{created_at}'>#{LocalTime.relativeWeekday(message_date)}</div>")
 
 $(document).ready ->
   $(document).on "click", App.conversations.handleVisiblityChange

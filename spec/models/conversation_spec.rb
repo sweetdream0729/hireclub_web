@@ -16,17 +16,18 @@ RSpec.describe Conversation, type: :model do
   describe 'validations' do
     it { should validate_uniqueness_of(:slug) }
     #it { should validate_uniqueness_of(:key).case_insensitive }
+    it { should validate_presence_of(:key) }
   end
 
   describe "between" do
     
-
     it "should create conversation between users" do
       conversation = Conversation.between([user1, user2])
 
       expect(conversation).to be_persisted
       expect(conversation.users).to include(user1)
       expect(conversation.users).to include(user2)
+      expect(conversation.key).to eq("#{user1.id}_#{user2.id}")
     end
 
     it "should not duplicate conversation between users" do
@@ -37,7 +38,7 @@ RSpec.describe Conversation, type: :model do
     end
   end
 
-  describe "not_user" do
+  describe "other_users" do
     it "should return all users minus user" do
       conversation = Conversation.between([user1, user2])
 

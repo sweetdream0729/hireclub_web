@@ -13,7 +13,8 @@ class Conversation < ApplicationRecord
 
   # Validations
   validates :slug, :uniqueness => true, :presence => true
-  validates :key, uniqueness: {case_sensitive: false}, :allow_blank => true
+  validates :key, uniqueness: {case_sensitive: false}, presence: true
+  validates_associated :conversation_users
 
   # Callbacks
   before_validation :ensure_slug, on: :create
@@ -59,7 +60,7 @@ class Conversation < ApplicationRecord
 
   def update_unread_counts
     conversation_users.each do |conversation_user|
-      conversation_user.update_unread_messages_count
+      conversation_user.update_unread_messages_count #updating unread count for one conversation
     end
   end
 end
