@@ -7,6 +7,7 @@ namespace :daily do
     Badge.check_badges
     Project.privatize_projects_without_image
     Follow.counter_culture_fix_counts
+    SparkpostService.get_message_events
   end
   
 end
