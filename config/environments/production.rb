@@ -60,15 +60,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
 
-  ActionMailer::Base.smtp_settings = {
-    :user_name => Rails.application.secrets.sendgrid_username,
-    :password => Rails.application.secrets.sendgrid_password,
-    :domain => Rails.application.secrets.domain_name,
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true
-  }
+  # ActionMailer::Base.smtp_settings = {
+  #   :user_name => Rails.application.secrets.sendgrid_username,
+  #   :password => Rails.application.secrets.sendgrid_password,
+  #   :domain => Rails.application.secrets.domain_name,
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
 
   ActionMailer::Base.smtp_settings = {
     domain: Rails.application.secrets.domain_name,
