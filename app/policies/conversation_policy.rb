@@ -14,13 +14,11 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def between?
-    return false if user.nil?
-    true
+    user_present?
   end
 
   def create?
-    return false if user.nil?
-    user.is_admin || user.is_moderator
+    user_present?
   end
   
   def update?

@@ -34,6 +34,21 @@ class ApplicationPolicy
     false
   end
 
+  def admin?
+    return false if user.nil?
+    user.is_admin
+  end
+
+  def user_present?
+    return false if user.nil?
+    return true
+  end
+
+  def owner_or_admin?
+    return false if user.nil?
+    record.user == user || user.is_admin
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end
