@@ -14,8 +14,7 @@ class CommentPolicy < ApplicationPolicy
   end
   
   def update?
-    return false if user.nil?
-    record.user == user || user.is_admin
+    owner_or_admin?
   end
 
   def destroy?

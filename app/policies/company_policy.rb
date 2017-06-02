@@ -6,28 +6,23 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
   
   def update?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
 
   def destroy?
-    return false if user.nil?
-    user.is_admin
+    admin?
   end
 
   def refresh?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
 
   def import?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
 
   def follow?
@@ -35,7 +30,6 @@ class CompanyPolicy < ApplicationPolicy
   end
 
   def unfollow?
-    return false if user.nil?
-    true
+    user_present?
   end
 end

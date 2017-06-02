@@ -39,6 +39,11 @@ class ApplicationPolicy
     user.is_admin
   end
 
+  def moderator?
+    return false if user.nil?
+    user.is_moderator || user.is_admin
+  end
+
   def user_present?
     return false if user.nil?
     return true

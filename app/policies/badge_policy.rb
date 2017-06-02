@@ -6,17 +6,14 @@ class BadgePolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    user.is_admin
+    admin?
   end
   
   def update?
-    return false if user.nil?
-    user.is_admin
+    admin?
   end
 
   def destroy?
-    return false if user.nil?
-    user.is_admin
+    admin?
   end
 end

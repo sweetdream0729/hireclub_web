@@ -11,8 +11,7 @@ class ReviewRequestPolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    true
+    user_present?
   end
   
   def update?
@@ -21,7 +20,6 @@ class ReviewRequestPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return false if user.nil?
-    user.is_admin || record.user == user
+    owner_or_admin?
   end
 end

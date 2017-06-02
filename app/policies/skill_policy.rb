@@ -6,17 +6,14 @@ class SkillPolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
   
   def update?
-    return false if user.nil?
-    user.is_moderator || user.is_admin
+    moderator?
   end
 
   def destroy?
-    return false if user.nil?
-    user.is_admin
+    admin?
   end
 end

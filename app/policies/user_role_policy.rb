@@ -10,17 +10,15 @@ class UserRolePolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user.nil?
-    true
+    user_present?
+    
   end
   
   def update?
-    return false if user.nil?
-    record.user == user
+    owner_or_admin?
   end
 
   def destroy?
-    return false if user.nil?
-    record.user == user
+    owner_or_admin?
   end
 end
