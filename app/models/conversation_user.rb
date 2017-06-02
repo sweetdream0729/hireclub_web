@@ -1,6 +1,7 @@
 class ConversationUser < ApplicationRecord
   belongs_to :conversation
   belongs_to :user
+  counter_culture :user, column_name: 'unread_messages_count', delta_column: 'unread_messages_count'
 
   # Validations
   validates :user_id, uniqueness: { scope: :conversation_id }
