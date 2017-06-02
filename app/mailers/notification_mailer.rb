@@ -1,16 +1,15 @@
 class NotificationMailer < ApplicationMailer
-  default from: "HireClub <no-reply@hireclub.co>"
 
   def user_welcome(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
 
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
 
   def review_request(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @activity = @notification.activity
     @review_request = @activity.trackable
     @owner = @review_request.user
@@ -26,52 +25,74 @@ class NotificationMailer < ApplicationMailer
   end
 
   def comment_created(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @comment = @notification.activity.trackable
     @commentable = @comment.commentable
     mail(to: @user.email, subject: 'New Comment')
   end
 
   def comment_mentioned(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @comment = @notification.activity.trackable.mentionable
     @commentable = @comment.commentable
     mail(to: @user.email, subject: 'New Mention')
   end
 
   def job_created(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @job = @notification.activity.trackable
     @company = @job.company
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
 
   def story_published(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @story = @notification.activity.trackable
 
     mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
   end
 
   def project_created(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @project = @notification.activity.trackable
 
     mail(to: @user.email, subject: "#{@project.user.display_name} added project #{@project.name}")
   end
 
   def user_followed(notification)
-    @notification = Notification.find notification
-    @user = @notification.user
+    set_notification(notification)
+    
     @follower = notification.activity.owner
 
     @subject = "#{@follower.display_name} followed you on HireClub"
     mail(to: @user.email, subject: @subject)
+  end
+
+  def set_notification(notification)
+    @notification = Notification.find(notification.id)
+    @user = @notification.user
+
+    set_sparkpost_header
+  end
+
+  def set_sparkpost_header
+    if @notification.present?
+      data = { 
+        campaign_id: @notification.activity_key,
+        metadata: {
+          notification_id: @notification.id,
+          user_id: @user.id
+        }
+      }
+      headers['X-MSYS-API'] = data.to_json
+    end
+
+    Rails.logger.info headers.inspect
   end
   
 end

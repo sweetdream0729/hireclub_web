@@ -1,6 +1,6 @@
 $(document).ready ->
   roleSearch = (query, syncResults, asyncResults) ->
-    $.get '/roles.json', { query: query }, ((data) ->
+    $.get '/roles.json', { query: query, sort_by: "popular" }, ((data) ->
       asyncResults data
       return
     ), 'json'
@@ -13,6 +13,7 @@ $(document).ready ->
   },
     name: 'autocomplete_role'
     source: roleSearch
+    limit: 8
     display: (role) ->
       role.name
   # role selected, let's set hidden role_id field

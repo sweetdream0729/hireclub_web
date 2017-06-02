@@ -30,6 +30,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:likes) }
     it { should have_many(:jobs) }
     it { should have_many(:stories) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'validations' do

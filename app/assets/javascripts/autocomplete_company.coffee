@@ -1,6 +1,6 @@
 $(document).ready ->
   companySearch = (query, syncResults, asyncResults) ->
-    $.get '/companies', { query: query }, ((data) ->
+    $.get '/companies', { query: query, sort_by: "popular" }, ((data) ->
       asyncResults data
       cacheCompanies data
       return
