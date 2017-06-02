@@ -6,7 +6,11 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    redirect_to current_user.conversations.by_recent.first if current_user.conversations.any?
+    if current_user.conversations.any?
+      redirect_to current_user.conversations.by_recent.first 
+    else
+      redirect_back(fallback_location: user_path(User.first), alert: "You have no messages yet. Try messaging someone from their profile page.")
+    end
   end
 
   def between
