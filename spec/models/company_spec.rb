@@ -202,16 +202,13 @@ RSpec.describe Company, type: :model do
 
   describe "followers_count_cache" do
     it "should cache followers_count_cache" do
-      updated_at = company.updated_at
       3.times do
         user = FactoryGirl.create(:user)
         user.follow(company)
       end
       company.reload
 
-      expect(company.followers.count).to eq(3)
       expect(company.followers_count_cache).to eq(3)
-      expect(company.updated_at).to be > updated_at
     end
   end
 
