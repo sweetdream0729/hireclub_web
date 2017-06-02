@@ -201,7 +201,7 @@ class User < ApplicationRecord
   end
 
   def display_notifications
-    notifications.published.not_message_create
+    notifications.published.not_messages
   end
 
   # Devise methos

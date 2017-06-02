@@ -4,11 +4,17 @@ class Notification < ApplicationRecord
   SKIP_ACTIVITIES = [
     "user.create"
   ]
+
+  NOT_MESSAGES = [
+    MessageCreateActivity::KEY,
+    MessageUnreadActivity::KEY
+  ]
+
   # Scopes
   scope :published,          -> { where(published: true) }
   scope :unread,             -> { where(read_at: nil) }
   scope :recent,             -> { order(created_at: :desc) }
-  scope :not_message_create, -> { where.not(activity_key: MessageCreateActivity::KEY) }
+  scope :not_messages,       -> { where.not(activity_key: NOT_MESSAGES) }
 
   # Associations
   belongs_to :activity
