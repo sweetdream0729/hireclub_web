@@ -28,6 +28,8 @@ class Milestone < ApplicationRecord
   scope :work,          -> { where(kind: WORK) }
   scope :education,     -> { where(kind: EDUCATION) }
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   belongs_to :user
   belongs_to :company

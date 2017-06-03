@@ -1,0 +1,95 @@
+.container.content_container
+  %h1= title "Dashboard"
+  #dashboard_nav.mt-2.mb-3
+    .row
+      .col-12
+        %ul.nav.nav-pills
+          = nav_link_to 'Today', dashboard_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'Yesterday', dashboard_yesterday_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'This Week', dashboard_this_week_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'Last Week', dashboard_last_week_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'This Month', dashboard_this_month_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'Last Month', dashboard_last_month_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+          = nav_link_to 'All', dashboard_all_path, {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
+
+  .row.mb-3
+    .col-2
+      .card.card-inverse.card-primary
+        .card-block
+          %h2.card-title
+            = User.created_between(@start_time,@end_time).count
+          %p.card-text Sign Ups
+    .col-2
+      .card.card-inverse.card-success
+        .card-block
+          %h2.card-title
+            = Job.published_between(@start_time,@end_time).count
+          %p.card-text Jobs
+    .col-2
+      .card.card-inverse.card-info
+        .card-block
+          %h2.card-title
+            = Project.created_between(@start_time,@end_time).count
+          %p.card-text Projects
+    .col-2
+      .card.card-inverse{style: "background-color: #333; border-color: #333;"}
+        .card-block
+          %h2.card-title
+            = Company.created_between(@start_time,@end_time).count
+          %p.card-text Companies
+    .col-2
+      .card.card-inverse.card-primary
+        .card-block
+          %h2.card-title
+            = Story.published_between(@start_time,@end_time).count
+          %p.card-text Stories
+    .col-2
+      .card.card-inverse.card-info
+        .card-block
+          %h2.card-title
+            = UserSkill.created_between(@start_time,@end_time).count
+          %p.card-text User Skills
+  .row.mb-3
+    .col-2
+      .card.card-inverse.card-primary
+        .card-block
+          %h2.card-title
+            = Milestone.created_between(@start_time,@end_time).count
+          %p.card-text Milestones
+    .col-2
+      .card.card-inverse.card-success
+        .card-block
+          %h2.card-title
+            = Resume.created_between(@start_time,@end_time).count
+          %p.card-text Resumes
+    .col-2
+      .card.card-inverse.card-info
+        .card-block
+          %h2.card-title
+            = Like.created_between(@start_time,@end_time).count
+          %p.card-text Likes
+    .col-2
+      .card.card-inverse{style: "background-color: #333; border-color: #333;"}
+        .card-block
+          %h2.card-title
+            = Comment.created_between(@start_time,@end_time).count
+          %p.card-text Comments
+    .col-2
+      .card.card-inverse.card-primary
+        .card-block
+          %h2.card-title
+            = Story.published_between(@start_time,@end_time).count
+          %p.card-text Follows
+    .col-2
+      .card.card-inverse.card-info
+        .card-block
+          %h2.card-title
+            = UserRole.created_between(@start_time,@end_time).count
+          %p.card-text User Roles
+
+  .row.mb-3
+    .col-12
+      %p.text-muted
+        = @start_time.strftime('%a %D')
+        to
+        = @end_time.strftime('%a %D')

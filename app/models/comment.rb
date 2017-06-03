@@ -13,6 +13,8 @@ class Comment < ApplicationRecord
   scope :by_recent, -> {order(created_at: :desc)}
   scope :by_oldest, -> {order(created_at: :asc)}
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   belongs_to :user
   belongs_to :commentable, polymorphic: true

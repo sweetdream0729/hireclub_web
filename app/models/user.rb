@@ -43,6 +43,8 @@ class User < ApplicationRecord
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   has_many :conversation_users, dependent: :destroy, inverse_of: :user
   has_many :conversations, through: :conversation_users

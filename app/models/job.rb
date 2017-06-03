@@ -25,7 +25,9 @@ class Job < ApplicationRecord
   scope :recent,          -> { order(created_at: :desc) }
   scope :published,       -> { where.not(published_on: nil) }
   scope :drafts,          -> { where(published_on: nil) }
-
+  
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  scope :published_between,    -> (start_date, end_date) { where("published_on BETWEEN ? and ?", start_date, end_date) }
 
   # Associations
   belongs_to :company

@@ -36,6 +36,8 @@ class Project < ApplicationRecord
   scope :without_image,  -> { where(image_uid: nil) }
   scope :by_user,        -> (user) { where(user: user) }
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   belongs_to :user
   belongs_to :company

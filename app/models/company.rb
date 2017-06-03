@@ -34,6 +34,8 @@ class Company < ApplicationRecord
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   has_many :milestones, dependent: :nullify
   has_many :projects, dependent: :nullify

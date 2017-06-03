@@ -24,6 +24,9 @@ class Story < ApplicationRecord
   scope :by_oldest,       -> { order(published_on: :asc) }
   scope :by_popular,      -> { order(likes_count: :desc) }
 
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  scope :published_between,    -> (start_date, end_date) { where("published_on BETWEEN ? and ?", start_date, end_date) }
+
   # Associations
   belongs_to :user
   belongs_to :company

@@ -6,6 +6,9 @@ class Follow < ActiveRecord::Base
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
 
+  # Scopes
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  
   # NOTE: Follows belong to the "followable" and "follower" interface
   belongs_to :followable, polymorphic: true
   counter_culture :followable, touch: true,

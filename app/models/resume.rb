@@ -6,6 +6,7 @@ class Resume < ApplicationRecord
 
   # Scopes
   scope :by_newest,     -> { order(created_at: :desc)}
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
   # Associations
   belongs_to :user

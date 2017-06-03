@@ -9,6 +9,13 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  get 'dashboard' => 'dashboard#index', as: :dashboard
+  get 'dashboard/yesterday' => 'dashboard#yesterday'
+  get 'dashboard/this_week' => 'dashboard#this_week'
+  get 'dashboard/last_week' => 'dashboard#last_week'
+  get 'dashboard/this_month' => 'dashboard#this_month'
+  get 'dashboard/last_month' => 'dashboard#last_month'
+  get 'dashboard/all' => 'dashboard#all'
 
   get 'notifications' => 'notifications#index', as: :notifications
   get 'search' => 'search#index', as: :search
