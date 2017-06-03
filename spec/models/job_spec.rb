@@ -12,6 +12,7 @@ RSpec.describe Job, type: :model do
     it { should belong_to(:company) }
     it { should belong_to(:role) }
     it { should belong_to(:location) }
+    it { should have_many(:job_scores).dependent(:destroy) }
   end
 
   describe 'validations' do
