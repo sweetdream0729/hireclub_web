@@ -78,7 +78,7 @@
       .card.card-inverse.card-primary
         .card-block
           %h2.card-title
-            = Story.published_between(@start_time,@end_time).count
+            = Follow.created_between(@start_time,@end_time).count
           %p.card-text Follows
     .col-2
       .card.card-inverse.card-info
