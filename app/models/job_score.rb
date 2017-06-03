@@ -7,9 +7,6 @@ class JobScore < ApplicationRecord
   validates :job, presence: true
   validates :user_id, uniqueness: { scope: :job_id }
 
-  # Callbacks
-  before_save :update_score
-
   def update_score
     return if user.nil? || job.nil?
     puts "update_score"
@@ -29,5 +26,6 @@ class JobScore < ApplicationRecord
     end
     
     self.score = new_score
+    self.save
   end
 end
