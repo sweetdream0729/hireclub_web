@@ -16,6 +16,7 @@ RSpec.describe JobScore, type: :model do
     it { should validate_presence_of(:job) }
     it { should validate_presence_of(:user) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:job_id) }
+    it { should validate_numericality_of(:score).is_greater_than_or_equal_to(0) }
   end
 
   describe "update_score" do

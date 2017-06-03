@@ -6,6 +6,7 @@ class JobScore < ApplicationRecord
   validates :user, presence: true
   validates :job, presence: true
   validates :user_id, uniqueness: { scope: :job_id }
+  validates :score, numericality: { greater_than_or_equal_to: 0 }
 
   def update_score
     return if user.nil? || job.nil?
@@ -25,7 +26,7 @@ class JobScore < ApplicationRecord
       end
     end
     
-    self.score = new_score
+    self.score = [new_score,0].max
     self.save
   end
 end
