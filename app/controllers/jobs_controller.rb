@@ -22,9 +22,9 @@ class JobsController < ApplicationController
     notice = nil
     if params[:skill].present?
       skill = Skill.search_by_exact_name(params[:skill]).first
-      if skill.present? && @job.add_skill!(params[:skill])
+      if skill.present? && @job.add_skill!(skill.name)
         @job.update_suggested_skills!
-        notice = "Added #{skill} to job"
+        notice = "Added #{skill.name} to job"
       end
     end
 
