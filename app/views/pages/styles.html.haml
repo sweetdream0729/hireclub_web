@@ -1,0 +1,303 @@
+.container.content_container
+  .row
+    .col-2
+      %ul.nav.flex-column{style: "position: fixed"}
+        %li.nav-item
+          %a.nav-link{:href => '#colors'} Colors
+        %li.nav-item
+          %a.nav-link{:href => '#typography'} Typography
+        %li.nav-item
+          %a.nav-link{:href => '#alerts'} Alerts
+        %li.nav-item
+          %a.nav-link{:href => '#badges'} Badges
+        %li.nav-item
+          %a.nav-link{:href => '#buttons'} Buttons
+        
+    .col-10
+      %section#colors
+      %h2 Colors
+      %h6 Primary
+      .row
+        .col-2
+          .card.card-inverse.card-primary
+            .card-block
+              %h5.card-title
+                Primary
+              %h6
+                \#6070E9
+        .col-2
+          .card.card-inverse.card-info
+            .card-block
+              %h5.card-title
+                Info
+              %h6
+                \#2EC0F9
+        .col-2
+          .card.card-inverse.card-success
+            .card-block
+              %h5.card-title
+                Success
+              %h6
+                \#1FE267
+        .col-2
+          .card.card-inverse.card-warning
+            .card-block
+              %h5.card-title
+                Warning
+              %h6
+                \#FF904C
+        .col-2
+          .card.card-inverse.card-danger
+            .card-block
+              %h5.card-title
+                Danger
+              %h6
+                \#F2545B
+
+      %h6.mt-4 Accents
+      .row
+        .col-2
+          .card.card-inverse.accent-primary-bg
+            .card-block
+              %h5.card-title
+                Primary Accent
+              %h6
+                \#8783D1
+        .col-2
+          .card.card-inverse.accent-info-bg
+            .card-block
+              %h5.card-title
+                Info Accent
+              %h6
+                \#3066BE
+        .col-2
+          .card.card-inverse.accent-gray-bg
+            .card-block
+              %h5.card-title
+                Accent Gray
+              %h6
+                \#33628E
+        .col-2
+          .card.accent-warning-bg
+            .card-block
+              %h5.card-title
+                Accent Warning
+              %h6
+                \#FDC898
+        .col-2
+          .card.card-inverse.accent-danger-bg
+            .card-block
+              %h5.card-title
+                Accent Danger
+              %h6
+                \#C05746
+
+      %h6.mt-4 Secondary
+      .row
+        .col-2
+          .card.card-inverse.gray-dark-bg
+            .card-block
+              %h5.card-title
+                Dark Gray
+              %h6
+                \#47525D
+        .col-2
+          .card.card-inverse.gray-bg
+            .card-block
+              %h5.card-title
+                Gray
+              %h6
+                \#6B717E
+        .col-2
+          .card.card-inverse.gray-light-bg
+            .card-block
+              %h5.card-title
+                Light Gray
+              %h6
+                \#8E9AAF
+        .col-2
+          .card.gray-lighter-bg
+            .card-block
+              %h5.card-title
+                Lighter Gray
+              %h6
+                \#C0D3E8
+        .col-2
+          .card.gray-lightest-bg
+            .card-block
+              %h5.card-title
+                Lightest Gray
+              %h6
+                \#EAEEF1
+          
+
+      
+
+      %section#typography.mt-5
+      %h2 Typography
+      %h6 Headings
+      %h1 h1. Bootstrap heading
+      %h2 h2. Bootstrap heading
+      %h3 h3. Bootstrap heading
+      %h4 h4. Bootstrap heading
+      %h5 h5. Bootstrap heading
+      %h6 h6. Bootstrap heading
+
+      %h6.mt-4 Secondary Text
+      %h3
+        Fancy display heading
+        %small.text-muted With faded secondary text
+
+      %h6.mt-4 Display Headings
+      %h1.display-1 Display 1
+      %h1.display-2 Display 2
+      %h1.display-3 Display 3
+      %h1.display-4 Display 4
+
+      %h6.mt-4 Lead
+      %p.lead
+        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+
+      %h6.mt-4 Text
+      %p
+        You can use the mark tag to
+        %mark highlight
+        text.
+      %p
+        %del This line of text is meant to be treated as deleted text.
+      %p
+        %s This line of text is meant to be treated as no longer accurate.
+      %p
+        %ins This line of text is meant to be treated as an addition to the document.
+      %p
+        %u This line of text will render as underlined
+      %p
+        %small This line of text is meant to be treated as fine print.
+      %p
+        %strong This line rendered as bold text.
+      %p
+        %em This line rendered as italicized text.
+
+      %h6.mt-4 Block Quotes
+      %blockquote.blockquote
+        %p.mb-0 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+
+      %h6.mt-4 Lists
+      %ul.list-unstyled
+        %li Lorem ipsum dolor sit amet
+        %li Consectetur adipiscing elit
+        %li Integer molestie lorem at massa
+        %li Facilisis in pretium nisl aliquet
+        %li
+          Nulla volutpat aliquam velit
+          %ul
+            %li Phasellus iaculis neque
+            %li Purus sodales ultricies
+            %li Vestibulum laoreet porttitor sem
+            %li Ac tristique libero volutpat at
+        %li Faucibus porta lacus fringilla vel
+        %li Aenean sit amet erat nunc
+        %li Eget porttitor lorem
+
+      %h6.mt-4 Inline Lists
+      %ul.list-inline
+        %li.list-inline-item Lorem ipsum
+        %li.list-inline-item Phasellus iaculis
+        %li.list-inline-item Nulla volutpat
+
+      %section#alerts.mt-5
+        %h2 Alerts
+        .alert.alert-success{:role => 'alert'}
+          %strong Well done!
+          You successfully read this important alert message.
+        .alert.alert-info{:role => 'alert'}
+          %strong Heads up!
+          This alert needs your attention, but it's not super important.
+        .alert.alert-warning{:role => 'alert'}
+          %strong Warning!
+          Better check yourself, you're not looking too good.
+        .alert.alert-danger{:role => 'alert'}
+          %strong Oh snap!
+          Change a few things up and try submitting again.
+
+      %section#badges.mt-5
+        %h2 Badges
+        %h1
+          Example heading
+          %span.badge.badge-default New
+        %h2
+          Example heading
+          %span.badge.badge-default New
+        %h3
+          Example heading
+          %span.badge.badge-default New
+        %h4
+          Example heading
+          %span.badge.badge-default New
+        %h5
+          Example heading
+          %span.badge.badge-default New
+        %h6
+          Example heading
+          %span.badge.badge-default New
+
+        %h6.mt-4 Contextual
+        %span.badge.badge-default Default
+        %span.badge.badge-primary Primary
+        %span.badge.badge-success Success
+        %span.badge.badge-info Info
+        %span.badge.badge-warning Warning
+        %span.badge.badge-danger Danger
+
+        %h6.mt-4 Pill Badges
+        %span.badge.badge-pill.badge-default Default
+        %span.badge.badge-pill.badge-primary Primary
+        %span.badge.badge-pill.badge-success Success
+        %span.badge.badge-pill.badge-info Info
+        %span.badge.badge-pill.badge-warning Warning
+        %span.badge.badge-pill.badge-danger Danger
+
+      %section#buttons.mt-5
+        %h2 Buttons
+        / Provides extra visual weight and identifies the primary action in a set of buttons
+        %button.btn.btn-primary{:type => "button"} Primary
+        / Secondary, outline button
+        %button.btn.btn-secondary{:type => "button"} Secondary
+        / Indicates a successful or positive action
+        %button.btn.btn-success{:type => "button"} Success
+        / Contextual button for informational alert messages
+        %button.btn.btn-info{:type => "button"} Info
+        / Indicates caution should be taken with this action
+        %button.btn.btn-warning{:type => "button"} Warning
+        / Indicates a dangerous or potentially negative action
+        %button.btn.btn-danger{:type => "button"} Danger
+        / Deemphasize a button by making it look like a link while maintaining button behavior
+        %button.btn.btn-link{:type => "button"} Link
+
+        %h6.mt-4 Outline Buttons
+        %button.btn.btn-outline-primary{:type => "button"} Primary
+        %button.btn.btn-outline-secondary{:type => "button"} Secondary
+        %button.btn.btn-outline-success{:type => "button"} Success
+        %button.btn.btn-outline-info{:type => "button"} Info
+        %button.btn.btn-outline-warning{:type => "button"} Warning
+        %button.btn.btn-outline-danger{:type => "button"} Danger
+
+        %h6.mt-4 Large Buttons
+        %button.btn.btn-primary.btn-lg{:type => "button"} Large button
+        %button.btn.btn-secondary.btn-lg{:type => "button"} Large button
+
+        %h6.mt-4 Small Buttons
+        %button.btn.btn-primary.btn-sm{:type => "button"} Small button
+        %button.btn.btn-secondary.btn-sm{:type => "button"} Small button
+
+        %h6.mt-4 Active
+        %a.btn.btn-primary.btn-lg.active{"aria-pressed" => "true", :href => "#", :role => "button"}
+          Primary link
+        %a.btn.btn-secondary.btn-lg.active{"aria-pressed" => "true", :href => "#", :role => "button"}
+          Link
+
+        %h6.mt-4 Disabled
+        %a.btn.btn-primary.btn-lg.disabled{"aria-disabled" => "true", :href => "#", :role => "button"}
+          Primary link
+        %a.btn.btn-secondary.btn-lg.disabled{"aria-disabled" => "true", :href => "#", :role => "button"}
+          Link

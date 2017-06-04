@@ -1,0 +1,63 @@
+$brand-primary:         #6070E9;
+$brand-success:         #1FE267;
+$brand-info:            #2EC0F9;
+$brand-warning:         #FF904C;
+$brand-danger:          #F2545B;
+
+$accent-primary:        #8783D1;
+$accent-info:           #3066BE;
+$accent-gray:           #33628E;
+$accent-warning:        #FDC898;
+$accent-danger:         #C05746;
+
+$gray-dark:                 #47525D !default;
+$gray:                      #6B717E !default;
+$gray-light:                #8E9AAF !default;
+$gray-lighter:              #C0D3E8 !default;
+$gray-lightest:             #EAEEF1 !default;
+
+.accent-primary-bg {
+  background-color: $accent-primary !important;
+  border-color: $accent-primary !important;
+}
+
+.accent-info-bg {
+  background-color: $accent-info !important;
+}
+
+.accent-gray-bg {
+  background-color: $accent-gray !important;
+}
+
+.accent-warning-bg {
+  background-color: $accent-warning !important;
+  border-color: $accent-warning !important;
+}
+
+.accent-danger-bg {
+  background-color: $accent-danger !important;
+  border-color: $accent-danger !important;
+}
+
+.gray-dark-bg {
+  background-color: $gray-dark !important;
+}
+
+.gray-bg {
+  background-color: $gray !important;
+}
+
+.gray-light-bg {
+  background-color: $gray-light !important;
+  border-color: $gray-light !important;
+}
+
+.gray-lighter-bg {
+  background-color: $gray-lighter !important;
+  border-color: $gray-lighter !important;
+}
+
+.gray-lightest-bg {
+  background-color: $gray-lightest !important;
+  border-color: $gray-lightest !important;
+}
