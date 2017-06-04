@@ -82,11 +82,12 @@
           - if current_user && current_user.has_skill_name?(skill)
             %i.fa.fa-lg.fa-check-circle
 
-      - if policy(:dashboard).admin?
+      - if policy(@job).suggest_skill? && @job.suggested_skills.any?
         %h6.mt-5 Suggested Skills
         - @job.suggested_skills.each do |skill|
-          %span.badge.badge-pill-outline.badge-info
-            = skill
+          = link_to suggest_skill_job_path(skill: skill) do
+            %span.badge.badge-pill-outline.badge-info
+              = skill
 
       - if @job_score.present?
         %h6.mt-5 Job Score

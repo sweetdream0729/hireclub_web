@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill]
   after_action :verify_authorized, except: [:index]
 
   # GET /jobs
@@ -16,6 +16,19 @@ class JobsController < ApplicationController
       @job_score = @job.job_scores.where(user: current_user).first_or_create
       @job_score.update_score
     end
+  end
+
+  def suggest_skill
+    notice = nil
+    if params[:skill].present?
+      skill = Skill.search_by_exact_name(params[:skill]).first
+      if skill.present? && @job.add_skill!(params[:skill])
+        @job.update_suggested_skills!
+        notice = "Added #{skill} to job"
+      end
+    end
+
+    redirect_to @job, notice: notice
   end
 
   # GET /jobs/new
@@ -36,6 +49,7 @@ class JobsController < ApplicationController
 
     if @job.save
       @job.publish!
+      @job.update_suggested_skills!
       redirect_to @job, notice: 'Job was successfully created.'
     else
       render :new
@@ -45,6 +59,7 @@ class JobsController < ApplicationController
   # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
+      @job.update_suggested_skills!
       redirect_to @job, notice: 'Job was successfully updated.'
     else
       render :edit

@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
   resources :jobs do
     resources :comments, module: :jobs
+    member do
+      get :suggest_skill
+    end
   end
 
   resources :review_requests do

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let(:job) { FactoryGirl.build(:job) }
-  let(:skill) { FactoryGirl.create(:skill) }
-  let(:skill2) { FactoryGirl.create(:skill) }
+  let(:skill) { FactoryGirl.create(:skill, name: "Design") }
+  let(:skill2) { FactoryGirl.create(:skill, name: "Development") }
 
   subject { job }
 
@@ -72,7 +72,7 @@ RSpec.describe Job, type: :model do
   end
 
   describe 'publish!' do
-    it "publishes the story" do
+    it "publishes the job" do
       company_follower = FactoryGirl.create(:user)
       company_follower.follow(job.company)
       company_follower.follow(job.user)
@@ -126,9 +126,20 @@ RSpec.describe Job, type: :model do
       expect(job.skills).to include(skill2.name)
       expect(job.skills_list).to eq "#{skill.name}, #{skill2.name}"
     end
+
+    it "should be able add_skill!" do
+      job.suggested_skills = [skill2.name]
+      job.add_skill!(skill.name)
+      job.add_skill!(skill.name)
+      job.add_skill!(skill2.name)
+
+      expect(job.skills_list).to eq "#{skill.name}, #{skill2.name}"
+
+      puts job.suggested_skills
+    end
   end
 
-  describe "suggested skills",focus: true do
+  describe "suggested skills" do
     it "should suggest skills based on description" do
       FactoryGirl.create(:skill, name: "C++")
       FactoryGirl.create(:skill, name: "C")

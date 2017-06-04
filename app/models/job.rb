@@ -49,9 +49,10 @@ class Job < ApplicationRecord
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
   validate :skills_exist
-  
+
   # Callbacks
-  before_save :update_suggested_skills
+
+  before_save :deduplicate_skills
   
   def should_generate_new_friendly_id?
     name_changed? || super
@@ -133,7 +134,21 @@ class Job < ApplicationRecord
     return results
   end
 
-  def update_suggested_skills
+  def update_suggested_skills!
     self.suggested_skills = parse_suggested_skills.map(&:name)
+    self.save
+  end
+
+  def add_skill!(skill)
+    if self.skills.include?(skill)
+      return false
+    end
+    self.skills << skill
+    self.save
+    return true
+  end
+
+  def deduplicate_skills
+    self.suggested_skills = self.suggested_skills - self.skills
   end
 end

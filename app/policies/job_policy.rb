@@ -16,4 +16,8 @@ class JobPolicy < ApplicationPolicy
   def destroy?
     owner_or_admin?
   end
+
+  def suggest_skill?
+    owner_or_admin?
+  end
 end
