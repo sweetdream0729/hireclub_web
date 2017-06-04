@@ -30,12 +30,6 @@ RSpec.describe Message, type: :model do
       expect(activity.trackable).to eq(message)
       expect(activity.owner).to eq(message.user)
       expect(activity.private).to eq(true)
-
-      recipients = MessageCreateActivity.get_recipients_for(activity)
-      expect(recipients.count).to be > 0
-      expect(recipients.count).to eq(message.conversation.users.count - 1)
-
-      #expect(user2.unread_messages_count).to eq(1)
     end
 
     it "should have message.read activity" do
