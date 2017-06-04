@@ -22,7 +22,7 @@
 
 
   .row
-    .col-sm-8
+    .col-sm-7
       .media
         = link_to image_tag(model_avatar(@job.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @job.user
         .media-body
@@ -55,7 +55,7 @@
       = render partial: "comments/comments", locals: { commentable: @job }
       = render partial: "comments/form", locals: { commentable: @job } 
 
-    .col-sm-3
+    .col-sm-3.push-sm-1
       - if @job.any_flags?
         %h6 Details
       - if @job.full_time
