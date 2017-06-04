@@ -50,6 +50,9 @@ class Job < ApplicationRecord
   validates :description, presence: true
   validate :skills_exist
   
+  # Callbacks
+  before_save :update_suggested_skills
+  
   def should_generate_new_friendly_id?
     name_changed? || super
   end
@@ -125,4 +128,12 @@ class Job < ApplicationRecord
     full_time || part_time || contract || internship || remote
   end
 
+  def parse_suggested_skills
+    results = TextService.find_keywords(description, Skill.all)
+    return results
+  end
+
+  def update_suggested_skills
+    self.suggested_skills = parse_suggested_skills.map(&:name)
+  end
 end
