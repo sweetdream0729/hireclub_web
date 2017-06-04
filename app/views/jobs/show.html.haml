@@ -4,7 +4,7 @@
 - set_meta_tags og: {type: "article", image: model_image(@job.company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
 
 .container.content_container
-  .row
+  .row.mb-4
     .col-sm-12
       .media
         = link_to image_tag(company_avatar(@job.company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @job.company
@@ -20,25 +20,6 @@
             ·
             = local_relative_time(@job.created_at, type: 'time-or-date')
 
-            %br
-            = @job.skills_list.split(",").join(" · ")
-            %br
-            - if @job.full_time
-              %span.badge.badge-pill.badge-primary
-                Full Time
-            - if @job.part_time
-              %span.badge.badge-pill.badge-default
-                Part Time
-            - if @job.contract
-              %span.badge.badge-pill.badge-info
-                Contract
-            - if @job.internship
-              %span.badge.badge-pill.badge-default
-                Internship
-            - if @job.remote
-              %span.badge.badge-pill.badge-success
-                %i.fa.fa-plane
-                Remote
 
   .row
     .col-sm-8
@@ -75,14 +56,41 @@
       = render partial: "comments/form", locals: { commentable: @job } 
 
     .col-sm-3
-      = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?
-      = link_to 'Delete', @job, :method => :delete, :data => { :confirm => 'Are you sure you want to delete this job post?' }, class: "btn btn-danger" if policy(@job).edit?
+      - if @job.any_flags?
+        %h6 Details
+      - if @job.full_time
+        %span.badge.badge-pill.badge-primary
+          Full Time
+      - if @job.part_time
+        %span.badge.badge-pill.badge-default
+          Part Time
+      - if @job.contract
+        %span.badge.badge-pill.badge-info
+          Contract
+      - if @job.internship
+        %span.badge.badge-pill.badge-default
+          Internship
+      - if @job.remote
+        %span.badge.badge-pill.badge-success
+          %i.fa.fa-plane
+          Remote
+
+      %h6.mt-5 Skills
+      - @job.skills.each do |skill|
+        %span.badge.badge-pill-outline.badge-primary
+          = skill
 
       - if @job_score.present?
-        .card.card-inverse.card-info.mt-5{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
+        %h6.mt-5 Job Score
+        .card.card-inverse.card-info{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
           .card-block
             %p.card-text Your Job Score
             %h2.mb-0.card-title
               = @job_score.score
+
+      - if policy(@job).edit?
+        %h6.mt-5 Manage
+        = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?
+        = link_to 'Delete', @job, :method => :delete, :data => { :confirm => 'Are you sure you want to delete this job post?' }, class: "btn btn-danger" if policy(@job).destroy?
         
             

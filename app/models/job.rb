@@ -121,4 +121,8 @@ class Job < ApplicationRecord
     published_on.nil? 
   end
 
+  def any_flags?
+    full_time || part_time || contract || internship || remote
+  end
+
 end
