@@ -203,6 +203,10 @@ class User < ApplicationRecord
     primary_role.try(:name)
   end
 
+  def has_skill_name?(skill_name)
+    skills.where(name: skill_name).any?
+  end
+  
   def display_notifications
     notifications.published.not_messages
   end
