@@ -19,10 +19,43 @@
 
 .badge-pill {
   border-radius: 10rem;
-  letter-spacing: .02rem;
-  padding: 0.3rem 0.64rem;
+  letter-spacing: .05rem;
+  padding: 0.5rem 0.8rem;
   font-weight: 600;
   a {
     color: #fff;
   }
+  margin-bottom: 0.5rem;
+}
+
+.badge-pill-outline {
+  border-radius: 10rem;
+  letter-spacing: .05rem;
+  padding: 0.5rem 0.8rem;
+  font-weight: 600;
+  color: $gray-light;
+  border-color: $gray-light;
+  background-color: white;
+  border: 1px solid;
+  margin-bottom: 0.5rem;
+}
+.badge-pill-outline.badge-primary {
+  color: $brand-primary;
+  border-color: $brand-primary;
+}
+.badge-pill-outline.badge-success {
+  color: $brand-success;
+  border-color: $brand-success;
+}
+.badge-pill-outline.badge-info {
+  color: $brand-info;
+  border-color: $brand-info;
+}
+.badge-pill-outline.badge-warning {
+  color: $brand-warning;
+  border-color: $brand-warning;
+}
+.badge-pill-outline.badge-danger {
+  color: $brand-danger;
+  border-color: $brand-danger;
 }

@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
   resources :jobs do
     resources :comments, module: :jobs
+    member do
+      get :suggest_skill
+    end
   end
 
   resources :review_requests do
@@ -93,10 +96,11 @@ Rails.application.routes.draw do
   resources :skills
   resources :onboarding
 
-  get "/locations",   to: "locations#index",   as: :locations
-  get "/privacy",   to: "pages#privacy",   as: :privacy
-  get "/about",   to: "pages#about",   as: :about
-  get "/contact", to: "pages#contact", as: :contact
+  get "/locations",     to: "locations#index",   as: :locations
+  get "/styles",        to: "pages#styles",      as: :styles
+  get "/privacy",       to: "pages#privacy",     as: :privacy
+  get "/about",         to: "pages#about",       as: :about
+  get "/contact",       to: "pages#contact",     as: :contact
 
   get 'users/username' => 'users#username'
   devise_for :users,
@@ -120,8 +124,6 @@ Rails.application.routes.draw do
   authenticated :user do
     root :to => 'feed#index', as: :authenticated_root
   end
-
-  get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
 
   root to: "pages#index"
 end

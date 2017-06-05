@@ -66,6 +66,7 @@ class User < ApplicationRecord
   has_many :jobs, dependent: :destroy, inverse_of: :user
   has_many :stories, dependent: :destroy, inverse_of: :user
   has_many :comments, dependent: :destroy, inverse_of: :user
+  has_many :job_scores, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -202,6 +203,10 @@ class User < ApplicationRecord
     primary_role.try(:name)
   end
 
+  def has_skill_name?(skill_name)
+    skills.where(name: skill_name).any?
+  end
+  
   def display_notifications
     notifications.published.not_messages
   end

@@ -9,8 +9,8 @@
   .list-group-item {
     border-radius: 0;
     border: none;
-    border-top: solid 1px #EAEEF1;
-    border-bottom: solid 1px #EAEEF1;
+    border-top: solid 1px $gray-lightest;
+    border-bottom: solid 1px $gray-lightest;
   }
   .list-group-item:first-child {
     border-top: none;
@@ -18,8 +18,8 @@
   
   .list-group-item.active {
     color: inherit;
-    background-color: #EAEEF1;
-    border-color: #EAEEF1;
+    background-color: $gray-lightest;
+    border-color: $gray-lightest;
   }
   .conversation_cell {
     font-weight: inherit;
@@ -35,7 +35,7 @@
 #conversations_header {
   height: 72px;
   padding: 10px;
-  border-bottom: solid 1px #EAEEF1;
+  border-bottom: solid 1px $gray-lightest;
 }
 
 #conversation_list {
@@ -48,13 +48,13 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 56px);
-  border-left: solid 1px #EAEEF1;
+  border-left: solid 1px $gray-lightest;
 }
 
 #messages_header {
   height: 72px;
   padding: 10px;
-  border-bottom: solid 1px #EAEEF1;
+  border-bottom: solid 1px $gray-lightest;
 }
 
 #messages {
@@ -72,7 +72,7 @@
 #message_text {
   border-radius: 0;
   border: none;
-  border-top: solid 1px #EAEEF1;
+  border-top: solid 1px $gray-lightest;
 }
 
 
@@ -110,7 +110,7 @@
 }
 
 .message_bubble {
-  background : #EAEEF1;
+  background : $gray-lightest;
   border-radius: 16px;
   padding-left: 12px;
   padding-right: 12px;
@@ -135,7 +135,7 @@
   border-radius: 12px;
   bottom: 12px;
   left: 36px;
-  background: #EAEEF1;
+  background: $gray-lightest;
   position: relative;
   box-sizing: border-box;
   border: 2px solid white;

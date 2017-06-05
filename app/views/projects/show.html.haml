@@ -28,8 +28,9 @@
         %h6 Skills
         %p
           - @project.skills.each do |skill|
-            %span.badge.badge-pill.badge-info
-              = link_to skill, projects_path(username: @project.user.username, skill: skill)
+            = link_to projects_path(username: @project.user.username, skill: skill) do
+              %span.badge.badge-pill-outline.badge-primary
+                = skill
           
 
       - if @project.company

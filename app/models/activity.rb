@@ -29,6 +29,6 @@ PublicActivity::Activity.class_eval do
   after_commit :create_notifications, on: :create
 
   def create_notifications
-    CreateNotificationJob.perform_later(self.id) if Notification.enabled
+    CreateNotificationJob.perform_later(self) if Notification.enabled
   end
 end

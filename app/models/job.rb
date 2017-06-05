@@ -25,7 +25,7 @@ class Job < ApplicationRecord
   scope :recent,          -> { order(created_at: :desc) }
   scope :published,       -> { where.not(published_on: nil) }
   scope :drafts,          -> { where(published_on: nil) }
-  
+
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
   scope :published_between,    -> (start_date, end_date) { where("published_on BETWEEN ? and ?", start_date, end_date) }
 
@@ -36,6 +36,7 @@ class Job < ApplicationRecord
   belongs_to :location
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
+  has_many :job_scores, dependent: :destroy, inverse_of: :job
 
 
   # Validations
@@ -48,6 +49,10 @@ class Job < ApplicationRecord
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
   validate :skills_exist
+
+  # Callbacks
+
+  before_save :deduplicate_skills
   
   def should_generate_new_friendly_id?
     name_changed? || super
@@ -120,4 +125,30 @@ class Job < ApplicationRecord
     published_on.nil? 
   end
 
+  def any_flags?
+    full_time || part_time || contract || internship || remote
+  end
+
+  def parse_suggested_skills
+    results = TextService.find_keywords(description, Skill.all)
+    return results
+  end
+
+  def update_suggested_skills!
+    self.suggested_skills = parse_suggested_skills.map(&:name)
+    self.save
+  end
+
+  def add_skill!(skill)
+    if self.skills.include?(skill)
+      return false
+    end
+    self.skills << skill
+    self.save
+    return true
+  end
+
+  def deduplicate_skills
+    self.suggested_skills = self.suggested_skills - self.skills
+  end
 end

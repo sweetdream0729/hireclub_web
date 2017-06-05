@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602082149) do
+ActiveRecord::Schema.define(version: 20170604184445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,25 +185,37 @@ ActiveRecord::Schema.define(version: 20170602082149) do
     t.index ["user_id"], name: "index_impressions_on_user_id", using: :btree
   end
 
+  create_table "job_scores", force: :cascade do |t|
+    t.integer  "user_id",                null: false
+    t.integer  "job_id",                 null: false
+    t.integer  "score",      default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["job_id"], name: "index_job_scores_on_job_id", using: :btree
+    t.index ["user_id", "job_id"], name: "index_job_scores_on_user_id_and_job_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_job_scores_on_user_id", using: :btree
+  end
+
   create_table "jobs", force: :cascade do |t|
-    t.string   "name",                         null: false
-    t.citext   "slug",                         null: false
-    t.integer  "company_id",                   null: false
-    t.integer  "user_id",                      null: false
+    t.string   "name",                             null: false
+    t.citext   "slug",                             null: false
+    t.integer  "company_id",                       null: false
+    t.integer  "user_id",                          null: false
     t.text     "description"
     t.string   "link"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "full_time",    default: true,  null: false
-    t.boolean  "part_time",    default: false, null: false
-    t.boolean  "remote",       default: false, null: false
-    t.boolean  "contract",     default: false, null: false
-    t.boolean  "internship",   default: false, null: false
-    t.integer  "location_id",                  null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "full_time",        default: true,  null: false
+    t.boolean  "part_time",        default: false, null: false
+    t.boolean  "remote",           default: false, null: false
+    t.boolean  "contract",         default: false, null: false
+    t.boolean  "internship",       default: false, null: false
+    t.integer  "location_id",                      null: false
     t.integer  "role_id"
-    t.string   "skills",       default: [],                 array: true
-    t.integer  "likes_count",  default: 0,     null: false
+    t.string   "skills",           default: [],                 array: true
+    t.integer  "likes_count",      default: 0,     null: false
     t.datetime "published_on"
+    t.string   "suggested_skills", default: [],                 array: true
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
@@ -215,6 +227,7 @@ ActiveRecord::Schema.define(version: 20170602082149) do
     t.index ["role_id"], name: "index_jobs_on_role_id", using: :btree
     t.index ["skills"], name: "index_jobs_on_skills", using: :gin
     t.index ["slug"], name: "index_jobs_on_slug", unique: true, using: :btree
+    t.index ["suggested_skills"], name: "index_jobs_on_suggested_skills", using: :gin
     t.index ["user_id"], name: "index_jobs_on_user_id", using: :btree
   end
 
@@ -499,6 +512,8 @@ ActiveRecord::Schema.define(version: 20170602082149) do
   add_foreign_key "comments", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "job_scores", "jobs"
+  add_foreign_key "job_scores", "users"
   add_foreign_key "jobs", "companies"
   add_foreign_key "jobs", "locations"
   add_foreign_key "jobs", "roles"
