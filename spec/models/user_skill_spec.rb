@@ -19,11 +19,11 @@ RSpec.describe UserSkill, type: :model do
 
   describe "broadcasts" do
     it "broadcasts update_user_skill on save" do
-      expect { user_skill.save }.to broadcast(:update_user_skill, user_skill)
+      expect { user_skill.save }.to broadcast(:update_user_skill)
     end
 
     it "broadcasts update_user_skill on destroy" do
-      expect { user_skill.destroy }.to broadcast(:update_user_skill, user_skill)
+      expect { user_skill.destroy }.to broadcast(:update_user_skill)
     end
   end
 

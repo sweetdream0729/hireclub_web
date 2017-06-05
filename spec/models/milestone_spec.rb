@@ -45,11 +45,11 @@ RSpec.describe Milestone, type: :model do
 
   describe "broadcasts" do
     it "broadcasts update_milestone on save" do
-      expect { milestone.save }.to broadcast(:update_milestone, milestone)
+      expect { milestone.save }.to broadcast(:update_milestone)
     end
 
     it "broadcasts update_milestone on destroy" do
-      expect { milestone.destroy }.to broadcast(:update_milestone, milestone)
+      expect { milestone.destroy }.to broadcast(:update_milestone)
     end
   end
 

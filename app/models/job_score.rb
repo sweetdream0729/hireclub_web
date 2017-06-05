@@ -10,18 +10,15 @@ class JobScore < ApplicationRecord
 
   def update_score
     return if user.nil? || job.nil?
-    puts "update_score"
     new_score = 0
     job.skills.each do |skill_name|
       
       skill = Skill.where(name: skill_name)
       next if skill.nil?
 
-      puts "   job skill: #{skill_name}"
       user_skill = user.user_skills.where(skill: skill).first
       if user_skill
         increment = [user_skill.years,1].max
-        puts "  increment: #{increment}"
         new_score += increment
       end
     end
