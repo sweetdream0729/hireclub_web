@@ -141,6 +141,7 @@ RSpec.describe Job, type: :model do
 
   describe "suggested skills" do
     it "should suggest skills based on description" do
+      Skill.destroy_all
       FactoryGirl.create(:skill, name: "C++")
       FactoryGirl.create(:skill, name: "C")
       FactoryGirl.create(:skill, name: "Java")
