@@ -11,16 +11,14 @@ class OnesignalService
   def self.create_notification(params)
     self.client
     params[:app_id] = Rails.application.secrets.onesignal_app_id
-    puts "OnesignalService.create_notification #{params.inspect}"
     begin
       response = OneSignal::Notification.create(params: params)
       Rails.logger.info(response.body.inspect)
-      notification_id = JSON.parse(response.body)["id"]
     rescue OneSignal::OneSignalError => e
-      puts "--- OneSignalError  :"
-      puts "-- message : #{e.message}"
-      puts "-- status : #{e.http_status}"
-      puts "-- body : #{e.http_body}"
+      Rails.logger.error puts "--- OneSignalError  :"
+      Rails.logger.error puts "-- message : #{e.message}"
+      Rails.logger.error puts "-- status : #{e.http_status}"
+      Rails.logger.error puts "-- body : #{e.http_body}"
     end 
   end
 
