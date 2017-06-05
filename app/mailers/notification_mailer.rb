@@ -3,7 +3,6 @@ class NotificationMailer < ApplicationMailer
   def user_welcome(notification)
     set_notification(notification)
     
-
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
 
@@ -77,23 +76,14 @@ class NotificationMailer < ApplicationMailer
     @notification = Notification.find(notification.id)
     @user = @notification.user
 
-    set_sparkpost_header
-  end
-
-  def set_sparkpost_header
     if @notification.present?
-      data = { 
-        campaign_id: @notification.activity_key,
-        metadata: {
-          notification_id: @notification.id,
-          user_id: @user.id,
-          activity_id: @notification.activity.id
-        }
-      }
-      headers['X-MSYS-API'] = data.to_json
+      set_campaign(@notification.activity_key)
+      add_metadata(:notification_id, @notification.id)
+      add_metadata(:user_id, @user.try(:id))
+      add_metadata(:activity_id, @notification.try(:activity).try(:id))
+      set_sparkpost_header
     end
 
-    #Rails.logger.info headers.inspect
   end
   
 end
