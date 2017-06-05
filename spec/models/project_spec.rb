@@ -36,11 +36,11 @@ RSpec.describe Project, type: :model do
 
   describe "broadcasts" do
     it "broadcasts update_project on save" do
-      expect { project.save }.to broadcast(:update_project, project)
+      expect { project.save }.to broadcast(:update_project)
     end
 
     it "broadcasts update_project on destroy" do
-      expect { project.destroy }.to broadcast(:update_project, project)
+      expect { project.destroy }.to broadcast(:update_project)
     end
   end
 
