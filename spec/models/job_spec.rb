@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let(:job) { FactoryGirl.build(:job) }
-  let(:skill) { FactoryGirl.create(:skill, name: "Design") }
-  let(:skill2) { FactoryGirl.create(:skill, name: "Development") }
+  let(:skill) { FactoryGirl.create(:skill) }
+  let(:skill2) { FactoryGirl.create(:skill) }
 
   subject { job }
 
