@@ -81,9 +81,7 @@ class NotificationMailer < ApplicationMailer
       add_metadata(:notification_id, @notification.id)
       add_metadata(:user_id, @user.try(:id))
       add_metadata(:activity_id, @notification.try(:activity).try(:id))
-      set_sparkpost_header
     end
-
   end
   
 end
