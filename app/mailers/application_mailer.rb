@@ -7,6 +7,13 @@ class ApplicationMailer < ActionMailer::Base
   def set_campaign(campaign_id)
     get_sparkpost_data
     @sparkpost_data[:campaign_id] = campaign_id
+    add_metadata(:campaign_id, campaign_id)
+  end
+
+  def set_tags(tags_array)
+    get_sparkpost_data
+    @sparkpost_data[:tags] = tags_array
+    add_metadata(:tags, tags_array)
   end
 
   def add_metadata(key, value)
