@@ -4,7 +4,7 @@ class StoriesController < ApplicationController
 
   # GET /stories
   def index
-    @stories = Story.published
+    @title = "Stories"
 
     scope = Story.published
     if params[:sort_by] == "oldest"
@@ -13,6 +13,14 @@ class StoriesController < ApplicationController
       scope = scope.by_popular
     else
       scope = scope.by_recent
+    end
+
+    if params[:username]
+      @user = User.friendly.find(params[:username])
+      if @user.present?
+        scope = scope.by_user(@user)
+        @title = "#{@title} by #{@user.display_name}"
+      end
     end
 
     if params[:query]

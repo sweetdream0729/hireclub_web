@@ -32,6 +32,7 @@ RSpec.describe UserSkill, type: :model do
       user_skill.years = 1
       user_skill.save
 
+      user_skill.reload
       expect(user_skill.user.years_experience).to eq(1)
     end
   end

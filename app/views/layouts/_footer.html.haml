@@ -23,8 +23,13 @@
             = link_to "Apply", "http://facebook.com/groups/hireclub"
           %li.list-inline-item
             = link_to "Help", "mailto:help@hireclub.co"
+
           - if user_signed_in? && current_user.is_admin
-            = link_to "Admin", rails_admin_path
+            %li.list-inline-item
+              = link_to "Styles", styles_path
+            %li.list-inline-item
+              = link_to "Admin", rails_admin_path
+
       %p
         © 2017 kidBombay. All rights reserved.
 
