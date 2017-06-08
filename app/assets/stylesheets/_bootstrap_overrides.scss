@@ -59,3 +59,11 @@
   color: $brand-danger;
   border-color: $brand-danger;
 }
+
+.breadcrumb {
+  padding: 0;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: transparent;
+  border-radius: 0;
+}

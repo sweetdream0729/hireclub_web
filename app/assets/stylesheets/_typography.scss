@@ -64,6 +64,10 @@ em {
   @include semibold-font;
 }
 
+.regular {
+ @include regular-font; 
+}
+
 .bold {
   @include bold-font;
 }
