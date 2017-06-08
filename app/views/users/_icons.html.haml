@@ -1,6 +1,8 @@
 - if user.is_hiring
-  %i.fa.fa-bullseye.text-primary
+  %i.fa.fa-bullseye.text-primary.mr-1
 - if user.is_available
-  %i.fa.fa-briefcase.text-success
+  %i.fa.fa-briefcase.text-success.mr-1
 - if user.open_to_new_opportunities
-  %i.fa.fa-handshake-o
+  %i.fa.fa-handshake-o.text-muted.mr-1
+- if user.open_to_remote
+  %i.fa.fa-plane.text-muted
