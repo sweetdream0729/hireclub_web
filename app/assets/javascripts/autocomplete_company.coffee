@@ -8,7 +8,7 @@ $(document).ready ->
     maxItems: 1
     maxOptions: 8
     render: option: (item, escape) ->
-      (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + 'alt="" />' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
+      (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + '"/>' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
 
     load: (query, callback) ->
       if !query.length
