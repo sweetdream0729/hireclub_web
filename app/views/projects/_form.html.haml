@@ -21,7 +21,7 @@
         %p
           %small.form-text.text-muted
             800x600 minimum. JPG, PNG, or GIF. 10MB maximum file size.
-      
+
     .col-sm-6
       .form-group
         = f.label :name
@@ -33,13 +33,13 @@
 
       .form-group
         = f.label :company
-        = f.text_field :company, class: "form-control autocomplete_company", value: @project.company.try(:name), placeholder: "HireClub", autocomplete: "off"
+        = f.text_field :company, class: "autocomplete_company", value: @project.company.try(:name), placeholder: "HireClub"
         = f.hidden_field :company_id, value: @project.company_id, class: "autocomplete_company_id"
 
       .form-group
         = f.label "Link To"
         = f.text_field :link, class: 'form-control', placeholder: "http://"
-      
+
       .form-group
         = f.label :description
         = f.text_area :description, class: 'form-control', placeholder: "Describe the project...", rows: 4
@@ -68,15 +68,15 @@
     elems[i].addEventListener('click', showUploader ,false);
   }
   function showUploader(){
-    cloudinary.openUploadWidget({ 
-      cloud_name: "#{Rails.application.secrets.cloudinary_name}", 
+    cloudinary.openUploadWidget({
+      cloud_name: "#{Rails.application.secrets.cloudinary_name}",
       upload_preset: 'project_upload',
       cropping: 'server',
       cropping_aspect_ratio: 1.333333333333333,
       cropping_show_dimensions: true,
       resource_type: "image",
-      multiple: false}, 
-      function(error, result) { 
+      multiple: false},
+      function(error, result) {
         console.log(error, result);
         if(result) {
           image_uid = result[0].public_id;
