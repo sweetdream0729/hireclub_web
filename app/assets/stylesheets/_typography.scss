@@ -10,6 +10,7 @@ $font-family-sans-serif: "tt_normsregular","Avenir Next","Avenir", "Helvetica Ne
   font-family: "tt_normsmedium", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 @mixin regular-font {
@@ -22,6 +23,7 @@ $font-family-sans-serif: "tt_normsregular","Avenir Next","Avenir", "Helvetica Ne
   font-family: "tt_normsbold", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
+  -webkit-font-smoothing: antialiased;
 }
 @mixin italic-font {
   font-family: "tt_normsitalic", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -33,6 +35,7 @@ $font-family-sans-serif: "tt_normsregular","Avenir Next","Avenir", "Helvetica Ne
   font-family: "tt_normsextrabold", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 strong {
