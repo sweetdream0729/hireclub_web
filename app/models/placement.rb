@@ -6,6 +6,7 @@ class Placement < ApplicationRecord
 
   # Scopes
   scope :by_priority,    -> { order(priority: :asc) }
+  scope :in_time,        ->(time) { where("placements.start_time <= ? and placements.end_time >= ?", time, time) }
   
   # Associations
   belongs_to :placeable, polymorphic: true
