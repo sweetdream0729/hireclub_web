@@ -1,3 +1,6 @@
+require 'redcarpet'
+require 'redcarpet/render_strip'
+
 module ApplicationHelper
   
   def model_image(image, width, height, use_https = false)
@@ -39,6 +42,12 @@ module ApplicationHelper
       tables: true
     })
     @markdown.render(content).html_safe
+  end
+
+  def markdown_stripped(content)
+    @markdown_stripped ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+
+    @markdown_stripped.render(content)
   end
 
   def mentioned_users(body)

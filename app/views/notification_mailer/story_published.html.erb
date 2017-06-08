@@ -47,7 +47,7 @@
 
                            <font face="'Source Sans Pro', sans-serif" color="#333333" style="font-size: 24px; line-height: 32px;">
                               <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #333333; font-size: 24px; line-height: 32px;">
-                              <%= truncate(@story.content, length: 160) %></span>
+                              <%= truncate(markdown_stripped(@story.content), length: 160) %></span>
                            </font>
                         </td>
                      </tr>
