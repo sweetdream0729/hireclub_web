@@ -1,5 +1,6 @@
 class Placement < ApplicationRecord
   # Extensions
+  include Admin::PlacementAdmin
   acts_as_taggable_array_on :tags
   include HasTagsList
   has_tags_list :tags

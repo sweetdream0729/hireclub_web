@@ -33,6 +33,8 @@ class Story < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
 
+  has_many :placements, as: :placeable, dependent: :destroy
+
   # Validations
   validates :user, presence: true
   validates :name, presence: true
