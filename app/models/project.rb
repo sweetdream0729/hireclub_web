@@ -45,7 +45,7 @@ class Project < ApplicationRecord
   has_many :commenters, through: :comments, source: :user
 
   # Validations
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 64 }
   validates_presence_of :image
   validates :slug, uniqueness: { case_sensitive:false }
   validates :position, presence: true, numericality: { greater_than_or_equal_to: 0 }
