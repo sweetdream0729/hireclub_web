@@ -1,2 +1,18 @@
 - story = placement.placeable
-= render partial: "/stories/story", locals: {story: story}
+
+= link_to story do
+
+  .card.card-inverse
+    
+    = image_tag(model_image(story.cover, 1920, 1080, true), alt: story.name, class: "card-img img-fluid")
+    .card-img-overlay
+      %h6.card-title
+        = story.tags.join " "
+      %h5.card-title.bold
+        = story.name
+      %p.card-text
+        / This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+      %p.card-text
+        / %small.text-muted Last updated 3 mins ago
+
+/ = render partial: "/stories/story", locals: {story: story}
