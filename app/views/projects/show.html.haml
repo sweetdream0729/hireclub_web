@@ -4,6 +4,12 @@
 
 
 .container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Projects", projects_path
+    %li.breadcrumb-item
+      = link_to "By #{@project.user.display_name}", projects_path(username: @project.user.username)
+
   .row
     .col-sm-8
       = image_tag(model_image(@project.image, 800, 600, true), alt: @project.name, class: "img-fluid")
