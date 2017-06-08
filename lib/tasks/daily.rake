@@ -9,5 +9,9 @@ namespace :daily do
     Follow.counter_culture_fix_counts
     SparkpostService.get_message_events
   end
+
+  task run_hourly: :environment do
+    SparkpostService.get_message_events
+  end
   
 end

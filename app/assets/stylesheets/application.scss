@@ -1,7 +1,6 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "fonts";
 @import "colors";
-
-$font-family-sans-serif: "proxima-nova","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $alert-success-bg:      $brand-success;
 $alert-success-text:    #FFF !default;

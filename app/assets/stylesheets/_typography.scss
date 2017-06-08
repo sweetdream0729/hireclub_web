@@ -1,3 +1,48 @@
+$font-family-sans-serif: "tt_normsregular","Avenir Next","Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@mixin light-font {
+  font-family: "tt_normslight", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin semibold-font {
+  font-family: "tt_normsmedium", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin regular-font {
+  font-family: "tt_normsregular", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin bold-font {
+  font-family: "tt_normsbold", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+@mixin italic-font {
+  font-family: "tt_normsitalic", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin black-font {
+  font-family: "tt_normsextrabold", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+strong {
+  @include bold-font;
+}
+
+em {
+  @include italic-font;  
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -12,25 +57,55 @@
 
 
 .light {
-  font-weight: 300;
+  @include light-font;
 }
 
 .semi_bold {
-  font-weight: 600;
+  @include semibold-font;
+}
+
+.regular {
+ @include regular-font; 
 }
 
 .bold {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .black {
-  font-weight: 900;
+  @include black-font;
+}
+
+body {
+  @include regular-font;
+}
+
+h1 {
+  @include bold-font;
+}
+
+h2 {
+  @include light-font;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  @include bold-font;
+}
+
+h4 {
+  @include semibold-font;
+}
+
+h5 {
+  @include semibold-font;
+  margin-bottom: 1rem;
 }
 
 h6 {
+  @include bold-font;
+  margin-bottom: 1rem;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 1px;
   font-size: 0.8rem;
-  // opacity: 0.3;
+  letter-spacing: 0.08rem;
 }

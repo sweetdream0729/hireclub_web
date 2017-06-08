@@ -1,6 +1,6 @@
 .container.content_container
   %h1 
-    = title "Stories"
+    = title @title
     %small
       = link_to 'Write Story', new_story_path, class: "btn btn-primary btn-sm" if policy(Story).new?
   .dropdown
@@ -24,35 +24,3 @@
     = render @stories
 
   = paginate @stories
-
-/ %h1 Listing stories
-
-/ %table
-/   %thead
-/     %tr
-/       %th User
-/       %th Name
-/       %th Slug
-/       %th Cover uid
-/       %th Published on
-/       %th Content
-/       %th
-/       %th
-/       %th
-
-/   %tbody
-/     - @stories.each do |story|
-/       %tr
-/         %td= story.user
-/         %td= story.name
-/         %td= story.slug
-/         %td= story.cover_uid
-/         %td= story.published_on
-/         %td= story.content
-/         %td= link_to 'Show', story
-/         %td= link_to 'Edit', edit_story_path(story)
-/         %td= link_to 'Destroy', story, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-/ %br
-
-/ = link_to 'New Story', new_story_path

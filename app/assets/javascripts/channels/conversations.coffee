@@ -40,7 +40,8 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     if conversation_list_item.length > 0
         preview = conversation_list_item.find(".conversation_preview")
         preview.text(text)
-        conversation_list_item.addClass("unread")
+        if data.user_id.toString() != current_user_id.toString()
+          conversation_list_item.addClass("unread")
         if active_conversation.length == 0 || document.hidden #if conversation is not open or document is hidden we need to update the count in the list
           App.conversations.update_conversation_list_count(conversation_list_item,data.unread_message_hash[current_user_id])
     #update total count on title bar
@@ -76,16 +77,17 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     if $unread_cell.length > 0
       App.last_read.update(conversation_id)
       $unread_cell.remove()
-      $("#conversation_#{conversation_id}").removeClass("unread")
     if countElement.length > 0
       countElement.remove()
+    $("#conversation_#{conversation_id}").removeClass("unread")
 
   #Function to add day cell for first message of conversation or first message of the day
   add_day_cell: (created_at,conversation) ->
     last_day_cell = $('.day_cell').last()
     message_date = new Date(created_at)
+
     #condition to check if it is the first message of the conversation or day
-    if last_day_cell.length == 0 || LocalTime.relativeDate(new Date(last_day_cell.data('datetime'))) != LocalTime.relativeDate(message_date)
+    if last_day_cell.length == 0 || LocalTime.relativeDate(new Date(last_day_cell.data('datetime').replace(/-/g,'/'))) != LocalTime.relativeDate(message_date)
       conversation.append("<div class='day_cell' data-datetime='#{created_at}'>#{LocalTime.relativeWeekday(message_date)}</div>")
 
 $(document).ready ->

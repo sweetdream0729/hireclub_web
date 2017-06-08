@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170604184445) do
+ActiveRecord::Schema.define(version: 20170606174733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,9 +136,9 @@ ActiveRecord::Schema.define(version: 20170604184445) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -328,6 +328,21 @@ ActiveRecord::Schema.define(version: 20170604184445) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
+  end
+
+  create_table "placements", force: :cascade do |t|
+    t.string   "placeable_type"
+    t.integer  "placeable_id",                null: false
+    t.datetime "start_time",                  null: false
+    t.datetime "end_time",                    null: false
+    t.integer  "priority",       default: 0,  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "tags",           default: [],              array: true
+    t.index ["end_time"], name: "index_placements_on_end_time", using: :btree
+    t.index ["placeable_type", "placeable_id"], name: "index_placements_on_placeable_type_and_placeable_id", using: :btree
+    t.index ["start_time"], name: "index_placements_on_start_time", using: :btree
+    t.index ["tags"], name: "index_placements_on_tags", using: :gin
   end
 
   create_table "projects", force: :cascade do |t|
