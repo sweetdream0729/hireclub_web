@@ -9,12 +9,14 @@ class CompanyImportsController < ApplicationController
     if @company && @company.persisted?
       @company.added_by = current_user
       @company.save
-      redirect_to @company
+      respond_to do |format|
+        format.json { render json: @company }
+        format.html {redirect_to @company}
+      end
     else
       redirect_to new_company_import_path, alert: "There was an error importing #{facebook_url}"
     end
 
-    
   end
 
   def search

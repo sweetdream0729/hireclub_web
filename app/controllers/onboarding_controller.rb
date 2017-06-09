@@ -9,6 +9,7 @@ class OnboardingController < ApplicationController
     @user = current_user
     case step
     when :roles
+      @company = Company.new
       @user.user_roles.build if @user.user_roles.empty?
     when :skills
       @user.user_skills.build if @user.user_skills.empty?
@@ -34,7 +35,7 @@ class OnboardingController < ApplicationController
       :is_available, :is_hiring,
       :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation,
       :is_us_work_authorized, :requires_us_visa_sponsorship,
-      user_roles_attributes: [:id, :role_id], 
+      user_roles_attributes: [:id, :role_id],
       user_skills_attributes: [:id, :skill_id, :years, :_destroy],
       milestones_attributes: [:id, :name, :start_date, :_destroy])
   end
