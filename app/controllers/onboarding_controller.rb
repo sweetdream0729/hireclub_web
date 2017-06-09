@@ -9,7 +9,6 @@ class OnboardingController < ApplicationController
     @user = current_user
     case step
     when :roles
-      @company = Company.new
       @user.user_roles.build if @user.user_roles.empty?
     when :skills
       @user.user_skills.build if @user.user_skills.empty?

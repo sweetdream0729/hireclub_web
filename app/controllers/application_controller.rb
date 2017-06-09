@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protect_from_forgery with: :exception
+  before_action :create_company
 
 
 
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def create_company
+    @company = Company.new
+  end
 
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
