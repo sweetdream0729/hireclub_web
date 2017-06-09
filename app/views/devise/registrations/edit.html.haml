@@ -186,10 +186,12 @@
 
             .form-group
               = f.label :email
-              = f.email_field :email, class: 'form-control'
+              = f.email_field :email, class: 'form-control', value: resource.display_email
+
             - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-              %div
-                Currently waiting confirmation for: #{resource.unconfirmed_email}
+              %small.form-text.text-warning.mb-4
+                Currently awaiting confirmation for: #{resource.unconfirmed_email}
+
             .form-group
               = f.label :password
               = f.password_field :password, autocomplete: "off", class: 'form-control'

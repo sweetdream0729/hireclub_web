@@ -111,6 +111,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def resend_confirmation
+    set_user
+    authorize @user, :update?
+    @user.send_confirmation_instructions
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def set_user

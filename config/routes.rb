@@ -118,6 +118,7 @@ Rails.application.routes.draw do
       get :unfollow
       get :followers
       get :following
+      get :resend_confirmation
     end
   end
 
