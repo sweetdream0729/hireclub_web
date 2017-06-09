@@ -58,7 +58,10 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "hireclub_web_#{Rails.env}"
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
+  config.action_mailer.default_url_options = { 
+    :host => Rails.application.secrets.domain_name
+    :protocol => "http"
+  }
 
   # ActionMailer::Base.smtp_settings = {
   #   :user_name => Rails.application.secrets.sendgrid_username,
