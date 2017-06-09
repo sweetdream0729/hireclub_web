@@ -17,6 +17,10 @@ $(document).ready ->
         validators:
           notEmpty: 
             message: 'Name is required.'
+          stringLength:
+            max: 64
+            message: 'Name must be less than 64 characters.'
+                
     )
 
   $('#project_skills_list').selectize

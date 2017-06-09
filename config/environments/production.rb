@@ -58,7 +58,10 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "hireclub_web_#{Rails.env}"
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
+  config.action_mailer.default_url_options = { 
+    :host => Rails.application.secrets.domain_name,
+    :protocol => "http"
+  }
 
   # ActionMailer::Base.smtp_settings = {
   #   :user_name => Rails.application.secrets.sendgrid_username,
@@ -105,4 +108,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'
+      resource '*', :headers => :any, :methods => [:get]
+    end
+  end
 end

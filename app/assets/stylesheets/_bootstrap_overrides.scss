@@ -5,7 +5,6 @@
 }
 
 .navbar-brand {
-  font-weight: 700;
   font-size: 15px;
   color: $brand-primary;
   letter-spacing: 0.5px;
@@ -14,14 +13,12 @@
   letter-spacing: 1px;
   font-size: 15px;
   letter-spacing: 1px;
-  font-weight: 600;
 }
 
 .badge-pill {
   border-radius: 10rem;
   letter-spacing: .05rem;
   padding: 0.5rem 0.8rem;
-  font-weight: 600;
   a {
     color: #fff;
   }
@@ -32,7 +29,6 @@
   border-radius: 10rem;
   letter-spacing: .05rem;
   padding: 0.5rem 0.8rem;
-  font-weight: 600;
   color: $gray-light;
   border-color: $gray-light;
   background-color: white;

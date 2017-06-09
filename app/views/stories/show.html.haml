@@ -1,6 +1,6 @@
 - set_meta_tags canonical: story_url(@story)
 - set_meta_tags description: @story.content
-- set_meta_tags og: {type: "article", url: story_url(@story), description: @story.content}
+- set_meta_tags og: {type: "article", url: story_url(@story), description: markdown_stripped(@story.content), image: model_image(@story.cover, 1920, 1080, true)}
 
 .container.mt-4
   %ol.breadcrumb
