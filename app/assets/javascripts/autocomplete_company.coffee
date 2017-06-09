@@ -2,10 +2,10 @@ $(document).ready ->
   selectizeCallback = null
 
   # reset company create form when modal closes
-  $('.company-modal').on 'hide.bs.modal', (e) ->
+  $('#createCompanyModal').on 'hide.bs.modal', (e) ->
     if selectizeCallback != null
       selectizeCallback()
-      selecitzeCallback = null
+      selectizeCallback = null
     $('#new_company').trigger 'reset'
     $.rails.enableFormElements $('#new_company')
     return
@@ -23,7 +23,7 @@ $(document).ready ->
           name: response.name
           avatar_url: response.avatar_url
         selectizeCallback = null
-        $('.company-modal').modal 'toggle'
+        $('#createCompanyModal').modal 'toggle'
         return
     return
 
@@ -35,7 +35,7 @@ $(document).ready ->
     maxItems: 1
     maxOptions: 8
     persist: false
-    placeholder: 'hireclub'
+    placeholder: 'Acme Inc'
     render: option: (item, escape) ->
       (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + '"/>' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
 
@@ -61,6 +61,6 @@ $(document).ready ->
       return
     create: (input, callback) ->
       selectizeCallback = callback
-      $('.company-modal').modal()
+      $('#createCompanyModal').modal()
       $('#company_name').val input
       return
