@@ -373,10 +373,16 @@ class User < ApplicationRecord
     end
   end
 
+  # Devise methods
   # Always remember user
   # https://github.com/plataformatec/devise/issues/1513
   def remember_me
     (super == nil) ? '1' : super
+  end
+
+  def display_email
+    return unconfirmed_email if pending_reconfirmation?
+    return email
   end
 
   def suggested_username
