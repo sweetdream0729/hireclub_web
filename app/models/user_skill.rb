@@ -15,7 +15,7 @@ class UserSkill < ApplicationRecord
 
   # Associations
   belongs_to :user
-  counter_culture :user, column_name: 'years_experience', delta_column: 'years'
+  #counter_culture :user, column_name: 'years_experience', delta_column: 'years'
 
   belongs_to :skill
   delegate :name, to: :skill

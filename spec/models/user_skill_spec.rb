@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UserSkill, type: :model do
-  let(:user_skill) { FactoryGirl.build(:user_skill) }
+  let(:user) { FactoryGirl.build(:user)}
+  let(:user_skill) { FactoryGirl.build(:user_skill, user: user) }
 
   subject { user_skill }
 
@@ -31,9 +32,10 @@ RSpec.describe UserSkill, type: :model do
     it "should update user.years_experience on create" do
       user_skill.years = 1
       user_skill.save
+      user_skill2 = FactoryGirl.create(:user_skill, user: user, years: 5)
 
-      user_skill.reload
-      expect(user_skill.user.years_experience).to eq(1)
+      user.reload
+      expect(user_skill.user.years_experience).to eq(5)
     end
   end
 
