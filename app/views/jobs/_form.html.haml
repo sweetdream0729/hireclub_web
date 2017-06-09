@@ -12,8 +12,8 @@
         = f.text_field :name, class: 'form-control', autocomplete: :off, placeholder: "Rails Developer"
       .form-group
         = f.label :company
-        = f.text_field :company, class: "form-control autocomplete_company", value: @job.company.try(:name), placeholder: "HireClub", autocomplete: "off"
-      
+        = f.text_field :company, class: "autocomplete_company", value: @job.company.try(:name), placeholder: "HireClub"
+
         = f.hidden_field :company_id, value: @job.company_id, class: "autocomplete_company_id"
 
       .form-group
@@ -29,14 +29,14 @@
         = f.label :location
         = f.text_field :location, class: "form-control autocomplete_location", value: @job.location.try(:display_name), placeholder: "My City, CA", autocomplete: "off"
         = f.hidden_field :location_id, value: @job.location_id, class: "autocomplete_location_id"
-        %small.form-text.text-muted 
+        %small.form-text.text-muted
           Where is the job located? Use Anywhere for remote jobs.
-      
+
       .form-group
         = f.label :description
         = f.text_area :description, class: 'form-control', rows: 5, placeholder: "What exactly are you looking for?"
         %small.text-muted
-        
+
       .form-group
         = f.label :link
         = f.text_field :link, class: 'form-control'
@@ -66,7 +66,7 @@
           %i.fa.fa-plane
           Remote
 
-    
+
   = f.submit 'Save', class: "btn btn-lg btn-primary"
   = link_to 'Cancel', @job, class: "btn btn-lg btn-link" if @job.persisted?
 

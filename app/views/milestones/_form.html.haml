@@ -14,21 +14,21 @@
       .form-group
         = f.label :milestone
         = f.text_field :name, class: "form-control", placeholder: "Founded HireClub with 25 of my friends",maxlength: 140
-        %small.form-text.text-muted 
+        %small.form-text.text-muted
           Make them short, objective and interesting.
 
       .form-group
         = f.label :company
-        = f.text_field :company, class: "form-control autocomplete_company", value: @milestone.company.try(:name), placeholder: "HireClub", autocomplete: "off"
+        = f.text_field :company, class: "autocomplete_company", value: @milestone.company.try(:name), placeholder: "HireClub"
 
-        %small.form-text.text-muted 
+        %small.form-text.text-muted
           Which Company, School or Organization was this milestone for?
         = f.hidden_field :company_id, value: @milestone.company_id, class: "autocomplete_company_id"
       .form-group
         = f.label "When did this happen?"
         %br
         = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
-      
+
       .form-group
         = f.label "Skills"
         = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
@@ -54,9 +54,9 @@
           = f.check_box :printable, class: 'form-check-input'
           Printable
       %small.text-muted
-        Show this milestone in 
+        Show this milestone in
         = link_to "Print Profile", print_user_path(current_user), target: "_blank"
-       
+
 
     .col-sm-5.offset-sm-1.hidden-xs-down
       %h6 Examples
