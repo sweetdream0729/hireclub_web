@@ -41,8 +41,8 @@
 
             .form-group
               = f.label :location
-              = f.text_field :location, class: 'form-control', value: @user.location.try(:display_name), autocomplete: "off"
-              = f.hidden_field :location_id, value: @user.location_id
+              = f.text_field :location, class: 'form-control autocomplete_location', value: @user.location.try(:display_name), autocomplete: "off"
+              = f.hidden_field :location_id, value: @user.location_id, class: "autocomplete_location_id"
 
             .form-group
               = f.label :bio
@@ -56,7 +56,7 @@
 
               = f.file_field :avatar
               = f.hidden_field :retained_avatar
-              
+
             .form-group
               = f.label "Website"
               = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
@@ -157,8 +157,8 @@
               Do you require sponsorship for a US employment visa (e.g. H-1B)?
 
 
-          
-          
+
+
           / #social.tab-pane{:role => "tabpanel"}
           /   %h2 Social
           /   %hr
@@ -199,7 +199,7 @@
                   %br
                   = @minimum_password_length
                   characters minimum.
-          
+
           .mt-4
             = f.submit "Save Changes", class: "btn btn-primary btn-block"
         / %hr
@@ -208,5 +208,3 @@
         /   You can delete your account and all data associated with it.
         / %p
         /   = link_to "Delete Account", registration_path(resource_name), :method => :delete, :data => { :confirm => 'Delete your account?' }, class: 'btn btn-danger btn-sm'
-          
-        
