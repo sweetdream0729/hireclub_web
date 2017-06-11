@@ -32,6 +32,7 @@ module ApplicationHelper
   end
 
   def markdown(content)
+    return if content.blank?
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, {
       autolink: true,
       space_after_headers: true,
@@ -45,6 +46,7 @@ module ApplicationHelper
   end
 
   def markdown_stripped(content)
+    return if content.blank?
     @markdown_stripped ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
 
     @markdown_stripped.render(content)
