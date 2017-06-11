@@ -49,7 +49,7 @@ RSpec.describe Placement, type: :model do
 			expect(placements[2]).to eq placement3
   	end
 
-    it "should get placements in_time",focus: true do
+    it "should get placements in_time" do
       now = DateTime.now
       placement1 = FactoryGirl.create(:placement, start_time: now + 1.hour, end_time: now + 4.hours)
       placement2 = FactoryGirl.create(:placement, start_time: now + 5.hours, end_time: now + 6.hours)
