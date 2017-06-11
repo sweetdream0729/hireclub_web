@@ -28,7 +28,7 @@
     %h1.display-4
       = title @story.name
     %h4.light
-      Security Program Manager
+      = @story.subtitle
   
 - if @story.cover_uid.present?
   .container
