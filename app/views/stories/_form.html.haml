@@ -5,15 +5,15 @@
       %ul
         - @story.errors.full_messages.each do |msg|
           %li= msg
-
-  .form-group
-    = f.label "Title"
-    = f.text_field :name, class: 'form-control', placeholder: "Headline"
-  .form-group
-    = f.label "Subtitle"
-    = f.text_field :subtitle, class: 'form-control', placeholder: "Headline"
+  
   .row
     .col-lg-7
+      .form-group
+        = f.label "Title"
+        = f.text_field :name, class: 'form-control', placeholder: "Headline"
+      .form-group
+        = f.label "Subtitle"
+        = f.text_field :subtitle, class: 'form-control', placeholder: "Headline"
       .form-group
         = f.label :content
         = f.text_area :content, class: 'form-control', rows: 10, placeholder: "Write here"
