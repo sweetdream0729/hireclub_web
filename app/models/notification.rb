@@ -92,7 +92,7 @@ class Notification < ApplicationRecord
 
     return klass.get_recipients_for(activity) if klass && klass.respond_to?(:get_recipients_for)
 
-    raise "Please implement notification for activity #{key}"
+    raise "Please implement get_recipients_for for activity #{activity.key}"
   end
 
   def self.get_activity_class(key)
