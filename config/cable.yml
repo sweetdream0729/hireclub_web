@@ -1,10 +1,10 @@
 development:
   adapter: redis
-  url: <%= Rails.application.secrets.redis_provider %>
+  url: <%= Rails.application.secrets.redis_url %>
 
 test:
   adapter: async
 
 production:
   adapter: redis
-  url: <%= Rails.application.secrets.redis_provider %>
+  url: <%= Rails.application.secrets.redis_url %>
