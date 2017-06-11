@@ -11,7 +11,7 @@ class CommentCreateActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.comment_created(notification)
+    NotificationMailer.comment_created(notification).deliver_later
   end
 
 end

@@ -1,5 +1,5 @@
 class TitleCountJob < ApplicationJob
-  queue_as :default
+  queue_as :urgent
 
   def perform(current_user)
       ActionCable.server.broadcast "Title Update:#{current_user.id}", {

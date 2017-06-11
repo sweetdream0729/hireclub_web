@@ -6,7 +6,6 @@ class MessageUnreadActivity
   end
 
   def self.send_notification(notification)
-    #NotificationMailer.delay.user_followed(notification)
     self.send_push(notification)
   end
 

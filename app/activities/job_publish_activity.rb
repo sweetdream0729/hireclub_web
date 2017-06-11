@@ -7,7 +7,7 @@ class JobPublishActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.job_created(notification)
+    NotificationMailer.job_created(notification).deliver_later
   end
 
 end

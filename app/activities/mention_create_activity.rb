@@ -6,6 +6,6 @@ class MentionCreateActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.comment_mentioned(notification)
+    NotificationMailer.comment_mentioned(notification).deliver_later
   end
 end

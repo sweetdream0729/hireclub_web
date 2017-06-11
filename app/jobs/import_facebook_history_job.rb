@@ -1,5 +1,5 @@
 class ImportFacebookHistoryJob < ApplicationJob
-  queue_as :default
+  queue_as :urgent
 
   def perform(user, omniauth)
     education = omniauth["extra"]["raw_info"]["education"]

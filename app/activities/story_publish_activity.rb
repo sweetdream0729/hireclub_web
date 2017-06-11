@@ -7,7 +7,7 @@ class StoryPublishActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.story_published(notification)
+    NotificationMailer.story_published(notification).deliver_later
   end
 
 end

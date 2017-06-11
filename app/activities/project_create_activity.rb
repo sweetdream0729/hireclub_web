@@ -7,7 +7,7 @@ class ProjectCreateActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.project_created(notification)
+    NotificationMailer.project_created(notification).deliver_later
   end
 
 end

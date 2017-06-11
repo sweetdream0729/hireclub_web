@@ -3,7 +3,7 @@
 # Place this file at config/sidekiq.yml and Sidekiq will
 # pick it up automatically.
 ---
-:verbose: false
+:verbose: true
 :concurrency: 10
 
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
@@ -14,7 +14,9 @@
 # http://www.mikeperham.com/2013/11/13/advanced-sidekiq-host-specific-queues/
 :queues:
   - critical
+  - urgent
   - default
+  - mailers
   - low
 
 # you can override concurrency based on environment

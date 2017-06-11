@@ -64,6 +64,7 @@ class Notification < ApplicationRecord
     return false if activity.nil? || skip_notifications?(activity)
 
     users = self.get_recipients_for(activity)
+    return if users.nil?
 
     if users.is_a? Array
       users.each do |recipient|
@@ -90,9 +91,8 @@ class Notification < ApplicationRecord
   def self.get_recipients_for(activity)
     klass = Notification.get_activity_class(activity.key)
 
-    return klass.get_recipients_for(activity) if klass && klass.respond_to?(:get_recipients_for)
-
-    raise "Please implement get_recipients_for for activity #{activity.key}"
+    return nil unless klass.present? && klass.respond_to?(:get_recipients_for)
+    return klass.get_recipients_for(activity)
   end
 
   def self.get_activity_class(key)

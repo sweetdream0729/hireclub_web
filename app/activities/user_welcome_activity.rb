@@ -6,6 +6,6 @@ class UserWelcomeActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.user_welcome(notification)
+    NotificationMailer.user_welcome(notification).deliver_later
   end
 end

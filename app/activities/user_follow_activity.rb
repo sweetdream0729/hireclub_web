@@ -6,7 +6,7 @@ class UserFollowActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.user_followed(notification)
+    NotificationMailer.user_followed(notification).deliver_later
     self.send_push(notification)
   end
 

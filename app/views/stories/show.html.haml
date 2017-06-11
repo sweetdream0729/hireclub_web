@@ -24,8 +24,11 @@
         %span.badge.badge-pill-outline.badge-warning.uppercase
           Draft
 
-  %h1.display-4
-    = title @story.name
+  .mb-4
+    %h1.display-4
+      = title @story.name
+    %h4.light
+      Security Program Manager
   
 - if @story.cover_uid.present?
   .container

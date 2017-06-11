@@ -6,6 +6,6 @@ class ReviewRequestCreateActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.delay.review_request(notification)
+    NotificationMailer.review_request(notification).deliver_later
   end
 end
