@@ -33,5 +33,7 @@ class SearchController < ApplicationController
     else
       @results = PgSearch.multisearch(@query).page(@page).per(10)
     end
+
+    AnalyticsEvent.create_search_event({query: @query, type: @searchable_type, page: @page}, current_user, request)
   end
 end
