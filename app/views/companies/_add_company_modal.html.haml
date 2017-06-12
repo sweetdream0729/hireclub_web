@@ -1,0 +1,31 @@
+#createCompanyModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "createCompanyModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#createCompanyModalLabel.modal-title Add Company
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      - company = Company.new
+      = form_for company, remote: true, html: { multipart: true, authenticity_token: true, class: 'company_new', "data-type" => "json"} do |f|
+        .modal-body
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control', autocomplete: :off
+          .form-group
+            = f.label "Facebook Page"
+            = f.text_field :facebook_url, class: 'form-control'
+          .form-group
+            = f.label "Website"
+            = f.text_field :website_url, class: 'form-control'
+          .form-group
+            = f.label 'Avatar'
+            %br
+            = image_tag(company_avatar(company.avatar, 200, true), width: 100, class: 'm-b-1')
+            %br
+            = f.file_field :avatar
+            = f.hidden_field :retained_avatar
+            = f.text_field :avatar_url, class: 'form-control', placeholder: "http://site.com/image.jpg"
+
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Cancel
+          = f.submit 'Save', class: 'btn btn-primary'

@@ -42,6 +42,9 @@
         - if @company.angellist_url.present?
           = link_to @company.angellist_url, target: "_blank" do
             %i.fa.fa-angellist.ml-2
+        - if @company.added_by.present?
+          Added By
+          = link_to @company.added_by.display_name, user_path(@company.added_by)
   .row
     .col-sm-8
       - if @company.jobs.any?
