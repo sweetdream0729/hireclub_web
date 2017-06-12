@@ -3,7 +3,7 @@ class InviteMailer < ApplicationMailer
   def invite_created(invite)
     set_invite(invite)
     @subject = "#{@user.display_name} invited you to HireClub"
-    mail(to: @invite.input, subject: @subject, from: @invite.user.email)
+    mail(to: @invite.input, subject: @subject, reply_to: @invite.user.email)
   end
 
   def set_invite(invite)
