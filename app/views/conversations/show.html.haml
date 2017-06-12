@@ -16,13 +16,29 @@
       #messages_container
         #messages_header
           - other_user = @other_users.first
+          // for small screen devices
           .dropdown#conversation_list_mobile.hidden-sm-up
             %a#dropdownMenuButton.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown"}
             .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
               = render partial: "conversation", collection: @conversations, locals: {dropdown_item_class: " dropdown-item"}
-          .media
-            = link_to image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex mr-3 rounded-circle hidden-xs-down'), other_user, target: "_blank"
-            .media-body.text-center
+          .media.text-center.hidden-sm-up
+            .media-body
+              %strong
+                = link_to other_user.display_name, other_user, target: "_blank"
+              %p
+                %small
+                  = other_user.primary_role_name
+                  - if other_user.company
+                    ·
+                    = other_user.company.name
+                  - if other_user.location.present?
+                    ·
+                    = other_user.location.name
+                    
+          //for other devices
+          .media.hidden-xs-down
+            = link_to image_tag(model_avatar(other_user.avatar, 200, true), width: 48, class: 'd-flex mr-3 rounded-circle'), other_user, target: "_blank"
+            .media-body
               %strong
                 = link_to other_user.display_name, other_user, target: "_blank"
               %p
