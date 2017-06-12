@@ -56,5 +56,5 @@ $(document).ready ->
     create: (input, callback) ->
       selectizeCallback = callback
       $('#createCompanyModal').modal()
-      $('#company_name').val input
+      #$('#company_name').val input
       return
