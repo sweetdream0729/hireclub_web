@@ -117,3 +117,6 @@ gem 'hirefire-resource'
 gem 'capistrano-rails-logs-tail', :github => 'FindHotel/capistrano-rails-logs-tail'
 gem 'simple_spark'
 gem 'rack-cors', :require => 'rack/cors'
+
+#for uploading multipart forms via ajax
+gem 'remotipart', '~> 1.2'

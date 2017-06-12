@@ -1,4 +1,13 @@
 .container.content_container
   %h1= title "Import Company"
-  .row.col-md-6
-    = render 'form' 
+
+  = form_for @company, url: company_imports_path do |f|
+    .row
+      .col-sm-6
+        .form-group
+          = f.label "Name"
+          = f.text_field :name, class: 'form-control', placeholder: "HireClub", autocomplete: "off"
+        .form-group
+          = f.label "Facebook URL"
+          = f.url_field :facebook_url, class: 'form-control'
+        = f.submit 'Import', class: 'btn btn-primary btn-lg'

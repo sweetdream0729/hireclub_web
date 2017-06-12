@@ -549,6 +549,7 @@ DEPENDENCIES
   rails_layout
   redcarpet
   redis
+  remotipart (~> 1.2)
   rinku
   rollbar
   rspec-rails

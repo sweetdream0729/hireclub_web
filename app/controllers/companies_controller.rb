@@ -43,7 +43,7 @@ class CompaniesController < ApplicationController
 
     current_user.follow @company
     @company.reload
-    
+
     respond_to do |format|
       format.js { render :follow}
       format.html { redirect_to @company }
@@ -52,10 +52,10 @@ class CompaniesController < ApplicationController
 
   def unfollow
     set_company
-    
+
     current_user.stop_following @company
     @company.reload
-    
+
     respond_to do |format|
       format.js { render :follow}
       format.html { redirect_to @company }
@@ -88,7 +88,7 @@ class CompaniesController < ApplicationController
     if @company.save
       respond_to do |format|
         format.json { render json: @company }
-        format.html { redirect_to @company, "#{@company.name} added."}
+        format.html { redirect_to @company, :flash => { :success => "#{@company.name} added." }}
       end
     else
       respond_to do |format|

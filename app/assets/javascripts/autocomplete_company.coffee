@@ -6,26 +6,21 @@ $(document).ready ->
     if selectizeCallback != null
       selectizeCallback()
       selectizeCallback = null
-    $('#new_company').trigger 'reset'
-    $.rails.enableFormElements $('#new_company')
+    $('.company_new').trigger 'reset'
+    $.rails.enableFormElements $('.company_new')
     return
 
-  #submitting form data via ajax
-  $('#new_company').on 'submit', (e) ->
-    e.preventDefault()
-    $.ajax
-      method: 'POST'
-      url: $(this).attr('action')
-      data: $(this).serialize()
-      success: (response) ->
-        selectizeCallback
-          id: response.id
-          name: response.name
-          avatar_url: response.avatar_url
-        selectizeCallback = null
-        $('#createCompanyModal').modal 'toggle'
-        return
+  #handles response when company creation is successful  
+  $(".company_new").on("ajax:success", (e, response) ->
+    selectizeCallback
+      id: response.id
+      name: response.name
+      avatar_url: response.avatar_url
+    selectizeCallback = null
+    $('#createCompanyModal').modal 'toggle'
     return
+  ).on "ajax:error", (e, response) ->
+
 
   $('.autocomplete_company').selectize
     plugins: ['restore_on_backspace']
@@ -34,7 +29,6 @@ $(document).ready ->
     searchField: 'name'
     maxItems: 1
     maxOptions: 8
-    persist: false
     placeholder: 'Acme Inc'
     render: option: (item, escape) ->
       (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + '"/>' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
