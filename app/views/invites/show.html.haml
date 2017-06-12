@@ -1,0 +1,50 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Invites", invites_path
+  .row
+    .col-sm-4
+      .card
+        .card-block.text-center
+          = image_tag(model_avatar(@user.avatar, 200, true), width: "50%", class: "rounded-circle")
+        .card-block
+          %h4.card-title.mt-0
+            = @user.display_name
+          %p.card-text
+            = @user.primary_role_name
+            - if @user.company.present?
+              ·
+              = link_to @user.company.name, @user.company
+
+        %ul.list-group.list-group-flush
+          %li.list-group-item 
+            = link_to @user.email, "mailto:#{@user.email}"
+          %li.list-group-item
+            = link_to link_display(user_url(@user)), user_url(@user)
+          - if @user.website_url.present?
+            %li.list-group-item 
+              = link_to link_display(@user.website_url), @user.website_url, target: "_blank"
+    .col-sm-8
+      %p
+        %strong From
+        = link_to @user.display_name, @user
+      
+      %p 
+        %strong To
+        = link_to @invite.input, "mailto:#{@invite.input}"
+
+      %p.text-muted
+        = local_time @invite.created_at
+      
+      %p= @invite.text
+
+      - if @invite.viewed_on.present?
+        %p
+          %strong Viewed By
+          - if @invite.viewed_by.present?
+            = link_to @invite.viewed_by.display_name, @invite.viewed_by
+          - else
+            Anonymous
+        %p
+          %strong Viewed On
+          = local_time @invite.viewed_on

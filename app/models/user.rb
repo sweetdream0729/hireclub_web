@@ -67,6 +67,7 @@ class User < ApplicationRecord
   has_many :stories, dependent: :destroy, inverse_of: :user
   has_many :comments, dependent: :destroy, inverse_of: :user
   has_many :job_scores, dependent: :destroy, inverse_of: :user
+  has_many :invites, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true

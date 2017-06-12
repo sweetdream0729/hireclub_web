@@ -1,0 +1,29 @@
+.container.content_container
+  %h1
+    = title "Invites"
+    %small
+      = link_to 'New Invite', new_invite_path, class: "btn btn-primary btn-sm" if policy(Project).new?
+
+  %table.table
+    %thead
+      %tr
+        %th Email
+        %th Sent On
+        %th Viewed By
+        %th On
+
+    %tbody
+      - @invites.each do |invite|
+        %tr
+          %td= link_to invite.input, invite
+          %td= local_time(invite.created_at)
+          %td
+            - if invite.viewed?
+              - if invite.viewed_by.present?
+                = link_to invite.viewed_by.display_name, invite.viewed_by
+              - else
+                Anonymous
+          %td= local_time(invite.viewed_on) if invite.viewed_on.present?
+          
+
+  

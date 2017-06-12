@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611171540) do
+ActiveRecord::Schema.define(version: 20170611213749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,21 @@ ActiveRecord::Schema.define(version: 20170611171540) do
     t.index ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
     t.index ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
     t.index ["user_id"], name: "index_impressions_on_user_id", using: :btree
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.string   "input",        null: false
+    t.string   "slug",         null: false
+    t.datetime "viewed_on"
+    t.text     "text"
+    t.integer  "viewed_by_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["slug"], name: "index_invites_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
+    t.index ["viewed_by_id"], name: "index_invites_on_viewed_by_id", using: :btree
+    t.index ["viewed_on"], name: "index_invites_on_viewed_on", using: :btree
   end
 
   create_table "job_scores", force: :cascade do |t|
@@ -528,6 +543,7 @@ ActiveRecord::Schema.define(version: 20170611171540) do
   add_foreign_key "comments", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "invites", "users"
   add_foreign_key "job_scores", "jobs"
   add_foreign_key "job_scores", "users"
   add_foreign_key "jobs", "companies"
