@@ -1,12 +1,41 @@
 $(document).ready ->
+  selectizeCallback = null
+
+  # reset company create form when modal closes
+  $('#createCompanyModal').on 'hide.bs.modal', (e) ->
+    if selectizeCallback != null
+      selectizeCallback()
+      selectizeCallback = null
+    $('#new_company').trigger 'reset'
+    $.rails.enableFormElements $('#new_company')
+    return
+
+  #submitting form data via ajax
+  $('#new_company').on 'submit', (e) ->
+    e.preventDefault()
+    $.ajax
+      method: 'POST'
+      url: $(this).attr('action')
+      data: $(this).serialize()
+      success: (response) ->
+        selectizeCallback
+          id: response.id
+          name: response.name
+          avatar_url: response.avatar_url
+        selectizeCallback = null
+        $('#createCompanyModal').modal 'toggle'
+        return
+    return
+
   $('.autocomplete_company').selectize
-    plugins: ['restore_on_backspace'],
+    plugins: ['restore_on_backspace']
     valueField: 'id'
     labelField: 'name'
     searchField: 'name'
-    create: false
     maxItems: 1
     maxOptions: 8
+    persist: false
+    placeholder: 'Acme Inc'
     render: option: (item, escape) ->
       (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + '"/>' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
 
@@ -29,4 +58,9 @@ $(document).ready ->
       return
     onItemAdd: (value, item) ->
       $('.autocomplete_company_id').val value
+      return
+    create: (input, callback) ->
+      selectizeCallback = callback
+      $('#createCompanyModal').modal()
+      $('#company_name').val input
       return

@@ -86,9 +86,15 @@ class CompaniesController < ApplicationController
     @company.added_by = current_user
 
     if @company.save
-      redirect_to @company, notice: 'Company was successfully created.'
+      respond_to do |format|
+        format.json { render json: @company }
+        format.html { redirect_to @company, "#{@company.name} added."}
+      end
     else
-      render :new
+      respond_to do |format|
+        format.json { render json: {errors: @company.errors.full_messages} }
+        format.html { render :new}
+      end
     end
   end
 
