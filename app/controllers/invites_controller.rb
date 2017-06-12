@@ -34,6 +34,7 @@ class InvitesController < ApplicationController
     @invite = current_user.invites.build(invite_params)
     authorize @invite
     if @invite.save
+      InviteMailer.invite_created(@invite).deliver_later
       redirect_to @invite, notice: "Invite sent to #{@invite.input}."
     else
       render :new
