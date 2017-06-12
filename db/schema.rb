@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611213749) do
+ActiveRecord::Schema.define(version: 20170612135740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,8 @@ ActiveRecord::Schema.define(version: 20170611213749) do
     t.integer  "viewed_by_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "recipient_id"
+    t.index ["recipient_id"], name: "index_invites_on_recipient_id", using: :btree
     t.index ["slug"], name: "index_invites_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
     t.index ["viewed_by_id"], name: "index_invites_on_viewed_by_id", using: :btree

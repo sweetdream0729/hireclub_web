@@ -18,6 +18,7 @@ class Invite < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :viewed_by, class_name: "User"
+  belongs_to :recipient, class_name: "User"
 
   # Validations
   validates :user, presence: true
@@ -29,6 +30,7 @@ class Invite < ApplicationRecord
 
   # Callbacks
   before_validation :ensure_slug, on: :create
+  before_validation :set_recipient, on: :create
 
   def ensure_slug
     if slug.blank?
@@ -49,5 +51,9 @@ class Invite < ApplicationRecord
 
   def viewed?
     viewed_on.present?
+  end
+
+  def set_recipient
+    self.recipient = User.where(email: input).first
   end
 end

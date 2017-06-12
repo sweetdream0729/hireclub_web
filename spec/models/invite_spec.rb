@@ -8,6 +8,8 @@ RSpec.describe Invite, type: :model do
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:viewed_by) }
+    it { should belong_to(:recipient) }
   end
 
   describe 'validations' do
@@ -50,7 +52,7 @@ RSpec.describe Invite, type: :model do
     end
   end
 
-   describe "activity" do
+  describe "activity" do
     it "should have create activity" do
       invite.save
 
@@ -59,6 +61,18 @@ RSpec.describe Invite, type: :model do
       expect(activity.trackable).to eq(invite)
       expect(activity.owner).to eq(invite.user)
       expect(activity.private).to eq(true)
+
+      expect(invite.recipient).to be_nil
+    end
+  end
+
+  describe "recipient" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    it "should set recipient when matching email" do
+      invite.input = other_user.email
+      invite.save
+
+      expect(invite.recipient).to eq other_user
     end
   end
 end
