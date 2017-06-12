@@ -1,9 +1,12 @@
 class AnalyticsEvent < ApplicationRecord
+  # Scopes
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  scope :searches,             -> { where(key: SearchActivity::KEY) }
 
+  # Validations
   validates :event_id, :uniqueness => true, :presence => true
   validates :key, presence: true
   validates :timestamp, :presence => true
-
 
   def self.create_search_event(params, current_user, request)
     key = SearchActivity::KEY
@@ -16,7 +19,6 @@ class AnalyticsEvent < ApplicationRecord
     end
 
     if request.present?
-      Rails.logger.info request.inspect
       data[:ip_address] = request.ip
       data[:user_agent] = request.user_agent
       data[:session_id] = request.session.id

@@ -1,4 +1,20 @@
 class Invite < ApplicationRecord
+  # Extensions
+  extend FriendlyId
+  friendly_id :slug, use: [:finders]
+  is_impressionable
+  auto_strip_attributes :text, :squish => true
+  auto_strip_attributes :input, :squish => true
+  nilify_blanks
+
+  # Scopes
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+
+  include UnpublishableActivity
+  include PublicActivity::Model
+  include PublicActivity::CreateActivityOnce
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
+
   # Associations
   belongs_to :user
   belongs_to :viewed_by, class_name: "User"
@@ -10,19 +26,6 @@ class Invite < ApplicationRecord
   validates :input, presence: true
   # require all contacts to be email right now
   validates_format_of :input, with: Devise.email_regexp, message: "Not a valid email."
-
-  # Extensions
-  extend FriendlyId
-  friendly_id :slug, use: [:finders]
-  is_impressionable
-  auto_strip_attributes :text, :squish => true
-  auto_strip_attributes :input, :squish => true
-  nilify_blanks
-
-  include UnpublishableActivity
-  include PublicActivity::Model
-  include PublicActivity::CreateActivityOnce
-  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   # Callbacks
   before_validation :ensure_slug, on: :create

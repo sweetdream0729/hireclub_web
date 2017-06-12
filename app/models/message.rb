@@ -7,6 +7,7 @@ class Message < ApplicationRecord
 
   # Scopes
   scope :by_recent, -> {order(created_at: :asc)}
+  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
   # Associations
   belongs_to :user
