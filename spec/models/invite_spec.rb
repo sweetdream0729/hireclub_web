@@ -10,6 +10,7 @@ RSpec.describe Invite, type: :model do
     it { should belong_to(:user) }
     it { should belong_to(:viewed_by) }
     it { should belong_to(:recipient) }
+    it { should belong_to(:contact) }
   end
 
   describe 'validations' do
@@ -63,6 +64,7 @@ RSpec.describe Invite, type: :model do
       expect(activity.private).to eq(true)
 
       expect(invite.recipient).to be_nil
+      expect(invite.contact).to be_present
     end
   end
 
@@ -73,6 +75,7 @@ RSpec.describe Invite, type: :model do
       invite.save
 
       expect(invite.recipient).to eq other_user
+      expect(invite.contact).to be_nil
     end
   end
 end

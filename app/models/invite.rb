@@ -17,6 +17,7 @@ class Invite < ApplicationRecord
 
   # Associations
   belongs_to :user
+  belongs_to :contact
   belongs_to :viewed_by, class_name: "User"
   belongs_to :recipient, class_name: "User"
 
@@ -55,5 +56,8 @@ class Invite < ApplicationRecord
 
   def set_recipient
     self.recipient = User.where(email: input).first
+    if self.recipient.nil?
+      self.contact = Contact.where(email: input).first_or_create
+    end
   end
 end

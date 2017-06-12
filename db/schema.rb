@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612135740) do
+ActiveRecord::Schema.define(version: 20170612143518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,13 @@ ActiveRecord::Schema.define(version: 20170612135740) do
     t.index ["tags"], name: "index_companies_on_tags", using: :gin
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.string   "email",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_contacts_on_email", unique: true, using: :btree
+  end
+
   create_table "conversation_users", force: :cascade do |t|
     t.integer  "conversation_id"
     t.integer  "user_id"
@@ -195,6 +202,8 @@ ActiveRecord::Schema.define(version: 20170612135740) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "recipient_id"
+    t.integer  "contact_id"
+    t.index ["contact_id"], name: "index_invites_on_contact_id", using: :btree
     t.index ["recipient_id"], name: "index_invites_on_recipient_id", using: :btree
     t.index ["slug"], name: "index_invites_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
@@ -545,6 +554,7 @@ ActiveRecord::Schema.define(version: 20170612135740) do
   add_foreign_key "comments", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "invites", "contacts"
   add_foreign_key "invites", "users"
   add_foreign_key "job_scores", "jobs"
   add_foreign_key "job_scores", "users"
