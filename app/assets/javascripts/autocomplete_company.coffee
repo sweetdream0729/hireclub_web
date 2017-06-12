@@ -30,6 +30,7 @@ $(document).ready ->
     maxItems: 1
     maxOptions: 8
     placeholder: 'Acme Inc'
+    preload: 'focus'
     render: option: (item, escape) ->
       (if item.avatar_url then ('<div>' + '<img class="mr-2 rounded" width="50" src="' +  escape(item.avatar_url) + '"/>' + '<strong>' + item.name + '</strong> ' + '</div>') else '<span></span>')
 
@@ -52,6 +53,9 @@ $(document).ready ->
       return
     onItemAdd: (value, item) ->
       $('.autocomplete_company_id').val value
+      return
+    onItemRemove: (value) ->
+      $('.autocomplete_company_id').val null
       return
     create: (input, callback) ->
       selectizeCallback = callback
