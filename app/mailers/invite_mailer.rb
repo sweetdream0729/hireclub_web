@@ -1,8 +1,12 @@
 class InviteMailer < ApplicationMailer
-  
+
   def invite_created(invite)
     set_invite(invite)
     @subject = "#{@user.display_name} invited you to HireClub"
+    if invite.recipient.present?
+      @subject = "#{@user.display_name} sent you their HireClub Profile"
+    end
+
     mail(to: @invite.input, subject: @subject, reply_to: @invite.user.email)
   end
 

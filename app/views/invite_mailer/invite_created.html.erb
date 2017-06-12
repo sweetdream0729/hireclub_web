@@ -23,7 +23,11 @@
                      <tr>
                         <td align="left" valign="top">
                           <a href="<%= url_for(@invite) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
-                              <%= @user.display_name %> invited you to HireClub!
+                              <% if @invite.recipient.present? %>
+                                 <%= @user.display_name %> sent you their HireClub Profile!
+                              <% else %>
+                                 <%= @user.display_name %> invited you to HireClub!
+                              <% end %>
                            </a>
                            <div style="height: 28px; line-height: 28px; font-size: 26px;">&nbsp;</div>
                         </td>
