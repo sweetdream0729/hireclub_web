@@ -6,11 +6,11 @@ module Admin::SkillAdmin
       
       
       list do
-        
         field :id
         field :name
         field :slug
         field :users_count
+        field :added_by
         field :created_at
         field :updated_at
       end
