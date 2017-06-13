@@ -1,5 +1,5 @@
 - other_user = conversation.other_users(current_user).first
-- classes = "list-group-item list-group-item-action conversation_cell"
+- classes = "list-group-item list-group-item-action conversation_cell" + dropdown_item_class
 - classes += " active" if conversation.id == @conversation.id
 = link_to conversation_path(conversation), class: classes, id: "conversation_#{conversation.id}" do
   .media

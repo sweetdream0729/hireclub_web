@@ -15,7 +15,7 @@
   .list-group-item:first-child {
     border-top: none;
   }
-  
+
   .list-group-item.active {
     color: inherit;
     background-color: $gray-lightest;
@@ -44,6 +44,15 @@
   overflow-y: auto;
 }
 
+#conversation_list_mobile{
+  position: absolute;
+  top: 25px;
+}
+
+#conversation_list_mobile .dropdown-menu{
+  max-height: calc(100vh - 128px);
+  overflow-y: scroll;
+}
 #messages_container {
   display: flex;
   flex-direction: column;
@@ -84,7 +93,7 @@
   text-align: center;
   text-transform: uppercase;
   margin-top: 8px;
-  margin-bottom: 8px;    
+  margin-bottom: 8px;
   letter-spacing: 1px;
   font-size: 75%;
   color: #A9BCD0;
@@ -94,7 +103,7 @@
   text-align: center;
   text-transform: uppercase;
   margin-top: 8px;
-  margin-bottom: 8px;    
+  margin-bottom: 8px;
   letter-spacing: 1px;
   color: #8783D1;
   font-size: 75%;
