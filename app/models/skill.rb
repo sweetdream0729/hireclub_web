@@ -14,6 +14,7 @@ class Skill < ApplicationRecord
   # Associations
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
+  belongs_to :added_by, class_name: 'User'
 
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}

@@ -47,6 +47,7 @@ class SkillsController < ApplicationController
   def create
     @skill = Skill.new(skill_params)
     authorize @skill
+    @skill.added_by = current_user
 
     if @skill.save
       redirect_to @skill, notice: 'Skill was successfully created.'
