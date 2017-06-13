@@ -11,12 +11,15 @@
       %h1 🎩 What's your role?
 
       = form_for @user, url: wizard_path, method: :put do |f|
-        = f.fields_for :user_roles do |user_role_form|
-          .form-group
-            = user_role_form.text_field :roles, class: "form-control autocomplete_role", value: user_role_form.object.role.present? ? user_role_form.object.role.name : '', autocomplete: :off, placeholder: "Designer"
-            = user_role_form.hidden_field :role_id, class: "autocomplete_role_id", value: user_role_form.object.role.present? ? user_role_form.object.role_id : ''
+        = f.fields_for :user_roles do |ff|
+          .form-group{class: ('has-danger' if ff.object.errors.any?)}
+            = ff.text_field :roles, class: "form-control autocomplete_role", value: ff.object.role.present? ? ff.object.role.name : '', autocomplete: :off, placeholder: "Designer"
+            = ff.hidden_field :role_id, class: "autocomplete_role_id", value: ff.object.role.present? ? ff.object.role_id : ''
+            - if ff.object.errors.any? && ff.object.errors.details[:role].present?
+              .form-control-feedback
+                = ff.object.errors.full_messages.first        
             %small.form-text.text-muted
-              You can add more roles later.
+              What do you do everyday?
 
         .form-group
           = f.label :company
