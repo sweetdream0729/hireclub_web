@@ -37,7 +37,7 @@ $(document).ready ->
     load: (query, callback) ->
       if !query.length
         data =
-          sort_by: "alphabetical"
+          sort_by: "popular"
       else
         data =
           query: query
