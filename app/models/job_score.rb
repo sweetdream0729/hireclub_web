@@ -8,13 +8,6 @@ class JobScore < ApplicationRecord
   validates :user_id, uniqueness: { scope: :job_id }
   validates :score, numericality: { greater_than_or_equal_to: 0 }
 
-  def role_match?
-    self.user.user_roles.each do |role|
-      return true if role.name === self.job.name 
-    end
-    false
-  end
-
   def update_score
     return if user.nil? || job.nil?
     new_score = 0
@@ -29,7 +22,7 @@ class JobScore < ApplicationRecord
   def calc_skills(score)
     # Add user_skill.years to score
     # minimum score of 1 per matching skill
-    
+
     job.skills.each do |skill_name|
       skill = Skill.where(name: skill_name)
       next if skill.nil?
