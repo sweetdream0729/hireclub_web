@@ -1,10 +1,13 @@
 .nested-fields
   .row
     .col-7
-      .form-group
+      .form-group{class: ('has-danger' if f.object.errors.any?)}
         = f.label :skill
         = f.text_field :skills, class: "form-control autocomplete_skill", value: f.object.skill.present? ? f.object.skill.name : '', placeholder: "Design", autocomplete: :off
         = f.hidden_field :skill_id, class: "autocomplete_skill_id", value: f.object.skill.present? ? f.object.skill_id : ''
+        - if f.object.errors.any? && f.object.errors.details[:skill].present?
+          .form-control-feedback
+            = f.object.errors.full_messages.first        
 
     .col-3
       .form-group
