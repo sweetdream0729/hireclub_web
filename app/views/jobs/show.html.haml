@@ -56,6 +56,13 @@
       = render partial: "comments/form", locals: { commentable: @job } 
 
     .col-sm-3.push-sm-1
+      - if @job_score.present?
+        .card.card-inverse.card-info.mb-5{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
+          .card-block
+            %p.card-text Your Job Score
+            %h2.mb-0.card-title
+              = @job_score.score
+
       - if @job.any_flags?
         %h6 Details
       - if @job.full_time
@@ -88,14 +95,6 @@
           = link_to suggest_skill_job_path(skill: skill) do
             %span.badge.badge-pill-outline.badge-info
               = skill
-
-      - if @job_score.present?
-        %h6.mt-5 Job Score
-        .card.card-inverse.card-info{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
-          .card-block
-            %p.card-text Your Job Score
-            %h2.mb-0.card-title
-              = @job_score.score
 
       - if policy(@job).edit?
         %h6.mt-5 Manage
