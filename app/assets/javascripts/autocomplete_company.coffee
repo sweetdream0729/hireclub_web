@@ -10,7 +10,7 @@ $(document).ready ->
     $.rails.enableFormElements $('.company_new')
     return
 
-  #handles response when company creation is successful  
+  #handles response when company creation is successful
   $(".company_new").on("ajax:success", (e, response) ->
     selectizeCallback
       id: response.id
@@ -22,7 +22,7 @@ $(document).ready ->
   ).on "ajax:error", (e, response) ->
 
 
-  $('.autocomplete_company').selectize
+  select = $('.autocomplete_company').selectize
     plugins: ['restore_on_backspace']
     valueField: 'id'
     labelField: 'name'
@@ -36,14 +36,17 @@ $(document).ready ->
 
     load: (query, callback) ->
       if !query.length
-        return callback()
+        data =
+          sort_by: "alphabetical"
+      else
+        data =
+          query: query
+          sort_by: "popular"
       $.ajax
         url: '/companies'
         type: 'GET'
         dataType: 'json'
-        data:
-          query: query
-          sort_by: "popular"
+        data: data
         error: ->
           callback()
           return
