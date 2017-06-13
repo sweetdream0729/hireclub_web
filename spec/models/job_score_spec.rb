@@ -22,38 +22,53 @@ RSpec.describe JobScore, type: :model do
   describe "update_score" do
     let(:skill1) { FactoryGirl.create(:skill) }
     let(:skill2) { FactoryGirl.create(:skill) }
-    before do
-      job.skills << skill1.name
-      job.save
-      user.skills << skill1
-      user.save
+
+    context "skills" do
+      before do
+        job.skills << skill1.name
+        job.save
+        user.skills << skill1
+        user.save
+      end
+
+      it "should score 1 for matching skill" do
+        job_score.update_score
+
+        expect(job_score.score).to eq(1)
+      end
+
+      it "should score 1 for each matching skill" do
+        job.skills << skill2.name
+        job.save
+        user.skills << skill2
+        user.save
+
+        job_score.update_score
+
+        expect(job_score.score).to eq(2)
+      end
+
+      it "should score 1 + number of years for each matching skill" do
+        user_skill = user.user_skills.first
+        user_skill.years = 5
+        user_skill.save
+        
+        job_score.update_score
+
+        expect(job_score.score).to eq(5)
+      end
     end
 
-    it "should score 1 for matching skill" do
-      job_score.update_score
+    context "roles" do
+      it "should score 5 if the user role matches" do
+        user_role = FactoryGirl.create(:user_role, user: user)
+        job.role = user_role.role
+        job.save
 
-      expect(job_score.score).to eq(1)
-    end
+        job_score.update_score
 
-    it "should score 1 for each matching skill" do
-      job.skills << skill2.name
-      job.save
-      user.skills << skill2
-      user.save
-
-      job_score.update_score
-
-      expect(job_score.score).to eq(2)
-    end
-
-    it "should score 1 + number of years for each matching skill" do
-      user_skill = user.user_skills.first
-      user_skill.years = 5
-      user_skill.save
-      
-      job_score.update_score
-
-      expect(job_score.score).to eq(5)
+        expect(job_score.score).to eq(5)
+      end
     end
   end
 end
