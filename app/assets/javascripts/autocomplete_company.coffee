@@ -22,7 +22,7 @@ $(document).ready ->
   ).on "ajax:error", (e, response) ->
 
 
-  select = $('.autocomplete_company').selectize
+  $('.autocomplete_company').selectize
     plugins: ['restore_on_backspace']
     valueField: 'id'
     labelField: 'name'
