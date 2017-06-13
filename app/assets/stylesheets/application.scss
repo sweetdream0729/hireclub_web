@@ -94,3 +94,12 @@ $badge-padding-y: .4rem;
 .card-inverse {
   border: none;
 }
+
+// for pinning footer to bottom
+body {
+  min-height: 100vh; 
+}
+
+.flex-grow {
+  flex: 1;
+}

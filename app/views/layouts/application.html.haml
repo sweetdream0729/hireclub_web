@@ -1,10 +1,10 @@
 !!!
 %html
   = render "layouts/head"
-  %body{ class: "#{controller_name}_#{action_name}"}
+  %body{ class: "#{controller_name}_#{action_name} d-flex flex-column"}
     %header
       = render "layouts/navigation"
-    %main{:role => "main"}
+    %main{:role => "main", class: 'flex-grow'}
       = render "layouts/messages"
       = yield
 
