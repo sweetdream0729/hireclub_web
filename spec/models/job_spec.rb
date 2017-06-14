@@ -190,7 +190,10 @@ Also helpful:
 
   describe "suggested_users" do
     it "update_suggested_users",focus: true do
-      user = FactoryGirl.create(:user)
+      user = FactoryGirl.create(:user, confirmed_at: DateTime.now)
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user.save
+
       job.save
       job.update_suggested_users
 
