@@ -24,6 +24,6 @@ class Skill < ApplicationRecord
     names = %w(Design Development Rails Branding HTML CSS Acting Branding Elixir Javascript Marketing Modeling Phoenix Python Rails Ruby Sales SEO)
     names.each do |name|
       Skill.where(name: name).first_or_create
-    end    
+    end
   end
 end

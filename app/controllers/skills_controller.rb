@@ -50,9 +50,15 @@ class SkillsController < ApplicationController
     @skill.added_by = current_user
 
     if @skill.save
-      redirect_to @skill, notice: 'Skill was successfully created.'
+      respond_to do |format|
+        format.json { render json: @skill }
+        format.html { redirect_to @skill, :flash => { :success => "#{@skill.name} added." }}
+      end
     else
-      render :new
+      respond_to do |format|
+        format.json { render json: {errors: @skill.errors.full_messages} }
+        format.html { render :new}
+      end
     end
   end
 
