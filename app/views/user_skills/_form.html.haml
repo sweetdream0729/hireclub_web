@@ -12,8 +12,8 @@
       .col-6
         .form-group
           = f.label :skill
-          = f.text_field :skill, class: "form-control", value: @user_skill.skill.try(:name), placeholder: "Design", autocomplete: "off"
-          = f.hidden_field :skill_id, value: @user_skill.skill_id
+          = f.text_field :skills, class: "autocomplete_skill", value: @user_skill.skill.try(:name)
+          = f.hidden_field :skill_id, class: "autocomplete_skill_id", value: @user_skill.skill_id
           
     .col-6
       .form-group
@@ -28,3 +28,5 @@
   .actions
     = f.submit 'Save', class: "btn btn-primary"
     = link_to "Cancel", current_user, class: "btn btn-link"
+
+= render '/skills/add_skill_modal'
