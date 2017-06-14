@@ -42,6 +42,7 @@ class User < ApplicationRecord
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
+  scope :scoreable,    -> { where.not(confirmed_at: nil).where.not(avatar_uid: nil)}
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 

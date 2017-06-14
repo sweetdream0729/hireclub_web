@@ -153,7 +153,7 @@ class Job < ApplicationRecord
   end
 
   def update_suggested_users
-    User.find_each do |user|
+    User.scoreable.find_each do |user|
       job_score = self.job_scores.where(user: user).first_or_create
       job_score.update_score
     end
