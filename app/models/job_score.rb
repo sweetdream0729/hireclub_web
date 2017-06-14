@@ -2,6 +2,10 @@ class JobScore < ApplicationRecord
   belongs_to :user
   belongs_to :job
 
+  # Scopes
+  scope :by_score,            -> { order(score: :desc) }
+  scope :greater_than_zero,   -> { where("score > ? ", 0)}
+
   # Validations
   validates :user, presence: true
   validates :job, presence: true

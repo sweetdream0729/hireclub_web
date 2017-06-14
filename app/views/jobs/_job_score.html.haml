@@ -1,0 +1,20 @@
+- user = job_score.user
+.media
+  = link_to image_tag(model_avatar(user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), user
+  .media-body
+    %h5.bold.mt-0.mb-1
+      = job_score.score
+      = link_to user.display_name, user
+      %small.ml-2
+        = render partial: "/users/icons", locals: {user: user}
+    %p.mt-0
+      - if user.primary_role.present?
+        = user.primary_role.name
+      - if user.company.present?
+        ·
+        = link_to user.company.name, user.company
+      - if user.location.present?
+        ·
+        = user.location.name
+      ·
+      = "#{display_years(user.years_experience)} Experience"

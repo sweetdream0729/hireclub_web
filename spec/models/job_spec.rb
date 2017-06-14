@@ -188,6 +188,16 @@ Also helpful:
     end
   end
 
+  describe "suggested_users" do
+    it "update_suggested_users",focus: true do
+      user = FactoryGirl.create(:user)
+      job.save
+      job.update_suggested_users
 
+      job_score = JobScore.where(user: user, job: job).first
+
+      expect(job_score).to be_present
+    end
+  end
 
 end

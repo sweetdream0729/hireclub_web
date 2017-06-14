@@ -40,7 +40,7 @@
               Admin
 
 
-  .row
+  .row.mt-3
     .col-sm-7
       %h6.regular
         = local_time @job.created_at, '%B %e, %Y'
@@ -71,8 +71,15 @@
 
           %p
             = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
-            
+      
+      - if current_user && current_user.is_admin
+        %h6 Suggested Members
+        - @job.job_scores.greater_than_zero.by_score.limit(3).each do |job_score|
+          / = job_score.inspect
+          = render partial: "job_score", locals: {job_score: job_score}
+
       %hr
+      %h6 Comments
       = render partial: "comments/comments", locals: { commentable: @job }
       = render partial: "comments/form", locals: { commentable: @job } 
 

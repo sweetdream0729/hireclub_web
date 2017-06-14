@@ -51,6 +51,7 @@ class JobsController < ApplicationController
     if @job.save
       @job.publish!
       @job.update_suggested_skills!
+      UpdateJobScoresJob.perform_later(@job)
       redirect_to @job, notice: 'Job was successfully created.'
     else
       render :new
@@ -61,6 +62,7 @@ class JobsController < ApplicationController
   def update
     if @job.update(job_params)
       @job.update_suggested_skills!
+      UpdateJobScoresJob.perform_later(@job)
       redirect_to @job, notice: 'Job was successfully updated.'
     else
       render :edit
