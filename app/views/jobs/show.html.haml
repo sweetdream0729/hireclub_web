@@ -73,7 +73,7 @@
             = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
       
       - if current_user && current_user.is_admin
-        %h6 Suggested Members
+        %h6.mt-5 Suggested Members
         - @job.job_scores.greater_than_zero.by_score.limit(3).each do |job_score|
           / = job_score.inspect
           = render partial: "job_score", locals: {job_score: job_score}
