@@ -4,6 +4,26 @@
 - set_meta_tags og: {type: "article", image: model_image(@job.company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
 
 .container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Jobs", jobs_path
+    %li.breadcrumb-item
+      = link_to @job.company.name, @job.company
+
+  - if policy(@job).edit?
+    %p.mt-4
+      = link_to edit_job_path(@job) do
+        %span.badge.badge-pill-outline.uppercase.mr-2
+          Edit
+
+      = link_to @job, :method => :delete, :data => { :confirm => "Are you sure you want to delete this job post?" } do
+        %span.badge.badge-pill-outline.badge-danger.uppercase.mr-2
+          Delete
+
+      = link_to rails_admin.edit_path(model_name: 'job', id: @job.id) do
+        %span.badge.badge-pill-outline.badge-warning.uppercase
+          Admin
+
   .row.mb-4
     .col-sm-12
       .media
@@ -95,11 +115,3 @@
           = link_to suggest_skill_job_path(skill: skill) do
             %span.badge.badge-pill-outline.badge-info
               = skill
-
-      - if policy(@job).edit?
-        %h6.mt-5 Manage
-        = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?
-        = link_to 'Delete', @job, :method => :delete, :data => { :confirm => 'Are you sure you want to delete this job post?' }, class: "btn btn-danger" if policy(@job).destroy?
-        = link_to "Admin", rails_admin.edit_path(model_name: 'job', id: @job.id), class: "btn btn-warning" if policy(:dashboard).admin?
-        
-            
