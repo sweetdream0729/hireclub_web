@@ -8,20 +8,20 @@ describe UserHelper do
   let(:next_path) { next_user_completion_path(user_completion) }
 
   it "should return settings path when no username" do
-    expect(next_path).to eq edit_user_registration_path
+    expect(next_path).to eq settings_path
   end
 
   it "should return settings path no location" do
     user.username = "test"
 
-    expect(next_path).to eq edit_user_registration_path
+    expect(next_path).to eq settings_path
   end
 
   it "should return settings path when no bio" do
     user.username = "test"
     user.location = location
 
-    expect(next_path).to eq edit_user_registration_path
+    expect(next_path).to eq settings_path
   end
 
   it "should return settings path when no avatar" do
@@ -29,7 +29,7 @@ describe UserHelper do
     user.location = location
     user.bio = "this is a bio"
 
-    expect(next_path).to eq edit_user_registration_path
+    expect(next_path).to eq settings_path
   end
 
   it "should return new user role path when no roles" do
@@ -101,7 +101,7 @@ describe UserHelper do
       FactoryGirl.create(:milestone, user: user)
     end
 
-    expect(next_path).to eq edit_user_registration_path
+    expect(next_path).to eq settings_path
   end
 
   

@@ -2,6 +2,12 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   
+  get 'settings' => 'settings#index', as: :settings
+  get 'settings/status'
+  get 'settings/account'
+  get 'settings/links'
+  put 'settings/update'
+
   mount ActionCable.server => '/cable'
 
   get '/sitemap.xml', to: redirect("https://s3-us-west-1.amazonaws.com/hireclub-production/sitemaps/sitemap.xml.gz", status: 301)
@@ -107,7 +113,7 @@ Rails.application.routes.draw do
   get 'users/username' => 'users#username'
   devise_for :users,
     path:        '',
-    path_names:  {:sign_in => 'login', :sign_out => 'logout', :edit => 'settings', :sign_up => "signup"},
+    path_names:  {:sign_in => 'login', :sign_out => 'logout', :sign_up => "signup"},
     controllers: {registrations: 'registrations',
                   omniauth_callbacks: 'users/omniauth_callbacks' }
 

@@ -1,0 +1,70 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-6
+      %h1= title "Status"
+
+      = form_for @user, url: settings_update_path, method: :put do |f|
+        .form-check
+          %label.form-check-label
+            = f.check_box :is_hiring, class: 'form-check-input'
+            %i.fa.fa-bullseye.text-primary
+            Hiring
+
+        .form-check
+          %label.form-check-label
+            = f.check_box :is_available, class: 'form-check-input'
+            %i.fa.fa-briefcase.text-success
+            Available To Hire
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_new_opportunities, class: 'form-check-input'
+            %i.fa.fa-handshake-o
+            New Opportunities
+
+        %h2.mt-4 Open To
+        %hr
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_remote, class: 'form-check-input'
+            %i.fa.fa-plane
+            Remote
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_relocation, class: 'form-check-input'
+            Relocation
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_full_time, class: 'form-check-input'
+            Full Time
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_part_time, class: 'form-check-input'
+            Part Time
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_contract, class: 'form-check-input'
+            Contract
+        .form-check
+          %label.form-check-label
+            = f.check_box :open_to_internship, class: 'form-check-input'
+            Internship
+
+        - if current_user.is_admin || current_user.is_moderator
+          .form-check
+            %label.form-check-label
+              = f.check_box :is_reviewer, class: 'form-check-input'
+              Reviewing Profiles
+
+        %h2.mt-4 Work Authorization
+        %hr
+        %label.form-check-label
+          = f.check_box :is_us_work_authorized, class: 'form-check-input'
+          Legally authorized to work in the United States?
+        %label.form-check-label
+          = f.check_box :requires_us_visa_sponsorship, class: 'form-check-input'
+          Do you require sponsorship for a US employment visa (e.g. H-1B)?
+
+        %hr.mt-4
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
