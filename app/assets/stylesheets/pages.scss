@@ -22,3 +22,12 @@ hr.inverse {
   border-top: 5px solid rgb(255,255,255);
   opacity: .4;
 }
+
+.pages_headshots {
+  .jumbotron {
+    border-radius: 0;
+  }
+  section {
+    margin-bottom: 4rem;
+  }
+}

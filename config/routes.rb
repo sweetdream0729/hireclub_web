@@ -105,6 +105,7 @@ Rails.application.routes.draw do
   resources :onboarding
 
   get "/locations",     to: "locations#index",   as: :locations
+  get "/headshots",     to: "pages#headshots",   as: :headshots
   get "/styles",        to: "pages#styles",      as: :styles
   get "/privacy",       to: "pages#privacy",     as: :privacy
   get "/about",         to: "pages#about",       as: :about
