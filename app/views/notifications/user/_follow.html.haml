@@ -6,4 +6,4 @@
   - object = following.display_name
   - link = url_for(following)
 
-= render partial: "/notifications/item", locals: {activity: activity, verb: "followed", object: object, link: link}
+= render partial: "/notifications/item", locals: {activity: activity, verb: "followed", object: object, link: link, action_link: link_to_follow_user(activity.owner, current_user)}

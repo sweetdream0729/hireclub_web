@@ -112,3 +112,7 @@ h6 {
   font-size: 0.8rem;
   letter-spacing: 0.08rem;
 }
+
+label {
+  @include semibold-font; 
+}

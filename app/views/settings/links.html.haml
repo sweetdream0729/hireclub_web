@@ -1,0 +1,46 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-6
+      %h1= title "Links"
+
+      = form_for @user, url: settings_update_path, method: :put do |f|
+        .form-group
+          = f.label "Website"
+          = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
+
+        .form-group
+          = f.label "Twitter"
+          = f.text_field :twitter_url, class: 'form-control', placeholder: "http://twitter.com/username"
+
+        .form-group
+          = f.label "Dribbble"
+          = f.text_field :dribbble_url, class: 'form-control', placeholder: "http://dribbble.com/username"
+
+        .form-group
+          = f.label "Github"
+          = f.text_field :github_url, class: 'form-control', placeholder: "http://github.com/username"
+
+        .form-group
+          = f.label "Medium"
+          = f.text_field :medium_url, class: 'form-control', placeholder: "http://medium.com/@username"
+
+        .form-group
+          = f.label "Facebook"
+          = f.text_field :facebook_url, class: 'form-control', placeholder: "http://facebook.com/username"
+
+        .form-group
+          = f.label "LinkedIn"
+          = f.text_field :linkedin_url, class: 'form-control', placeholder: "http://www.linkedin.com/in/username"
+
+        .form-group
+          = f.label "Instagram"
+          = f.text_field :instagram_url, class: 'form-control', placeholder: "http://instagram.com/username"
+
+        .form-group
+          = f.label "IMDB"
+          = f.text_field :imdb_url, class: 'form-control', placeholder: "http://www.imdb.com/name/nm000000/"
+
+        %hr.mt-4
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"

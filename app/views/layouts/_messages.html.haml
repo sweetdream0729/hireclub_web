@@ -7,7 +7,7 @@
       = link_to "Resend Email Confirmation", resend_confirmation_user_path(current_user), style: "color: inherit"
     or
     %strong
-      = link_to "Change Your Email", edit_user_registration_path, style: "color: inherit"
+      = link_to "Change Your Email", settings_account_path, style: "color: inherit"
       
 - flash.each do |name, msg|
   - if msg.is_a?(String)

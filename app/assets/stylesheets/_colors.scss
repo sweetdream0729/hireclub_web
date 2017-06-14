@@ -16,6 +16,8 @@ $gray-light:                #8E9AAF !default;
 $gray-lighter:              #C0D3E8 !default;
 $gray-lightest:             #EAEEF1 !default;
 
+$input-color: $gray-dark;
+
 .accent-primary-bg {
   background-color: $accent-primary !important;
   border-color: $accent-primary !important;

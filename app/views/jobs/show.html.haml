@@ -1,28 +1,49 @@
 - set_meta_tags canonical: job_url(@job)
-- set_meta_tags image_src: model_image(@job.company.avatar, 200, 200, true)
+- set_meta_tags image_src: model_image(@company.avatar, 200, 200, true)
 - set_meta_tags description: @job.description
-- set_meta_tags og: {type: "article", image: model_image(@job.company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
+- set_meta_tags og: {type: "article", image: model_image(@company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
 
 .container.content_container
-  .row.mb-4
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Jobs", jobs_path
+    %li.breadcrumb-item
+      = link_to @company.name, @company
+
+  .row
     .col-sm-12
       .media
-        = link_to image_tag(company_avatar(@job.company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @job.company
+        = link_to image_tag(company_avatar(@company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @company
         .media-body
           %h1.black
             = title @job.name
           %p
-            = link_to @job.company.name, @job.company
-            
-            = "· #{@job.role.name}" if @job.role
+            = link_to @company.name, @company
+            - if @job.role
+              ·
+              = link_to @job.role.name, @job.role 
             ·
             = @job.location.display_name
-            ·
-            = local_relative_time(@job.created_at, type: 'time-or-date')
+
+      - if policy(@job).edit?
+        %p.mt-3
+          = link_to edit_job_path(@job) do
+            %span.badge.badge-pill-outline.uppercase.mr-2
+              Edit
+
+          = link_to @job, :method => :delete, :data => { :confirm => "Are you sure you want to delete this job post?" } do
+            %span.badge.badge-pill-outline.badge-danger.uppercase.mr-2
+              Delete
+
+          = link_to rails_admin.edit_path(model_name: 'job', id: @job.id) do
+            %span.badge.badge-pill-outline.badge-warning.uppercase
+              Admin
 
 
   .row
     .col-sm-7
+      %h6.regular
+        = local_time @job.created_at, '%B %e, %Y'
       .media
         = link_to image_tag(model_avatar(@job.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @job.user
         .media-body
@@ -56,6 +77,13 @@
       = render partial: "comments/form", locals: { commentable: @job } 
 
     .col-sm-3.push-sm-1
+      - if @job_score.present?
+        .card.card-inverse.card-info.mb-5{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
+          .card-block
+            %p.card-text Your Job Score
+            %h2.mb-0.card-title
+              = @job_score.score
+
       - if @job.any_flags?
         %h6 Details
       - if @job.full_time
@@ -89,18 +117,23 @@
             %span.badge.badge-pill-outline.badge-info
               = skill
 
-      - if @job_score.present?
-        %h6.mt-5 Job Score
-        .card.card-inverse.card-info{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
-          .card-block
-            %p.card-text Your Job Score
-            %h2.mb-0.card-title
-              = @job_score.score
+      %h6.mt-5 Company
+      .card
+        .card-block.text-center
+          = link_to image_tag(company_avatar(@company.avatar, 200, true), width: "50%", class: "rounded-circle"), @company
+        .card-block
+          %h5.card-title.mt-0
+            %strong
+              = link_to @company.name, @company
+          %p.card-text
+            = @company.tagline
+          %p
+            = link_to_follow_company(@company, current_user)
+            %span{class: "company_#{@company.id}_followers_count"}
+              = pluralize(@company.followers_count_cache, "Follower")
 
-      - if policy(@job).edit?
-        %h6.mt-5 Manage
-        = link_to 'Edit', edit_job_path(@job), class: "btn btn-primary" if policy(@job).edit?
-        = link_to 'Delete', @job, :method => :delete, :data => { :confirm => 'Are you sure you want to delete this job post?' }, class: "btn btn-danger" if policy(@job).destroy?
-        = link_to "Admin", rails_admin.edit_path(model_name: 'job', id: @job.id), class: "btn btn-warning" if policy(:dashboard).admin?
-        
-            
+        %ul.list-group.list-group-flush
+          - if @company.website_url.present?
+            %li.list-group-item 
+              = link_to link_display(@company.website_url), @company.website_url 
+              

@@ -3,13 +3,13 @@ module UserHelper
     step = user_completion.next_step
     case step
     when UserCompletion::USERNAME_STEP
-      edit_user_registration_path
+      settings_path
     when UserCompletion::LOCATION_STEP
-      edit_user_registration_path
+      settings_path
     when UserCompletion::BIO_STEP
-      edit_user_registration_path
+      settings_path
     when UserCompletion::AVATAR_STEP
-      edit_user_registration_path
+      settings_path
     when UserCompletion::ROLES_STEP
       new_user_role_path
     when UserCompletion::SKILLS_STEP
@@ -19,7 +19,7 @@ module UserHelper
     when UserCompletion::PROJECTS_STEP
       new_project_path
     when UserCompletion::WEBSITE_STEP
-      edit_user_registration_path
+      settings_path
     end 
   end
 
