@@ -5,10 +5,14 @@ class SkillPolicy < ApplicationPolicy
     end
   end
 
-  def create?
+  def new?
     moderator?
   end
-  
+
+  def create?
+    user_present?
+  end
+
   def update?
     moderator?
   end
