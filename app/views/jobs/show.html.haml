@@ -1,14 +1,14 @@
 - set_meta_tags canonical: job_url(@job)
-- set_meta_tags image_src: model_image(@job.company.avatar, 200, 200, true)
+- set_meta_tags image_src: model_image(@company.avatar, 200, 200, true)
 - set_meta_tags description: @job.description
-- set_meta_tags og: {type: "article", image: model_image(@job.company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
+- set_meta_tags og: {type: "article", image: model_image(@company.avatar, 200, 200, true), url: job_url(@job), description: @job.description}
 
 .container.content_container
   %ol.breadcrumb
     %li.breadcrumb-item
       = link_to "Jobs", jobs_path
     %li.breadcrumb-item
-      = link_to @job.company.name, @job.company
+      = link_to @company.name, @company
 
   - if policy(@job).edit?
     %p.mt-4
@@ -27,12 +27,12 @@
   .row.mb-4
     .col-sm-12
       .media
-        = link_to image_tag(company_avatar(@job.company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @job.company
+        = link_to image_tag(company_avatar(@company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @company
         .media-body
           %h1.black
             = title @job.name
           %p
-            = link_to @job.company.name, @job.company
+            = link_to @company.name, @company
             
             = "· #{@job.role.name}" if @job.role
             ·
@@ -115,3 +115,24 @@
           = link_to suggest_skill_job_path(skill: skill) do
             %span.badge.badge-pill-outline.badge-info
               = skill
+
+      %h6.mt-5 Company
+      .card
+        .card-block.text-center
+          = link_to image_tag(company_avatar(@company.avatar, 200, true), width: "50%", class: "rounded-circle"), @company
+        .card-block
+          %h5.card-title.mt-0
+            %strong
+              = link_to @company.name, @company
+          %p.card-text
+            = @company.tagline
+          %p
+            = link_to_follow_company(@company, current_user)
+            %span{class: "company_#{@company.id}_followers_count"}
+              = pluralize(@company.followers_count_cache, "Follower")
+              
+        %ul.list-group.list-group-flush
+          - if @company.website_url.present?
+            %li.list-group-item 
+              = link_to link_display(@company.website_url), @company.website_url 
+              

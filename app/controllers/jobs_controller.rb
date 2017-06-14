@@ -11,6 +11,7 @@ class JobsController < ApplicationController
   # GET /jobs/1
   def show
     impressionist(@job)
+    @company = @job.company
 
     if current_user
       @job_score = @job.job_scores.where(user: current_user).first_or_create
