@@ -47,8 +47,9 @@
       .media
         = link_to image_tag(model_avatar(@job.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @job.user
         .media-body
-          %h5.mt-0.mb-0
-            = link_to @job.user.display_name, @job.user
+          %p.mb-0
+            %strong
+              = link_to @job.user.display_name, @job.user
             - if @job.user.is_hiring
               %span.small
                 %i.fa.fa-bullseye.text-primary
@@ -56,7 +57,7 @@
             - if @job.user.is_available
               %small
                 %i.fa.fa-briefcase.text-success
-          %small
+          %small.text-muted
             = @job.user.primary_role_name
             - if @job.user.company
               ·
