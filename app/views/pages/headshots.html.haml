@@ -40,9 +40,11 @@
         %p
           Our stylists will help you with wardrobe, make up and accessories to help you look your best. You don’t have to be a model but we’ll make you feel like one.
 
-  .col-md-4.offset-md-4.mb-5
-    %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
-      Book Your Shoot
+.container
+  .row
+    .col-md-4.offset-md-4.mb-5
+      %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
+        Book Your Shoot
 
 %section.headshots_packages
   .container
@@ -97,8 +99,22 @@
     %p.text-center.bold
       Additional Retouched shots are $25 each.
 
-.container
-  .row
-    .col-md-4.offset-md-4.mb-5
-      %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
-        Book Your Shoot
+%section
+  .container
+    .row
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/derek_yuan.jpg", class: 'img-fluid')
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/coraly_rosario.jpg", class: 'img-fluid')
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/alena_chincurtis.jpg", class: 'img-fluid')
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/sara_madanat.jpg", class: 'img-fluid')
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/aaron_endre.jpg", class: 'img-fluid')
+      .col-md-4.col-6.mb-4
+        = image_tag("headshots/carlos_martinez.jpg", class: 'img-fluid')
+    .row.mt-5
+      .col-md-4.offset-md-4.mb-5
+        %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
+          Book Your Shoot
