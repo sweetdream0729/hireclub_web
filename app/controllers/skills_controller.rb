@@ -1,5 +1,5 @@
 class SkillsController < ApplicationController
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :available]
   before_action :set_skill, only: [:show, :edit, :update, :destroy]
 
   # GET /skills
@@ -25,6 +25,27 @@ class SkillsController < ApplicationController
     respond_to do |format|
       format.json { render json: @skills }
       format.html
+    end
+  end
+
+
+  def available
+    skill_name = (params[:q] || "").downcase
+    scope = Skill.search_with_any_name(skill_name)
+    
+    available = scope.length == 0
+    
+    if available
+      hash = { available: true}
+    else
+      hash = {
+        :available => available,
+        :skill => scope.first.name
+      }
+    end
+
+    respond_to do |format|
+      format.json { render :json => hash.to_json }
     end
   end
 

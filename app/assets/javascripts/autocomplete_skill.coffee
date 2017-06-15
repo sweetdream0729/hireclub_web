@@ -60,7 +60,7 @@ $(document).ready ->
     create: (input, callback) ->
       selectizeCallback = callback
       $('#createSkillModal').modal()
-      $('#skill_name').val input
+      #$('#skill_name').val input
       return
 
   #initialize all skill input field with selectize

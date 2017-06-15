@@ -27,7 +27,9 @@
           = hidden_field_tag :authenticity_token, form_authenticity_token
           .form-group
             = f.label "Skill"
-            = f.text_field :name, class: 'form-control'
+            = f.text_field :name, class: 'form-control', autocomplete: :off
+            .form-control-feedback
+              %span#existing_skill
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Cancel
           = f.submit 'Save', class: 'btn btn-primary'

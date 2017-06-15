@@ -102,6 +102,7 @@ Rails.application.routes.draw do
   end
 
   resources :user_skills
+  get 'skills/available' => 'skills#available'
   resources :skills
   resources :onboarding
 
