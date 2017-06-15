@@ -8,6 +8,10 @@
 
   .form-group
     = f.label :name
-    = f.text_field :name, class: 'form-control'
-  .actions
-    = f.submit 'Save', class: "btn btn-primary"
+    = f.text_field :name, class: 'form-control', autocomplete: :off
+    .form-control-feedback.text-warning
+      There is already the skill
+      %span#existing_skill
+        Skill Name
+
+  = f.submit 'Save', class: "btn btn-primary"
