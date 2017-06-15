@@ -8,9 +8,25 @@
       - skill = Skill.new
       = form_for skill, remote: true, html: {authenticity_token: true, class: 'skill_new', "data-type" => "json"} do |f|
         .modal-body
+          %p
+            Please be very careful in adding new skills.
+            %br
+            Don't add 
+            %strong "Sales Operations"
+            , because are there is already 
+            %strong "Sales"
+            and 
+            %strong "Operations"
+            skills.
+            %br
+            If there is
+            %strong "Prototyping"
+            , don't add 
+            %strong "Rapid Prototyping"
+            \.
           = hidden_field_tag :authenticity_token, form_authenticity_token
           .form-group
-            = f.label :name
+            = f.label "Skill"
             = f.text_field :name, class: 'form-control'
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Cancel
