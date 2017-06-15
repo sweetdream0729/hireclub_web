@@ -24,6 +24,8 @@
       = render partial: "/jobs/job", locals: {job: result.searchable}
     - elsif result.searchable_type == "Project"
       = render partial: "/search/project", locals: {project: result.searchable}
+    - elsif result.searchable_type == "Skill"
+      = render partial: "/skills/skill", locals: {skill: result.searchable}
 
   = paginate @results
 

@@ -9,10 +9,6 @@ class TextService
     # tokenize input
     words = input.split((/[^A-Za-z0-9_+]+/))
 
-    # ignore default words
-    words = words - ["and", "with", "plus", "featuring", "the", "live", "aka", "presents", "present", "from", "more", "set", "free", "rsvp", "guest", "guests", "tba", "monthly", "friends"
-    ]
-
     words.each_with_index do |word, index|
       #next if word.length == 2
       results = source_relation.search_by_exact_name(word)

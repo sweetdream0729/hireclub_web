@@ -5,6 +5,9 @@ class Skill < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  include PgSearch
+  multisearchable :against => [:name]
+
   # Scopes
   scope :by_users,     -> { order(users_count: :desc) }
   scope :recent,       -> { order(created_at: :desc) }
@@ -26,4 +29,9 @@ class Skill < ApplicationRecord
       Skill.where(name: name).first_or_create
     end
   end
+
+  def self.search_with_any_name(query)
+    results = TextService.find_keywords(query, Skill.all)
+  end
+
 end
