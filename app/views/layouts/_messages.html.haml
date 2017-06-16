@@ -1,14 +1,3 @@
--# Rails flash messages styled for Bootstrap 4.0
-- if user_signed_in? && !current_user.confirmed?
-  .alert.alert-warning{:role  => "alert"}
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-    = "We sent a confirmation email to #{current_user.display_email}."
-    %strong
-      = link_to "Resend Email Confirmation", resend_confirmation_user_path(current_user), style: "color: inherit"
-    or
-    %strong
-      = link_to "Change Your Email", settings_account_path, style: "color: inherit"
-      
 - flash.each do |name, msg|
   - if msg.is_a?(String)
     %div{:class => "alert alert-#{name.to_s == 'notice' ? 'success' : 'danger'}", :role  => "alert"}
