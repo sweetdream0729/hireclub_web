@@ -18,6 +18,7 @@ class SettingsController < ApplicationController
   def update
     # What page to return to
     session[:return_to] = request.referer
+    session[:return_to] ||= settings_path
     
     if @user.update_without_password(user_params)
       # Sign in the user bypassing validation in case his password changed
