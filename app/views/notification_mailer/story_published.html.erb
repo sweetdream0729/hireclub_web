@@ -22,7 +22,7 @@
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
                         <td align="left" valign="top">
-                           <a href="<%= story_url(@story) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                           <a href="<%= @story_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
                               <%= @story.user.display_name %>
                               Published A Story
                            </a>
@@ -30,7 +30,7 @@
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 12} %>
                            
                            <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                              <a style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #6070E9; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px; text-decoration: none;" href="<%= story_url(@story) %>">
+                              <a style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #6070E9; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px; text-decoration: none;" href="<%= @story_url %>">
                                  <%= @story.name %>
                               </a>
                            </font>
@@ -38,7 +38,7 @@
                            <div style="height: 35px; line-height: 35px; font-size: 33px;">&nbsp;</div>
 
                            <%- if @story.cover_uid.present? %>
-                             <a href="<%= story_url(@story) %>" style="display: block; max-width: 620px;">
+                             <a href="<%= @story_url %>" style="display: block; max-width: 620px;">
                                 <img src="<%= model_image(@story.cover, 1104, 621, true) %>" alt="img" width="620" border="0" style="display: block; width: 620px; max-width: 100%;" />
                              </a>
                            <% end %>
@@ -59,7 +59,7 @@
                            
                            <div style="height: 32px; line-height: 32px; font-size: 30px;">&nbsp;</div>
                            
-                           <%= render partial: "/email/elements/button", locals: { url: story_url(@story), text: "Read More"} %>
+                           <%= render partial: "/email/elements/button", locals: { url: @story_url, text: "Read More"} %>
                            
 
                            <div style="height: 45px; line-height: 45px; font-size: 43px;">&nbsp;</div>

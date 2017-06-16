@@ -3,6 +3,8 @@ class NotificationMailer < ApplicationMailer
   def user_welcome(notification)
     set_notification(notification)
 
+    @url_url = get_utm_url user_url(@user)
+
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
 
@@ -28,6 +30,10 @@ class NotificationMailer < ApplicationMailer
 
     @comment = @notification.activity.trackable
     @commentable = @comment.commentable
+
+    @commentable_url = get_utm_url url_for(@commentable)
+    @comment_user_url = get_utm_url url_for(@comment.user)
+
     mail(to: @user.email, subject: 'New Comment')
   end
 
@@ -36,6 +42,10 @@ class NotificationMailer < ApplicationMailer
 
     @comment = @notification.activity.trackable.mentionable
     @commentable = @comment.commentable
+
+    @commentable_url = get_utm_url url_for(@commentable)
+    @comment_user_url = get_utm_url url_for(@comment.user)
+
     mail(to: @user.email, subject: 'New Mention')
   end
 
@@ -44,6 +54,11 @@ class NotificationMailer < ApplicationMailer
 
     @job = @notification.activity.trackable
     @company = @job.company
+
+    @job_url = get_utm_url url_for(@job)
+    @user_url = get_utm_url url_for(@job.user)
+    @company_url = get_utm_url url_for(@company)
+
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
 
@@ -52,6 +67,8 @@ class NotificationMailer < ApplicationMailer
 
     @story = @notification.activity.trackable
 
+    @story_url = get_utm_url url_for(@story)
+
     mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
   end
 
@@ -59,6 +76,8 @@ class NotificationMailer < ApplicationMailer
     set_notification(notification)
 
     @project = @notification.activity.trackable
+
+    @project_url = get_utm_url url_for(@project)
 
     mail(to: @user.email, subject: "#{@project.user.display_name} added project #{@project.name}")
   end
