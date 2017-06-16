@@ -47,13 +47,13 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
 
-                           <a href="<%= user_url(@follower) %>" style="display: block; max-width: 100px;">
+                           <a href="<%= @follower_url %>" style="display: block; max-width: 100px;">
                               <img src="<%= model_avatar(@follower.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 100px;" />
                            </a>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
 
-                           <a href="<%= user_url(@follower) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                           <a href="<%= @follower_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                               <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                    <%= @follower.display_name %>
@@ -63,7 +63,7 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
 
-                           <a href="<%= user_url(@follower) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
+                           <a href="<%= @follower_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
                               <font face="'Source Sans Pro', sans-serif" color="#5E5E5E" style="font-size: 19px; line-height: 22px; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
                                     <%- if @follower.primary_role.present? %>
@@ -80,11 +80,11 @@
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
 
                            <%- if @following %>
-                            <%= render partial: "/email/elements/button", locals: { url: user_url(@follower), text: "View Profile"} %>
+                            <%= render partial: "/email/elements/button", locals: { url: @follower_url, text: "View Profile"} %>
                            <% else %>
-                             <%= render partial: "/email/elements/button", locals: { url: follow_user_url(@follower), text: "Follow #{@follower.first_name}"} %>
+                             <%= render partial: "/email/elements/button", locals: { url: @follow_url, text: "Follow #{@follower.first_name}"} %>
                              <%= render partial: "/email/elements/v_spacer", locals: { height: 18} %>
-                             <%= render partial: "/email/elements/button_link", locals: { url: user_url(@follower), text: "View Profile"} %>
+                             <%= render partial: "/email/elements/button_link", locals: { url: @follower_url, text: "View Profile"} %>
                            <% end %>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>

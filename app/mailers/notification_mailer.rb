@@ -68,6 +68,10 @@ class NotificationMailer < ApplicationMailer
 
     @follower = notification.activity.owner
     @following = @user.following?(@follower)
+
+    @follower_url = get_utm_url user_url(@follower)
+    @follow_url = get_utm_url follow_user_url(@follower)
+    
     if @following
       @subject = "#{@follower.display_name} followed you back on HireClub"
     else

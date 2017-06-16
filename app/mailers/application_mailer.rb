@@ -6,6 +6,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def set_campaign(campaign_id)
     get_sparkpost_data
+    @campaign_id = campaign_id
     @sparkpost_data[:campaign_id] = campaign_id
     add_metadata(:campaign_id, campaign_id)
   end
@@ -27,5 +28,9 @@ class ApplicationMailer < ActionMailer::Base
 
   def set_sparkpost_header
     headers['X-MSYS-API'] = get_sparkpost_data.to_json
+  end
+
+  def get_utm_url(url)
+    "#{url}?utm_source=transactional&utm_medium=email&utm_campaign=#{@campaign_id}"
   end
 end
