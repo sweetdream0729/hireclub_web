@@ -1,4 +1,4 @@
-- if user_signed_in? && !current_user.confirmed?
+- if show_confirm_email
   .alert.alert-warning{:role  => "alert"}
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
     = "We sent a confirmation email to #{current_user.display_email}."
