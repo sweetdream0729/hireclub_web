@@ -61,3 +61,15 @@ hr.inverse {
   margin-right: 0;
   margin-left: 0;
 }
+
+@include media-breakpoint-up(sm) {
+  .pages_headshots {
+    .hireclub_headshots {
+      background: asset-url("headshots/rosy_cameron_jessica.jpg");
+      background-size: cover;
+      background-position: top center;
+      height: 90vh;
+      margin-bottom: 0;
+    }
+  }
+}
