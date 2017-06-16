@@ -5,4 +5,17 @@ class CustomDeviseMailer < Devise::Mailer
   default template_path: 'devise/mailer' # to make sure that your mailer uses the devise views
 
   after_action :set_sparkpost_header
+
+  def confirmation_instructions(record, token, opts={})
+    set_campaign("confirm_email")
+    add_metadata(:user_id, record.try(:id))
+    super
+  end
+
+  def reset_password_instructions(record, token, opts={})
+    set_campaign("reset_password")
+    add_metadata(:user_id, record.try(:id))
+    super
+  end
+
 end
