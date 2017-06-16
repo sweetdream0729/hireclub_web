@@ -19,7 +19,7 @@ module UserHelper
     when UserCompletion::PROJECTS_STEP
       new_project_path
     when UserCompletion::WEBSITE_STEP
-      settings_path
+      settings_links_path
     end 
   end
 

@@ -84,7 +84,7 @@ describe UserHelper do
     expect(next_path).to eq new_milestone_path
   end
 
-  it "should return settings path when no website_url" do
+  it "should return settings_links_path when no website_url" do
     user.username = "test"
     user.location = location
     user.bio = "this is a bio"
@@ -101,7 +101,7 @@ describe UserHelper do
       FactoryGirl.create(:milestone, user: user)
     end
 
-    expect(next_path).to eq settings_path
+    expect(next_path).to eq settings_links_path
   end
 
   
