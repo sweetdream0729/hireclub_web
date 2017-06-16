@@ -1,56 +1,62 @@
-%section.hireclub_headshots
-  .jumbotron
-    .container
-      %h1
-        HireClub Headshots
-      %p
-        First impressions that get you hired
+.jumbotron.jumbotron-fluid.hireclub_headshots.d-flex.align-items-end
+  .container.text-white
+    %h1.text-uppercase.black
+      HireClub Headshots
 
-.container
-  .row
-    .col-md-4.offset-md-4.mb-5
+    %p
+      First impressions that get you hired
+
+    %p
       %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
         Book Your Shoot
-
-%section.headshots_starting
-  .jumbotron
-    .container
-      %h1
-        Starting at $75
-  .container
-    %p
-      Starting at just $75 our professional photographers work with you to create a custom look that is both professional and powerful. You’ll be talking at TED soon!
-    .row
-      .col-md-4.offset-md-4
-        %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
-          Book Now
-
-.row
-  .col-md-6
-    %section.headshots_likes
-      .jumbotron
-        .container
-          %h1
-            Get all the likes
-      .container
-        %p
-          Use your HireClub Headshot for Facebook, LinkedIn  or Tinder. Doesn’t matter where, your new headshot will you get noticed like never before.
-
-  .col-md-6
-    %section.headshots_bold
-      .jumbotron
-        .container
-          %h1
-            Your boldest look
-      .container
-        %p
-          Our stylists will help you with wardrobe, make up and accessories to help you look your best. You don’t have to be a model but we’ll make you feel like one.
+  
+.jumbotron.jumbotron-fluid.headshots_starting.d-flex.align-items-end
+  .container.text-white
+    %h1.text-uppercase.black
+      Starting at $75
+    
 
 .container
+  %p.mt-4
+    Starting at just $75 our professional photographers work with you to create a custom look that is both professional and powerful. You’ll be talking at TED soon!
+
   .row
-    .col-md-4.offset-md-4.mb-5
-      %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
-        Reserve Your Shoot
+    .col-md-4.offset-md-4
+      %a{href: '#', class: "btn btn-primary btn-lg btn-block mb-5"}
+        Book Your Shoot
+
+
+
+.jumbotron.jumbotron-fluid.d-flex.align-items-end.headshots_likes
+  .container.text-white
+    %h1.text-uppercase.black
+      Get all the likes
+    
+.container
+  %p.mt-4
+    Use your HireClub Headshot for Facebook, LinkedIn  or Tinder. Doesn’t matter where, your new headshot will you get noticed like never before.
+
+  .row
+    .col-md-4.offset-md-4
+      %a{href: '#', class: "btn btn-primary btn-lg btn-block mb-5"}
+        Book Your Shoot
+
+
+.jumbotron.jumbotron-fluid.d-flex.align-items-end.headshots_bold
+  .container.text-white
+    %h1.text-uppercase.black
+      Your boldest look
+    
+
+.container
+  %p.mt-4
+    Our stylists will help you with wardrobe, make up and accessories to help you look your best. You don’t have to be a model but we’ll make you feel like one.
+
+  .row
+    .col-md-4.offset-md-4
+      %a{href: '#', class: "btn btn-primary btn-lg btn-block mb-5"}
+        Book Your Shoot
+
 
 %section.headshots_packages
   .container
@@ -121,6 +127,6 @@
       .col-md-4.col-6.mb-4
         = image_tag("headshots/carlos_martinez.jpg", class: 'img-fluid')
     .row.mt-5
-      .col-md-4.offset-md-4.mb-5
-        %a{href: '#', class: "btn btn-primary btn-lg btn-block"}
+      .col-md-4.offset-md-4
+        %a{href: '#', class: "btn btn-primary btn-lg btn-block mb-4"}
           Book Now
