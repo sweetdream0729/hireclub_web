@@ -7,6 +7,8 @@ class InviteMailer < ApplicationMailer
       @subject = "#{@user.display_name} sent you their HireClub Profile"
     end
 
+    @invite_url = get_utm_url url_for(@invite)
+
     mail(to: @invite.input, subject: @subject, reply_to: @invite.user.email)
   end
 
