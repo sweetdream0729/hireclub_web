@@ -5,7 +5,9 @@ class AnalyticsEvent < ApplicationRecord
   # Scopes
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
   scope :searches,             -> { where(key: SearchActivity::KEY) }
-  scope :email_clicks,             -> { where(key: "email.click") }
+  scope :email_deliveries,     -> { where(key: "email.delivery") }
+  scope :email_opens,          -> { where(key: "email.open") }
+  scope :email_clicks,         -> { where(key: "email.click") }
 
   # Associations
   belongs_to :user

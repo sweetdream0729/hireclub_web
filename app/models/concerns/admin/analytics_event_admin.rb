@@ -5,7 +5,7 @@ module Admin::AnalyticsEventAdmin
     rails_admin do
       
       list do
-        scopes [nil, :searches, :email_clicks]
+        scopes [nil, :searches, :email_deliveries, :email_opens, :email_clicks]
         
         field :id
         field :key
