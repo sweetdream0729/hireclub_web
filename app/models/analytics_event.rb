@@ -25,8 +25,9 @@ class AnalyticsEvent < ApplicationRecord
       found_user_id ||= data["rcpt_meta"]["user_id"]
     end
 
-    if found_user_id.nil? && data["raw_rcpt_to"].present?
-      found_user_id = User.where(email: data["raw_rcpt_to"]).first.try(:id)
+    email = data["raw_rcpt_to"]
+    if found_user_id.nil? && email.present?
+      found_user_id = User.where(email: email).or(User.where(unconfirmed_email: email)).pluck(:id).first
     end
 
     self.user = User.where(id: found_user_id.to_i).first
