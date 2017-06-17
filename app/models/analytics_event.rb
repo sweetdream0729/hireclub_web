@@ -1,7 +1,7 @@
 class AnalyticsEvent < ApplicationRecord
   # Extensions
   include Admin::AnalyticsEventAdmin
-  
+
   # Scopes
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
   scope :searches,             -> { where(key: SearchActivity::KEY) }
@@ -14,6 +14,23 @@ class AnalyticsEvent < ApplicationRecord
   validates :event_id, :uniqueness => true, :presence => true
   validates :key, presence: true
   validates :timestamp, :presence => true
+
+  before_save :parse_user
+
+  def parse_user
+    return if data.nil? || user.present?
+
+    found_user_id ||= data["user_id"]
+    if data["rcpt_meta"].present?
+      found_user_id ||= data["rcpt_meta"]["user_id"]
+    end
+
+    if found_user_id.nil? && data["raw_rcpt_to"].present?
+      found_user_id = User.where(email: data["raw_rcpt_to"]).first.try(:id)
+    end
+
+    self.user = User.where(id: found_user_id.to_i).first
+  end
 
   def self.create_search_event(params, user, request)
     key = SearchActivity::KEY
