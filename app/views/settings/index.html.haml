@@ -2,13 +2,13 @@
   .row
     = render partial: "sub_nav"
     
-    .col-sm-6
+    .col-sm-6.mb-4
       %h1= title "Profile"
 
       = form_for @user, url: settings_update_path, method: :put do |f|
         .form-group
           %label
-            Profile Image
+            Image
           %br
           = image_tag(model_image(@user.avatar, 200, 200, true), width: 100, class: 'img-circle m-b-1')
           %br
@@ -48,3 +48,7 @@
 
         %hr.mt-4
         = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+    .col-sm-3.mb-4
+      = link_to headshots_path do
+        %h5 Get a New Profile Pic
+        = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
