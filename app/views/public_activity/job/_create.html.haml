@@ -10,7 +10,7 @@
       = link_to job.name, job
     = job.role.name if job.role
     ·
-    = job.location.display_name
+    = job.location.cached_display_name
     %p
       = job.skills_list.split(",").join(" · ")
       %br
