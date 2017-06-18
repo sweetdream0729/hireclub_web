@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
       @title = "#{params[:skill]} #{@title}"
     end
 
-    @projects = scope.page(params[:page]).per(12)
+    @projects = scope.page(params[:page]).per(12).includes(:user)
   end
 
   # GET /projects/1

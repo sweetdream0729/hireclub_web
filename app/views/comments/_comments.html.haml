@@ -1,4 +1,4 @@
-- commentable.comments.by_oldest.each do |comment|
+- commentable.comments.by_oldest.includes(:user).each do |comment|
   .media.mb-4
     = link_to image_tag(model_avatar(comment.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), comment.user
     .media-body

@@ -21,7 +21,7 @@ class RolesController < ApplicationController
       scope = scope.search_by_name(params[:query])
     end
 
-    @roles = scope.page(params[:page]).per(20)
+    @roles = scope.page(params[:page]).per(20).includes(:parent)
 
     respond_to do |format|
       format.json { render json: @roles }

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       scope = scope.search_name_and_username(params[:query])
     end
 
-    @users = scope.page(params[:page]).per(10)
+    @users = scope.page(params[:page]).per(10).includes(:company, :location)
 
     respond_to do |format|
       format.json { render json: @users, each_serializer: UserSerializer }
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     @first_milestones = @milestones.limit(5)
     @rest_milestones = @milestones.offset(5)
 
-    @user_skills = @user.user_skills.by_position
+    @user_skills = @user.user_skills.by_position.includes(:skill)
     @first_skills = @user_skills.limit(5)
     @rest_skills = @user_skills.offset(5)
 

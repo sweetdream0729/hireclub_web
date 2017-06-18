@@ -5,7 +5,7 @@ class JobsController < ApplicationController
   # GET /jobs
   def index
     scope = Job.recent
-    @jobs = scope.page(params[:page]).per(10)
+    @jobs = scope.page(params[:page]).per(10).includes(:company, :user, :location, :role)
   end
 
   # GET /jobs/1

@@ -99,6 +99,9 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
     builder (3.2.3)
+    bullet (5.5.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
     capistrano (3.8.1)
       airbrussh (>= 1.0.0)
@@ -460,6 +463,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    uniform_notifier (1.10.0)
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
@@ -491,6 +495,7 @@ DEPENDENCIES
   acts_as_tree
   auto_strip_attributes
   bootstrap (~> 4.0.0.alpha6)
+  bullet
   byebug
   capistrano (~> 3.7, >= 3.7.1)
   capistrano-passenger (~> 0.2.0)

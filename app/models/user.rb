@@ -187,7 +187,7 @@ class User < ApplicationRecord
   end
 
   def key_words
-    self.user_roles.by_position.limit(3).map(&:name) + self.user_skills.by_position.limit(5).map(&:name) + [ self.location.try(:name_and_parent) ]
+    self.user_roles.by_position.limit(3).map(&:name) + self.user_skills.by_position.limit(5).includes(:skill).map(&:name) + [ self.location.try(:name_and_parent) ]
   end
 
 
