@@ -72,6 +72,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy, inverse_of: :user
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
   has_one :preference, dependent: :destroy, inverse_of: :user
+  accepts_nested_attributes_for :preference
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -214,6 +215,10 @@ class User < ApplicationRecord
   
   def display_notifications
     notifications.published.not_messages
+  end
+
+  def preference
+    super || build_preference
   end
 
   # Devise methos

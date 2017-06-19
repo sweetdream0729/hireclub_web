@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'settings/status'
   get 'settings/account'
   get 'settings/links'
+  get 'settings/notifications'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'
