@@ -9,6 +9,7 @@
           = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
         - @placements.each do |placement|
           = render partial: "placements/#{placement.placeable_type.downcase}", locals: {placement: placement}
+        = render partial: "/users/user_completion_card"
           
     .row
       .col-sm-12
