@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618003816) do
+ActiveRecord::Schema.define(version: 20170619102200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -374,6 +374,19 @@ ActiveRecord::Schema.define(version: 20170618003816) do
     t.index ["tags"], name: "index_placements_on_tags", using: :gin
   end
 
+  create_table "preferences", force: :cascade do |t|
+    t.integer  "user_id",                         null: false
+    t.boolean  "email_on_follow",  default: true, null: false
+    t.boolean  "email_on_comment", default: true, null: false
+    t.boolean  "email_on_mention", default: true, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
+    t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
+    t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
+    t.index ["user_id"], name: "index_preferences_on_user_id", unique: true, using: :btree
+  end
+
   create_table "projects", force: :cascade do |t|
     t.integer  "user_id",                   null: false
     t.string   "name",                      null: false
@@ -577,6 +590,7 @@ ActiveRecord::Schema.define(version: 20170618003816) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "preferences", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
   add_foreign_key "resumes", "users"

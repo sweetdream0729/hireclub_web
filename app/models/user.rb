@@ -71,6 +71,7 @@ class User < ApplicationRecord
   has_many :invites, dependent: :destroy, inverse_of: :user
   has_many :messages, dependent: :destroy, inverse_of: :user
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
+  has_one :preference, dependent: :destroy, inverse_of: :user
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
