@@ -14,6 +14,7 @@ class JobScore < ApplicationRecord
 
     new_score = calc_skills(new_score)
     new_score = calc_roles(new_score)
+    new_score = calc_projects(new_score)
     
     self.score = [new_score,0].max
     self.save
@@ -44,4 +45,22 @@ class JobScore < ApplicationRecord
 
     return score
   end
+
+  #iterate through the job's skills and total user's project skills; 
+  #increment score by one at most for each skill found on a unique project
+
+  def calc_projects(score)
+    job.skills.each do |skill_name|
+      skill = Skill.where(name: skill_name).first
+      next if skill.nil?
+      user.projects.each do |project| 
+        if project.skills.include?(skill.name) 
+          increment = 1
+          score += increment
+        end
+      end
+    end
+     return score
+  end
+
 end
