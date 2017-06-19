@@ -21,5 +21,9 @@
               = p.check_box :email_on_mention, class: 'form-check-input'
               Someone Mentions Me
 
-        %hr.mt-4
-        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+          %hr
+            %label.form-check-label
+              = p.check_box :unsubscribe_all, class: 'form-check-input'
+              Unsubscribe All
+        %hr
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block mt-5"

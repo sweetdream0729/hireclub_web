@@ -13,4 +13,15 @@ RSpec.describe Preference, type: :model do
     it { should validate_presence_of(:user) }
     it { preference.save; should validate_uniqueness_of(:user) }
   end
+
+  describe "unsubscribe_all" do
+    it "should unsubscribe to all notifications" do
+      preference.unsubscribe_all = true
+      preference.save
+
+      expect(preference.email_on_follow).to be false
+      expect(preference.email_on_comment).to be false
+      expect(preference.email_on_mention).to be false
+    end
+  end
 end
