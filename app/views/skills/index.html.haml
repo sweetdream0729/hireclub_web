@@ -18,11 +18,8 @@
     %small
       = pluralize(Skill.all.count, "skill")
   
-  - @skills.each do |skill|
-    %h5
-      = link_to skill.name, skill
-
-
+  = render @skills
+  
   = paginate @skills
 
 

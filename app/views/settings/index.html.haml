@@ -1,0 +1,54 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-6.mb-4
+      %h1= title "Profile"
+
+      = form_for @user, url: settings_update_path, method: :put do |f|
+        .form-group
+          %label
+            Image
+          %br
+          = image_tag(model_image(@user.avatar, 200, 200, true), width: 100, class: 'img-circle m-b-1')
+          %br
+
+          = f.file_field :avatar
+          = f.hidden_field :retained_avatar
+
+        .form-group
+          = f.label :name, "Full Name"
+          = f.text_field :name, class: 'form-control', placeholder: "John Doe"
+
+        .form-group
+          = f.label :company
+          = f.text_field :company, class: "autocomplete_company", value: @user.company.try(:name), placeholder: "Acme Inc"
+          = f.hidden_field :company_id, value: @user.company_id, class: "autocomplete_company_id"
+
+        .form-group
+          = f.label :username, "Username"
+          = f.text_field :username, class: 'form-control', autocomplete: "off"
+          .form-control-feedback
+            - username = "username"
+            - if @user.errors.any? && @user.errors.details[:username].present?
+              - username = @user.errors.details[:username][0][:value]
+            %small
+              %span#username_hint
+                = "hireclub.co/#{username}"
+
+        .form-group
+          = f.label :location
+          = f.text_field :location, class: 'form-control autocomplete_location', value: @user.location.try(:display_name), autocomplete: "off"
+          = f.hidden_field :location_id, value: @user.location_id, class: "autocomplete_location_id"
+
+        .form-group
+          = f.label :bio
+          = f.text_area :bio, class: 'form-control', rows: 3, maxlength: 140
+
+
+        %hr.mt-4
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+    .col-sm-3.mb-4
+      = link_to headshots_path do
+        %h5 Get a New Profile Pic
+        = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')

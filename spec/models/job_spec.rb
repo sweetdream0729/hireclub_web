@@ -188,6 +188,19 @@ Also helpful:
     end
   end
 
+  describe "suggested_users" do
+    it "update_suggested_users" do
+      user = FactoryGirl.create(:user, confirmed_at: DateTime.now)
+      user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user.save
 
+      job.save
+      job.update_suggested_users
+
+      job_score = JobScore.where(user: user, job: job).first
+
+      expect(job_score).to be_present
+    end
+  end
 
 end

@@ -11,4 +11,8 @@ class PagesController < ApplicationController
   def styles
 
   end
+
+  def headshots
+
+  end
 end

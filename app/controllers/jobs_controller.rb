@@ -5,12 +5,13 @@ class JobsController < ApplicationController
   # GET /jobs
   def index
     scope = Job.recent
-    @jobs = scope.page(params[:page]).per(10)
+    @jobs = scope.page(params[:page]).per(10).includes(:company, :user, :location, :role)
   end
 
   # GET /jobs/1
   def show
     impressionist(@job)
+    @company = @job.company
 
     if current_user
       @job_score = @job.job_scores.where(user: current_user).first_or_create
@@ -50,6 +51,7 @@ class JobsController < ApplicationController
     if @job.save
       @job.publish!
       @job.update_suggested_skills!
+      UpdateJobScoresJob.perform_later(@job)
       redirect_to @job, notice: 'Job was successfully created.'
     else
       render :new
@@ -60,6 +62,7 @@ class JobsController < ApplicationController
   def update
     if @job.update(job_params)
       @job.update_suggested_skills!
+      UpdateJobScoresJob.perform_later(@job)
       redirect_to @job, notice: 'Job was successfully updated.'
     else
       render :edit

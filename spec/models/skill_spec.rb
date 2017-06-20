@@ -47,6 +47,16 @@ RSpec.describe Skill, type: :model do
       expect(results.count).to eq 1
       expect(results.first).to eq skill      
     end
+
+    it "should search partial match" do
+      skill.name = "Prototyping"
+      skill.save
+
+      results = Skill.search_with_any_name("rapid prototyping")
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first).to eq skill      
+    end
   end
 
 end

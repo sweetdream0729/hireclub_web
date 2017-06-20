@@ -5,8 +5,11 @@
       .col-md-8.col-lg-6.activities
         = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
       .col-md-4.col-lg-4
+        = link_to headshots_path do
+          = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
         - @placements.each do |placement|
           = render partial: "placements/#{placement.placeable_type.downcase}", locals: {placement: placement}
+        = render partial: "/users/user_completion_card"
           
     .row
       .col-sm-12

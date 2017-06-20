@@ -33,6 +33,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:job_scores).dependent(:destroy) }
     it { should have_many(:invites).dependent(:destroy) }
+    it { should have_many(:analytics_events).dependent(:destroy) }
+
+    it { should have_one(:preference).dependent(:destroy) }
   end
 
   describe 'validations' do

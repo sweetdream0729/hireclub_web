@@ -57,4 +57,8 @@ module ApplicationHelper
       link_to match, user_path($1)
     end.html_safe
   end
+
+  def show_confirm_email
+    user_signed_in? && (!current_user.confirmed? || current_user.pending_reconfirmation?)
+  end
 end

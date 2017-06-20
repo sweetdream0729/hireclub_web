@@ -22,7 +22,7 @@
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
                         <td align="left" valign="top">
-                          <a href="<%= url_for(@invite) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                          <a href="<%= @invite_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
                               <% if @invite.recipient.present? %>
                                  <%= @user.display_name %> sent you their HireClub Profile!
                               <% else %>
@@ -41,13 +41,13 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
                            
-                           <a href="<%= invite_url(@invite) %>" style="display: block; max-width: 100px;">
+                           <a href="<%= @invite_url %>" style="display: block; max-width: 100px;">
                               <img src="<%= model_avatar(@user.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 100px;" />
                            </a>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
 
-                           <a href="<%= invite_url(@invite) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                           <a href="<%= @invite_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                               <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;"><%= @user.display_name %></span>
                               </font>
@@ -55,7 +55,7 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
 
-                           <a href="<%= invite_url(@invite) %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">   
+                           <a href="<%= @invite_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">   
                               <font face="'Source Sans Pro', sans-serif" color="#5E5E5E" style="font-size: 19px; line-height: 22px; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
                                     <%- if @user.primary_role.present? %>
@@ -73,7 +73,7 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
 
-                           <%= render partial: "/email/elements/button", locals: { url: invite_url(@invite), text: "View Profile"} %>
+                           <%= render partial: "/email/elements/button", locals: { url: @invite_url, text: "View Profile"} %>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>
 

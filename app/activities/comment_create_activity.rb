@@ -11,6 +11,7 @@ class CommentCreateActivity
   end
 
   def self.send_notification(notification)
+    return unless notification.user.preference.email_on_comment
     NotificationMailer.comment_created(notification).deliver_later
   end
 

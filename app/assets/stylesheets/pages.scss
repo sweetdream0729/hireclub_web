@@ -22,3 +22,77 @@ hr.inverse {
   border-top: 5px solid rgb(255,255,255);
   opacity: .4;
 }
+
+.pages_headshots {
+  section {
+    margin-bottom: 4rem;
+  }
+  .hireclub_headshots {
+    background: asset-url("headshots/rosy_capron.jpg");
+    background-size: cover;
+    background-position: top center;
+    height: 90vh;
+    margin-bottom: 0;
+  }
+  .headshots_starting {
+    background: asset-url("headshots/parker_coomans.jpg");
+    background-size: cover;
+    background-position: top center;
+    height: 70vh; 
+    margin-bottom: 0;
+  }
+
+  .headshots_likes {
+    background: asset-url("headshots/shuba_mohan.jpg");
+    background-size: cover;
+    background-position: top center;
+    height: 70vh; 
+    margin-bottom: 0;
+  }
+  .headshots_bold {
+    background: asset-url("headshots/hasan_korre.jpg");
+    background-size: cover;
+    background-position: top center;
+    height: 70vh; 
+    margin-bottom: 0;
+  }
+}
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+@include media-breakpoint-up(sm) {
+  .pages_headshots {
+    .hireclub_headshots {
+      background: asset-url("headshots/rosy_cameron_jessica.jpg");
+      background-size: cover;
+      background-position: top center;
+      height: 90vh;
+      margin-bottom: 0;
+    }
+
+    .headshots_starting {
+      background: asset-url("headshots/parker_wide.jpg");
+      background-size: cover;
+      background-position: top center;
+      height: 70vh; 
+      margin-bottom: 0;
+    }
+
+    .headshots_likes {
+      background: asset-url("headshots/shuba_wide.jpg");
+      background-size: cover;
+      background-position: top center;
+      height: 70vh; 
+      margin-bottom: 0;
+    }
+    .headshots_bold {
+      background: asset-url("headshots/hasan_wide.jpg");
+      background-size: cover;
+      background-position: top center;
+      height: 70vh; 
+      margin-bottom: 0;
+    }
+  }
+}

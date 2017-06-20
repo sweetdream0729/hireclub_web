@@ -2,6 +2,13 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   
+  get 'settings' => 'settings#index', as: :settings
+  get 'settings/status'
+  get 'settings/account'
+  get 'settings/links'
+  get 'settings/notifications'
+  put 'settings/update'
+
   mount ActionCable.server => '/cable'
 
   get '/sitemap.xml', to: redirect("https://s3-us-west-1.amazonaws.com/hireclub-production/sitemaps/sitemap.xml.gz", status: 301)
@@ -24,6 +31,7 @@ Rails.application.routes.draw do
   get 'search/projects' => 'search#projects'
   get 'search/members' => 'search#members'
   get 'search/companies' => 'search#companies'
+  get 'search/skills' => 'search#skills'
 
   get 'feed', to: "feed#index", as: :feed
 
@@ -95,10 +103,12 @@ Rails.application.routes.draw do
   end
 
   resources :user_skills
+  get 'skills/available' => 'skills#available'
   resources :skills
   resources :onboarding
 
   get "/locations",     to: "locations#index",   as: :locations
+  get "/headshots",     to: "pages#headshots",   as: :headshots
   get "/styles",        to: "pages#styles",      as: :styles
   get "/privacy",       to: "pages#privacy",     as: :privacy
   get "/about",         to: "pages#about",       as: :about
@@ -107,7 +117,7 @@ Rails.application.routes.draw do
   get 'users/username' => 'users#username'
   devise_for :users,
     path:        '',
-    path_names:  {:sign_in => 'login', :sign_out => 'logout', :edit => 'settings', :sign_up => "signup"},
+    path_names:  {:sign_in => 'login', :sign_out => 'logout', :sign_up => "signup"},
     controllers: {registrations: 'registrations',
                   omniauth_callbacks: 'users/omniauth_callbacks' }
 

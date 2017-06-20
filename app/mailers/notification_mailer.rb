@@ -2,13 +2,15 @@ class NotificationMailer < ApplicationMailer
 
   def user_welcome(notification)
     set_notification(notification)
-    
+
+    @url_url = get_utm_url user_url(@user)
+
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
 
   def review_request(notification)
     set_notification(notification)
-    
+
     @activity = @notification.activity
     @review_request = @activity.trackable
     @owner = @review_request.user
@@ -25,50 +27,75 @@ class NotificationMailer < ApplicationMailer
 
   def comment_created(notification)
     set_notification(notification)
-    
+
     @comment = @notification.activity.trackable
     @commentable = @comment.commentable
+
+    @commentable_url = get_utm_url url_for(@commentable)
+    @comment_user_url = get_utm_url url_for(@comment.user)
+
     mail(to: @user.email, subject: 'New Comment')
   end
 
   def comment_mentioned(notification)
     set_notification(notification)
-    
+
     @comment = @notification.activity.trackable.mentionable
     @commentable = @comment.commentable
+
+    @commentable_url = get_utm_url url_for(@commentable)
+    @comment_user_url = get_utm_url url_for(@comment.user)
+
     mail(to: @user.email, subject: 'New Mention')
   end
 
   def job_created(notification)
     set_notification(notification)
-    
+
     @job = @notification.activity.trackable
     @company = @job.company
+
+    @job_url = get_utm_url url_for(@job)
+    @user_url = get_utm_url url_for(@job.user)
+    @company_url = get_utm_url url_for(@company)
+
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
 
   def story_published(notification)
     set_notification(notification)
-    
+
     @story = @notification.activity.trackable
+
+    @story_url = get_utm_url url_for(@story)
 
     mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
   end
 
   def project_created(notification)
     set_notification(notification)
-    
+
     @project = @notification.activity.trackable
+
+    @project_url = get_utm_url url_for(@project)
 
     mail(to: @user.email, subject: "#{@project.user.display_name} added project #{@project.name}")
   end
 
   def user_followed(notification)
     set_notification(notification)
-    
-    @follower = notification.activity.owner
 
-    @subject = "#{@follower.display_name} followed you on HireClub"
+    @follower = notification.activity.owner
+    @following = @user.following?(@follower)
+
+    @follower_url = get_utm_url user_url(@follower)
+    @follow_url = get_utm_url follow_user_url(@follower)
+    
+    if @following
+      @subject = "#{@follower.display_name} followed you back on HireClub"
+    else
+      @subject = "#{@follower.display_name} followed you on HireClub"
+    end
     mail(to: @user.email, subject: @subject)
   end
 
@@ -83,5 +110,5 @@ class NotificationMailer < ApplicationMailer
       add_metadata(:activity_id, @notification.try(:activity).try(:id))
     end
   end
-  
+
 end

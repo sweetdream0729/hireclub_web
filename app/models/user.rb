@@ -42,6 +42,7 @@ class User < ApplicationRecord
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
+  scope :scoreable,    -> { where.not(confirmed_at: nil).where.not(avatar_uid: nil)}
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
@@ -68,6 +69,10 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy, inverse_of: :user
   has_many :job_scores, dependent: :destroy, inverse_of: :user
   has_many :invites, dependent: :destroy, inverse_of: :user
+  has_many :messages, dependent: :destroy, inverse_of: :user
+  has_many :analytics_events, dependent: :destroy, inverse_of: :user
+  has_one :preference, dependent: :destroy, inverse_of: :user
+  accepts_nested_attributes_for :preference
 
   belongs_to :location
   counter_culture :location, column_name: :users_count, touch: true
@@ -184,7 +189,7 @@ class User < ApplicationRecord
   end
 
   def key_words
-    self.user_roles.by_position.limit(3).map(&:name) + self.user_skills.by_position.limit(5).map(&:name) + [ self.location.try(:name_and_parent) ]
+    self.user_roles.by_position.limit(3).map(&:name) + self.user_skills.by_position.limit(5).includes(:skill).map(&:name) + [ self.location.try(:name_and_parent) ]
   end
 
 
@@ -210,6 +215,10 @@ class User < ApplicationRecord
   
   def display_notifications
     notifications.published.not_messages
+  end
+
+  def preference
+    super || build_preference
   end
 
   # Devise methos

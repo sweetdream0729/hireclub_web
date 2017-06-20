@@ -38,6 +38,12 @@ class Location < ApplicationRecord
                             :inclusion => { :in => VALID_LEVELS, :message => "%{value} is not a valid level" }
   validates :facebook_id, uniqueness: {allow_blank: true}
 
+  before_save :cache_display_name
+
+  def cache_display_name
+    self.cached_display_name = self.display_name
+  end
+  
   def should_generate_new_friendly_id?
     name_changed? || parent_id_changed? || short_changed?
   end

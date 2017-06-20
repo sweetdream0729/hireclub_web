@@ -56,7 +56,7 @@
 
                   <%= render partial: "/email/elements/v_spacer", locals: { height: 24} %>
 
-                  <%= render partial: "/email/elements/button", locals: { url: user_url(@user), text: "View Your Profile"} %>
+                  <%= render partial: "/email/elements/button", locals: { url: @user_url, text: "View Your Profile"} %>
 
                   <%= render partial: "/email/elements/v_spacer", locals: { height: 56} %>                
 

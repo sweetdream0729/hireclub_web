@@ -1,0 +1,29 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+
+    .col-sm-6
+      %h1= title "Account"
+      
+      = form_for @user, url: settings_update_path, method: :put do |f|
+        .form-group
+          = f.label :email
+          = f.email_field :email, class: 'form-control', value: @user.display_email
+
+        - if @user.pending_reconfirmation?
+          %small.form-text.text-warning.mb-4
+            Currently awaiting confirmation for: #{@user.unconfirmed_email}
+
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: 'form-control'
+          %small.form-text.text-muted
+            Leave blank if you dont want to change it.
+            - if @minimum_password_length
+              %br
+              = @minimum_password_length
+              characters minimum.
+
+        %hr.mt-4
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+

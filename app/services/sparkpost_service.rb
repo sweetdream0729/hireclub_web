@@ -2,7 +2,7 @@ require 'simple_spark'
 class SparkpostService
 
   def self.client
-    @@client ||=  SimpleSpark::Client.new(api_key: Rails.application.secrets.sparkpost_api_key)
+    @@client ||=  SimpleSpark::Client.new(api_key: Rails.application.secrets.sparkpost_api_key, subaccount_id: Rails.application.secrets.sparkpost_subaccount_id)
   end
 
   def self.get_message_events

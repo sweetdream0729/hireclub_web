@@ -23,6 +23,11 @@ class SearchController < ApplicationController
     render :index
   end
 
+  def skills
+    get_results("Skill")
+    render :index
+  end
+
   def get_results(type = nil)
     @searchable_type = type
     @query = params[:q]

@@ -22,6 +22,8 @@
         %a.nav-link{:href => members_path} Members
       %li.nav-item
         %a.nav-link{:href => companies_path} Companies
+      %li.nav-item
+        %a.nav-link{:href => headshots_path} Headshots
 
     %ul.nav.navbar-nav
       - if !user_signed_in?
@@ -58,7 +60,7 @@
             %a.dropdown-item{:href => new_invite_path } Invite
             
             .dropdown-divider
-            %a.dropdown-item{:href => edit_user_registration_path} Settings
+            %a.dropdown-item{:href => settings_path} Settings
             %a.dropdown-item{:href => invites_path } Invites
             %a.dropdown-item{:href => resumes_path } Resumes
             

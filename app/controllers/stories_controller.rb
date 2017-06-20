@@ -27,7 +27,7 @@ class StoriesController < ApplicationController
       scope = scope.search_by_name(params[:query])
     end
 
-    @stories = scope.page(params[:page]).per(10)
+    @stories = scope.page(params[:page]).per(10).includes(user: [:company])
 
     respond_to do |format|
       format.json { render json: @stories }

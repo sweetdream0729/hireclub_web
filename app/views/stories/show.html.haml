@@ -13,15 +13,15 @@
     %p.mt-4
       - if @story.unpublished? && policy(@story).publish?
         = link_to publish_story_path(@story) do
-          %span.badge.badge-pill.badge-primary.uppercase.mr-2
+          %span.badge.badge-pill.badge-primary.text-uppercase.mr-2
             Publish
 
       = link_to edit_story_path(@story) do
-        %span.badge.badge-pill-outline.uppercase.mr-2
+        %span.badge.badge-pill-outline.text-uppercase.mr-2
           Edit
 
       - if @story.unpublished?
-        %span.badge.badge-pill-outline.badge-warning.uppercase
+        %span.badge.badge-pill-outline.badge-warning.text-uppercase
           Draft
 
   .mb-4

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613131358) do
+ActiveRecord::Schema.define(version: 20170619102200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,9 +43,11 @@ ActiveRecord::Schema.define(version: 20170613131358) do
     t.datetime "timestamp",               null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "user_id"
     t.index ["event_id"], name: "index_analytics_events_on_event_id", unique: true, using: :btree
     t.index ["key"], name: "index_analytics_events_on_key", using: :btree
     t.index ["timestamp"], name: "index_analytics_events_on_timestamp", using: :btree
+    t.index ["user_id"], name: "index_analytics_events_on_user_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -269,15 +271,16 @@ ActiveRecord::Schema.define(version: 20170613131358) do
   end
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name",                    null: false
-    t.citext   "slug",                    null: false
+    t.string   "name",                            null: false
+    t.citext   "slug",                            null: false
     t.string   "level"
     t.string   "short"
     t.integer  "parent_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "users_count", default: 0, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "users_count",         default: 0, null: false
     t.string   "facebook_id"
+    t.string   "cached_display_name"
     t.index ["facebook_id"], name: "index_locations_on_facebook_id", unique: true, using: :btree
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
@@ -369,6 +372,19 @@ ActiveRecord::Schema.define(version: 20170613131358) do
     t.index ["placeable_type", "placeable_id"], name: "index_placements_on_placeable_type_and_placeable_id", using: :btree
     t.index ["start_time"], name: "index_placements_on_start_time", using: :btree
     t.index ["tags"], name: "index_placements_on_tags", using: :gin
+  end
+
+  create_table "preferences", force: :cascade do |t|
+    t.integer  "user_id",                         null: false
+    t.boolean  "email_on_follow",  default: true, null: false
+    t.boolean  "email_on_comment", default: true, null: false
+    t.boolean  "email_on_mention", default: true, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
+    t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
+    t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
+    t.index ["user_id"], name: "index_preferences_on_user_id", unique: true, using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -552,6 +568,7 @@ ActiveRecord::Schema.define(version: 20170613131358) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "analytics_events", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "conversation_users", "conversations"
@@ -573,6 +590,7 @@ ActiveRecord::Schema.define(version: 20170613131358) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "preferences", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
   add_foreign_key "resumes", "users"

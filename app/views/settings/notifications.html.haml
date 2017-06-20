@@ -1,0 +1,29 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-6
+      %h1= title "Notifications"
+
+      = form_for @user, url: settings_update_path, method: :put do |f|
+        = f.fields_for :preference, @user.preference do |p|
+          %h6 Email Me When
+          .form-check
+            %label.form-check-label
+              = p.check_box :email_on_follow, class: 'form-check-input'
+              Someone Follows Me
+          .form-check
+            %label.form-check-label
+              = p.check_box :email_on_comment, class: 'form-check-input'
+              Someone Comments On My Profile
+          .form-check
+            %label.form-check-label
+              = p.check_box :email_on_mention, class: 'form-check-input'
+              Someone Mentions Me
+
+          %hr
+            %label.form-check-label
+              = p.check_box :unsubscribe_all, class: 'form-check-input'
+              Unsubscribe All
+        %hr
+        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block mt-5"

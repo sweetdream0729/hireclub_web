@@ -14,7 +14,7 @@
           = comma
       - if @user.location.present?
         ·
-        = @user.location.display_name
+        = @user.location.cached_display_name
       ·
       = @user.email
       %hr

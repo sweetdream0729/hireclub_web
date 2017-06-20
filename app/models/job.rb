@@ -151,4 +151,11 @@ class Job < ApplicationRecord
   def deduplicate_skills
     self.suggested_skills = self.suggested_skills - self.skills
   end
+
+  def update_suggested_users
+    User.scoreable.find_each do |user|
+      job_score = self.job_scores.where(user: user).first_or_create
+      job_score.update_score
+    end
+  end
 end

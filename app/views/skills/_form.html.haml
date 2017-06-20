@@ -8,6 +8,9 @@
 
   .form-group
     = f.label :name
-    = f.text_field :name, class: 'form-control'
-  .actions
-    = f.submit 'Save', class: "btn btn-primary"
+    = f.text_field :name, class: 'form-control', autocomplete: :off
+    .form-control-feedback
+      %span#existing_skill
+        
+
+  = f.submit 'Save', class: "btn btn-primary"

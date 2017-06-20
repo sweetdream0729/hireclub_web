@@ -6,8 +6,10 @@ class UserFollowActivity
   end
 
   def self.send_notification(notification)
-    NotificationMailer.user_followed(notification).deliver_later
     self.send_push(notification)
+
+    return unless notification.user.preference.email_on_follow
+    NotificationMailer.user_followed(notification).deliver_later
   end
 
   def self.send_push(notification)

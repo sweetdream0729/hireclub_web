@@ -46,14 +46,6 @@ em {
   @include italic-font;  
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
-
-.titlecase {
-  text-transform: capitalize;
-}
-
 .letterspace {
   letter-spacing: 1px
 }
@@ -111,4 +103,8 @@ h6 {
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.08rem;
+}
+
+label {
+  @include semibold-font; 
 }

@@ -9,7 +9,7 @@
         = link_to job.user.display_name, job.user
         = "· #{job.role.name}" if job.role
         ·
-        = job.location.display_name
+        = job.location.cached_display_name
         ·
         = local_relative_time(job.created_at, type: 'time-or-date')
         

@@ -44,6 +44,7 @@ group :development do
   gem 'foreman'
   gem 'letter_opener'
   gem 'derailed'
+  gem 'bullet'
 
   gem 'capistrano', '~> 3.7', '>= 3.7.1'
   gem 'capistrano-rails', '~> 1.2'

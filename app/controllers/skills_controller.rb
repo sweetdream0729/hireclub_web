@@ -1,5 +1,5 @@
 class SkillsController < ApplicationController
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :available]
   before_action :set_skill, only: [:show, :edit, :update, :destroy]
 
   # GET /skills
@@ -28,6 +28,27 @@ class SkillsController < ApplicationController
     end
   end
 
+
+  def available
+    skill_name = (params[:q] || "").downcase
+    scope = Skill.search_with_any_name(skill_name)
+    
+    available = scope.length == 0
+    
+    if available
+      hash = { available: true}
+    else
+      hash = {
+        :available => available,
+        :skill => scope.first.name
+      }
+    end
+
+    respond_to do |format|
+      format.json { render :json => hash.to_json }
+    end
+  end
+
   # GET /skills/1
   def show
     @users = @skill.users.page(params[:page])
@@ -50,9 +71,15 @@ class SkillsController < ApplicationController
     @skill.added_by = current_user
 
     if @skill.save
-      redirect_to @skill, notice: 'Skill was successfully created.'
+      respond_to do |format|
+        format.json { render json: @skill }
+        format.html { redirect_to @skill, :flash => { :success => "#{@skill.name} added." }}
+      end
     else
-      render :new
+      respond_to do |format|
+        format.json { render json: {errors: @skill.errors.full_messages} }
+        format.html { render :new}
+      end
     end
   end
 
