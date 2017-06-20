@@ -4,8 +4,6 @@ RSpec.describe JobScore, type: :model do
   let(:job_score) { FactoryGirl.build(:job_score) }
   let(:job) { job_score.job }
   let(:user) { job_score.user }
-  let(:project) { FactoryGirl.build(:project, user: user) }
-  let(:project2) { FactoryGirl.build(:project, user: user) }
 
   
   subject { job_score }
@@ -75,30 +73,12 @@ RSpec.describe JobScore, type: :model do
     end
 
     context "projects" do
-      before do
-        job.skills << skill1.name
+      let(:project) { FactoryGirl.create(:project, user: user, skills: [skill1.name, skill2.name]) }
+      
+      it "should score 1 for each matching skill in project" do
+        expect(project).to be_valid
+        job.skills = [skill1.name, skill2.name]
         job.save
-        user.skills << skill1
-        user.save
-        project.skills << skill1.name
-        project.save
-      end
-
-      it "should score 1 if the user's project skill matches job skill" do
-        job_score.update_score
-
-        expect(job_score.score).to eq(1)
-      end
-
-
-      it "should score 1 for each matching job skill in the user's project" do
-        job.skills << skill2.name
-        job.save
-        user.skills << skill2
-        user.save
-        project.skills << skill2.name
-        project.save
-
         job_score.update_score
 
         expect(job_score.score).to eq(2)
