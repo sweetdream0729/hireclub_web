@@ -55,14 +55,10 @@ class JobScore < ApplicationRecord
 
   def calc_projects(score)
     job.skills.each do |skill_name|
-      skill = Skill.where(name: skill_name).first
+      skill = Skill.search_by_exact_name(skill_name).first
       next if skill.nil?
-      user.projects.each do |project| 
-        if project.skills.include?(skill.name) 
-          increment = 1
-          score += increment
-        end
-      end
+      matching_projects = user.projects.with_any_skills(skill.name)
+      score += matching_projects.count
     end
      return score
   end
