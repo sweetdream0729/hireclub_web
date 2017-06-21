@@ -15,9 +15,16 @@
   letter-spacing: 1px;
 }
 
+.badge {
+  letter-spacing: .05rem;
+  font-family: "tt_normsmedium", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
 .badge-pill {
   border-radius: 10rem;
-  letter-spacing: .05rem;
   padding: 0.5rem 0.8rem;
   a {
     color: #fff;
