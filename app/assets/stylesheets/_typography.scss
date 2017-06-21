@@ -10,7 +10,7 @@ $font-family-sans-serif: "tt_normsregular","Avenir Next","Avenir", "Helvetica Ne
   font-family: "tt_normsmedium", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
+  // -webkit-font-smoothing: antialiased;
 }
 
 @mixin regular-font {
@@ -93,8 +93,9 @@ h4 {
 }
 
 h5 {
-  @include semibold-font;
+  @include regular-font;
   margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
 h6 {
@@ -107,8 +108,4 @@ h6 {
 
 label {
   @include semibold-font; 
-}
-
-.btn {
-  @include bold-font;  
 }
