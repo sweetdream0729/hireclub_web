@@ -108,3 +108,7 @@ h6 {
 label {
   @include semibold-font; 
 }
+
+.btn {
+  @include bold-font;  
+}

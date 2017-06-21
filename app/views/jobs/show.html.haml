@@ -15,7 +15,7 @@
       .media
         = link_to image_tag(company_avatar(@company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @company
         .media-body
-          %h1.black
+          %h1.bold.mb-1
             = title @job.name
           %p
             = link_to @company.name, @company
@@ -42,8 +42,6 @@
 
   .row.mt-3
     .col-sm-7
-      %h6.regular
-        = local_time @job.created_at, '%B %e, %Y'
       .media
         = link_to image_tag(model_avatar(@job.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @job.user
         .media-body
@@ -62,6 +60,8 @@
             - if @job.user.company
               ·
               = @job.user.company.name
+            ·
+            = local_time @job.created_at, '%B %e, %Y'
           
           / %hr
           / = render partial: "/likes/like_button", locals: { likeable: @job }
@@ -129,7 +129,7 @@
       .card
         .card-block.text-center
           = link_to image_tag(company_avatar(@company.avatar, 200, true), width: "50%", class: "rounded-circle"), @company
-        .card-block
+        .card-block.pt-0
           %h5.card-title.mt-0
             %strong
               = link_to @company.name, @company
