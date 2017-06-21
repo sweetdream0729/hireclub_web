@@ -1,7 +1,7 @@
 .media
   = link_to image_tag(company_avatar(company.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded'), company
   .media-body
-    %h5.mt-0
+    %h5.mt-0.semi_bold
       = link_to company.name, company
     = link_to_follow_company(company, current_user)
     %small{class: "company_#{company.id}_followers_count"}

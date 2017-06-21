@@ -4,7 +4,7 @@
     .media-body
       %h5.semi_bold.mt-0.mb-1
         = link_to job.name, job
-      %small
+      %small.text-muted
         = job.company.name
         = "· #{job.role.name}" if job.role
         ·
