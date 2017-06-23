@@ -47,6 +47,7 @@ class Invite < ApplicationRecord
       self.viewed_on = DateTime.now
       self.viewed_by = other_user
       self.save
+      self.create_activity_once key: InviteFirstViewActivity::KEY, owner: other_user, published: true, private: true, recipient: self.user
     end
   end
 

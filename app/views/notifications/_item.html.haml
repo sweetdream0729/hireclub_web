@@ -1,21 +1,25 @@
 .list-group-item{data: {key: activity.key}}
   .media
     .media-left
-      = link_to image_tag(model_avatar(activity.owner.avatar, 200, true), width: 48, class: "d-flex mr-3 rounded-circle"), link
+      - if activity.owner
+        = link_to image_tag(model_avatar(activity.owner.avatar, 200, true), width: 48, class: "d-flex mr-3 rounded-circle"), link
+      - else
+        = link_to_if activity.owner.present?,image_tag(model_avatar(nil, 200, true), width: 48, class: "d-flex mr-3 rounded-circle"), link
     %a{href: link, style: "color: inherit"}
       .media-body
         %p.mb-0
           %span
             %strong
-              = activity.owner.display_name
+              - if activity.owner
+                = activity.owner.display_name
+              - else
+                = "Anonymous"
             = verb
             %strong
               = object
           %br
           %small.text-muted
             = local_time_ago(activity.created_at)
-    
     .media-right.mr-3{style: "position: absolute; right: 0"}
       - action_link ||= nil
       = action_link
-
