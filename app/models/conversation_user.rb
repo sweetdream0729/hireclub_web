@@ -1,4 +1,10 @@
 class ConversationUser < ApplicationRecord
+  include Admin::ConversationUserAdmin
+  
+  # Scopes
+  scope :unread, -> { where("unread_messages_count > ?", 0) }
+
+  # Associations
   belongs_to :conversation
   belongs_to :user
   counter_culture :user, column_name: 'unread_messages_count', delta_column: 'unread_messages_count'
@@ -32,4 +38,8 @@ class ConversationUser < ApplicationRecord
     conversation.update_unread_counts
   end
 
+
+  def self.notify_unread
+
+  end
 end
