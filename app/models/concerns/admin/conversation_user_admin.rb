@@ -5,7 +5,7 @@ module Admin::ConversationUserAdmin
     rails_admin do
       
       list do
-        scopes [nil, :unread]
+        scopes [nil, :unread, :unread_notified]
       end
     end
   end

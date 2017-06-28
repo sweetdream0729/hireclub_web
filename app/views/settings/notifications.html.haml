@@ -11,15 +11,19 @@
           .form-check
             %label.form-check-label
               = p.check_box :email_on_follow, class: 'form-check-input'
-              Someone Follows Me
+              Someone follows me
           .form-check
             %label.form-check-label
               = p.check_box :email_on_comment, class: 'form-check-input'
-              Someone Comments On My Profile
+              Someone comments on my profile
           .form-check
             %label.form-check-label
               = p.check_box :email_on_mention, class: 'form-check-input'
-              Someone Mentions Me
+              Someone mentions me
+          .form-check
+            %label.form-check-label
+              = p.check_box :email_on_unread, class: 'form-check-input'
+              I have unread messages
 
           %hr
             %label.form-check-label

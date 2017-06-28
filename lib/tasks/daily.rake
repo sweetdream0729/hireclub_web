@@ -12,7 +12,8 @@ namespace :daily do
   end
 
   task run_hourly: :environment do
-    SparkpostService.get_message_events
+    ConversationUser.notify_all_unread
+    #SparkpostService.get_message_events
   end
   
 end

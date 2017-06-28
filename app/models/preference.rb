@@ -8,8 +8,11 @@ class Preference < ApplicationRecord
   before_save :check_unsubscribe_all
 
   def check_unsubscribe_all
-    self.email_on_follow = false
-    self.email_on_comment = false
-    self.email_on_mention = false
+    if ActiveModel::Type::Boolean.new.cast(self.unsubscribe_all)
+      self.email_on_follow = false
+      self.email_on_comment = false
+      self.email_on_mention = false
+      self.email_on_unread = false
+    end
   end
 end

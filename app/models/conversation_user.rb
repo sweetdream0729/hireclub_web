@@ -1,8 +1,14 @@
 class ConversationUser < ApplicationRecord
+  # Extensions
   include Admin::ConversationUserAdmin
-  
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
+
   # Scopes
-  scope :unread, -> { where("unread_messages_count > ?", 0) }
+  scope :unread,             -> { where("unread_messages_count > ?", 0) }
+  scope :unread_notified,    -> { where(unread_notified: true) }
+  scope :not_notified,       -> { where(unread_notified: false) }
 
   # Associations
   belongs_to :conversation
@@ -39,7 +45,19 @@ class ConversationUser < ApplicationRecord
   end
 
 
-  def self.notify_unread
+  def notify_unread!
+    return false if self.unread_messages_count < 1 || self.unread_notified
 
+    self.create_activity key: ConversationUserUnreadActivity::KEY, owner: user, published: true, private: true, trackable: self
+    self.unread_notified = true
+    self.save
+
+    return true
+  end
+
+  def self.notify_all_unread
+    self.unread.not_notified.find_each do |cu|
+      cu.notify_unread!
+    end
   end
 end

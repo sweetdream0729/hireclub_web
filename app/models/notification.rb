@@ -7,7 +7,8 @@ class Notification < ApplicationRecord
 
   NOT_MESSAGES = [
     MessageCreateActivity::KEY,
-    MessageUnreadActivity::KEY
+    MessageUnreadActivity::KEY,
+    ConversationUserUnreadActivity::KEY
   ]
 
   # Scopes
