@@ -88,7 +88,7 @@
               %p.card-text
                 1 Retouched Shot
                 %br
-                1 Background
+                1 Style
                 %br
                 + Hair & Make Up
       .col-md-4
@@ -102,7 +102,7 @@
               %p.card-text
                 2 Retouched Shots
                 %br
-                2 Backgrounds
+                2 Styles
                 %br
                 + Hair & Make Up
               %p.card-text.bold
@@ -118,15 +118,41 @@
               %p.card-text
                 3 Retouched Shots
                 %br
-                3 Backgrounds
+                3 Styles
                 %br
                 + Hair & Make Up
 
     %p.text-center.bold
       Additional Retouched shots are $25 each.
 
-%section
+%section.mb-5
   .container
+    .row
+      .col-12.mb-4
+        .text-center
+          %h2 Up To 3 Different Styles
+      .col-md-4
+        %h4.bold Business Blue
+        = image_tag("headshots/styles/business_blue.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Business Blue makes you look good anywhere, any time. Great for professional profiles.
+      .col-md-4
+        %h4.bold Natural Tan
+        = image_tag("headshots/styles/natural_tan.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Natural Tan highlights your inner glow. Perfect for a warm and personal feel.
+      .col-md-4
+        %h4.bold Power Black
+        = image_tag("headshots/styles/power_black.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Powerful and high contrast. Power Black is awesome for commanding respect and authority.
+
+%section.mt-5
+  .container
+    .row
+      .col-12.mb-4
+        .text-center
+          %h2 Samples
     .row
       .col-md-4.col-6.mb-4
         = image_tag("headshots/derek_yuan.jpg", class: 'img-fluid')
