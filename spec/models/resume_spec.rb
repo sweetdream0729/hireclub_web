@@ -18,7 +18,9 @@ RSpec.describe Resume, type: :model do
   describe "activity" do
     it "should have create activity" do
       resume.save
-      activity = PublicActivity::Activity.last
+      expect(resume).to be_persisted
+      
+      activity = Activity.where(key: ResumeCreateActivity::KEY).last
       expect(activity).to be_present
       expect(activity.trackable).to eq(resume)
       expect(activity.owner).to eq(resume.user)

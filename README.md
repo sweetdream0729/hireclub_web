@@ -35,7 +35,8 @@ Redis
 Postgres - http://postgresapp.com/
 Homebrew
 RVM - https://rvm.io/
-ImageMagick 
+ImageMagick
+Ghostscript
 Terminal Notifier
 Foreman
 
