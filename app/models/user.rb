@@ -317,9 +317,9 @@ class User < ApplicationRecord
 
       if milestone.name.blank?
         company_name = item["employer"]["name"]
-        position = item["position"]["name"]
         milestone.name = "Joined #{company_name}"
-        milestone.name += " as #{position}" if position.present?
+        position = item["position"]["name"]
+        milestone.name += " as #{position}" if item["position"].present? && position.present?
       end
 
       company_facebook_id = item["employer"]["id"]
