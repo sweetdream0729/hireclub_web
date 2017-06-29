@@ -88,7 +88,7 @@
               %p.card-text
                 1 Retouched Shot
                 %br
-                1 Background
+                1 Style
                 %br
                 + Hair & Make Up
       .col-md-4
@@ -102,7 +102,7 @@
               %p.card-text
                 2 Retouched Shots
                 %br
-                2 Backgrounds
+                2 Styles
                 %br
                 + Hair & Make Up
               %p.card-text.bold
@@ -118,15 +118,70 @@
               %p.card-text
                 3 Retouched Shots
                 %br
-                3 Backgrounds
+                3 Styles
                 %br
                 + Hair & Make Up
 
     %p.text-center.bold
       Additional Retouched shots are $25 each.
 
-%section
+%section.mb-5
   .container
+    .row
+      .col-12.mb-4
+        .text-center
+          %h2 Up To 3 Different Styles
+      .col-sm-4
+        %h5.bold Business Blue
+        %a{href: 'https://hireclub.acuityscheduling.com/schedule.php?appointmentType=category:Photography'}
+          = image_tag("headshots/styles/business_blue.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Business Blue makes you look good anywhere, any time. Great for professional profiles.
+      .col-sm-4
+        %h5.bold Natural Tan
+        %a{href: 'https://hireclub.acuityscheduling.com/schedule.php?appointmentType=category:Photography'}
+          = image_tag("headshots/styles/natural_tan.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Natural Tan highlights your inner glow. Perfect for a warm and personal feel.
+      .col-sm-4
+        %h5.bold Power Black
+        %a{href: 'https://hireclub.acuityscheduling.com/schedule.php?appointmentType=category:Photography'}
+          = image_tag("headshots/styles/power_black.jpg", class: 'img-fluid rounded')
+        %p.mt-3
+          Powerful and high contrast. Power Black is awesome for commanding respect and authority.
+
+%section.mb-5
+  .container
+    .row
+      .col-12.mb-4
+        .text-center
+          %h2 For Your Company
+    .row
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team1.jpg", class: 'img-fluid rounded')
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team2.jpg", class: 'img-fluid rounded')
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team3.jpg", class: 'img-fluid rounded')
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team4.jpg", class: 'img-fluid rounded')
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team5.jpg", class: 'img-fluid rounded')
+      .col-sm-2.col-4
+        = image_tag("headshots/team/team6.jpg", class: 'img-fluid rounded')
+    .row.justify-content-md-center
+      .col-md-6.mt-3
+        %p
+          Bring your entire team and get headshots for everyone. We create a singular style that shows off your brand.
+    
+
+
+%section.mt-5
+  .container
+    .row
+      .col-12.mb-4
+        .text-center
+          %h2 Samples
     .row
       .col-md-4.col-6.mb-4
         = image_tag("headshots/derek_yuan.jpg", class: 'img-fluid')
