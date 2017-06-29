@@ -78,4 +78,19 @@ RSpec.describe Invite, type: :model do
       expect(invite.contact).to be_nil
     end
   end
+
+  describe "mark_bounced!" do
+    it "should mark invite as bounced", :focus do
+      invite.save
+      invite.mark_bounced!
+
+      activity = Activity.where(key: InviteBounceActivity::KEY).last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq invite
+      expect(activity.owner).to be_nil
+      expect(activity.recipient).to eq invite.user
+      expect(activity.published).to be true
+      expect(activity.private).to be true
+    end
+  end
 end

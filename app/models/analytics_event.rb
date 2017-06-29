@@ -1,6 +1,7 @@
 class AnalyticsEvent < ApplicationRecord
   # Extensions
   include Admin::AnalyticsEventAdmin
+  include Wisper::Publisher
 
   # Scopes
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
@@ -17,8 +18,10 @@ class AnalyticsEvent < ApplicationRecord
   validates :key, presence: true
   validates :timestamp, :presence => true
 
-  before_save :parse_user
-
+  # Callbacks
+  before_save      :parse_user
+  after_create     :broadcast_create
+  
   def parse_user
     return if data.nil? || user.present?
 
@@ -33,6 +36,11 @@ class AnalyticsEvent < ApplicationRecord
     end
 
     self.user = User.where(id: found_user_id.to_i).first
+  end
+
+  def broadcast_create
+    self.subscribe(AnalyticsEventListener.new)
+    broadcast(:create_analytics_event, self)
   end
 
   def self.create_search_event(params, user, request)
