@@ -89,10 +89,14 @@ class Notification < ApplicationRecord
   end
 
   def self.get_recipients_for(activity)
-    klass = Notification.get_activity_class(activity.key)
+    begin
+      klass = Notification.get_activity_class(activity.key)
 
-    return nil unless klass.present? && klass.respond_to?(:get_recipients_for)
-    return klass.get_recipients_for(activity)
+      return nil unless klass.present? && klass.respond_to?(:get_recipients_for)
+      return klass.get_recipients_for(activity)
+    rescue
+      return nil
+    end
   end
 
   def self.get_activity_class(key)
