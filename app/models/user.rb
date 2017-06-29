@@ -305,9 +305,9 @@ class User < ApplicationRecord
       if milestone.start_date.nil?
         if start_date.present?
           milestone.start_date = Chronic.parse(start_date)
-        else
-          milestone.start_date = Date.today
         end
+
+        milestone.start_date = Date.today if milestone.start_date.nil?
       end
 
       end_date = item["end_date"]
