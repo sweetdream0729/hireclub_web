@@ -16,8 +16,9 @@ class SparkpostService
     event = AnalyticsEvent.where(event_id: message_event["event_id"]).first_or_create do |event|
       event.key = "email.#{message_event['type']}"
       timestamp = message_event["timestamp"]
-      date = DateTime.parse(timestamp)
-      if date.nil?
+      begin
+        date = DateTime.parse(timestamp)
+      rescue
         date = Time.at(timestamp.to_i)
       end
       event.timestamp = date
