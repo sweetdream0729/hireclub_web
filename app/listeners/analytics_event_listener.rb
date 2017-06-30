@@ -4,7 +4,7 @@ class AnalyticsEventListener
   end
 
   def process_email_bounce(analytics_event)
-    return unless analytics_event.key == EmailBounceActivity::KEY
+    return unless analytics_event.key == EmailBounceActivity::KEY || EmailBounceActivity::REJECTION_KEY
 
     data = analytics_event.data
     campaign_id = data["campaign_id"]
