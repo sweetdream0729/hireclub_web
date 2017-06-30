@@ -1,5 +1,6 @@
 class AnalyticsEventListener
   def create_analytics_event(analytics_event)
+    Rails.logger.info "!!! create_analytics_event #{analytics_event.inspect}"
     process_email_bounce(analytics_event)
   end
 
@@ -7,6 +8,8 @@ class AnalyticsEventListener
     if analytics_event.key == EmailBounceActivity::KEY || analytics_event.key == EmailBounceActivity::REJECTION_KEY
 
       data = analytics_event.data
+
+      Rails.logger.info "!!! data #{data.inspect}"
       campaign_id = data["campaign_id"]
       rcpt_meta = data["rcpt_meta"]
       
