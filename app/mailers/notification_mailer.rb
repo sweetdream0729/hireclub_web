@@ -99,6 +99,17 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
+  def invite_bounced(notification)
+    set_notification(notification)
+    @invite = @notification.activity.trackable
+    @invite_url = url_for(@invite)
+
+    add_metadata(:invite_id, @invite.id)
+
+    @subject = "Your invite to #{@invite.input} bounced"
+    mail(to: @user.email, subject: @subject)
+  end
+
   def set_notification(notification)
     @notification = Notification.find(notification.id)
     @user = @notification.user

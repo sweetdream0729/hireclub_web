@@ -48,3 +48,13 @@
         %p
           %strong Viewed On
           = local_time @invite.viewed_on
+
+      - if @bounced
+        %hr
+        %p
+          %strong.text-warning Bounced
+          %br
+          %span.text-muted
+            This usually happens because the email has a typo.
+        %p
+          = link_to "Invite Again", new_invite_path, class: "btn btn-primary"

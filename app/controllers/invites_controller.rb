@@ -14,6 +14,8 @@ class InvitesController < ApplicationController
     impressionist(@invite)
     @user = @invite.user
     @invite.mark_viewed!(current_user)
+    @bounced = @invite.activities.where(key: InviteBounceActivity::KEY).exists?
+    
     if current_user.nil? || (!current_user.is_admin && current_user != @user)
       redirect_to user_path(@invite.user)
     end
