@@ -37,8 +37,6 @@ class Notification < ApplicationRecord
   end
 
   def send_email
-    Rails.logger.tagged("notifications") { Rails.logger.info "send_email key #{activity.key}" }
-
     klass = Notification.get_activity_class(activity_key)
     return klass.send_notification(self) if klass && klass.respond_to?(:send_notification)
   end

@@ -3,7 +3,6 @@ class CloudinaryStore
   # Store the data AND meta, and return a unique string uid
   def write(content, opts={})
     result = Cloudinary::Uploader.upload(content.path, :resource_type => :auto)
-    Rails.logger.info result.inspect
     uid = result['public_id']
     return uid
   end
