@@ -19,6 +19,7 @@
           // for small screen devices
           .dropdown#conversation_list_mobile.hidden-sm-up
             %a#dropdownMenuButton.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown"}
+              %i.fa.fa-comment
             .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
               = render partial: "conversation", collection: @conversations, locals: {dropdown_item_class: " dropdown-item"}
           .media.text-center.hidden-sm-up
