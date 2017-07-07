@@ -61,4 +61,55 @@ RSpec.describe ConversationUser, type: :model do
     end
   end
 
+  describe "notify unread",focus: true do
+    it "should be false if unread_messages_count is 0" do
+      conversation_user.unread_messages_count = 0
+      conversation_user.save
+
+      notified = conversation_user.notify_unread!
+      conversation_user.reload
+
+      expect(notified).to be false
+      expect(conversation_user.unread_notified).to be false
+
+      activity = Activity.where(key: ConversationUserUnreadActivity::KEY).last
+      expect(activity).to be_nil
+    end
+
+    it "should be false if unread_messages_count is 1 and unread_notified is true" do
+      conversation_user.unread_messages_count = 1
+      conversation_user.unread_notified = true
+      conversation_user.save
+
+      notified = conversation_user.notify_unread!
+      conversation_user.reload
+
+      expect(notified).to be false
+      
+      activity = Activity.where(key: ConversationUserUnreadActivity::KEY).last
+      expect(activity).to be_nil
+    end
+
+    it "should be true if unread_messages_count is 1 and unread_notified is false" do
+      conversation_user.unread_messages_count = 1
+      conversation_user.unread_notified = false
+      conversation_user.save
+
+      notified = conversation_user.notify_unread!
+      conversation_user.reload
+
+      expect(notified).to be true
+      expect(conversation_user.unread_notified).to be true
+
+      activity = Activity.where(key: ConversationUserUnreadActivity::KEY).last
+      
+      expect(activity).to be_present
+      expect(activity.key).to eq ConversationUserUnreadActivity::KEY
+      expect(activity.trackable).to eq conversation_user
+      expect(activity.owner).to eq conversation_user.user
+      expect(activity.private).to be true
+      expect(activity.published).to be true
+    end
+  end
+
 end

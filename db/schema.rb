@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619102200) do
+ActiveRecord::Schema.define(version: 20170627123718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,12 +125,14 @@ ActiveRecord::Schema.define(version: 20170619102200) do
   create_table "conversation_users", force: :cascade do |t|
     t.integer  "conversation_id"
     t.integer  "user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "unread_messages_count", default: 0, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "unread_messages_count", default: 0,     null: false
     t.datetime "last_read_at"
+    t.boolean  "unread_notified",       default: false, null: false
     t.index ["conversation_id", "user_id"], name: "index_conversation_users_on_conversation_id_and_user_id", unique: true, using: :btree
     t.index ["conversation_id"], name: "index_conversation_users_on_conversation_id", using: :btree
+    t.index ["unread_notified"], name: "index_conversation_users_on_unread_notified", using: :btree
     t.index ["user_id"], name: "index_conversation_users_on_user_id", using: :btree
   end
 
@@ -381,9 +383,11 @@ ActiveRecord::Schema.define(version: 20170619102200) do
     t.boolean  "email_on_mention", default: true, null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.boolean  "email_on_unread",  default: true, null: false
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
     t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
+    t.index ["email_on_unread"], name: "index_preferences_on_email_on_unread", using: :btree
     t.index ["user_id"], name: "index_preferences_on_user_id", unique: true, using: :btree
   end
 
