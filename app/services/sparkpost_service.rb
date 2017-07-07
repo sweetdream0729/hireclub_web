@@ -13,7 +13,6 @@ class SparkpostService
   end
 
   def self.create_from_sparkpost_message_event(message_event)
-    Rails.logger.info message_event
     return if message_event["subaccount_id"].present? && message_event["subaccount_id"] != Rails.application.secrets.sparkpost_subaccount_id
     event = AnalyticsEvent.where(event_id: message_event["event_id"]).first_or_create do |event|
       event.key = "email.#{message_event['type']}"
