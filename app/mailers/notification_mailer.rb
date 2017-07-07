@@ -110,6 +110,19 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
+  def conversation_unread(notification)
+    set_notification(notification)
+    @conversation_user = @notification.activity.trackable
+    @conversation = @conversation_user.conversation
+    @conversation_url = url_for(@conversation)
+
+    add_metadata(:conversation_user_id, @conversation_user.id)
+    add_metadata(:conversation_id, @conversation.id)
+
+    @subject = "You have a message on HireClub"
+    mail(to: @user.email, subject: @subject)
+  end
+
   def set_notification(notification)
     @notification = Notification.find(notification.id)
     @user = @notification.user

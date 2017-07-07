@@ -56,4 +56,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: InviteBounceActivity::KEY).last
     NotificationMailer.invite_bounced(notification)
   end
+
+  def conversation_unread
+    notification = Notification.where(activity_key: ConversationUserUnreadActivity::KEY).last
+    NotificationMailer.conversation_unread(notification)
+  end
 end
