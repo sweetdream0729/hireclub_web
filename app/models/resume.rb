@@ -1,5 +1,6 @@
 class Resume < ApplicationRecord
   # Extensions
+  extend Dragonfly::Model::Validations
   dragonfly_accessor :file
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
@@ -15,4 +16,5 @@ class Resume < ApplicationRecord
   validates_presence_of :user
   validates_presence_of :file
   validates_size_of :file, maximum: 5.megabytes
+  validates_property :format, of: :file, in: ['pdf']
 end

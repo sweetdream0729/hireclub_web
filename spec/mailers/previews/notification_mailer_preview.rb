@@ -51,4 +51,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: ProjectCreateActivity::KEY).first
     NotificationMailer.project_created(notification)
   end
+
+  def invite_bounced
+    notification = Notification.where(activity_key: InviteBounceActivity::KEY).last
+    NotificationMailer.invite_bounced(notification)
+  end
 end

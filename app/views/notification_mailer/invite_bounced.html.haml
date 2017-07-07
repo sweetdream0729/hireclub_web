@@ -1,0 +1,11 @@
+%h4
+  Your invite to #{@invite.input} bounced and was not delivered.
+Usually this is because the e-mail address has a typo.
+
+Please try inviting again with the correct email.
+
+%p
+  = link_to "Invite Again", new_invite_url
+
+%p
+  = link_to "View Invite", @invite_url

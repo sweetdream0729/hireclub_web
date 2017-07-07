@@ -1,2 +1,2 @@
 - invite = activity.trackable
-= render partial: "/notifications/item", locals: {activity: activity, verb: "viewed your invite", object: "", link: url_for(invite)}
+= render partial: "/notifications/item", locals: {activity: activity, verb: "Your invite to #{invite.input} was viewed", object: "", link: url_for(invite)}

@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   
+  post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
   get 'settings/account'

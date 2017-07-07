@@ -46,6 +46,11 @@ RSpec.describe UserSkill, type: :model do
       expect(activity).to be_present
       expect(activity.trackable).to eq(user_skill)
       expect(activity.owner).to eq(user_skill.user)
+
+      Notification.create_notifications_for_activity(activity)
+      notification = Notification.last
+
+      expect(notification).to be_nil
     end
   end
 

@@ -31,7 +31,7 @@ App.typing = App.cable.subscriptions.create "TypingChannel",
     App.conversations.scrollToBottom()
     return
 
-$(document).ready ->  
+$(document).ready ->
   # Scroll to bottom when starting conversation
   App.typing.showTypingIndicator(false)
 
@@ -44,6 +44,9 @@ $(document).ready ->
     onActive: ->
       conversation_id = $("#message_conversation_id").val()
       App.typing.is_typing(conversation_id, true)
+      conversation_list = $("#conversation_#{conversation_id}")
+      if conversation_list.hasClass('unread') || conversation_list.find('.badge').length > 0
+        App.conversations.handleVisiblityChange()
       return
     idle: 3000
     events: "keydown"

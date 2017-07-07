@@ -15,5 +15,8 @@ namespace :daily do
     ConversationUser.notify_all_unread
     #SparkpostService.get_message_events
   end
-  
+
+  task run_every_10_minutes: :environment do
+    SparkpostService.get_message_events
+  end  
 end
