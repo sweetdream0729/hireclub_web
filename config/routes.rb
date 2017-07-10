@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'search/members' => 'search#members'
   get 'search/companies' => 'search#companies'
   get 'search/skills' => 'search#skills'
+  get 'search/communities' => 'search#communities'
 
   get 'feed', to: "feed#index", as: :feed
 

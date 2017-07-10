@@ -28,6 +28,11 @@ class SearchController < ApplicationController
     render :index
   end
 
+  def communities
+    get_results("Community")
+    render :index
+  end
+
   def get_results(type = nil)
     @searchable_type = type
     @query = params[:q]

@@ -8,6 +8,8 @@ class Community < ApplicationRecord
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
+  include PgSearch
+  multisearchable :against => [:name]
 
   # Scopes
   scope :by_members,   -> { order(members_count: :desc) }
