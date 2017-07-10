@@ -6,8 +6,8 @@ RSpec.describe Community, type: :model do
   subject { community }
 
   describe "associations" do
-    #it { should have_many(:user_communitys) }
-    #it { should have_many(:users).through(:user_communitys) }
+    it { should have_many(:posts) }
+    it { should have_many(:community_members) }
   end
 
   describe 'validations' do

@@ -11,7 +11,8 @@ class Activity < PublicActivity::Activity
     CommentCreateActivity::KEY,
     CompanyFollowActivity::KEY,
     LikeCreateActivity::KEY,
-    CommunityJoinActivity::KEY
+    CommunityJoinActivity::KEY,
+    PostCreateActivity::KEY
   ]
 
 

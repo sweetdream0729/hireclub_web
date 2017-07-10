@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
@@ -41,6 +40,10 @@ Rails.application.routes.draw do
       get :join
       get :leave
     end
+  end
+
+  resources :posts do
+    resources :comments, module: :posts
   end
 
   resources :invites, except: [:edit, :update]

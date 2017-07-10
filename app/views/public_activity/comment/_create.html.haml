@@ -15,7 +15,9 @@
     - elsif comment.commentable_type == "Job"
       job
       = link_to(truncate(commentable.name,length:40), commentable)
-    - else comment.commentable_type == "Project"
+    - elsif comment.commentable_type == "Post"
+      = link_to("post", commentable)
+    - elsif comment.commentable_type == "Project"
       project
       = link_to(truncate(commentable.name,length:40), commentable)
     

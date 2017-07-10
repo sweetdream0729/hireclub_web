@@ -25,6 +25,8 @@ class CommunitiesController < ApplicationController
   # GET /communities/1
   def show
     impressionist(@community)
+
+    @posts = @community.posts.recent.page(params[:page]).per(10)
   end
 
   def join

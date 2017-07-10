@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710095534) do
+ActiveRecord::Schema.define(version: 20170710114900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -400,6 +400,16 @@ ActiveRecord::Schema.define(version: 20170710095534) do
     t.index ["tags"], name: "index_placements_on_tags", using: :gin
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.integer  "community_id", null: false
+    t.string   "text",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["community_id"], name: "index_posts_on_community_id", using: :btree
+    t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
+  end
+
   create_table "preferences", force: :cascade do |t|
     t.integer  "user_id",                         null: false
     t.boolean  "email_on_follow",  default: true, null: false
@@ -620,6 +630,8 @@ ActiveRecord::Schema.define(version: 20170710095534) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "posts", "communities"
+  add_foreign_key "posts", "users"
   add_foreign_key "preferences", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"

@@ -38,6 +38,7 @@ RSpec.describe User, type: :model do
     it { should have_one(:preference).dependent(:destroy) }
 
     it { should have_many(:community_members).dependent(:destroy) }
+    it { should have_many(:posts).dependent(:destroy) }
   end
 
   describe 'validations' do

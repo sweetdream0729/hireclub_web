@@ -81,6 +81,7 @@ class User < ApplicationRecord
 
   has_many :community_members, inverse_of: :user, dependent: :destroy
   has_many :communities, through: :community_members
+  has_many :posts, dependent: :destroy, inverse_of: :user
 
   # Nested
   accepts_nested_attributes_for :user_roles
