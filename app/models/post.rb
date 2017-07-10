@@ -16,4 +16,8 @@ class Post < ApplicationRecord
   validates :text, presence: true
   validates :user, presence: true
   validates :community, presence: true
+
+  def name
+    text
+  end
 end
