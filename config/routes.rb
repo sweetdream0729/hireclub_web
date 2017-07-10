@@ -36,6 +36,13 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :communities do
+    member do
+      get :join
+      get :leave
+    end
+  end
+
   resources :invites, except: [:edit, :update]
 
   resources :stories do

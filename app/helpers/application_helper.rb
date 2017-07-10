@@ -27,6 +27,14 @@ module ApplicationHelper
     end
   end
 
+  def community_avatar(image, size, use_https = false)
+    if image
+      image.remote_url(width: size, height: size, crop: :fill, secure: use_https, gravity: :north, fetch_format: "auto", quality: "auto")
+    else
+      image_placeholder_url(size, size)
+    end
+  end
+
   def image_placeholder_url(width, height)
     return "//placehold.it/#{width}x#{height}"
   end

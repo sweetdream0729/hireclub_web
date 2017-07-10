@@ -1,0 +1,26 @@
+- set_meta_tags canonical: community_url(@community)
+- set_meta_tags image_src: model_image(@community.avatar, 200, 200, true)
+- set_meta_tags description: @community.description
+- set_meta_tags og: {image: model_image(@community.avatar, 200, 200, true)}
+
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Communities", communities_path
+  .row
+    .col-sm-8
+      .media
+        = image_tag(community_avatar(@community.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded")
+        .media-body
+          %h1.black
+            = title @community.name
+          = @community.description
+          %p
+            = link_to_join_community(@community, current_user)
+            %span{class: "community_#{@community.id}_members_count"}
+              = pluralize(@community.members_count, "Member")
+            
+
+    .col-sm-3
+      = link_to 'Edit', edit_community_path(@community), class: "btn btn-info btn-block" if policy(@community).edit?
+      = link_to "Admin", rails_admin.edit_path(model_name: 'community', id: @community.id), class: "btn btn-danger btn-block" if current_user && current_user.is_admin

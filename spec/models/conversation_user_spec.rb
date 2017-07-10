@@ -61,7 +61,7 @@ RSpec.describe ConversationUser, type: :model do
     end
   end
 
-  describe "notify unread",focus: true do
+  describe "notify unread" do
     it "should be false if unread_messages_count is 0" do
       conversation_user.unread_messages_count = 0
       conversation_user.save

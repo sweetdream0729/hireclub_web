@@ -1,0 +1,5 @@
+var button = $('.community_join_btn_<%= @community.id %>');
+button.replaceWith("<%=j link_to_join_community(@community, current_user) %>");
+
+var count = $('.community_<%= @community.id %>_members_count')
+count.text("<%= pluralize(@community.members_count, 'Member') %>")

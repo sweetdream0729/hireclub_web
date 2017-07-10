@@ -1,0 +1,25 @@
+.container.content_container
+  %h1 
+    = title "Communities"
+    %small
+      = link_to 'Create Community', new_community_path, class: "btn btn-primary btn-sm" if policy(Community).new?
+
+  .dropdown
+    %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+      - if params[:sort_by]
+        = params[:sort_by].titlecase
+      - else
+        Recent
+    .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+      %a.dropdown-item{href: communities_path } Recent
+      %a.dropdown-item{href: communities_path(sort_by: "popular")} Popular
+      %a.dropdown-item{href: communities_path(sort_by: "alphabetical")} Alphabetical
+      %a.dropdown-item{href: communities_path(sort_by: "oldest")} Oldest
+  %p
+    %small
+      = pluralize(Community.all.count, "community")
+
+  .communities.mt-4
+    = render @communities
+
+  = paginate @communities

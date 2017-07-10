@@ -10,7 +10,8 @@ class Activity < PublicActivity::Activity
     ProjectCreateActivity::KEY,
     CommentCreateActivity::KEY,
     CompanyFollowActivity::KEY,
-    LikeCreateActivity::KEY
+    LikeCreateActivity::KEY,
+    CommunityJoinActivity::KEY
   ]
 
 

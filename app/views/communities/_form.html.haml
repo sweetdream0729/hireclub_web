@@ -1,0 +1,31 @@
+= form_for @community do |f|
+  - if @community.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@community.errors.count, "error")} prohibited this community from being saved:"
+      %ul
+        - @community.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col-6
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :slug
+        = f.text_field :slug, class: 'form-control'
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control'
+
+    .col-6
+      .form-group
+        = f.label 'Avatar'
+        %br
+        = image_tag(community_avatar(@community.avatar, 200, true), width: 100, class: 'm-b-1')
+        %br
+        = f.file_field :avatar
+        = f.hidden_field :retained_avatar
+        = f.text_field :avatar_url, class: 'form-control', placeholder: "http://site.com/image.jpg"
+
+  = f.submit 'Save', class: 'btn btn-primary btn-lg'
