@@ -21,6 +21,7 @@ class Community < ApplicationRecord
   # Associations
   has_many :posts, dependent: :destroy, inverse_of: :community
   has_many :community_members, dependent: :destroy, inverse_of: :community
+  has_many :users, through: :community_members
 
 
   # Validations
