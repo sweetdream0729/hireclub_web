@@ -31,6 +31,9 @@ class NotificationMailer < ApplicationMailer
     @post = @notification.activity.trackable
     @community = @post.community
 
+    add_metadata(:post_id, @post.id)
+    add_metadata(:community, @community.id)
+
     @post_url = get_utm_url url_for(@post)
     @post_user_url = get_utm_url url_for(@post.user)
 
