@@ -5,7 +5,7 @@
       %strong
         = link_to post.user.display_name, post.user
     %p.mb-0
-      = post.text
+      = link_to post.text, post
     
     %small.text-muted
       = link_to local_time_ago(post.created_at), post_path(post), class: "text-muted"

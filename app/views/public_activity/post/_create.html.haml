@@ -9,7 +9,7 @@
     = link_to community.name, community
 
     %br
-      = post.text
+      = link_to post.text, post
 
     %small
       = link_to local_time_ago(post.created_at), post_path(post), class: 'text-muted'
