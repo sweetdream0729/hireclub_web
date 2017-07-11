@@ -3,7 +3,6 @@ class Activity < PublicActivity::Activity
   PUBLIC_DISPLAY = [
     UserWelcomeActivity::KEY,
     UserFollowActivity::KEY,
-    UserBadgeCreateActivity::KEY,
     StoryPublishActivity::KEY,
     JobCreateActivity::KEY,
     JobPublishActivity::KEY,
