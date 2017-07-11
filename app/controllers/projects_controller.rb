@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
       @title = "#{params[:skill]} #{@title}"
     end
 
+    @count = scope.count
     @projects = scope.page(params[:page]).per(12).includes(:user)
   end
 

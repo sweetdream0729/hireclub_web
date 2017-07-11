@@ -15,7 +15,7 @@
       %a.dropdown-item{href: projects_path(sort_by: "oldest")} Oldest
   %p
     %small
-      = pluralize(Project.with_image.count, "project")
+      = pluralize(@count, "project")
       
   .infinite-projects
     .row.projects
