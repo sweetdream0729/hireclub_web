@@ -19,7 +19,7 @@ class CommunitiesController < ApplicationController
       scope = scope.search_by_name(params[:query])
     end
 
-    @communities = scope.page(params[:page]).per(10)
+    @communities = scope.page(params[:page]).per(20)
   end
 
   # GET /communities/1
