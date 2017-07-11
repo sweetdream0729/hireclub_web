@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  before_action :sign_up_required, except: [:notifications]
+  before_action :sign_up_required
   before_action :set_user
 
   def index

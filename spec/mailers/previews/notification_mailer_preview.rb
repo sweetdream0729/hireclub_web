@@ -61,4 +61,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: ConversationUserUnreadActivity::KEY).last
     NotificationMailer.conversation_unread(notification)
   end
+
+  def post_created
+    notification = Notification.where(activity_key: PostCreateActivity::KEY).last
+    NotificationMailer.post_created(notification)
+  end
 end

@@ -1,0 +1,6 @@
+- user = activity.owner
+- community = activity.trackable
+
+= render partial: "/public_activity/header", locals: {activity: activity, text: "joined the #{link_to community.name, community} community"}
+
+= render partial: "/communities/community", locals: {community: community}

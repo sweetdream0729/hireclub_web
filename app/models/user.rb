@@ -79,6 +79,10 @@ class User < ApplicationRecord
 
   belongs_to :company
 
+  has_many :community_members, inverse_of: :user, dependent: :destroy
+  has_many :communities, through: :community_members
+  has_many :posts, dependent: :destroy, inverse_of: :user
+
   # Nested
   accepts_nested_attributes_for :user_roles
   accepts_nested_attributes_for :user_skills, reject_if: :all_blank, allow_destroy: true
@@ -219,6 +223,18 @@ class User < ApplicationRecord
 
   def preference
     super || build_preference
+  end
+
+  def member_of_community?(community)
+    CommunityMember.where(user: self, community: community).exists?
+  end
+
+  def join_community(community)
+    cm = CommunityMember.where(user: self, community: community, role: CommunityMember::MEMBER).first_or_create
+  end
+
+  def leave_community(community)
+    CommunityMember.where(user: self, community: community).destroy_all
   end
 
   # Devise methos

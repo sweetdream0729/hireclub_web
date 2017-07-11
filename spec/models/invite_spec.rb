@@ -80,7 +80,7 @@ RSpec.describe Invite, type: :model do
   end
 
   describe "mark_bounced!" do
-    it "should mark invite as bounced", :focus do
+    it "should mark invite as bounced" do
       invite.save
       invite.mark_bounced!
 

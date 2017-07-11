@@ -7,6 +7,7 @@
       = nav_link_to 'Projects', search_projects_path(q: params[:q]), {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: true }
       = nav_link_to 'Members', search_members_path(q: params[:q]), {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: false }
       = nav_link_to 'Companies', search_companies_path(q: params[:q]), {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: false }
+      = nav_link_to 'Communities', search_communities_path(q: params[:q]), {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: false }
       = nav_link_to 'Skills', search_skills_path(q: params[:q]), {class: 'nav-link'}, { :wrapper => 'li', :wrapper_class => "nav-item", ignore_params: false }
 
 .container.mt-3
@@ -27,6 +28,8 @@
       = render partial: "/search/project", locals: {project: result.searchable}
     - elsif result.searchable_type == "Skill"
       = render partial: "/skills/skill", locals: {skill: result.searchable}
+    - elsif result.searchable_type == "Community"
+      = render partial: "/communities/community", locals: {community: result.searchable}
 
   = paginate @results
 

@@ -1,0 +1,17 @@
+- user = community_member.user
+.media.mb-4
+  = link_to image_tag(model_avatar(user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), user
+  .media-body
+    %h5.semi_bold.mt-0.mb-1
+      = link_to user.display_name, user
+      %small.ml-2
+        = render partial: "/users/icons", locals: {user: user}
+    %small.text-muted
+      - if user.primary_role.present?
+        = user.primary_role.name
+      - if user.company.present?
+        ·
+        = link_to user.company.name, user.company
+      - if community_member.admin_or_moderator?
+        · Moderator
+      

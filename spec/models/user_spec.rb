@@ -36,6 +36,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:analytics_events).dependent(:destroy) }
 
     it { should have_one(:preference).dependent(:destroy) }
+
+    it { should have_many(:community_members).dependent(:destroy) }
+    it { should have_many(:posts).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -428,6 +431,23 @@ describe "unread_messages_count" do
       second_conversation_first_user.update_unread_messages_count
       first_user.reload
       expect(first_user.unread_messages_count).to eq(0)
+    end
+  end
+
+  describe "communities" do
+    let(:community) { FactoryGirl.create(:community) }
+    before do
+      user.save
+      user.join_community(community)
+    end
+
+    it "should join_community" do
+      expect(user.community_members.count).to eq 1
+    end
+
+    it "should leave_community" do
+      user.leave_community(community)
+      expect(user.community_members.count).to eq 0
     end
   end
 end

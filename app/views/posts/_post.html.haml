@@ -1,0 +1,18 @@
+.media.mb-4
+  = link_to image_tag(model_avatar(post.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), post.user
+  .media-body
+    %p.mb-0
+      %strong
+        = link_to post.user.display_name, post.user
+    %p.mb-0
+      = link_to post.text, post
+    
+    %small.text-muted
+      = link_to local_time_ago(post.created_at), post_path(post), class: "text-muted"
+      ·
+      = link_to "Reply", post_path(post)
+      - if policy(post).destroy?
+        ·
+        = link_to "Delete", post_path(post), method: :delete, data: { confirm: "Delete this post?" }, class: "text-muted"
+
+    

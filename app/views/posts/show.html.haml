@@ -1,0 +1,27 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Communities", communities_path
+    %li.breadcrumb-item
+      = link_to @community.name, @community
+
+  .row
+    .col-sm-8
+      .media.mb-4
+        = link_to image_tag(model_avatar(@post.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @post.user
+        .media-body
+          %p.mb-0
+            %strong
+              = link_to @post.user.display_name, @post.user
+          %p.mb-0
+            = @post.text
+          
+          %small.text-muted
+            = local_time_ago(@post.created_at)
+            - if policy(@post).destroy?
+              ·
+              = link_to "Delete", post_path(@post), method: :delete, data: { confirm: "Delete this @post?" }, class: "text-muted"
+
+          %hr
+          = render partial: "comments/comments", locals: { commentable: @post }
+          = render partial: "comments/form", locals: { commentable: @post } 

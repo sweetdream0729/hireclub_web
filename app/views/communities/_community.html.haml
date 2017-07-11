@@ -1,0 +1,9 @@
+.media.mb-3
+  = link_to image_tag(community_avatar(community.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded'), community
+  .media-body
+    %h5.mt-0.semi_bold
+      = link_to community.name, community
+    = link_to_join_community(community, current_user)
+    %small{class: "community_#{community.id}_members_count"}
+      = pluralize(community.members_count, "Member")
+/ %hr

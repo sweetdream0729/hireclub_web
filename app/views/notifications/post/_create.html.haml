@@ -1,0 +1,4 @@
+- post = activity.trackable
+- community = post.community
+
+= render partial: "/notifications/item", locals: {activity: activity, verb: "commented in", object: community.name, link: url_for(post)}

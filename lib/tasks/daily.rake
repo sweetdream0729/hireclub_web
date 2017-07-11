@@ -8,6 +8,7 @@ namespace :daily do
     Project.privatize_projects_without_image
     Follow.counter_culture_fix_counts
     ConversationUser.counter_culture_fix_counts
+    CommunityMember.counter_culture_fix_counts
     SparkpostService.get_message_events
   end
 

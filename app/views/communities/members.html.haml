@@ -1,0 +1,21 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Communities", communities_path
+    %li.breadcrumb-item
+      = link_to @community.name, @community
+  .row
+    .col-sm-8.mb-4
+      .media
+        = image_tag(community_avatar(@community.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded")
+        .media-body
+          %h1.black
+            = title "#{@community.name} Members"
+  .row
+    .col-sm-8
+      = render partial: "community_members/community_member", collection: @members
+  .row
+    .col-sm-8
+      = paginate @members
+
+      
