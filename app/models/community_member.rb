@@ -9,6 +9,11 @@ class CommunityMember < ApplicationRecord
     MEMBER
   ]
 
+  # Scopes
+  scope :admins,        -> { where(role: ADMIN) }
+  scope :moderators,    -> { where(role: MODERATOR) }
+
+  # Associations
   belongs_to :community
   counter_culture :community, column_name: "members_count"
   belongs_to :user
@@ -38,5 +43,9 @@ class CommunityMember < ApplicationRecord
     notifications = Notification.where(activity_id: activities.pluck(:id))
     notifications.update_all(published: false)
     return true
+  end
+
+  def admin_or_moderator?
+    role == MODERATOR || role == ADMIN
   end
 end

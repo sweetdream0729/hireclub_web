@@ -8,7 +8,7 @@
     %li.breadcrumb-item
       = link_to "Communities", communities_path
   .row
-    .col-sm-8
+    .col-sm-8.mb-4
       .media
         = image_tag(community_avatar(@community.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded")
         .media-body
@@ -17,8 +17,9 @@
           = @community.description
           %p
             = link_to_join_community(@community, current_user)
-            %span{class: "community_#{@community.id}_members_count"}
-              = pluralize(@community.members_count, "Member")
+            = link_to members_community_path do
+              %span{class: "community_#{@community.id}_members_count"}
+                = pluralize(@community.members_count, "Member")
             
 
     .col-sm-3
@@ -31,4 +32,7 @@
   .row
     .col-sm-8
       = render @posts
-
+    .col-sm-3
+      %h6 Moderators
+      = render partial: "community_members/community_member", collection: @community.community_members.moderators
+      

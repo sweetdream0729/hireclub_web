@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     member do
       get :join
       get :leave
+      get :members
     end
   end
 

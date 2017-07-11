@@ -1,5 +1,5 @@
 class CommunitiesController < ApplicationController
-  before_action :set_community, only: [:show, :edit, :update, :destroy]
+  before_action :set_community, only: [:show, :edit, :update, :destroy, :members]
 
   # GET /communities
   def index
@@ -27,6 +27,11 @@ class CommunitiesController < ApplicationController
     impressionist(@community)
 
     @posts = @community.posts.recent.page(params[:page]).per(10)
+  end
+
+  def members
+    scope = @community.community_members
+    @members = scope.page(params[:page]).per(10)
   end
 
   def join
