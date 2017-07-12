@@ -9,6 +9,9 @@
   = f.hidden_field :community_id
   .form-group
     = f.label "User"
-    = f.collection_select :user_id, User.all, :id, :name, {}, {class: "form-control"}
+    = f.text_field :user, class: "form-control autocomplete_user", placeholder: "Name", autocomplete: "off"
+    = f.hidden_field :user_id, value: @community_invite.user_id, class: "autocomplete_user_id"
+
+    / = f.collection_select :user_id, User.all, :id, :name, {}, {class: "form-control"}
   
   = f.submit "Invite", class: "btn btn-primary btn-block btn-lg"

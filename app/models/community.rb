@@ -31,7 +31,6 @@ class Community < ApplicationRecord
 
   def join_pending_invites(user)
     return unless user.present?
-    return if user.member_of_community?(self)
 
     if CommunityInvite.where(user: user, community: self).any?
       user.join_community(self)
