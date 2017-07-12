@@ -61,7 +61,6 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles
   has_many :user_badges, dependent: :destroy, inverse_of: :user
   has_many :badges, through: :user_badges
-
   has_many :resumes, dependent: :destroy, inverse_of: :user
   has_many :likes, dependent: :destroy, inverse_of: :user
   has_many :jobs, dependent: :destroy, inverse_of: :user
@@ -79,10 +78,12 @@ class User < ApplicationRecord
 
   belongs_to :company
 
+  has_many :community_invites, dependent: :destroy, inverse_of: :user
   has_many :community_members, inverse_of: :user, dependent: :destroy
   has_many :communities, through: :community_members
   has_many :posts, dependent: :destroy, inverse_of: :user
 
+  
   # Nested
   accepts_nested_attributes_for :user_roles
   accepts_nested_attributes_for :user_skills, reject_if: :all_blank, allow_destroy: true

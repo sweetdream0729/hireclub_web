@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710114900) do
+ActiveRecord::Schema.define(version: 20170712111213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,22 @@ ActiveRecord::Schema.define(version: 20170710114900) do
     t.integer  "members_count", default: 0, null: false
     t.index ["name"], name: "index_communities_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_communities_on_slug", unique: true, using: :btree
+  end
+
+  create_table "community_invites", force: :cascade do |t|
+    t.integer  "community_id", null: false
+    t.integer  "sender_id",    null: false
+    t.integer  "user_id",      null: false
+    t.string   "slug",         null: false
+    t.datetime "accepted_on"
+    t.datetime "declined_on"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["community_id", "sender_id", "user_id"], name: "sender_user", unique: true, using: :btree
+    t.index ["community_id"], name: "index_community_invites_on_community_id", using: :btree
+    t.index ["sender_id"], name: "index_community_invites_on_sender_id", using: :btree
+    t.index ["slug"], name: "index_community_invites_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_community_invites_on_user_id", using: :btree
   end
 
   create_table "community_members", force: :cascade do |t|
@@ -609,6 +625,9 @@ ActiveRecord::Schema.define(version: 20170710114900) do
   add_foreign_key "analytics_events", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "community_invites", "communities"
+  add_foreign_key "community_invites", "users"
+  add_foreign_key "community_invites", "users", column: "sender_id"
   add_foreign_key "community_members", "communities"
   add_foreign_key "community_members", "users"
   add_foreign_key "conversation_users", "conversations"
