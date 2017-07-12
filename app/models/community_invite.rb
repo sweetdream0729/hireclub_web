@@ -1,5 +1,10 @@
 class CommunityInvite < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
+  include PublicActivity::Model
+  include PublicActivity::CreateActivityOnce
+
+
   extend FriendlyId
   friendly_id :slug
 
@@ -13,10 +18,15 @@ class CommunityInvite < ApplicationRecord
   validates :slug, uniqueness: true, presence: true
   validates_uniqueness_of :user_id, scope: [:community_id, :sender_id]
   validate :user_not_sender
+  validate :user_not_member
 
   # Callbacks
   before_validation :ensure_slug, on: :create
+  after_commit :send_activity, on: :create
 
+  def send_activity
+    self.create_activity_once :create, owner: sender, recipient: user, private: true
+  end
 
   def ensure_slug
     if slug.blank?
@@ -30,6 +40,12 @@ class CommunityInvite < ApplicationRecord
   def user_not_sender
      if sender.present? && user.present? && sender == user
       errors.add(:user, "can't invite yourself.")
+    end
+  end
+
+  def user_not_member
+     if community.present? && user.present? && user.member_of_community?(community)
+      errors.add(:user, "already a member.")
     end
   end
 end

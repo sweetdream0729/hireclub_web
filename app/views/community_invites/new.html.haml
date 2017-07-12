@@ -1,0 +1,10 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Communities", communities_path
+    %li.breadcrumb-item
+      = link_to @community.name, @community
+
+  %h1= title "Invite to #{@community.name} Community"
+
+  = render 'form'
