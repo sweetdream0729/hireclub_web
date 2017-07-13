@@ -24,6 +24,7 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/1
   def show
+    authorize @community
     impressionist(@community)
     @community.join_pending_invites(current_user)
     @posts = @community.posts.recent.page(params[:page]).per(10)
@@ -67,15 +68,18 @@ class CommunitiesController < ApplicationController
   # GET /communities/new
   def new
     @community = Community.new
+    authorize @community
   end
 
   # GET /communities/1/edit
   def edit
+    authorize @community
   end
 
   # POST /communities
   def create
     @community = Community.new(community_params)
+    authorize @community
 
     if @community.save
       redirect_to @community, notice: 'Community was successfully created.'
@@ -86,6 +90,7 @@ class CommunitiesController < ApplicationController
 
   # PATCH/PUT /communities/1
   def update
+    authorize @community
     if @community.update(community_params)
       redirect_to @community, notice: 'Community was successfully updated.'
     else
@@ -95,6 +100,7 @@ class CommunitiesController < ApplicationController
 
   # DELETE /communities/1
   def destroy
+    authorize @community
     @community.destroy
     redirect_to communities_url, notice: 'Community was successfully destroyed.'
   end
