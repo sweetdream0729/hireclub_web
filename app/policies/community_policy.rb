@@ -6,11 +6,11 @@ class CommunityPolicy < ApplicationPolicy
   end
 
   def create?
-    admin?
+    moderator?
   end
   
   def update?
-    admin?
+    moderator?
   end
 
   def destroy?

@@ -2,27 +2,41 @@ require 'rails_helper'
 
 RSpec.describe CommunityPolicy do
 
-  let(:user) { User.new }
+  subject { CommunityPolicy.new(user, community) }
 
-  subject { described_class }
+  let(:community) { FactoryGirl.build(:community) }
+  let(:user) { FactoryGirl.build(:user) }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being a visitor' do
+    let(:user) { nil }
+
+    it { should permit_action(:show) }
+    it { should forbid_action(:update) }
+    it { should forbid_action(:destroy) }
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being a user' do
+    it { should permit_action(:show) }
+    it { should forbid_action(:update) }
+    it { should forbid_action(:destroy) }
   end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being an admin' do
+    let(:user) { FactoryGirl.build(:admin) }
+
+    it { should permit_action(:show) }
+    it { should permit_action(:create) }
+    it { should permit_action(:update) }
+    it { should permit_action(:destroy) }
   end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being a moderator' do
+    let(:user) { FactoryGirl.build(:moderator) }
+
+    it { should permit_action(:show) }
+    it { should permit_action(:create) }
+    it { should permit_action(:update) }
+    it { should forbid_action(:destroy) }
   end
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 end
