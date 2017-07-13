@@ -79,6 +79,7 @@ class User < ApplicationRecord
   belongs_to :company
 
   has_many :community_invites, dependent: :destroy, inverse_of: :user
+  has_many :community_invites_sent, dependent: :destroy, inverse_of: :sender, class_name: "CommunityInvite"
   has_many :community_members, inverse_of: :user, dependent: :destroy
   has_many :communities, through: :community_members
   has_many :posts, dependent: :destroy, inverse_of: :user

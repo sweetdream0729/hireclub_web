@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:posts).dependent(:destroy) }
 
     it { should have_many(:community_invites).dependent(:destroy) }
-    it { should have_many(:sent_community_invites).dependent(:destroy) }
+    it { should have_many(:community_invites_sent).dependent(:destroy) }
   end
 
   describe 'validations' do
