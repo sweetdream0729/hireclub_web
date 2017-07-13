@@ -37,6 +37,17 @@ RSpec.describe UserSkill, type: :model do
       user.reload
       expect(user_skill.user.years_experience).to eq(5)
     end
+
+    it "should update user.years_experience on destroy",:focus do
+      user_skill.years = 1
+      user_skill.save
+      user_skill2 = FactoryGirl.create(:user_skill, user: user, years: 5)
+      user_skill.destroy
+      user_skill2.destroy
+
+      user.reload
+      expect(user.years_experience).to eq(0)
+    end
   end
 
   describe "activity" do
