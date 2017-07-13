@@ -1,3 +1,5 @@
+//= require jquery.are-you-sure
+
 $(document).ready -> 
   $('.job_form').formValidation(
     framework: 'bootstrap4'
@@ -35,3 +37,6 @@ $(document).ready ->
           callback response
           return
       return
+
+  $('form.job_form').areYouSure
+    'message': 'Are you sure? You will lose any changes.'
