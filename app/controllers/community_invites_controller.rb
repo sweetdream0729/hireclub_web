@@ -3,10 +3,12 @@ class CommunityInvitesController < ApplicationController
   def new
     set_community
     @community_invite = CommunityInvite.new(community: @community)
+    authorize @community_invite
   end
 
   def create
     @community_invite = CommunityInvite.new(community_invite_params)
+    authorize @community_invite
     @community = @community_invite.community
     @community_invite.sender = current_user
 
@@ -30,6 +32,7 @@ class CommunityInvitesController < ApplicationController
 
     def set_community_invite
       @community_invite = CommunityInvite.friendly.find(params[:id])
+      authorize @community_invite
     end
 
     # Only allow a trusted parameter "white list" through.
