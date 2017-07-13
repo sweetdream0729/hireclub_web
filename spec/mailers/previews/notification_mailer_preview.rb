@@ -66,4 +66,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: PostCreateActivity::KEY).last
     NotificationMailer.post_created(notification)
   end
+  
+  def community_invited
+    notification = Notification.where(activity_key: CommunityInviteCreateActivity::KEY).last
+    NotificationMailer.community_invited(notification)
+  end
 end

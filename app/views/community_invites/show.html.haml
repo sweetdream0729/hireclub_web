@@ -1,0 +1,13 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Communities", communities_path
+    %li.breadcrumb-item
+      = link_to @community.name, @community
+
+  %h1= title "Community Invite"
+  %p
+    = @community_invite.sender.display_name
+    invited you to join the
+    = @community_invite.community.name
+    community

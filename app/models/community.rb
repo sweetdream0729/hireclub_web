@@ -27,4 +27,18 @@ class Community < ApplicationRecord
   # Validations
   validates :name, presence: true, uniqueness: {case_sensitive: false}
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
+
+
+  def join_pending_invites(user)
+    return unless user.present?
+
+    if CommunityInvite.where(user: user, community: self).any?
+      user.join_community(self)
+    end
+  end
 end
+
+# https://cdn.trolleytours.com/wp-content/uploads/2016/06/washington-dc-capitol-at-night.jpg
+# https://www.statuecruises.com/images/HSC-HomepageImage.jpg
+# http://www.udr.com/uploadedImages/UDR3/Market_Areas/Common/UDR_3.0_SeattleWA.jpg
+# https://tctechcrunch2011.files.wordpress.com/2015/02/chicago.jpg

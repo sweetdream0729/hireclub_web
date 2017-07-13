@@ -1,0 +1,17 @@
+= form_for @community_invite do |f|
+  - if @community_invite.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@community_invite.errors.count, "error")} prohibited this invite from being saved:"
+      %ul
+        - @community_invite.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.hidden_field :community_id
+  .form-group
+    = f.label "User"
+    = f.text_field :user, class: "form-control autocomplete_user", placeholder: "Name", autocomplete: "off"
+    = f.hidden_field :user_id, value: @community_invite.user_id, class: "autocomplete_user_id"
+
+    / = f.collection_select :user_id, User.all, :id, :name, {}, {class: "form-control"}
+  
+  = f.submit "Invite", class: "btn btn-primary btn-block btn-lg"

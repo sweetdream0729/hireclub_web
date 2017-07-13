@@ -125,6 +125,22 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
+  def community_invited(notification)
+    set_notification(notification)
+    @community_invite = @notification.activity.trackable
+    @sender = @community_invite.sender
+    @community = @community_invite.community
+
+    @community_url = url_for(@community)
+    @sender_url = url_for(@sender)
+
+    add_metadata(:community_invite_id, @community_invite.id)
+    add_metadata(:community_id, @community.id)
+
+    @subject = "#{@sender.display_name} invited you to the #{@community.name} community"
+    mail(to: @user.email, subject: @subject)
+  end
+
   def conversation_unread(notification)
     set_notification(notification)
     @conversation_user = @notification.activity.trackable

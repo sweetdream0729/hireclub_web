@@ -1,0 +1,5 @@
+- community_invite = activity.trackable
+- community = community_invite.community
+- sender = community_invite.sender
+
+= render partial: "/notifications/item", locals: {activity: activity, verb: "invited you to the", object: "#{community.name} community", link: url_for(community)}

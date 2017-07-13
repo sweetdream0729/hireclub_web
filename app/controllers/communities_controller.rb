@@ -25,7 +25,7 @@ class CommunitiesController < ApplicationController
   # GET /communities/1
   def show
     impressionist(@community)
-
+    @community.join_pending_invites(current_user)
     @posts = @community.posts.recent.page(params[:page]).per(10)
   end
 
