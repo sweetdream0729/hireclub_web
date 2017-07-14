@@ -203,4 +203,53 @@ Also helpful:
     end
   end
 
+  describe "show suggested job scores on job show" do
+    it "relevant job scores should be selected" do
+      job.skills = [skill.name, skill2.name]
+      job.save
+
+      #add job score for job creator
+      job_creator = job.user
+      job_creator.confirmed_at = DateTime.now
+      job_creator.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      job_creator.save
+      FactoryGirl.create(:user_skill, user: job_creator, skill: skill)
+
+      #creating user without any skills i.e w/o any job score
+      user1 = FactoryGirl.create(:user, confirmed_at: DateTime.now)
+      user1.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      user1.save
+
+      job.update_suggested_users
+
+      # 2 user(1 job owner + 1 w/o job score) are present
+      # Suggested job scores should be 0 as job owner  & user with job score 0 can't be selected
+      expect(job.suggested_job_scores.count).to eq(0)
+
+      # create 6 new users having job scores
+
+      for i in (1..6) do
+        user = FactoryGirl.create(:user, confirmed_at: DateTime.now)
+        user.avatar = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+        user.save
+        FactoryGirl.create(:user_skill, user: user, skill: skill)
+      end
+
+      job.update_suggested_users
+
+      suggested_job_scores = job.suggested_job_scores
+      #Max  5 suggested job scores can be selected.Total user are 8(6 with job score + 1 job owner + 1 w/o job score)
+      # but suggested job scores should be 5
+      expect(suggested_job_scores.count).to eq(5)
+
+      suggested_job_scores.each do |job_scores|
+        #job scores with score greater than 0 should only be selected 
+        expect(job_scores.score).to be > 0
+
+        #selected job scores should not be of user who created the job
+        expect(job_scores.user_id).not_to eql(job_creator.id)
+      end
+    end
+  end
+
 end
