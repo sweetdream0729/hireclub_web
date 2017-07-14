@@ -75,7 +75,7 @@
       
       - if current_user && current_user.is_admin
         %h6.mt-5 Suggested Members
-        - @job.job_scores.greater_than_zero.by_score.limit(3).each do |job_score|
+        - @job.suggested_job_scores.each do |job_score|
           / = job_score.inspect
           = render partial: "job_score", locals: {job_score: job_score}
 

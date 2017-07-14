@@ -158,4 +158,8 @@ class Job < ApplicationRecord
       job_score.update_score
     end
   end
+
+  def suggested_job_scores
+    job_scores.greater_than_zero.by_score.where('job_scores.user_id != ?', self.user_id).limit(5)
+  end
 end
