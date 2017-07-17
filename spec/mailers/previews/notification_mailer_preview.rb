@@ -68,7 +68,7 @@ class NotificationMailerPreview < ActionMailer::Preview
   end
 
   def post_mentioned
-    notification = Notification.where(activity_key: MentionCreateActivity::KEY).last
+    notification = Notification.where(activity_id: Mention.where(mentionable_type: "Post").last.activities.last.id).last
     NotificationMailer.post_mentioned(notification)
   end
   
