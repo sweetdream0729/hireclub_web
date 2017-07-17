@@ -1,8 +1,5 @@
 class App.Search
   constructor: ($nav_search_form, $nav_search_input) ->
-    console.log "App.Search"
-    # select search input text
-    $nav_search_input.select()
     
     # don't submit form in nil query
     $nav_search_form.on 'submit', (event) ->

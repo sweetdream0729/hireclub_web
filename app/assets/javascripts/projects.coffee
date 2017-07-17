@@ -1,10 +1,12 @@
 $(document).ready ->
-  Mousetrap.bind 'left', ->
-    document.getElementById("previous_project").click()
-    return
-  Mousetrap.bind 'right', ->
-    document.getElementById("next_project").click()
-    return
+  if $('#previous_project').length > 0
+    Mousetrap.bind 'left', ->
+      document.getElementById("previous_project").click()
+      return
+  if $('#next_project').length > 0
+    Mousetrap.bind 'right', ->
+      document.getElementById("next_project").click()
+      return
 
   $('.project_form').formValidation(
     framework: 'bootstrap4'
