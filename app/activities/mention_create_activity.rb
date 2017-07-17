@@ -7,6 +7,14 @@ class MentionCreateActivity
 
   def self.send_notification(notification)
     return unless notification.user.preference.email_on_mention
-    NotificationMailer.comment_mentioned(notification).deliver_later
+    
+    mentionable_type = notification.activity.trackable.mentionable_type
+
+    case mentionable_type
+    when "Comment"
+      NotificationMailer.comment_mentioned(notification).deliver_later
+    when "Post"
+      NotificationMailer.post_mentioned(notification).deliver_later
+    end
   end
 end

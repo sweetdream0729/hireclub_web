@@ -14,7 +14,7 @@
             %strong
               = link_to @post.user.display_name, @post.user
           %p.mb-0
-            = @post.text
+            = mentioned_users(@post.text)
           
           %small.text-muted
             = local_time_ago(@post.created_at)

@@ -40,6 +40,15 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: "New Post in the #{@community.name} community")
   end
 
+  def post_mentioned(notification)
+    set_notification(notification)
+
+    @post = @notification.activity.trackable.mentionable
+    @post_user_url = get_utm_url url_for(@post.user)
+
+    mail(to: @user.email, subject: 'New Mention')
+  end
+
   def comment_created(notification)
     set_notification(notification)
 
