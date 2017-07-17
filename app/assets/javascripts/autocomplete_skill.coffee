@@ -1,21 +1,20 @@
 $(document).ready ->
-  selectizeCallback = null
-
+  window.selectizeCallback = null
   # reset skill create form when modal closes
   $('#createSkillModal').on 'hide.bs.modal', (e) ->
-    if selectizeCallback != null
-      selectizeCallback()
-      selectizeCallback = null
+    if  window.selectizeCallback != null
+      window.selectizeCallback()
+      window.selectizeCallback = null
     $('.skill_new').trigger 'reset'
     $.rails.enableFormElements $('.skill_new')
     return
 
   #handles response when skill creation is successful
   $(".skill_new").on("ajax:success", (e, response) ->
-    selectizeCallback
+    window.selectizeCallback
       id: response.id
       name: response.name
-    selectizeCallback = null
+    window.selectizeCallback = null
     $('#createSkillModal').modal 'toggle'
     return
   ).on "ajax:error", (e, response) ->
@@ -58,7 +57,7 @@ $(document).ready ->
       $(this)[0].$input.parent().find('.autocomplete_skill_id').val null
       return
     create: (input, callback) ->
-      selectizeCallback = callback
+      window.selectizeCallback = callback
       $('#createSkillModal').modal()
       #$('#skill_name').val input
       return
