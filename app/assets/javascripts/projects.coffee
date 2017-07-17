@@ -30,7 +30,7 @@ $(document).ready ->
     valueField: 'name'
     labelField: 'name'
     selectOnTab: true
-    create: false
+    closeAfterSelect: true
     load: (query, callback) ->
       if !query.length
         return callback()
@@ -45,6 +45,11 @@ $(document).ready ->
         success: (response) ->
           callback response
           return
+      return
+    create: (input, callback) ->
+      window.selectizeCallback = callback
+      $('#createSkillModal').modal()
+      $('#skill_name').val input
       return
 
   # Configure infinite scroll
