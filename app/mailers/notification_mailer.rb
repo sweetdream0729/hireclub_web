@@ -32,12 +32,27 @@ class NotificationMailer < ApplicationMailer
     @community = @post.community
 
     add_metadata(:post_id, @post.id)
-    add_metadata(:community, @community.id)
+    add_metadata(:community_id, @community.id)
 
     @post_url = get_utm_url url_for(@post)
     @post_user_url = get_utm_url url_for(@post.user)
 
     mail(to: @user.email, subject: "New Post in the #{@community.name} community")
+  end
+
+  def post_mentioned(notification)
+    set_notification(notification)
+
+    @post = @notification.activity.trackable.mentionable
+    @community = @post.community
+
+    add_metadata(:post_id, @post.id)
+    add_metadata(:community_id, @community.id)
+
+    @post_url = get_utm_url url_for(@post)
+    @post_user_url = get_utm_url url_for(@post.user)
+
+    mail(to: @user.email, subject: 'New Mention')
   end
 
   def comment_created(notification)

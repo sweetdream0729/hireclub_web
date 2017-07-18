@@ -46,4 +46,28 @@ RSpec.describe Post, type: :model do
       expect(notification.user).to eq user2
     end
   end
+
+  describe "mentions" do
+    let(:kidbombay) {FactoryGirl.create(:user, username: "kidbombay")}
+    let(:other_user) {FactoryGirl.create(:user, username: "test.user3")}
+    
+    it "should let you mention users by username" do
+      post.text = "hey @#{kidbombay.username} you should meet @#{other_user.username}"
+
+      expect(post.mentioned_users.size).to eq(2)
+      expect(post.mentioned_users[0]).to eq(kidbombay)
+      expect(post.mentioned_users[1]).to eq(other_user)
+    end
+
+    it "should create mentions on save" do
+      post.text = "hey @#{kidbombay.username} you should meet @#{other_user.username}"
+      post.save
+
+      expect(post.mentions.size).to eq(2)
+      mention = post.mentions.first
+      expect(mention.user).to eq(kidbombay)
+      expect(mention.sender).to eq(post.user)
+      expect(mention.mentionable).to eq(post)
+    end
+  end
 end

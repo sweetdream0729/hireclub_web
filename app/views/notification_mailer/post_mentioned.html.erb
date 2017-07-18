@@ -23,11 +23,9 @@
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
                         <td align="left" valign="top">
-                          <a href="<%= @post_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                          <a href="<%= @post_url%>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
                               <%= @post.user.display_name %>
-                              posted in the
-                              <%= @post.community.name %>
-                              community
+                              mentioned you in a post
                            </a>
                            <div style="height: 28px; line-height: 28px; font-size: 26px;">&nbsp;</div>
                         </td>
@@ -47,7 +45,7 @@
                                  <tr>
                                     <td align="center" valign="top">
                                        <div style="height: 10px; line-height: 10px; font-size: 8px;">&nbsp;</div>
-                                       <a href="<%= @post_user_url %>" target="_blank" style="display: block; max-width: 50px;">
+                                       <a href="<%= @post_user_url%>" target="_blank" style="display: block; max-width: 50px;">
                                           <img src="<%= model_avatar(@post.user.avatar, 200, true) %>" alt="img" width="50" border="0" style="display: block; width: 50px; border-radius: 100px" />
                                        </a>
                                     </td>
@@ -59,13 +57,13 @@
                                     <td width="6" style="width: 6px; max-width: 6px; min-width: 6px;">&nbsp;</td>
                                     <td class="mob_center" align="left" valign="top">
                                        <div style="height: 10px; line-height: 10px; font-size: 8px;">&nbsp;</div>
-                                       <a href="<%= @post_user_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                                       <a href="<%= @post_user_url%>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                           <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                              <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;"><%= @post.user.display_name %></span>
                                           </font>
                                        </a>
                                        <div style="height: 2px; line-height: 2px; font-size: 1px;">&nbsp;</div>
-                                       <a href="<%= @post_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #888888; font-size: 19px; line-height: 22px; text-decoration: none;">   
+                                       <a href="<%= @post_url%>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #888888; font-size: 19px; line-height: 22px; text-decoration: none;">   
                                           <font face="'Source Sans Pro', sans-serif" color="#888888" style="font-size: 19px; line-height: 22px; text-decoration: none;">
                                              <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #888888; font-size: 19px; line-height: 22px; text-decoration: none;">
                                              <%= @post.created_at.strftime("%B %e at %l:%M%P") %>
@@ -93,7 +91,7 @@
                            <div style="height: 24px; line-height: 24px; font-size: 22px;">&nbsp;</div>
 
                            <font class="mob_txt" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 22px; line-height: 27px;">
-                              <a href="<%= @post_url %>" class="mob_txt" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 22px; line-height: 27px; text-decoration: none">
+                              <a href="<%= @post_url%>" class="mob_txt" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 22px; line-height: 27px; text-decoration: none">
                                 <%= @post.text %>
                               </a>
                            </font>
