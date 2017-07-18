@@ -16,6 +16,8 @@ class JobsController < ApplicationController
     if current_user
       @job_score = @job.job_scores.where(user: current_user).first_or_create
       @job_score.update_score
+
+      @job_referrals = @job.job_referrals.where(user: current_user)
     end
   end
 
