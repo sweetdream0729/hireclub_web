@@ -67,6 +67,7 @@ Rails.application.routes.draw do
     member do
       get :suggest_skill
       get :refer
+      get :referral_viewed
     end
   end
 

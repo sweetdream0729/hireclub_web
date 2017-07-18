@@ -12,6 +12,10 @@ class JobPolicy < ApplicationPolicy
   def refer?
     user_present?
   end
+
+  def referral_viewed?
+    user_present?
+  end
   
   def update?
     owner_or_admin?

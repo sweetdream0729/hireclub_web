@@ -129,13 +129,16 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
-  def refer_user(notification)
+  def job_referred(notification)
     set_notification(notification)
+    
+    job_referral = notification.activity.trackable
 
     @sender = notification.activity.owner
-    @receiver = notification.activity.trackable.user
+    @receiver = job_referral.user
     
     @sender_url = get_utm_url user_url(@sender)
+    @referral_viewed_url = get_utm_url referral_viewed_job_url(job_referral.job, job_referral: job_referral.id)
 
     @subject ="#{@sender.display_name} referred you for a job"
 

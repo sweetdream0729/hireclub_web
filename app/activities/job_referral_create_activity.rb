@@ -7,6 +7,6 @@ class JobReferralCreateActivity
 
   def self.send_notification(notification)
     #return unless notification.user.preference.email_on_follow
-    NotificationMailer.refer_user(notification).deliver_later
+    NotificationMailer.job_referred(notification).deliver_later
   end
 end

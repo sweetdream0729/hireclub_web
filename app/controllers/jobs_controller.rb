@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed]
   after_action :verify_authorized, except: [:index]
 
   # GET /jobs
@@ -79,6 +79,13 @@ class JobsController < ApplicationController
       format.js { render :refer}
       format.html { redirect_to @job }
     end
+  end
+
+  def referral_viewed
+    job_referral = JobReferral.find(params[:job_referral]) rescue false
+    job_referral.update_attributes(viewed_on: DateTime.now) if (job_referral && !job_referral.viewed_on)
+
+    redirect_to @job
   end
 
   # DELETE /jobs/1
