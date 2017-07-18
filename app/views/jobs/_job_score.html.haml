@@ -20,5 +20,6 @@
       ·
       = "#{display_years(user.years_experience)} Experience"
   .d-flex.ml-3
-    .refer{ data: {username: user.username}}
-      = render partial: "refer", locals: {user: user}
+    = link_to_refer_job(job_score.job, user)
+    / .refer{ data: {username: user.username}}
+    /   = render partial: "refer", locals: {user: user}
