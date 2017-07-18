@@ -33,6 +33,14 @@ $(document).ready ->
     labelField: 'name'
     selectOnTab: true
     closeAfterSelect: true
+
+    #show create new skill only if there is no matching skills in dropdown
+    render: option_create: (data, escape) ->
+      if this.$dropdown_content.find('.option').length > 0
+        return ''
+      else
+        return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>'
+
     load: (query, callback) ->
       if !query.length
         return callback()
