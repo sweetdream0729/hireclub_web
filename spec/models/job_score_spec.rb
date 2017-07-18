@@ -86,7 +86,7 @@ RSpec.describe JobScore, type: :model do
 
     end
 
-    context "location",:focus do
+    context "location" do
       let(:skill1) { FactoryGirl.create(:skill) }
       let(:california) { FactoryGirl.create(:location, name: "California", level: Location::STATE, short: "CA") }
       let(:sf) { FactoryGirl.create(:location, name: "San Francisco", parent: california, level: Location::CITY) }
@@ -97,7 +97,7 @@ RSpec.describe JobScore, type: :model do
         user.skills << skill1
       end
 
-      it "should score 5 for matching city",:focus do
+      it "should score 5 for matching city" do
         job.location = sf
         job.save
 
