@@ -1,5 +1,11 @@
 - mention = activity.trackable
-- comment = mention.mentionable
-- commentable = comment.commentable
+- mention_type = mention.mentionable_type
+- mention_object = mention.mentionable
+- if mention_type == "Post"
+  - verb = "mentioned you in a post on"
+  - commentable = mention_object.community.name
+- else
+  - verb = "mentioned you in a comment on"
+  - commentable = mention_object.commentable.name
 
-= render partial: "/notifications/item", locals: {activity: activity, verb: "mentioned you in a comment on", object: commentable.name, link: url_for(commentable)}
+= render partial: "/notifications/item", locals: {activity: activity, verb: verb, object: commentable, link: url_for(mention_object)}
