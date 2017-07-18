@@ -32,7 +32,7 @@ class NotificationMailer < ApplicationMailer
     @community = @post.community
 
     add_metadata(:post_id, @post.id)
-    add_metadata(:community, @community.id)
+    add_metadata(:community_id, @community.id)
 
     @post_url = get_utm_url url_for(@post)
     @post_user_url = get_utm_url url_for(@post.user)
@@ -44,6 +44,12 @@ class NotificationMailer < ApplicationMailer
     set_notification(notification)
 
     @post = @notification.activity.trackable.mentionable
+    @community = @post.community
+
+    add_metadata(:post_id, @post.id)
+    add_metadata(:community_id, @community.id)
+
+    @post_url = get_utm_url url_for(@post)
     @post_user_url = get_utm_url url_for(@post.user)
 
     mail(to: @user.email, subject: 'New Mention')
