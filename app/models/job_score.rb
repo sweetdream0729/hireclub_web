@@ -24,6 +24,9 @@ class JobScore < ApplicationRecord
     if new_score > 0
       location_score = calc_location
       new_score += location_score
+
+      remote_score = calc_remote
+      new_score += remote_score
     end
     
     self.score = [new_score,0].max
@@ -83,6 +86,11 @@ class JobScore < ApplicationRecord
     end
 
     return location_score
+  end
+
+  def calc_remote
+    return 3 if job.remote && user.open_to_remote
+    return 0
   end
 
 end

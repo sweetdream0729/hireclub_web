@@ -4,6 +4,7 @@ RSpec.describe JobScore, type: :model do
   let(:job_score) { FactoryGirl.build(:job_score) }
   let(:job) { job_score.job }
   let(:user) { job_score.user }
+  let(:skill1) { FactoryGirl.create(:skill) }
 
   
   subject { job_score }
@@ -21,7 +22,6 @@ RSpec.describe JobScore, type: :model do
   end
 
   describe "update_score" do
-    let(:skill1) { FactoryGirl.create(:skill) }
     let(:skill2) { FactoryGirl.create(:skill) }
 
     context "skills" do
@@ -120,6 +120,27 @@ RSpec.describe JobScore, type: :model do
 
         expect(job_score.score).to eq(4)
       end
+    end
+
+    context "remote" do
+      let(:skill1) { FactoryGirl.create(:skill) }
+
+      before do
+        job.skills << skill1.name
+        job.remote = true
+        user.skills << skill1
+        user.open_to_remote = true
+      end
+
+      it "should if job remote and user remote" do
+        job.save
+        user.save
+
+        job_score.update_score
+
+        expect(job_score.score).to eq(4)
+      end
+
     end
   end
 end
