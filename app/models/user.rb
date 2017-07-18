@@ -67,6 +67,7 @@ class User < ApplicationRecord
   has_many :stories, dependent: :destroy, inverse_of: :user
   has_many :comments, dependent: :destroy, inverse_of: :user
   has_many :job_scores, dependent: :destroy, inverse_of: :user
+  has_many :job_referrals, dependent: :destroy, inverse_of: :user
   has_many :invites, dependent: :destroy, inverse_of: :user
   has_many :messages, dependent: :destroy, inverse_of: :user
   has_many :analytics_events, dependent: :destroy, inverse_of: :user

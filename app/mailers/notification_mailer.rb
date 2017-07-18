@@ -129,6 +129,19 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
+  def refer_user(notification)
+    set_notification(notification)
+
+    @sender = notification.activity.owner
+    @receiver = notification.activity.trackable.user
+    
+    @sender_url = get_utm_url user_url(@sender)
+
+    @subject ="#{@sender.display_name} referred you for a job"
+
+    mail(to: @user.email, subject: @subject)
+  end
+
   def invite_bounced(notification)
     set_notification(notification)
     @invite = @notification.activity.trackable

@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer]
   after_action :verify_authorized, except: [:index]
 
   # GET /jobs
@@ -66,6 +66,18 @@ class JobsController < ApplicationController
       redirect_to @job, notice: 'Job was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def refer
+    @user = User.find(params[:user])
+    sender = User.find_by_username('kidbombay')
+    
+    JobReferral.refer_user(sender, @user, @job) if sender
+
+    respond_to do |format|
+      format.js { render :refer}
+      format.html { redirect_to @job }
     end
   end
 

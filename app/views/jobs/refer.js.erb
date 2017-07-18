@@ -1,0 +1,2 @@
+var $div = $(".refer[data-username='<%= @user.username %>']")
+$div.replaceWith('<%=j render partial: 'jobs/refer', locals: { user: @user } %>')

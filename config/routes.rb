@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     resources :comments, module: :jobs
     member do
       get :suggest_skill
+      get :refer
     end
   end
 

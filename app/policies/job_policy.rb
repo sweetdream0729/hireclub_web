@@ -20,4 +20,8 @@ class JobPolicy < ApplicationPolicy
   def suggest_skill?
     owner_or_admin?
   end
+
+  def refer?
+    owner_or_admin?
+  end
 end

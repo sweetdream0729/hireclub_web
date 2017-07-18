@@ -1,5 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe JobReferral, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:job_referral) { FactoryGirl.build(:job_referral) }
+
+  subject { job_referral }
+
+  describe "associations" do
+    it { should belong_to(:user) }
+    it { should belong_to(:job) }
+    it { should belong_to(:sender)}
+  end
+  
+  describe "refer user for job" do
+    it "create job JobReferral" do
+      user = FactoryGirl.create(:user)
+      job = FactoryGirl.create(:job)
+      user1 = FactoryGirl.build(:admin)
+
+      user1.username = "kidbombay"
+      user1.save
+      user1.reload
+
+      JobReferral.refer_user(user1, user, job)
+      expect(job.job_referrals.count).to eq(1)
+    end
+
+  end
 end
