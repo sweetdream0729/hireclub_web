@@ -19,5 +19,6 @@
         = user.location.name
       ·
       = "#{display_years(user.years_experience)} Experience"
-  .refer{ data: {username: user.username}}
-    = render partial: "refer", locals: {user: user}
+  .d-flex.ml-3
+    .refer{ data: {username: user.username}}
+      = render partial: "refer", locals: {user: user}

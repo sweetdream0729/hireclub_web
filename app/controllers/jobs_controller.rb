@@ -71,7 +71,7 @@ class JobsController < ApplicationController
 
   def refer
     @user = User.find(params[:user])
-    sender = User.find_by_username('kidbombay')
+    sender = current_user
     
     JobReferral.refer_user(sender, @user, @job) if sender
 

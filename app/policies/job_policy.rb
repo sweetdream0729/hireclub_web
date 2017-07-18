@@ -8,6 +8,10 @@ class JobPolicy < ApplicationPolicy
   def create?
     user_present?
   end
+
+  def refer?
+    user_present?
+  end
   
   def update?
     owner_or_admin?
