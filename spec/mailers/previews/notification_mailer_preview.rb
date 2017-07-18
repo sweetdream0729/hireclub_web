@@ -37,6 +37,11 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.job_created(notification)
   end
 
+  def job_referred
+    notification = Notification.where(activity_key: JobReferralCreateActivity::KEY).last
+    NotificationMailer.job_referred(notification)
+  end
+
   def user_followed
     notification = Notification.where(activity_key: UserFollowActivity::KEY).first
     NotificationMailer.user_followed(notification)
@@ -75,5 +80,10 @@ class NotificationMailerPreview < ActionMailer::Preview
   def community_invited
     notification = Notification.where(activity_key: CommunityInviteCreateActivity::KEY).last
     NotificationMailer.community_invited(notification)
+  end
+
+  def job_referred
+    notification = Notification.where(activity_key: JobReferralCreateActivity::KEY).last
+    NotificationMailer.job_referred(notification)
   end
 end

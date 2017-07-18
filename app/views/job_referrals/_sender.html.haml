@@ -1,0 +1,9 @@
+.media.mb-4
+  = link_to image_tag(model_avatar(job_referral.sender.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), job_referral.sender
+  .media-body
+    %p.mb-0
+      %strong
+        = link_to job_referral.sender.display_name, job_referral.sender
+    %small.text-muted
+      = local_time_ago(job_referral.created_at)
+        

@@ -37,7 +37,7 @@ class Job < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
   has_many :job_scores, dependent: :destroy, inverse_of: :job
-
+  has_many :job_referrals, dependent: :destroy
 
   # Validations
   validates :user, presence: true
@@ -161,5 +161,9 @@ class Job < ApplicationRecord
 
   def suggested_job_scores
     job_scores.greater_than_zero.by_score.where('job_scores.user_id != ?', self.user_id).limit(5)
+  end
+
+  def referred_user(user)
+    job_referrals.pluck(:user_id).include?(user.id)
   end
 end

@@ -1,0 +1,2 @@
+var button = $('.job_refer_btn_<%= @user.id %>');
+button.replaceWith("<%=j link_to_refer_job(@job, @user) %>");

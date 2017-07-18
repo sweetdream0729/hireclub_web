@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
   
   resources :communities do
@@ -66,6 +67,8 @@ Rails.application.routes.draw do
     resources :comments, module: :jobs
     member do
       get :suggest_skill
+      get :refer
+      get :referral_viewed
     end
   end
 
