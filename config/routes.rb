@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
   
   resources :communities do

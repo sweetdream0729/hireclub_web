@@ -29,6 +29,14 @@ class JobReferral < ApplicationRecord
     end
   end
 
+  def mark_viewed!
+    if viewed_on.nil?
+      self.viewed_on = DateTime.now
+      self.save
+    end
+  end
+
+
   def self.refer_user(sender, user, job)
   	JobReferral.where(sender_id: sender, user_id: user, job_id: job).first_or_create!
   end

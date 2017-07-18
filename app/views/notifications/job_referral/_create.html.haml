@@ -1,2 +1,3 @@
-- job = activity.trackable.job
-= render partial: "/notifications/item", locals: {activity: activity, verb: "referred you for", object: job.name, link: url_for(job)}
+- job_referral = activity.trackable
+- job = job_referral.job
+= render partial: "/notifications/item", locals: {activity: activity, verb: "referred you for", object: job.name, link: url_for(job_referral)}

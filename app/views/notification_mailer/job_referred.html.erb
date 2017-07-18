@@ -21,15 +21,11 @@
 
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
-                        <td align="center" valign="top">
-                           <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                              <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                                  <%= @sender.display_name + " " + "referred you for a job" %>
-                              </span>
-                           </font>
-                           <div class="top_pad3" style="height: 30px; line-height: 30px; font-size: 28px;">
-                             &nbsp;
-                           </div>
+                        <td align="left" valign="top">
+                          <a href="<%= @job_referral_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                              <%= @sender.display_name %> referred you for a job
+                           </a>
+                           <div style="height: 28px; line-height: 28px; font-size: 26px;">&nbsp;</div>
                         </td>
                      </tr>
                   </table>
@@ -43,39 +39,37 @@
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
 
-                           <a href="<%= @sender_url %>" style="display: block; max-width: 100px;">
-                              <img src="<%= model_avatar(@sender.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 100px;" />
+                           <a href="<%= @job_referral_url %>" style="display: block; max-width: 100px;">
+                              <img src="<%= company_avatar(@job_referral.job.company.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 4px;" />
                            </a>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
 
-                           <a href="<%= @sender_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                           <a href="<%= @job_referral_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                               <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
-                                   <%= @sender.display_name %>
+                                   <%= @job_referral.job.company.name %>
+                                   <br/>
+                                   <%= @job_referral.job.name %>
                                  </span>
                               </font>
                            </a>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
 
-                           <a href="<%= @sender_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
+                           <a href="<%= @job_referral_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
                               <font face="'Source Sans Pro', sans-serif" color="#5E5E5E" style="font-size: 19px; line-height: 22px; text-decoration: none;">
                                  <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
-                                    <%- if @sender.primary_role.present? %>
-                                       <%= @sender.primary_role_name %>
-                                    <% end %>
-                                    <%- if @sender.company.present? %>
-                                       ·
-                                       <%= @sender.company.try(:name) %>
-                                    <% end %>
+                                    <%= @job_referral.job.role.try(:name) %>
+                                    ·
+                                    <%= @job_referral.job.location.cached_display_name %>
                                  </span>
                               </font>
                            </a>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
 
-                           <%= render partial: "/email/elements/button", locals: { url: @referral_viewed_url, text: "View Job"} %>
+                           <%= render partial: "/email/elements/button", locals: { url: @job_referral_url, text: "View Job"} %>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>
 
