@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718083244) do
+ActiveRecord::Schema.define(version: 20170718103106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,6 +253,22 @@ ActiveRecord::Schema.define(version: 20170718083244) do
     t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
     t.index ["viewed_by_id"], name: "index_invites_on_viewed_by_id", using: :btree
     t.index ["viewed_on"], name: "index_invites_on_viewed_on", using: :btree
+  end
+
+  create_table "job_referrals", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "job_id",     null: false
+    t.integer  "sender_id"
+    t.string   "slug",       null: false
+    t.datetime "viewed_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_job_referrals_on_job_id", using: :btree
+    t.index ["sender_id", "user_id", "job_id"], name: "job_user_sender", unique: true, using: :btree
+    t.index ["sender_id"], name: "index_job_referrals_on_sender_id", using: :btree
+    t.index ["slug"], name: "index_job_referrals_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_job_referrals_on_user_id", using: :btree
+    t.index ["viewed_on"], name: "index_job_referrals_on_viewed_on", using: :btree
   end
 
   create_table "job_scores", force: :cascade do |t|
@@ -636,6 +652,9 @@ ActiveRecord::Schema.define(version: 20170718083244) do
   add_foreign_key "conversation_users", "users"
   add_foreign_key "invites", "contacts"
   add_foreign_key "invites", "users"
+  add_foreign_key "job_referrals", "jobs"
+  add_foreign_key "job_referrals", "users"
+  add_foreign_key "job_referrals", "users", column: "sender_id"
   add_foreign_key "job_scores", "jobs"
   add_foreign_key "job_scores", "users"
   add_foreign_key "jobs", "companies"
