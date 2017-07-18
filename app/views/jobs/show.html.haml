@@ -85,6 +85,11 @@
       = render partial: "comments/form", locals: { commentable: @job } 
 
     .col-sm-3.push-sm-1
+      - if @job_referrals.any?
+        %h6 Referred By
+        - @job_referrals.each do |job_referral|
+          = render partial: "job_referrals/sender", locals: { job_referral: job_referral }
+        
       - if @job_score.present?
         .card.card-inverse.card-info.mb-5{data: {toggle:"tooltip", placement: "bottom"}, title: "Your Job Score is how good we think you might be for this job based on your profile. Higher numbers are better."}
           .card-block

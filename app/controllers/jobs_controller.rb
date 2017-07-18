@@ -16,6 +16,8 @@ class JobsController < ApplicationController
     if current_user
       @job_score = @job.job_scores.where(user: current_user).first_or_create
       @job_score.update_score
+
+      @job_referrals = @job.job_referrals.where(user: current_user)
     end
   end
 
@@ -70,10 +72,9 @@ class JobsController < ApplicationController
   end
 
   def refer
-    @user = User.find(params[:user])
-    sender = current_user
-    
-    JobReferral.refer_user(sender, @user, @job) if sender
+    @user = User.find(params[:user_id])
+
+    JobReferral.refer_user(current_user, @user, @job)
 
     respond_to do |format|
       format.js { render :refer}
