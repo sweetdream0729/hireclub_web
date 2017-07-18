@@ -3,7 +3,7 @@ class JobReferral < ApplicationRecord
   include PublicActivity::Model
   include PublicActivity::CreateActivityOnce
   
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug, use: [:finders]
   tracked only: [:create], owner: Proc.new{ |controller, model| model.sender }
 
   # Associations
@@ -11,10 +11,22 @@ class JobReferral < ApplicationRecord
   belongs_to :user
   belongs_to :job
 
-  def slug_candidates
-    [
-      [:job_id, :id]
-    ]
+  # Validations
+  validates :user, presence: true
+  validates :sender, presence: true
+  validates :job, presence: true
+  validates :slug, uniqueness: true, presence: true
+
+  # Callbacks
+  before_validation :ensure_slug, on: :create
+
+  def ensure_slug
+    if slug.blank?
+      self.slug = loop do
+        slug = SecureRandom.urlsafe_base64(6).tr('1+/=lIO0_-', 'pqrsxyz')
+        break slug unless JobReferral.where(slug: slug).exists?
+      end
+    end
   end
 
   def self.refer_user(sender, user, job)
