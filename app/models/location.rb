@@ -27,6 +27,8 @@ class Location < ApplicationRecord
 
   acts_as_tree order: "name"
 
+  geocoded_by :cache_display_name
+
   # Scope
   scope :by_users_count, -> { order(users_count: :desc) }
 
@@ -38,7 +40,8 @@ class Location < ApplicationRecord
                             :inclusion => { :in => VALID_LEVELS, :message => "%{value} is not a valid level" }
   validates :facebook_id, uniqueness: {allow_blank: true}
 
-  before_save :cache_display_name
+  after_validation :cache_display_name
+  after_validation :geocode
 
   def cache_display_name
     self.cached_display_name = self.display_name

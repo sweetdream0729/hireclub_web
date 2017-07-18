@@ -207,6 +207,7 @@ GEM
     formatador (0.2.5)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    geocoder (1.4.4)
     get_process_mem (0.2.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -517,6 +518,7 @@ DEPENDENCIES
   fog-aws
   foreman
   friendly_id (~> 5.1.0)
+  geocoder
   haml-rails (~> 0.9)
   hashie (~> 3.4.6)
   hirefire-resource
