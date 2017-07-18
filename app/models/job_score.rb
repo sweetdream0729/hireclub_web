@@ -18,9 +18,13 @@ class JobScore < ApplicationRecord
     skills_score = calc_skills
     roles_score = calc_roles
     projects_score = calc_projects
-    location_score = calc_location
+    
+    new_score = skills_score + roles_score + projects_score
 
-    new_score = skills_score + roles_score + projects_score + location_score
+    if new_score > 0
+      location_score = calc_location
+      new_score += location_score
+    end
     
     self.score = [new_score,0].max
     self.save
@@ -73,7 +77,6 @@ class JobScore < ApplicationRecord
       location_score = 5
     elsif user.location.present?
       distance = user.location.distance_to([job.location.latitude, job.location.longitude])
-      puts "distance: #{distance}"
       if distance <= 120
         location_score = 3
       end
