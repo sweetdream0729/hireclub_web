@@ -14,18 +14,15 @@ class WebhooksController < ApplicationController
 
   #when appointment is scheduled
   def acuity_scheduled
-    appointment = JSON.parse(AcuityService.get_client.get(path:"/api/v1/appointments/#{params['id']}").body)
-    AcuityService.create_appointment(appointment)
+    appointment_json = JSON.parse(AcuityService.get_client.get(path:"/api/v1/appointments/#{params['id']}").body)
+    AcuityService.create_appointment(appointment_json)
   end
 
   #When appointment is rescheduled
   def acuity_rescheduled
-    appointment = JSON.parse(AcuityService.get_client.get(path:"/api/v1/appointments/#{params['id']}").body)
-    a = Appointment.find_by(acuity_id: appointment['id'])
-    a.update_attributes(
-      start_time: appointment['date'] + " " + appointment['time'],
-      end_time: appointment['date'] + " " + appointment['endTime']
-    )
+    appointment_json = JSON.parse(AcuityService.get_client.get(path:"/api/v1/appointments/#{params['id']}").body)
+    appointment = Appointment.find_by(acuity_id: appointment_json['id'])
+    appointment.reschedule!(appointment['date'] + " " + appointment['time'], appointment['date'] + " " + appointment['endTime'])
   end
 
   #when appointment is cancelled

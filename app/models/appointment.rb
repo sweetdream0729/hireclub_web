@@ -12,7 +12,7 @@ class Appointment < ApplicationRecord
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
-  
+
   def name
     appointment_type.try(:name)
   end
@@ -34,6 +34,12 @@ class Appointment < ApplicationRecord
       self.canceled_at = DateTime.now
       self.save
     end
+  end
+
+  def reschedule!(new_start_time, new_end_time)
+    self.start_time = new_start_time
+    self.end_time = new_end_time
+    self.save
   end
   
 end

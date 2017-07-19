@@ -27,4 +27,17 @@ RSpec.describe Appointment, type: :model do
       expect(appointment.status).to eq "Canceled"
     end
   end
+
+  describe "reschedule!" do
+    it "should reschedule" do
+      new_start_time = DateTime.now + 1.day
+      new_end_time = new_start_time + 1.hour
+      appointment.reschedule!(new_start_time, new_end_time)
+
+      appointment.reload
+
+      expect(appointment.start_time).to eq new_start_time
+      expect(appointment.end_time).to eq new_end_time
+    end
+  end
 end
