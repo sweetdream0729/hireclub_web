@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719061734) do
+ActiveRecord::Schema.define(version: 20170719074605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,28 @@ ActiveRecord::Schema.define(version: 20170719061734) do
     t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
     t.index ["name"], name: "index_appointment_types_on_name", unique: true, using: :btree
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "acuity_id",                       null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "email"
+    t.integer  "price_cents",         default: 0
+    t.integer  "amount_paid_cents",   default: 0
+    t.integer  "appointment_type_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "timezone"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
+    t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
+    t.index ["end_time"], name: "index_appointments_on_end_time", using: :btree
+    t.index ["start_time"], name: "index_appointments_on_start_time", using: :btree
+    t.index ["user_id"], name: "index_appointments_on_user_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -209,6 +231,19 @@ ActiveRecord::Schema.define(version: 20170719061734) do
     t.integer  "messages_count", default: 0, null: false
     t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
+  end
+
+  create_table "facebook_posts", force: :cascade do |t|
+    t.string   "facebook_post_id",  null: false
+    t.string   "facebook_group_id"
+    t.text     "message"
+    t.string   "author_name"
+    t.string   "author_fb_id"
+    t.text     "link"
+    t.string   "post_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["facebook_post_id"], name: "index_facebook_posts_on_facebook_post_id", unique: true, using: :btree
   end
 
   create_table "follows", force: :cascade do |t|
@@ -667,6 +702,8 @@ ActiveRecord::Schema.define(version: 20170719061734) do
 
   add_foreign_key "analytics_events", "users"
   add_foreign_key "appointment_types", "appointment_categories"
+  add_foreign_key "appointments", "appointment_types"
+  add_foreign_key "appointments", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
