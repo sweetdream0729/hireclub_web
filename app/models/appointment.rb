@@ -10,8 +10,30 @@ class Appointment < ApplicationRecord
   has_many :participants, through: :appointment_messages, source: :user
 
 
+  # Validations
+  validates :acuity_id, presence: true, uniqueness: true
+  
   def name
     appointment_type.try(:name)
+  end
+
+  def canceled?
+    canceled_at.present?
+  end
+
+  def active?
+    !canceled?
+  end
+
+  def status
+    return "Canceled" if canceled?
+  end
+
+  def cancel!
+    if canceled_at.nil?
+      self.canceled_at = DateTime.now
+      self.save
+    end
   end
   
 end

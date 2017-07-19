@@ -48,7 +48,7 @@ class WebhooksController < ApplicationController
   def acuity_canceled
     appointment = JSON.parse(AcuityService.get_client.get(path:"/api/v1/appointments/#{params['id']}").body)
     a = Appointment.find_by(acuity_id: appointment['id'])
-    a.update_attribute(:canceled_at, DateTime.now)
+    a.cancel!
   end
   
 end

@@ -6,14 +6,19 @@
     %thead
       %tr
         %th Appointment
+        %th Status
         %th Date
         %th Time
-
+        
     %tbody
     - @appointments.each do |appointment|
       %tr
         %td
           = link_to appointment.name, appointment
+        %td
+          - if appointment.canceled?
+            %span.badge.badge-warning
+              Canceled
         %td
           = appointment.start_time.strftime("%A %B %e")
         %td

@@ -11,9 +11,14 @@
     = @appointment.start_time.strftime("%l:%M %P") 
     \-
     = @appointment.end_time.strftime("%l:%M %P") 
+  %p
+    - if @appointment.canceled?
+      %span.badge.badge-warning
+        Canceled
 
   .row
     .col-sm-8
       %hr
       = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
-      = render partial: "appointment_messages/form", locals: {appointment: @appointment}
+      - if @appointment.active?
+        = render partial: "appointment_messages/form", locals: {appointment: @appointment}
