@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Appointment:
+  = @appointment_review.appointment
+%p
+  %b Rating:
+  = @appointment_review.rating
+%p
+  %b Text:
+  = @appointment_review.text
+%p
+  %b User:
+  = @appointment_review.user
+
+= link_to 'Edit', edit_appointment_review_path(@appointment_review)
+\|
+= link_to 'Back', appointment_reviews_path
