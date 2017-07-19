@@ -3,6 +3,8 @@
     %li.breadcrumb-item
       = link_to "Appointments", appointments_path
 
+  %span.badge.badge-default
+    = @appointment.category_name
   %h1
     = title "#{@appointment.name}"
   %p
@@ -15,6 +17,7 @@
     - if @appointment.canceled?
       %span.badge.badge-warning
         Canceled
+    
 
   .row
     .col-sm-8

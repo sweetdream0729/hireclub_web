@@ -17,6 +17,10 @@ class Appointment < ApplicationRecord
     appointment_type.try(:name)
   end
 
+  def category_name
+    appointment_type.appointment_category.name
+  end
+
   def canceled?
     canceled_at.present?
   end
