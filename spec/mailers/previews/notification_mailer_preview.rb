@@ -86,4 +86,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: JobReferralCreateActivity::KEY).last
     NotificationMailer.job_referred(notification)
   end
+
+  def appointment_messaged
+    notification = Notification.where(activity_key: AppointmentMessageCreateActivity::KEY).last
+    NotificationMailer.appointment_messaged(notification)
+  end
 end

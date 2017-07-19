@@ -4,10 +4,16 @@
       = link_to "Appointments", appointments_path
 
   %h1
-    = title "#{@appointment.appointment_type.name}"
+    = title "#{@appointment.name}"
   %p
     = @appointment.start_time.strftime("%A %B %e")
     ·
     = @appointment.start_time.strftime("%l:%M %P") 
     \-
     = @appointment.end_time.strftime("%l:%M %P") 
+
+  .row
+    .col-sm-8
+      %hr
+      = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
+      = render partial: "appointment_messages/form", locals: {appointment: @appointment}

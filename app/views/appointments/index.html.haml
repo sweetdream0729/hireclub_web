@@ -13,7 +13,7 @@
     - @appointments.each do |appointment|
       %tr
         %td
-          = link_to appointment.appointment_type.name, appointment
+          = link_to appointment.name, appointment
         %td
           = appointment.start_time.strftime("%A %B %e")
         %td

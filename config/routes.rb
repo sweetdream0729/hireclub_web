@@ -1,6 +1,10 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get 'appointment_messages/create'
+
+  get 'appointment_messages/destroy'
+
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
@@ -36,6 +40,7 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :appointment_messages, only: [:create, :destroy]
   resources :appointments, only: [:index, :show]
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]

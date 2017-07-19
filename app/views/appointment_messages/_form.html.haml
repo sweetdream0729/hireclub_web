@@ -1,0 +1,6 @@
+- if user_signed_in?
+  = form_for [AppointmentMessage.new] do |f|
+    = f.hidden_field :appointment_id, value: @appointment.id
+    .form-group
+      = f.text_area :text, class: "form-control at_who_mentions", placeholder: "Message"
+    = f.submit "Send", class: "btn btn-primary"

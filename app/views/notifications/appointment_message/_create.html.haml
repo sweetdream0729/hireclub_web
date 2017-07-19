@@ -1,0 +1,4 @@
+- appointment_message = activity.trackable
+- appointment = appointment_message.appointment
+
+= render partial: "/notifications/item", locals: {activity: activity, verb: "commented on", object: appointment.name, link: url_for(appointment)}

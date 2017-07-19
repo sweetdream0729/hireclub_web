@@ -47,6 +47,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:mentions_sent).dependent(:destroy) }
 
     it { should have_many(:appointments).dependent(:destroy) }
+    it { should have_many(:appointment_messages).dependent(:destroy) }
   end
 
   describe 'validations' do

@@ -88,6 +88,7 @@ class User < ApplicationRecord
   has_many :mentions_sent, dependent: :destroy, inverse_of: :sender, class_name: "Mention", foreign_key: :sender_id
 
   has_many :appointments, dependent: :destroy, inverse_of: :user
+  has_many :appointment_messages, dependent: :destroy, inverse_of: :user
 
   
   # Nested
