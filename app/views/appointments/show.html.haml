@@ -2,6 +2,8 @@
   %ol.breadcrumb
     %li.breadcrumb-item
       = link_to "Appointments", appointments_path
+    %li.breadcrumb-item
+      = link_to @appointment.user.display_name, @appointment.user
 
   %span.badge.badge-default
     = @appointment.category_name
