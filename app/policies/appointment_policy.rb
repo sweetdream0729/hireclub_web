@@ -24,4 +24,8 @@ class AppointmentPolicy < ApplicationPolicy
   def destroy?
     owner_or_admin?
   end
+
+  def refresh?
+    admin?
+  end
 end

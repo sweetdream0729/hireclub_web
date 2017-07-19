@@ -19,6 +19,10 @@ class AcuityService
     JSON.parse(self.get_client.get(path:"/api/v1/appointments").body) rescue []
   end
 
+  def self.get_appointment(acuity_id)
+    JSON.parse(self.get_client.get(path:"/api/v1/appointments/#{acuity_id}").body) rescue []
+  end
+
   def self.refresh_appointment_types
     acuity_options = AcuityService.get_appointment_types
     appointment_types = []
@@ -45,19 +49,21 @@ class AcuityService
   end
 
   def self.create_appointment(appointment)
+    Rails.logger.info "create_appointment #{appointment.inspect}"
     user = User.find_by(email: appointment['email'])
     appointment_type = AppointmentType.find_by(name: appointment['type'])
-    a = Appointment.where(acuity_id: appointment['id']).first_or_create(
-      first_name: appointment['firstName'],
-      last_name: appointment['lastName'],
-      phone: appointment['phone'],
-      email: appointment['email'],
-      price_cents: appointment['price'],
-      amount_paid_cents: appointment['amountPaid'],
-      start_time: appointment['date'] + " " + appointment['time'],
-      end_time: appointment['date'] + " " + appointment['endTime'],
-      timezone: appointment['timezone']
-    )
+    
+    a = Appointment.where(acuity_id: appointment['id']).first_or_initialize
+
+    a.first_name = appointment['firstName']
+    a.last_name = appointment['lastName']
+    a.phone = appointment['phone']
+    a.email = appointment['email']
+    a.price_cents = appointment['price']
+    a.amount_paid_cents = appointment['amountPaid']
+    a.start_time = appointment['date'] + " " + appointment['time']
+    a.end_time = appointment['date'] + " " + appointment['endTime']
+    a.timezone = appointment['timezone']
 
     #if user is not registered on hireclub
     a.user_id = user.id if a.user.nil? && user.present?

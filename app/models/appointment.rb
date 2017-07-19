@@ -45,5 +45,11 @@ class Appointment < ApplicationRecord
     self.end_time = new_end_time
     self.save
   end
+
+  def refresh
+    json = AcuityService.get_appointment(acuity_id)
+    AcuityService.create_appointment(json)
+    self.reload
+  end
   
 end
