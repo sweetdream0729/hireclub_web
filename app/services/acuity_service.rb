@@ -1,0 +1,16 @@
+class AcuityService
+  BASE_URL = "https://acuityscheduling.com/api/v1"
+  
+  def self.get_client
+    # @connection ||=  Excon.new( BASE_URL, 
+    #                             user: Rails.application.secrets.acuity_user_id, 
+    #                             password: Rails.application.secrets.acuity_api_key,
+    #                             debug_response: true)
+
+    @connection ||= Excon.new("https://13980751:ebf8d901f44bf9a786cc266474087469@acuityscheduling.com/api/v1")
+  end
+
+  def self.appointment_types
+    self.get_client.get(path:"/appointment-types")
+  end
+end
