@@ -11,7 +11,6 @@ RSpec.describe AppointmentType, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
-    it { appointment_type.save; should validate_uniqueness_of(:name).case_insensitive }
     it { appointment_type.save; should validate_uniqueness_of(:acuity_id) }
     it { should validate_numericality_of(:price_cents).is_greater_than_or_equal_to(0) }
     it { should validate_numericality_of(:duration).is_greater_than_or_equal_to(0) }
