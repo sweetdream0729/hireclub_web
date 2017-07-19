@@ -13,4 +13,8 @@ class AcuityService
   def self.appointment_types
     self.get_client.get(path:"/api/v1/appointment-types").body
   end
+
+  def self.appointments
+    self.get_client.get(path:"/api/v1/appointments").body
+  end
 end
