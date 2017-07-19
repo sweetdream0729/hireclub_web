@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get 'appointment_messages/destroy'
 
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
+  post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
+  post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
+  post 'webhooks/acuity_canceled' => 'webhooks#acuity_canceled'
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
   get 'settings/account'
