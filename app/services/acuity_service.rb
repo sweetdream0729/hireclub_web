@@ -11,6 +11,6 @@ class AcuityService
   end
 
   def self.appointment_types
-    self.get_client.get(path:"/api/v1/appointment-types").body
+    JSON.parse(self.get_client.get(path:"/api/v1/appointment-types").body) rescue []
   end
 end
