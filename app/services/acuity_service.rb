@@ -7,10 +7,10 @@ class AcuityService
     #                             password: Rails.application.secrets.acuity_api_key,
     #                             debug_response: true)
 
-    @connection ||= Excon.new("https://13980751:ebf8d901f44bf9a786cc266474087469@acuityscheduling.com/api/v1")
+    @connection ||= Excon.new("https://13980751:ebf8d901f44bf9a786cc266474087469@acuityscheduling.com")
   end
 
   def self.appointment_types
-    self.get_client.get(path:"/appointment-types")
+    self.get_client.get(path:"/api/v1/appointment-types").body
   end
 end
