@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 20170719074605) do
     t.datetime "updated_at",                          null: false
     t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
-    t.index ["name"], name: "index_appointment_types_on_name", unique: true, using: :btree
   end
 
   create_table "appointments", force: :cascade do |t|

@@ -11,7 +11,6 @@ class CreateAppointmentTypes < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_index :appointment_types, :name, unique: true
     add_index :appointment_types, :acuity_id, unique: true
   end
 end
