@@ -1,0 +1,13 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Appointments", appointments_path
+
+  %h1
+    = title "#{@appointment.appointment_type.name}"
+  %p
+    = @appointment.start_time.strftime("%A %B %e")
+    ·
+    = @appointment.start_time.strftime("%l:%M %P") 
+    \-
+    = @appointment.end_time.strftime("%l:%M %P") 

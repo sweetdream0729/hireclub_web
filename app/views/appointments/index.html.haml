@@ -1,0 +1,22 @@
+.container.content_container
+  %h1
+    = title "Appointments"
+
+  %table.table
+    %thead
+      %tr
+        %th Appointment
+        %th Date
+        %th Time
+
+    %tbody
+    - @appointments.each do |appointment|
+      %tr
+        %td
+          = link_to appointment.appointment_type.name, appointment
+        %td
+          = appointment.start_time.strftime("%A %B %e")
+        %td
+          = appointment.start_time.strftime("%l:%M %P") 
+          \-
+          = appointment.end_time.strftime("%l:%M %P") 
