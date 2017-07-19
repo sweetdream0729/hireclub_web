@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718103106) do
+ActiveRecord::Schema.define(version: 20170719061734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,31 @@ ActiveRecord::Schema.define(version: 20170718103106) do
     t.index ["key"], name: "index_analytics_events_on_key", using: :btree
     t.index ["timestamp"], name: "index_analytics_events_on_timestamp", using: :btree
     t.index ["user_id"], name: "index_analytics_events_on_user_id", using: :btree
+  end
+
+  create_table "appointment_categories", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.citext   "slug",        null: false
+    t.text     "description"
+    t.string   "image_uid"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_appointment_categories_on_name", unique: true, using: :btree
+    t.index ["slug"], name: "index_appointment_categories_on_slug", unique: true, using: :btree
+  end
+
+  create_table "appointment_types", force: :cascade do |t|
+    t.string   "name",                                null: false
+    t.text     "description"
+    t.integer  "duration",                default: 0
+    t.integer  "price_cents",             default: 0
+    t.string   "acuity_id",                           null: false
+    t.integer  "appointment_category_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
+    t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
+    t.index ["name"], name: "index_appointment_types_on_name", unique: true, using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -641,6 +666,7 @@ ActiveRecord::Schema.define(version: 20170718103106) do
   end
 
   add_foreign_key "analytics_events", "users"
+  add_foreign_key "appointment_types", "appointment_categories"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
