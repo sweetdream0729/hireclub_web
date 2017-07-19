@@ -61,4 +61,9 @@ class AcuityService
     end
   end
 
+
+  def self.refresh
+    self.refresh_appointment_types
+    self.refresh_appointments
+  end
 end
