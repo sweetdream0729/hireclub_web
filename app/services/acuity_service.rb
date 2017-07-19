@@ -49,6 +49,7 @@ class AcuityService
   end
 
   def self.create_appointment(appointment)
+    Rails.logger.info "create_appointment #{appointment.inspect}"
     user = User.find_by(email: appointment['email'])
     appointment_type = AppointmentType.find_by(name: appointment['type'])
     a = Appointment.where(acuity_id: appointment['id']).first_or_create(
