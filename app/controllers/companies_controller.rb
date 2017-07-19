@@ -30,6 +30,11 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   def show
     impressionist(@company)
+
+    #When old company url is entered it should direct to new url
+    if request.path != company_path(@company)
+      redirect_to @company
+    end
   end
 
   def follow
