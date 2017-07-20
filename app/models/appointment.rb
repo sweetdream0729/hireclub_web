@@ -1,5 +1,9 @@
 class Appointment < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
+
   extend FriendlyId
   friendly_id :acuity_id
 
@@ -12,6 +16,7 @@ class Appointment < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :appointment_type
+  belongs_to :completed_by, class_name: 'User'
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
 
@@ -52,10 +57,32 @@ class Appointment < ApplicationRecord
     self.save
   end
 
+  def complete!(completer)
+    return false if completed_by.present?
+    self.completed_by = completer
+    self.completed_on = DateTime.now
+    self.save
+
+    self.create_activity_once :complete, owner: completer, recipient: user, private: true
+    return true
+  end
+
+  def completed?
+    completed_by.present?
+  end
+
+  def completable?
+    !completed?
+  end
+
   def refresh
     json = AcuityService.get_appointment(acuity_id)
     AcuityService.create_appointment(json)
     self.reload
+  end
+
+  def duration
+    TimeDifference.between(start_time, end_time).in_minutes
   end
   
 end

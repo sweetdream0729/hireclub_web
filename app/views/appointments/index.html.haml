@@ -19,9 +19,12 @@
           - if appointment.canceled?
             %span.badge.badge-warning
               Canceled
+          - elsif appointment.completed?
+            %span.badge.badge-success
+              Completed
         %td
           = appointment.start_time.strftime("%A %B %e")
         %td
           = appointment.start_time.strftime("%l:%M %P") 
-          \-
-          = appointment.end_time.strftime("%l:%M %P") 
+          ·
+          = pluralize(appointment.duration.to_i, "minutes")

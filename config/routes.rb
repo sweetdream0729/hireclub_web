@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   resources :appointments, only: [:index, :show] do
     member do
       get :refresh
+      get :complete
     end
   end
   resources :job_referrals, only: [:show]

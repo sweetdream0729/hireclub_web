@@ -28,4 +28,9 @@ class AppointmentPolicy < ApplicationPolicy
   def refresh?
     admin?
   end
+
+  def complete?
+    return false if user.nil?
+    return true if user.is_admin && record.completable?
+  end
 end

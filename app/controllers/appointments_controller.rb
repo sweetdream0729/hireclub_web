@@ -2,7 +2,7 @@ class AppointmentsController < ApplicationController
   before_action :sign_up_required
   after_action :verify_authorized, except: [:index]
 
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
   def index
     @appointments = policy_scope(Appointment).by_start_time
@@ -14,6 +14,13 @@ class AppointmentsController < ApplicationController
   def refresh
     if @appointment.refresh
       notice = "Appointment Refreshed"
+    end
+    redirect_to @appointment, notice: notice
+  end
+
+  def complete
+    if @appointment.complete!(current_user)
+      notice = "Appointment Completed by #{current_user.display_name}"
     end
     redirect_to @appointment, notice: notice
   end

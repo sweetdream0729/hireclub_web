@@ -5,13 +5,8 @@
     %li.breadcrumb-item
       = link_to @appointment.user.display_name, @appointment.user
 
-  
-    
-
   .row
     .col-sm-8
-      %span.badge.badge-default
-        = @appointment.category_name
       %h1
         = title "#{@appointment.name}"
       %p
@@ -19,16 +14,40 @@
         ·
         = @appointment.start_time.strftime("%l:%M %P") 
         \-
-        = @appointment.end_time.strftime("%l:%M %P") 
+        = @appointment.end_time.strftime("%l:%M %P")
+        ·
+        = pluralize(@appointment.duration.to_i, "minutes")
       %p
+        %span.badge.badge-default
+          = @appointment.category_name
+        - if @appointment.completed?
+          %span.badge.badge-success
+            Completed
         - if @appointment.canceled?
           %span.badge.badge-warning
             Canceled
         
-      %hr
+      
       = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
+      - if @appointment.completed?
+        %hr
+        %p.small
+          Completed
+          = local_time_ago(@appointment.completed_on)
+          by
+          = @appointment.completed_by.display_name
+        %hr
+      - elsif @appointment.canceled?
+        %hr
+        %p.small
+          Canceled
+          = local_time_ago(@appointment.canceled_at)
+          
+        %hr
+
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
     .col-sm-3
+      = link_to 'Complete', complete_appointment_path(@appointment), class: "btn btn-info btn-block" if policy(@appointment).complete?
       = link_to 'Refresh', refresh_appointment_path(@appointment), class: "btn btn-secondary btn-block" if policy(@appointment).refresh?
       = link_to "Admin", rails_admin.edit_path(model_name: 'appointment', id: @appointment.id), class: "btn btn-danger btn-block" if current_user && current_user.is_admin
