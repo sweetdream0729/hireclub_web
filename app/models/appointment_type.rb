@@ -4,7 +4,6 @@ class AppointmentType < ApplicationRecord
 
   # Associations
   belongs_to :appointment_category
-  has_many :appointment_type_providers, dependent: :destroy
 
   # Validations
   validates :name, presence: true

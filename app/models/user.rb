@@ -89,7 +89,6 @@ class User < ApplicationRecord
 
   has_many :appointments, dependent: :destroy, inverse_of: :user
   has_many :appointment_messages, dependent: :destroy, inverse_of: :user
-  has_many :appointment_type_providers, dependent: :destroy, inverse_of: :user
   has_many :assignees, dependent: :destroy, inverse_of: :user
 
   

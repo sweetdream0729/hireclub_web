@@ -71,15 +71,6 @@ ActiveRecord::Schema.define(version: 20170720100356) do
     t.index ["user_id"], name: "index_appointment_messages_on_user_id", using: :btree
   end
 
-  create_table "appointment_type_providers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "appointment_type_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["appointment_type_id"], name: "index_appointment_type_providers_on_appointment_type_id", using: :btree
-    t.index ["user_id"], name: "index_appointment_type_providers_on_user_id", using: :btree
-  end
-
   create_table "appointment_types", force: :cascade do |t|
     t.string   "name",                                null: false
     t.text     "description"
@@ -732,8 +723,6 @@ ActiveRecord::Schema.define(version: 20170720100356) do
   add_foreign_key "analytics_events", "users"
   add_foreign_key "appointment_messages", "appointments"
   add_foreign_key "appointment_messages", "users"
-  add_foreign_key "appointment_type_providers", "appointment_types"
-  add_foreign_key "appointment_type_providers", "users"
   add_foreign_key "appointment_types", "appointment_categories"
   add_foreign_key "appointments", "appointment_types"
   add_foreign_key "appointments", "users"
