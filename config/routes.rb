@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     collection do
       get :completed
       get :canceled
+      get :assigned
       get :all
     end
     member do

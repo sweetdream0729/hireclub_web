@@ -92,6 +92,7 @@ class User < ApplicationRecord
 
   has_many :appointment_messages, dependent: :destroy, inverse_of: :user
   has_many :assignees, dependent: :destroy, inverse_of: :user
+  has_many :assigned_appointments, through: :assignees, source: :appointment
 
   
   # Nested
@@ -246,6 +247,10 @@ class User < ApplicationRecord
 
   def leave_community(community)
     CommunityMember.where(user: self, community: community).destroy_all
+  end
+
+  def has_assignments?
+    Assignee.where(user: self).exists?
   end
 
   # Devise methos
