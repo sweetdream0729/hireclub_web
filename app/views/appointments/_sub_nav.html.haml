@@ -1,0 +1,5 @@
+.col-sm-3.mb-4
+  .list-group
+    = nav_link_to 'Appointments', appointments_path, {class: 'list-group-item'}, { ignore_params: true }
+    = nav_link_to 'Completed', completed_appointments_path, {class: 'list-group-item'}, { ignore_params: true }
+    = nav_link_to 'Canceled', canceled_appointments_path, {class: 'list-group-item'}, { ignore_params: true }

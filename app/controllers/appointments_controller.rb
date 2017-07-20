@@ -1,11 +1,21 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :completed, :canceled]
 
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
   def index
-    @appointments = policy_scope(Appointment).by_start_time
+    @appointments = current_user.appointments.active.incomplete.by_start_time
+  end
+
+  def completed
+    @appointments = current_user.appointments.completed.by_start_time
+    render :index
+  end
+
+  def canceled
+    @appointments = current_user.appointments.canceled.by_start_time
+    render :index
   end
 
   def show

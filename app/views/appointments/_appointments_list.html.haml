@@ -1,0 +1,32 @@
+.col-sm-9
+  %table.table
+    %thead
+      %tr
+        %th Appointment
+        %th Status
+        %th Date
+        %th Time
+        
+    %tbody
+    - @appointments.each do |appointment|
+      %tr
+        %td
+          = link_to appointment.name, appointment
+        %td
+          - if appointment.canceled?
+            %span.badge.badge-warning
+              Canceled
+          - elsif appointment.completed?
+            %span.badge.badge-success
+              Completed
+        %td
+          = appointment.start_time.strftime("%A %B %e")
+        %td
+          = appointment.start_time.strftime("%l:%M %P") 
+          ·
+          = pluralize(appointment.duration.to_i, "minutes")
+  - if @appointments.count == 0
+    No Appointments Found
+
+  %hr
+  = link_to 'Book Appointment', Rails.application.secrets.acuity_link, class: "btn btn-primary"

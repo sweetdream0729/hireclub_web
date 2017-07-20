@@ -9,7 +9,9 @@ class Appointment < ApplicationRecord
 
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
-  scope :canceled,      -> { where("canceled_at IS NOT NULL") }
+  scope :incomplete,    -> { where(completed_on: nil) }
+  scope :canceled,      -> { where("appointments.canceled_at IS NOT NULL") }
+  scope :completed,     -> { where("appointments.completed_on IS NOT NULL") }
   scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
   scope :by_start_time, -> { order('appointments.start_time', 'appointments.id') }
 
