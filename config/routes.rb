@@ -43,8 +43,14 @@ Rails.application.routes.draw do
   resources :appointment_reviews, except: [:update, :edit, :destroy]
   resources :appointment_messages, only: [:create, :destroy]
   resources :appointments, only: [:index, :show] do
+    collection do
+      get :completed
+      get :canceled
+      get :all
+    end
     member do
       get :refresh
+      get :complete
     end
   end
   resources :job_referrals, only: [:show]

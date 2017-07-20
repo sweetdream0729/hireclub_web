@@ -119,3 +119,4 @@ gem 'simple_spark'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'remotipart', '~> 1.2' #for uploading multipart forms via ajax
 gem 'geocoder'
+gem 'time_difference'
