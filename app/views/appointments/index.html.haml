@@ -1,7 +1,7 @@
 .container.content_container
   %h1
     = title "Appointments"
-  = link_to 'Book Appointment', "https://hireclub.acuityscheduling.com", class: "btn btn-primary"
+  = link_to 'Book Appointment', Rails.application.secrets.acuity_link, class: "btn btn-primary"
   %table.table.mt-4
     %thead
       %tr
