@@ -3,6 +3,11 @@ class Appointment < ApplicationRecord
   extend FriendlyId
   friendly_id :acuity_id
 
+  # Scopes
+  scope :active,   -> { where(canceled_at: nil) }
+  scope :canceled, -> { where("canceled_at IS NOT NULL") }
+  scope :upcoming, -> { where('appointments.start_time > ?', Time.current) }
+
   # Associations
   belongs_to :user
   belongs_to :appointment_type
