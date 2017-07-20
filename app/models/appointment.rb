@@ -4,9 +4,10 @@ class Appointment < ApplicationRecord
   friendly_id :acuity_id
 
   # Scopes
-  scope :active,   -> { where(canceled_at: nil) }
-  scope :canceled, -> { where("canceled_at IS NOT NULL") }
-  scope :upcoming, -> { where('appointments.start_time > ?', Time.current) }
+  scope :active,        -> { where(canceled_at: nil) }
+  scope :canceled,      -> { where("canceled_at IS NOT NULL") }
+  scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
+  scope :by_start_time, -> { order('appointments.start_time', 'appointments.id') }
 
   # Associations
   belongs_to :user

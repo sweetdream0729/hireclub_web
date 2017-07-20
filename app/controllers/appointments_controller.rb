@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh]
 
   def index
-    @appointments = policy_scope(Appointment)
+    @appointments = policy_scope(Appointment).by_start_time
   end
 
   def show
