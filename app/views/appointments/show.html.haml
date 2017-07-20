@@ -64,7 +64,7 @@
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
     .col-sm-3.offset-sm-1
-      - if current_user.is_admin
+      - if policy(@appointment).manage?
         .card.mb-4
           .card-block.text-center
             = link_to image_tag(model_avatar(@appointment_user.avatar, 200, true), width: "50%", class: "rounded-circle"), @appointment_user if @appointment_user.present?
