@@ -1,0 +1,27 @@
+%h1 Listing appointment_reviews
+
+%table
+  %thead
+    %tr
+      %th Appointment
+      %th Rating
+      %th Text
+      %th User
+      %th
+      %th
+      %th
+
+  %tbody
+    - @appointment_reviews.each do |appointment_review|
+      %tr
+        %td= appointment_review.appointment
+        %td= appointment_review.rating
+        %td= appointment_review.text
+        %td= appointment_review.user
+        %td= link_to 'Show', appointment_review
+        %td= link_to 'Edit', edit_appointment_review_path(appointment_review)
+        %td= link_to 'Destroy', appointment_review, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Appointment review', new_appointment_review_path

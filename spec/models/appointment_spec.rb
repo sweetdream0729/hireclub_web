@@ -7,6 +7,7 @@ RSpec.describe Appointment, type: :model do
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:completed_by) }
     it { should belong_to(:appointment_type) }
     it { should have_many(:appointment_messages) }
     it { should have_many(:participants).through(:appointment_messages) }
@@ -29,7 +30,7 @@ RSpec.describe Appointment, type: :model do
   end
 
   describe "reschedule!" do
-    it "should reschedule" do
+    it "should reschedule!" do
       new_start_time = DateTime.now + 1.day
       new_end_time = new_start_time + 1.hour
       appointment.reschedule!(new_start_time, new_end_time)
@@ -38,6 +39,26 @@ RSpec.describe Appointment, type: :model do
 
       expect(appointment.start_time).to eq new_start_time
       expect(appointment.end_time).to eq new_end_time
+    end
+  end
+
+  describe "complete!" do
+    let(:completer) { FactoryGirl.build(:user) }
+    it "should complete!" do
+      appointment.complete!(completer)
+
+      appointment.reload
+
+      expect(appointment.completed_on).not_to be_nil
+      expect(appointment.completed_by).to eq completer
+
+      activity = Activity.where(key: AppointmentCompleteActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.owner).to eq completer
+      expect(activity.private).to eq true
+      expect(activity.recipient).to eq appointment.user
+
     end
   end
 end
