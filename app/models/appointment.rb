@@ -32,7 +32,7 @@ class Appointment < ApplicationRecord
   end
 
   def category_name
-    appointment_type.appointment_category.name
+    appointment_type.try(:appointment_category).try(:name)
   end
 
   def canceled?

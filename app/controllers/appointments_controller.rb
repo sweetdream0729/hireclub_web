@@ -28,6 +28,7 @@ class AppointmentsController < ApplicationController
   end
 
   def show
+    @appointment_user = @appointment.user
   end
 
   def refresh
