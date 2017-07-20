@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719142937) do
+ActiveRecord::Schema.define(version: 20170720073631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 20170719142937) do
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_appointment_messages_on_appointment_id", using: :btree
     t.index ["user_id"], name: "index_appointment_messages_on_user_id", using: :btree
+  end
+
+  create_table "appointment_type_providers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "appointment_type_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["appointment_type_id"], name: "index_appointment_type_providers_on_appointment_type_id", using: :btree
+    t.index ["user_id"], name: "index_appointment_type_providers_on_user_id", using: :btree
   end
 
   create_table "appointment_types", force: :cascade do |t|
@@ -257,9 +266,9 @@ ActiveRecord::Schema.define(version: 20170719142937) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -436,6 +445,7 @@ ActiveRecord::Schema.define(version: 20170719142937) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -713,6 +723,8 @@ ActiveRecord::Schema.define(version: 20170719142937) do
   add_foreign_key "analytics_events", "users"
   add_foreign_key "appointment_messages", "appointments"
   add_foreign_key "appointment_messages", "users"
+  add_foreign_key "appointment_type_providers", "appointment_types"
+  add_foreign_key "appointment_type_providers", "users"
   add_foreign_key "appointment_types", "appointment_categories"
   add_foreign_key "appointments", "appointment_types"
   add_foreign_key "appointments", "users"
