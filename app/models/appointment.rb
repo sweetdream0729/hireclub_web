@@ -13,6 +13,7 @@ class Appointment < ApplicationRecord
   belongs_to :appointment_type
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
+  has_many :assignees, dependent: :destroy
 
 
   # Validations
