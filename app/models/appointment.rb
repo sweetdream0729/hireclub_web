@@ -6,6 +6,7 @@ class Appointment < ApplicationRecord
 
   extend FriendlyId
   friendly_id :acuity_id
+  paginates_per 10
 
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }

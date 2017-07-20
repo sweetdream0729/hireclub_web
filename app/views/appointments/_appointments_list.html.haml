@@ -28,5 +28,6 @@
   - if @appointments.count == 0
     No Appointments Found
 
+  = paginate @appointments
   %hr
   = link_to 'Book Appointment', Rails.application.secrets.acuity_link, class: "btn btn-primary"

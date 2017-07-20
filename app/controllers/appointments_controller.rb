@@ -1,21 +1,30 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all]
 
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
   def index
-    @appointments = current_user.appointments.active.incomplete.by_start_time
+    @appointments = current_user.appointments.active.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
   end
 
   def completed
-    @appointments = current_user.appointments.completed.by_start_time
+    @appointments = current_user.appointments.completed.by_start_time.includes(:appointment_type).page(params[:page])
     render :index
   end
 
   def canceled
-    @appointments = current_user.appointments.canceled.by_start_time
+    @appointments = current_user.appointments.canceled.by_start_time.includes(:appointment_type).page(params[:page])
     render :index
+  end
+
+  def all
+    if !current_user.is_admin
+      redirect_to appointments_path 
+    else
+      @appointments = Appointment.by_start_time.includes(:appointment_type).page(params[:page])
+      render :index
+    end
   end
 
   def show
