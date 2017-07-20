@@ -1,4 +1,4 @@
-.container.content_container
+.container-fluid.content_container
   %ol.breadcrumb
     %li.breadcrumb-item
       = link_to "Appointments", appointments_path
@@ -9,7 +9,7 @@
         = link_to "Admin", rails_admin.edit_path(model_name: 'appointment', id: @appointment.id)
 
   .row
-    .col-sm-8
+    .col-sm-7
       %h1
         = title "#{@appointment.name}"
       %p
@@ -63,7 +63,7 @@
 
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
-    .col-sm-3
+    .col-sm-3.offset-sm-1
       - if current_user.is_admin
         .card
           .card-block.text-center

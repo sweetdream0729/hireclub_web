@@ -2,6 +2,8 @@
   %table.table
     %thead
       %tr
+        - if current_user.is_admin
+          %th User
         %th Appointment
         %th Status
         %th Date
@@ -10,6 +12,11 @@
     %tbody
     - @appointments.each do |appointment|
       %tr
+        - if current_user.is_admin
+          %td
+            - if appointment.user.present?
+              = link_to image_tag(model_avatar(appointment.user.avatar, 200, true), width: 32, class: 'mr-1 rounded-circle'), appointment.user
+            = link_to "#{appointment.first_name} #{appointment.last_name}", appointment
         %td
           = link_to appointment.name, appointment
         %td
