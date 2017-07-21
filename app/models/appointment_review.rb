@@ -10,6 +10,7 @@ class AppointmentReview < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :appointment, presence: true
+  validates_uniqueness_of :appointment_id, message: 'can have only one review'
   validates :rating, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
   validate :appointment_should_be_complete
 

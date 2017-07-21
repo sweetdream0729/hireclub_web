@@ -6,17 +6,17 @@
         - @appointment_review.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :appointment
-    = f.text_field :appointment
-  .field
-    = f.label :rating
-    = f.number_field :rating
-  .field
-    = f.label :text
-    = f.text_area :text
-  .field
-    = f.label :user
-    = f.text_field :user
-  .actions
-    = f.submit 'Save'
+  = f.hidden_field :appointment_id
+  = f.hidden_field :user_id
+  .col-sm-6
+    .form-group
+      = f.label :rating
+      = f.select :rating, options_for_select(['',1,2,3,4,5]), class: "form-control"
+    .form-group
+      = f.label :description
+      = f.text_field :text, class: "form-control"
+
+    = f.submit "Submit", class: "btn btn-primary btn-block btn-lg"
+
+  
+

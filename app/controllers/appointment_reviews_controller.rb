@@ -12,7 +12,9 @@ class AppointmentReviewsController < ApplicationController
 
   # GET /appointment_reviews/new
   def new
-    @appointment_review = AppointmentReview.new
+    set_appointment
+    set_user
+    @appointment_review = AppointmentReview.new(appointment: @appointment,user: @user)
   end
 
 
@@ -31,6 +33,14 @@ class AppointmentReviewsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment_review
       @appointment_review = AppointmentReview.find(params[:id])
+    end
+
+    def set_appointment
+      @appointment = Appointment.find(params[:appointment_id])
+    end
+
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a trusted parameter "white list" through.
