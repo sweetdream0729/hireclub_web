@@ -90,5 +90,9 @@ class Appointment < ApplicationRecord
   def duration
     TimeDifference.between(start_time, end_time).in_minutes
   end
+
+  def reviewed?
+    appointment_review.present?
+  end
   
 end

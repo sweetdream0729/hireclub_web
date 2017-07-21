@@ -16,8 +16,6 @@
         = @appointment.start_time.strftime("%A %B %e")
         ·
         = @appointment.start_time.strftime("%l:%M %P") 
-        \-
-        = @appointment.end_time.strftime("%l:%M %P")
         ·
         = pluralize(@appointment.duration.to_i, "minutes")
       %p
@@ -31,8 +29,8 @@
               %i.fa.fa-refresh.mr-1
               Refresh
           
-          - if @appointment.completed? && !@appointment.appointment_review.present? && @appointment.user ==current_user
-            = link_to "Add Review",new_appointment_review_path(appointment_id: @appointment.id, user_id: @appointment.user.id), class: "btn btn-secondary"
+          - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
+            = link_to "Add Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-primary"
               
 
       %p
@@ -63,6 +61,14 @@
           = local_time_ago(@appointment.canceled_at)
           
         %hr
+
+      - if @appointment.reviewed?
+        %p.small
+          Reviewed
+          = local_time_ago(@appointment.appointment_review.created_at)
+          by 
+          = @appointment.appointment_review.user.display_name
+          %hr
 
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
