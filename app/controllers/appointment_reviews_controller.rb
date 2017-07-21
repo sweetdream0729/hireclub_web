@@ -2,13 +2,10 @@ class AppointmentReviewsController < ApplicationController
   before_action :sign_up_required
   before_action :set_appointment_review, only: [:show, :edit, :update, :destroy]
 
-  # GET /appointment_reviews
-  def index
-    @appointment_reviews = AppointmentReview.all
-  end
-
+  
   # GET /appointment_reviews/1
   def show
+    redirect_to @appointment_review.appointment
   end
 
   # GET /appointment_reviews/new
