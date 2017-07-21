@@ -66,9 +66,22 @@
         %p.small
           Reviewed
           = local_time_ago(@appointment.appointment_review.created_at)
-          by 
-          = @appointment.appointment_review.user.display_name
-          %hr
+        .media.mb-4
+          = link_to image_tag(model_avatar(@appointment.appointment_review.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.appointment_review.user
+          .media-body
+            %p.mb-0
+              %strong
+                = link_to @appointment.appointment_review.user.display_name, @appointment.appointment_review.user
+            %p.mb-0
+              = @appointment.appointment_review.rating
+            %p.mb-0
+              = @appointment.appointment_review.text
+            
+            %small.text-muted
+              = local_time_ago(@appointment.appointment_review.created_at)
+        
+          
+        %hr
 
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
