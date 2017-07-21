@@ -64,7 +64,7 @@ class Appointment < ApplicationRecord
   end
 
   def complete!(completer)
-    return false if completed_by.present?
+    return false if completed_on.present?
     self.completed_by = completer
     self.completed_on = DateTime.now
     self.save
@@ -74,7 +74,7 @@ class Appointment < ApplicationRecord
   end
 
   def completed?
-    completed_by.present?
+    completed_on.present?
   end
 
   def completable?

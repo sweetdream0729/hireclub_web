@@ -14,13 +14,20 @@ class AppointmentReview < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :appointment, presence: true
-  validates_uniqueness_of :appointment_id, message: 'can have only one review'
+  validates :appointment_id, uniqueness: { case_sensitive: false, scope: :user_id }
   validates :rating, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
-  validate :appointment_should_be_complete
+  validate :appointment_completed
+  validate :text_required_if_low_rating
 
-  def appointment_should_be_complete
+  def appointment_completed
     if appointment.present? && !appointment.completed?
-      errors.add(:appointment, "Appointment should be completed")
+      errors.add(:appointment, "must be completed")
+    end
+  end
+
+  def text_required_if_low_rating
+    if appointment.present? && text.blank? && rating.present? && rating < 5
+      errors.add(:text, "is required")
     end
   end
 end
