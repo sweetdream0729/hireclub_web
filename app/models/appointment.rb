@@ -24,6 +24,7 @@ class Appointment < ApplicationRecord
   has_many :participants, through: :appointment_messages, source: :user
   has_many :assignees, dependent: :destroy
   has_many :assigned_users, through: :assignees, source: :user
+  has_one :appointment_review, dependent: :destroy
 
 
   # Validations

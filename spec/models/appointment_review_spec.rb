@@ -17,5 +17,16 @@ RSpec.describe AppointmentReview, type: :model do
     it { should validate_presence_of(:rating) }
     it { should validate_numericality_of(:rating).is_greater_than_or_equal_to(1) }
     it { should validate_numericality_of(:rating).is_less_than_or_equal_to(5) }
+
+    it "appointment should complete before adding review" do
+      user = FactoryGirl.create(:user)
+      appointment.user = user
+      appointment.save
+      before_count = AppointmentReview.count
+      appointment.complete!(user)
+      review = FactoryGirl.create(:appointment_review, appointment: appointment)
+      expect(AppointmentReview.count).not_to eq(before_count)
+    end
+
   end
 end
