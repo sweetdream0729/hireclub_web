@@ -43,6 +43,11 @@
         - if @appointment.canceled?
           %span.badge.badge-warning
             Canceled
+        - if @appointment.reviewed?
+          %span.ml-2
+            - @appointment.appointment_review.rating.times do
+              %i.fa.fa-star.star_rating
+          
         
       
       = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
@@ -63,21 +68,20 @@
         %hr
 
       - if @appointment.reviewed?
-        %p.small
-          Reviewed
-          = local_time_ago(@appointment.appointment_review.created_at)
         .media.mb-4
           = link_to image_tag(model_avatar(@appointment.appointment_review.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.appointment_review.user
           .media-body
             %p.mb-0
               %strong
                 = link_to @appointment.appointment_review.user.display_name, @appointment.appointment_review.user
-            %p.mb-0
-              = @appointment.appointment_review.rating
-            %p.mb-0
+            %p.mb-0.mt-1
+              - @appointment.appointment_review.rating.times do
+                %i.fa.fa-star.fa-2x.star_rating
+            %p.mb-0.mt-1
               = @appointment.appointment_review.text
             
             %small.text-muted
+              Reviewed
               = local_time_ago(@appointment.appointment_review.created_at)
         
           
