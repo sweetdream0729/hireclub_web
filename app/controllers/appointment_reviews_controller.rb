@@ -27,21 +27,6 @@ class AppointmentReviewsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /appointment_reviews/1
-  def update
-    if @appointment_review.update(appointment_review_params)
-      redirect_to @appointment_review, notice: 'Appointment review was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /appointment_reviews/1
-  def destroy
-    @appointment_review.destroy
-    redirect_to appointment_reviews_url, notice: 'Appointment review was successfully destroyed.'
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment_review
