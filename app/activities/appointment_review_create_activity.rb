@@ -3,13 +3,8 @@ class AppointmentReviewCreateActivity
 
   def self.get_recipients_for(activity)
     appointment_review = activity.trackable
-    appointment = appointment_review.appointment
-
-    # all user assigned to appointment
-    recipient_ids = appointment.assignees.pluck(:user_id)
-   
-    recipients = User.where(id: recipient_ids)
-  
+    appointment = appointment_review.appointment   
+    recipients = appointment.assigned_users
   end
 
   def self.send_notification(notification)
