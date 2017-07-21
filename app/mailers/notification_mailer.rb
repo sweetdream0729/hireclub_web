@@ -77,6 +77,15 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Appointment Assigned')
   end
 
+  def appointment_reviewed(notification)
+    set_notification(notification)
+    @appointment_review = notification.activity.trackable
+    @user = notification.user
+    @appointment_user_url = get_utm_url url_for(@appointment_review.user)
+    @appointment_review_url = get_utm_url appointment_review_url(@appointment_review)
+    mail(to: @user.email, subject: 'Appointment Reviewed')
+  end
+
   def comment_created(notification)
     set_notification(notification)
 

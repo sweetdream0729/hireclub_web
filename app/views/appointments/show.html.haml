@@ -30,7 +30,8 @@
             = link_to refresh_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-refresh.mr-1
               Refresh
-          - if @appointment.completed? && !@appointment.appointment_review.present?
+          
+          - if @appointment.completed? && !@appointment.appointment_review.present? && @appointment.user ==current_user
             = link_to "Add Review",new_appointment_review_path(appointment_id: @appointment.id, user_id: @appointment.user.id), class: "btn btn-secondary"
               
 
