@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719175148) do
+ActiveRecord::Schema.define(version: 20170720103737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,11 +112,23 @@ ActiveRecord::Schema.define(version: 20170719175148) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.datetime "canceled_at"
+    t.datetime "completed_on"
+    t.integer  "completed_by_id"
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
+    t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
     t.index ["end_time"], name: "index_appointments_on_end_time", using: :btree
     t.index ["start_time"], name: "index_appointments_on_start_time", using: :btree
     t.index ["user_id"], name: "index_appointments_on_user_id", using: :btree
+  end
+
+  create_table "assignees", force: :cascade do |t|
+    t.integer  "appointment_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
+    t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -730,6 +742,9 @@ ActiveRecord::Schema.define(version: 20170719175148) do
   add_foreign_key "appointment_types", "appointment_categories"
   add_foreign_key "appointments", "appointment_types"
   add_foreign_key "appointments", "users"
+  add_foreign_key "appointments", "users", column: "completed_by_id"
+  add_foreign_key "assignees", "appointments"
+  add_foreign_key "assignees", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"

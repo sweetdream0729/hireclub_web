@@ -7,7 +7,7 @@ class AppointmentMessagePolicy < ApplicationPolicy
 
   def create?
     return false if user.nil?
-    record.appointment.user == user || user.is_admin
+    record.appointment.user == user || user.is_admin || record.appointment.assignees.where(user: user).exists?
   end
 
   def destroy?

@@ -60,7 +60,13 @@
             %a.dropdown-item{:href => new_invite_path } Invite
             
             .dropdown-divider
-            %a.dropdown-item{:href => appointments_path} Appointments
+            %a.dropdown-item{:href => appointments_path} 
+              Appointments
+              - count = current_user.appointments.active.incomplete.count 
+              - if count > 0
+                %small.ml-2
+                  %span.badge.badge-default
+                    = count
 
             .dropdown-divider
             %a.dropdown-item{:href => settings_path} Settings

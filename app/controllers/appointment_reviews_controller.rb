@@ -15,9 +15,6 @@ class AppointmentReviewsController < ApplicationController
     @appointment_review = AppointmentReview.new
   end
 
-  # GET /appointment_reviews/1/edit
-  def edit
-  end
 
   # POST /appointment_reviews
   def create

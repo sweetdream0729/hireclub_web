@@ -251,7 +251,8 @@ Devise.setup do |config|
   config.omniauth :facebook, Rails.application.secrets.facebook_app_id, Rails.application.secrets.facebook_app_secret,
     :scope => "email, public_profile, user_friends, user_location, user_work_history, user_education_history, user_website",
     :info_fields => "id, name, gender, locale, email, location, education, work",
-    :image_size => "large"
+    :image_size => "large",
+    token_params: { parse: :json }
 
   config.omniauth :linkedin, Rails.application.secrets.linkedin_client_id, Rails.application.secrets.linkedin_client_secret
 
