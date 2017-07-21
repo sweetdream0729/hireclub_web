@@ -26,6 +26,7 @@
 //= require local_time
 //= require jquery.infinite-pages
 //= require jquery.remotipart
+//= require jquery.barrating.min
 //= require cocoon
 //= require init
 //= require cable
