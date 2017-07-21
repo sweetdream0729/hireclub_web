@@ -69,6 +69,14 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: "New Message for #{@appointment.name}")
   end
 
+  def appointment_assigned(notification)
+    set_notification(notification)
+    @appointment = @notification.activity.trackable.appointment
+    @user = @notification.activity.trackable.user
+    @appointment_url = get_utm_url appointment_url(@appointment)
+    mail(to: @user.email, subject: 'Appointment Assigned')
+  end
+
   def comment_created(notification)
     set_notification(notification)
 

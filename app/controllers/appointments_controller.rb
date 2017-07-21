@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled, :all]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned]
 
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
@@ -15,6 +15,11 @@ class AppointmentsController < ApplicationController
 
   def canceled
     @appointments = current_user.appointments.canceled.by_start_time.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
+  def assigned
+    @appointments = current_user.assigned_appointments.by_start_time.includes(:appointment_type).page(params[:page])
     render :index
   end
 

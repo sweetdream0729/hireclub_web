@@ -64,8 +64,8 @@
       - if @appointment.active?
         = render partial: "appointment_messages/form", locals: {appointment: @appointment}
     .col-sm-3.offset-sm-1
-      - if current_user.is_admin
-        .card
+      - if policy(@appointment).manage?
+        .card.mb-4
           .card-block.text-center
             = link_to image_tag(model_avatar(@appointment_user.avatar, 200, true), width: "50%", class: "rounded-circle"), @appointment_user if @appointment_user.present?
           .card-block.pt-0
@@ -110,5 +110,10 @@
               - if @appointment_user.twitter_url.present?
                 %li.list-group-item 
                   = link_to link_display(@appointment_user.twitter_url), @appointment_user.twitter_url
+
+      - if @appointment.assignees.any?
+        %h6 Helpers
+        - @appointment.assignees.each do |assignee|
+          = render partial: "assignees/assignee", locals: { assignee: assignee }
                 
           

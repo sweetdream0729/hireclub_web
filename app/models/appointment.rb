@@ -22,6 +22,8 @@ class Appointment < ApplicationRecord
   belongs_to :completed_by, class_name: 'User'
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
+  has_many :assignees, dependent: :destroy
+  has_many :assigned_users, through: :assignees, source: :user
 
 
   # Validations

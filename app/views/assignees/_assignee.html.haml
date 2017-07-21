@@ -1,0 +1,9 @@
+.media.mb-4
+  = link_to image_tag(model_avatar(assignee.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), assignee.user
+  .media-body
+    %p.mb-0
+      %strong
+        = link_to assignee.user.display_name, assignee.user
+    %small.text-muted
+      = local_time_ago(assignee.created_at)
+        

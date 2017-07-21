@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(version: 20170720103737) do
     t.index ["user_id"], name: "index_appointments_on_user_id", using: :btree
   end
 
+  create_table "assignees", force: :cascade do |t|
+    t.integer  "appointment_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
+    t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
+  end
+
   create_table "authentications", force: :cascade do |t|
     t.string   "provider",      null: false
     t.string   "uid",           null: false
@@ -734,6 +743,8 @@ ActiveRecord::Schema.define(version: 20170720103737) do
   add_foreign_key "appointments", "appointment_types"
   add_foreign_key "appointments", "users"
   add_foreign_key "appointments", "users", column: "completed_by_id"
+  add_foreign_key "assignees", "appointments"
+  add_foreign_key "assignees", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
