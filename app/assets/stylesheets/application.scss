@@ -29,6 +29,7 @@ $badge-padding-y: .4rem;
 @import "selectize.default";
 @import "conversation";
 @import "jquery.atwho";
+@import "fontawesome-stars";
 
 .content_container {
   margin-top: 1.5rem;
@@ -102,4 +103,7 @@ body {
 
 .flex-grow {
   flex: 1;
+}
+.star_rating {
+  color: #EDB867;
 }

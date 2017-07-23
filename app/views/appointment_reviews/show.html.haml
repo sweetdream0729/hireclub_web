@@ -2,7 +2,7 @@
 
 %p
   %b Appointment:
-  = @appointment_review.appointment
+  = @appointment_review.appointment.name
 %p
   %b Rating:
   = @appointment_review.rating
@@ -11,8 +11,7 @@
   = @appointment_review.text
 %p
   %b User:
-  = @appointment_review.user
+  = @appointment_review.user.name
 
-= link_to 'Edit', edit_appointment_review_path(@appointment_review)
-\|
+
 = link_to 'Back', appointment_reviews_path

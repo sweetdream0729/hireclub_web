@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
-  resources :appointment_reviews, except: [:update, :edit, :destroy]
+  resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
   resources :appointment_messages, only: [:create, :destroy]
   resources :appointments, only: [:index, :show] do
     collection do

@@ -3,7 +3,9 @@ class AppointmentMessage < ApplicationRecord
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
-  
+  auto_strip_attributes :text, :squish => true
+  nilify_blanks
+
   # Scopes
   scope :by_recent, -> {order(created_at: :desc)}
   scope :by_oldest, -> {order(created_at: :asc)}

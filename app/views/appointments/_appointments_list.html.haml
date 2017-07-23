@@ -24,8 +24,12 @@
             %span.badge.badge-warning
               Canceled
           - elsif appointment.completed?
-            %span.badge.badge-success
-              Completed
+            - if appointment.reviewed?
+              - appointment.appointment_review.rating.times do
+                %i.fa.fa-star.star_rating
+            - else
+              %span.badge.badge-success
+                Completed
           - elsif current_user.is_admin || current_user.has_assignments?
             - if appointment.assigned_users.exists?
               = link_to image_tag(model_avatar(appointment.assigned_users.first.avatar, 200, true), width: 32, class: 'mr-1 rounded-circle'), appointment.assigned_users.first

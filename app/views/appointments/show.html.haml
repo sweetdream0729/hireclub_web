@@ -12,12 +12,26 @@
     .col-sm-7
       %h1
         = title "#{@appointment.name}"
+        
+      %p
+        - if @appointment.category_name.present?
+          %span.badge.badge-default
+            = @appointment.category_name
+        - if @appointment.completed?
+          %span.badge.badge-success
+            Completed
+        - if @appointment.canceled?
+          %span.badge.badge-warning
+            Canceled
+        - if @appointment.reviewed?
+          %span.ml-2
+            - @appointment.appointment_review.rating.times do
+              %i.fa.fa-star.star_rating
+
       %p
         = @appointment.start_time.strftime("%A %B %e")
         ·
         = @appointment.start_time.strftime("%l:%M %P") 
-        \-
-        = @appointment.end_time.strftime("%l:%M %P")
         ·
         = pluralize(@appointment.duration.to_i, "minutes")
       %p
@@ -30,19 +44,9 @@
             = link_to refresh_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-refresh.mr-1
               Refresh
-              
-
-      %p
-        - if @appointment.category_name.present?
-          %span.badge.badge-default
-            = @appointment.category_name
-        - if @appointment.completed?
-          %span.badge.badge-success
-            Completed
-        - if @appointment.canceled?
-          %span.badge.badge-warning
-            Canceled
-        
+          
+          - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
+            = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-primary"        
       
       = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
       - if @appointment.completed?
@@ -58,6 +62,26 @@
         %p.small
           Canceled
           = local_time_ago(@appointment.canceled_at)
+          
+        %hr
+
+      - if @appointment.reviewed?
+        .media.mb-4
+          = link_to image_tag(model_avatar(@appointment.appointment_review.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.appointment_review.user
+          .media-body
+            %p.mb-0
+              %strong
+                = link_to @appointment.appointment_review.user.display_name, @appointment.appointment_review.user
+            %p.mb-0.mt-1
+              - @appointment.appointment_review.rating.times do
+                %i.fa.fa-star.fa-2x.star_rating
+            %p.mb-0.mt-1
+              = @appointment.appointment_review.text
+            
+            %small.text-muted
+              Reviewed
+              = local_time_ago(@appointment.appointment_review.created_at)
+        
           
         %hr
 

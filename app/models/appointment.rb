@@ -24,6 +24,7 @@ class Appointment < ApplicationRecord
   has_many :participants, through: :appointment_messages, source: :user
   has_many :assignees, dependent: :destroy
   has_many :assigned_users, through: :assignees, source: :user
+  has_one :appointment_review, dependent: :destroy
 
 
   # Validations
@@ -63,7 +64,7 @@ class Appointment < ApplicationRecord
   end
 
   def complete!(completer)
-    return false if completed_by.present?
+    return false if completed_on.present?
     self.completed_by = completer
     self.completed_on = DateTime.now
     self.save
@@ -73,7 +74,7 @@ class Appointment < ApplicationRecord
   end
 
   def completed?
-    completed_by.present?
+    completed_on.present?
   end
 
   def completable?
@@ -88,6 +89,10 @@ class Appointment < ApplicationRecord
 
   def duration
     TimeDifference.between(start_time, end_time).in_minutes
+  end
+
+  def reviewed?
+    appointment_review.present?
   end
   
 end
