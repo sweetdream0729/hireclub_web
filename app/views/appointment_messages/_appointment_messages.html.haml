@@ -6,7 +6,7 @@
         %strong
           = link_to appointment_message.user.display_name, appointment_message.user
       %p.mb-0
-        = appointment_message.text
+        = Rinku.auto_link(appointment_message.text, :all, 'target="_blank"').html_safe
       
       %small.text-muted
         = local_time_ago(appointment_message.created_at)
