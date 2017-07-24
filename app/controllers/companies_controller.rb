@@ -82,6 +82,10 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
+    #When old company url is entered it should direct to new url
+    if request.path != edit_company_path(@company)
+      redirect_to edit_company_path(@company)
+    end
   end
 
   # POST /companies
