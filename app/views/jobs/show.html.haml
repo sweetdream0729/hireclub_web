@@ -85,7 +85,7 @@
       = render partial: "comments/form", locals: { commentable: @job } 
 
     .col-sm-3.push-sm-1
-      - if @job_referrals.any?
+      - if @job_referrals.present?
         %h6 Referred By
         - @job_referrals.each do |job_referral|
           = render partial: "job_referrals/sender", locals: { job_referral: job_referral }
