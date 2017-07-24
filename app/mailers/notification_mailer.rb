@@ -98,9 +98,8 @@ class NotificationMailer < ApplicationMailer
     set_notification(notification)
 
     @appointment = notification.activity.trackable
-    @appointment_review = @appointment.appointment_review
 
-    if @appointment_review
+    if @appointment.reviewed?
       @appointment_review_url = get_utm_url url_for(@appointment)
     else
       @appointment_review_url = get_utm_url url_for(new_appointment_review_url(appointment_id: @appointment.id))
