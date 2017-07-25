@@ -17,6 +17,16 @@ RSpec.describe Attachment, type: :model do
       attachment.file_uid = nil
       attachment.save
       expect(attachment).not_to be_valid
+
+      attachment.link = "http://instagram.com/attachmentname"
+      attachment.save
+      expect(attachment).to be_valid
+
+      attachment.link = nil
+      attachment.file_uid = "test"
+      attachment.save
+
+      expect(attachment).to be_valid
     end
 
   end
@@ -37,6 +47,6 @@ RSpec.describe Attachment, type: :model do
       expect(attachment.link).to eq(nil)
     end
 
-    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/attachmentname", nil).for(:link) }
+    it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/attachmentname").for(:link) }
   end
 end
