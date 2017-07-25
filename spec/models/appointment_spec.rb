@@ -12,6 +12,7 @@ RSpec.describe Appointment, type: :model do
     it { should have_many(:appointment_messages) }
     it { should have_many(:participants).through(:appointment_messages) }
     it { should have_one(:appointment_review) }
+    it { should have_many(:attachments) }
   end
 
   describe 'validations' do
