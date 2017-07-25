@@ -63,7 +63,7 @@ RSpec.describe Appointment, type: :model do
     end
   end
 
-  describe "search", :focus => true do
+  describe "search" do
     let(:appointment_category) { FactoryGirl.build(:appointment_category) }
     let(:appointment_type) { FactoryGirl.build(:appointment_type) }
     let(:appointment1) { FactoryGirl.build(:appointment) }
