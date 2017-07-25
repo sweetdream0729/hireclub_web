@@ -91,4 +91,14 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: AppointmentMessageCreateActivity::KEY).last
     NotificationMailer.appointment_messaged(notification)
   end
+
+  def appointment_completed
+    notification = Notification.where(activity_key: AppointmentCompleteActivity::KEY).last
+    NotificationMailer.appointment_completed(notification)
+  end
+  
+  def appointment_reviewed
+    notification = Notification.where(activity_key: AppointmentReviewCreateActivity::KEY).last
+    NotificationMailer.appointment_reviewed(notification)
+  end
 end

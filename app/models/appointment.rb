@@ -16,6 +16,8 @@ class Appointment < ApplicationRecord
   friendly_id :acuity_id
   paginates_per 10
 
+  monetize :price_cents
+
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
   scope :incomplete,    -> { where(completed_on: nil) }
