@@ -4,6 +4,9 @@ class Attachment < ApplicationRecord
   has_smart_url :link
   dragonfly_accessor :file
 
+  # Scopes
+  scope :by_oldest, -> {order(created_at: :asc)}
+  
   # Associations
   belongs_to :attachable, polymorphic: true
 
