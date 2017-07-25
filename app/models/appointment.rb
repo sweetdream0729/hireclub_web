@@ -6,6 +6,7 @@ class Appointment < ApplicationRecord
 
   include PgSearch
   pg_search_scope :text_search,
+                  :against => [:first_name, :last_name],
                   :associated_against => {
                     :user => {:name => "A", :username => "A"},
                     :appointment_type => {:name => "B"},
