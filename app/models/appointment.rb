@@ -5,11 +5,12 @@ class Appointment < ApplicationRecord
   include PublicActivity::Model
 
   include PgSearch
-  pg_search_scope :text_search, 
+  pg_search_scope :text_search,
                   :associated_against => {
                     :user => {:name => "A", :username => "A"},
                     :appointment_type => {:name => "B"},
-                    :assigned_users => {:name => "C", :username => "C"}
+                    :appointment_category => {:name => "C"},
+                    :assigned_users => {:name => "D", :username => "D"}
                   }
 
   extend FriendlyId
@@ -33,7 +34,8 @@ class Appointment < ApplicationRecord
   has_many :assignees, dependent: :destroy
   has_many :assigned_users, through: :assignees, source: :user
   has_one :appointment_review, dependent: :destroy
-
+  #added to support search by appointment_category
+  has_one :appointment_category, through: :appointment_type 
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
