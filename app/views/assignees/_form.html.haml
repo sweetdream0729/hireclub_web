@@ -1,0 +1,8 @@
+= form_for(Assignee.new,remote: true, html: {class: "form-horizontal" }) do |f|
+  = f.hidden_field :appointment_id, value: appointment.id
+  .form-group
+    = select_tag :users,[],{ multiple: true, class: "autocomplete_assignee"}
+    .form-control-feedback
+      = f.object.errors.full_messages.first
+
+  = f.submit "Add", class: 'btn btn-primary btn-sm', data: {disable_with: "Please wait..."}
