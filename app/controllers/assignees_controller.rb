@@ -8,4 +8,10 @@ class AssigneesController < ApplicationController
 		@assignees = @appointment.assignees
 		
 	end
+
+	def assign_me
+		@appointment = Appointment.find(params[:appointment_id])
+		assignee = @appointment.assignees.where(user_id: current_user.id).first_or_create
+		@assignees = @appointment.assignees
+	end
 end

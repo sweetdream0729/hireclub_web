@@ -5,3 +5,4 @@
     .form-control-feedback
       
   = f.submit "Assign", class: 'btn btn-primary btn-sm', data: {disable_with: "Please wait..."}
+  = link_to "Assign me", assign_me_assignee_path(appointment_id: appointment.id), remote: true, class: 'btn btn-outline-primary btn-sm',data: {disable_with: "Please wait..."}
