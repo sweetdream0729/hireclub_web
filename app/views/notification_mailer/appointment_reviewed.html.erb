@@ -89,11 +89,13 @@
                      <tr>
                         <td width="5%" style="width: 5%; max-width: 5%; min-width: 5%;">&nbsp;</td>
                         <td align="left" valign="top">
-                           <div style="height: 30px; line-height: 24px; font-size: 22px; text-align: center;">
+                           <div style="height: 12px; line-height: 12px; font-size: 22px;">&nbsp;</div>
+                           <div style="height: 30px; line-height: 24px; font-size: 22px">
                               <% for i in 1..@appointment_review.rating %>
-                                 <%= image_tag("rating", style: "height:22px;padding: 2px;") %>
+                                 <%= image_tag("star", style: "height:22px;padding: 2px;") %>
                               <% end %>
                            </div>
+                           <div style="height: 12px; line-height: 12px; font-size: 22px;">&nbsp;</div>
 
                            <font class="mob_txt" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 22px; line-height: 27px;">
                               <a href="<%= @appointment_review_url %>" class="mob_txt" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 22px; line-height: 27px; text-decoration: none">
