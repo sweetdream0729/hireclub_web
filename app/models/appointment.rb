@@ -42,12 +42,6 @@ class Appointment < ApplicationRecord
     appointment_type.try(:name)
   end
   
-  def name_or_username
-    user = self.user
-    user.name + " " + user.username
-  end
-  
-
   def category_name
     appointment_type.try(:appointment_category).try(:name)
   end
