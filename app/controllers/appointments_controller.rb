@@ -34,7 +34,13 @@ class AppointmentsController < ApplicationController
 
   def search
     if current_user.has_assignments? || current_user.is_admin
-      @appointments = Appointment.text_search(params[:query]).page(params[:page])
+      if current_user.is_admin
+        scope = Appointment.text_search(params[:query])
+      else
+        scope = current_user.assigned_appointments.text_search(params[:query])
+      end
+
+      @appointments = scope.page(params[:page])
       render :index
     else
       redirect_to appointments_path 
