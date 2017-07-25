@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :search]
 
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
@@ -29,6 +29,15 @@ class AppointmentsController < ApplicationController
     else
       @appointments = Appointment.by_start_time.includes(:appointment_type).page(params[:page])
       render :index
+    end
+  end
+
+  def search
+    if current_user.has_assignments? || current_user.is_admin
+      @appointments = Appointment.text_search(params[:query]).page(params[:page])
+      render :index
+    else
+      redirect_to appointments_path 
     end
   end
 
