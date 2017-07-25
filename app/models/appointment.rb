@@ -4,6 +4,14 @@ class Appointment < ApplicationRecord
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
 
+  include PgSearch
+  pg_search_scope :text_search, 
+                  :associated_against => {
+                    :user => {:name => "A", :username => "A"},
+                    :appointment_type => {:name => "B"},
+                    :assigned_users => {:name => "C", :username => "C"}
+                  }
+
   extend FriendlyId
   friendly_id :acuity_id
   paginates_per 10
@@ -33,6 +41,12 @@ class Appointment < ApplicationRecord
   def name
     appointment_type.try(:name)
   end
+  
+  def name_or_username
+    user = self.user
+    user.name + " " + user.username
+  end
+  
 
   def category_name
     appointment_type.try(:appointment_category).try(:name)
