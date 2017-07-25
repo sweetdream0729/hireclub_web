@@ -4,6 +4,16 @@ class Appointment < ApplicationRecord
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
 
+  include PgSearch
+  pg_search_scope :text_search,
+                  :against => [:first_name, :last_name],
+                  :associated_against => {
+                    :user => {:name => "A", :username => "A"},
+                    :appointment_type => {:name => "B"},
+                    :appointment_category => {:name => "C"},
+                    :assigned_users => {:name => "D", :username => "D"}
+                  }
+
   extend FriendlyId
   friendly_id :acuity_id
   paginates_per 10
@@ -27,7 +37,8 @@ class Appointment < ApplicationRecord
   has_many :assignees, dependent: :destroy
   has_many :assigned_users, through: :assignees, source: :user
   has_one :appointment_review, dependent: :destroy
-
+  #added to support search by appointment_category
+  has_one :appointment_category, through: :appointment_type 
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
@@ -35,7 +46,7 @@ class Appointment < ApplicationRecord
   def name
     appointment_type.try(:name)
   end
-
+  
   def category_name
     appointment_type.try(:appointment_category).try(:name)
   end

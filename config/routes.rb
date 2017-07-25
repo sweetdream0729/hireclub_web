@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :appointment_messages, only: [:create, :destroy]
   resources :appointments, only: [:index, :show] do
     collection do
+      get :search
       get :completed
       get :canceled
       get :assigned
