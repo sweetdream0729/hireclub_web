@@ -1,6 +1,6 @@
 $(document).ready ->
 
-  window.$select = $('.autocomplete_assignee').selectize
+  $('.autocomplete_assignee').selectize
     valueField: 'id'
     labelField: 'name'
     searchField: 'name'
