@@ -7,4 +7,8 @@ class Assignee < ApplicationRecord
   belongs_to :appointment
   belongs_to :user
 
+  validates :user, presence: true
+  validates :appointment, presence: true
+  validates :appointment_id, uniqueness: { case_sensitive: false, scope: :user_id }
+
 end

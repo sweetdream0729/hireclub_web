@@ -134,11 +134,12 @@
               - if @appointment_user.twitter_url.present?
                 %li.list-group-item 
                   = link_to link_display(@appointment_user.twitter_url), @appointment_user.twitter_url
-      %h6 
-        Add Assignees
-        %br
-        %br
-        = render partial: "assignees/form",locals: {appointment: @appointment}
+      - if current_user.is_admin?
+        %h6 
+          Add Assignees
+          %br
+          %br
+          = render partial: "assignees/form",locals: {appointment: @appointment}
 
       %h6 Helpers
       #appointment_assignees
