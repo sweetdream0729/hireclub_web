@@ -62,4 +62,76 @@ RSpec.describe Appointment, type: :model do
 
     end
   end
+
+  describe "search", :focus => true do
+    let(:appointment_category) { FactoryGirl.build(:appointment_category) }
+    let(:appointment_type) { FactoryGirl.build(:appointment_type) }
+    let(:appointment1) { FactoryGirl.build(:appointment) }
+    let(:appointment2) { FactoryGirl.build(:appointment) }
+    let(:user1) { FactoryGirl.create(:user) }
+    let(:user2) { FactoryGirl.build(:admin) }
+
+    it "should search by user name" do
+      appointment_type.appointment_category_id = appointment_category.id
+      appointment_type.save
+      appointment_type.reload
+
+      user2.name = "Developer"
+      user2.save
+
+      appointment1.user_id = user1.id
+      appointment1.appointment_type_id = appointment_type.id
+      appointment1.save
+
+      appointment2.user_id = user2.id
+      appointment2.appointment_type_id = appointment_type.id
+      appointment2.acuity_id = "MyString2"
+      appointment2.save
+      #assigning the appointment to user1
+      appointment1.assignees.create(user_id: user2.id)
+
+      results = Appointment.text_search(user2.name)
+
+      expect(results).not_to be_nil
+      expect(results.count).to eq 2
+      expect(results.first.user.name).to eq user2.name
+      #check the precedence in result
+      expect(results.first.assigned_users.count).to eq 0
+      expect(results.last.assigned_users.first.name).to eq user2.name
+    end
+
+    it "should search by appointment_type" do
+      appointment_type.appointment_category_id = appointment_category.id
+      appointment_type.save
+      appointment_type.reload
+
+      appointment1.user_id = user1.id
+      appointment1.appointment_type_id = appointment_type.id
+      appointment1.save
+
+      results = Appointment.text_search(appointment_type.name)
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first.appointment_type.name).to eq appointment_type.name
+    end
+
+    it "should search by appointment_category" do
+      appointment_category.name = "testname"
+      appointment_category.save
+      appointment_category.reload
+
+      appointment_type.appointment_category_id = appointment_category.id
+      appointment_type.save
+      appointment_type.reload
+
+      appointment1.user_id = user1.id
+      appointment1.appointment_type_id = appointment_type.id
+      appointment1.save
+
+      results = Appointment.text_search(appointment_category.name)
+      expect(results).not_to be_nil
+      expect(results.count).to eq 1
+      expect(results.first.appointment_category.name).to eq appointment_category.name
+    end
+  end
 end

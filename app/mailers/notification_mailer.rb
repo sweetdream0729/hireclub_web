@@ -94,6 +94,22 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Appointment Reviewed')
   end
 
+  def appointment_completed(notification)
+    set_notification(notification)
+
+    @appointment = notification.activity.trackable
+
+    if @appointment.reviewed?
+      @appointment_review_url = get_utm_url url_for(@appointment)
+    else
+      @appointment_review_url = get_utm_url url_for(new_appointment_review_url(appointment_id: @appointment.id))
+    end
+
+    add_metadata(:appointment_id, @appointment.id)
+    
+    mail(to: @user.email, subject: 'Appointment Completed')  
+  end
+
   def comment_created(notification)
     set_notification(notification)
 
