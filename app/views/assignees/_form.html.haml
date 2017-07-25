@@ -3,6 +3,5 @@
   .form-group
     = select_tag :users,[],{ multiple: true, class: "autocomplete_assignee"}
     .form-control-feedback
-      = f.object.errors.full_messages.first
-
+      
   = f.submit "Assign", class: 'btn btn-primary btn-sm', data: {disable_with: "Please wait..."}
