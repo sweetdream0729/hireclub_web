@@ -16,6 +16,18 @@ FactoryGirl.define do
     "#{Faker::Company.name}_#{n}"
   end
 
+  sequence :company_tagline do |n|
+    "#{Faker::Company.catch_phrase}"
+  end
+
+  sequence :job_name do |n|
+    "#{Faker::Job.title}"
+  end
+
+  sequence :milestone_name do |n|
+    "milestone_#{n}"
+  end
+
   sequence :city do |n|
     "#{Faker::Address.city}_#{n}"
   end
