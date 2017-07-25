@@ -1,6 +1,6 @@
 $(document).ready ->
 
-  $('.autocomplete_assignee').selectize
+  assigneeSelect = $('.autocomplete_assignee').selectize
     valueField: 'id'
     labelField: 'name'
     searchField: 'name'
@@ -32,4 +32,9 @@ $(document).ready ->
           callback res
           return
       return
+
+  $("#new_assignee").on "ajax:success", (e, data, status, xhr) ->
+    assigneeSelect[0].selectize.clear()
+    $('#new_assignee')[0].reset()
+  
     
