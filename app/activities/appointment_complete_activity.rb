@@ -6,6 +6,6 @@ class AppointmentCompleteActivity
   end
 
   def self.send_notification(notification)
-    #NotificationMailer.appointment_completed(notification).deliver_later
+    NotificationMailer.appointment_completed(notification).deliver_later
   end
 end
