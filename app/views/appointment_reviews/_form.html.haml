@@ -11,7 +11,7 @@
   .col-sm-6
     .form-group
       = f.label :rating
-      = f.select :rating, options_for_select([1,2,3,4,5]), class: "form-control"
+      = f.select :rating, options_for_select(['',1,2,3,4,5]), class: "form-control"
     .form-group
       = f.text_area :text, class: "form-control", rows: 5, placeholder: "Comments"
 

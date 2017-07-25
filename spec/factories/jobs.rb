@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :job do
-    name "Rails Developer"
+    name { FactoryGirl.generate(:job_name) }
     company
     user
     location

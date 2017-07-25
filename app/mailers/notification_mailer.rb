@@ -104,6 +104,8 @@ class NotificationMailer < ApplicationMailer
     else
       @appointment_review_url = get_utm_url url_for(new_appointment_review_url(appointment_id: @appointment.id))
     end
+
+    add_metadata(:appointment_id, @appointment.id)
     
     mail(to: @user.email, subject: 'Appointment Completed')  
   end
