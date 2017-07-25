@@ -21,38 +21,29 @@
 
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
-                        <td align="center" valign="top">
-                           <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                              <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                                 Your appointment
-                                <%= @appointment.name %>
-                                is complete.
-                              </span>
-                           </font>
-                           <div class="top_pad3" style="height: 30px; line-height: 30px; font-size: 28px;">
-                             &nbsp;
-                           </div>
-                        </td>
-                     </tr>
-                  </table>
-
-                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%; border-width: 1px; border-style: solid; border-color: #e5e5e5; border-top: none;">
-                     <tr>
-                        <td width="5%" style="width: 5%; max-width: 5%; min-width: 5%;">&nbsp;</td>
                         <td align="left" valign="top">
-                           <div style="height: 24px; line-height: 24px; font-size: 22px;">&nbsp;</div>
-
-                           <font class="mob_txt" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 22px; line-height: 27px;">
-                              <a href="<%= @appointment_review_url %>" class="mob_txt" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 22px; line-height: 27px; text-decoration: none">
-                                Please leave a review. Your feedback is greatly appreciated.
-                              </a>
-                           </font>
-
-                           <div style="height: 24px; line-height: 24px; font-size: 22px;">&nbsp;</div>
+                          <a href="<%= @appointment_review_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                            Your appointment
+                            <%= @appointment.name %>
+                            is complete.
+                           </a>
+                           <div style="height: 28px; line-height: 28px; font-size: 26px;">&nbsp;</div>
                         </td>
-                        <td width="5%" style="width: 5%; max-width: 5%; min-width: 5%;">&nbsp;</td>
                      </tr>
                   </table>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
+                     <tr>
+                        <td align="left" valign="top">
+                          <div class="min_pad" style="height: 32px; line-height: 32px; font-size: 30px;">&nbsp;</div>
+
+                          <%= render partial: "/email/elements/p", locals: { text: "Please leave a review. Your feedback is greatly appreciated."} %>
+
+                          <div style="height: 48px; line-height: 48px; font-size: 46px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
 
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
