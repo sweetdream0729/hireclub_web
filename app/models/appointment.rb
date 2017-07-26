@@ -40,9 +40,13 @@ class Appointment < ApplicationRecord
   #added to support search by appointment_category
   has_one :appointment_category, through: :appointment_type 
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :payments, as: :payable
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
+  
+  #callbacks
+  after_create :create_payment
 
   def name
     appointment_type.try(:name)
@@ -107,6 +111,12 @@ class Appointment < ApplicationRecord
 
   def reviewed?
     appointment_review.present?
+  end
+
+  private
+
+  def create_payment
+    CreatePaymentJob.perform_later(self)
   end
   
 end
