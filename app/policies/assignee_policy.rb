@@ -5,8 +5,4 @@ class AssigneePolicy < ApplicationPolicy
     Pundit.policy(user, record.appointment).manage?
   end
 
-  def assign_me?
-  	create?
-  end
-
 end
