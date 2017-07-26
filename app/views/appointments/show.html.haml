@@ -142,4 +142,12 @@
         - @appointment.assignees.each do |assignee|
           = render partial: "assignees/assignee", locals: { assignee: assignee }
                 
-          
+      
+      %h6 Attachments
+      - @appointment.attachments.by_oldest.each do |attachment|
+        .attachment.mb-2
+          %p.mb-0
+            = link_to link_display(attachment.link), attachment.link
+          %small.text-muted
+            = local_time_ago(attachment.created_at)
+      
