@@ -110,6 +110,11 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Appointment Completed')  
   end
 
+  def appointment_rescheduled(notification)
+    set_notification(notification)
+    @appointment = notification.activity.trackable
+  end
+
   def comment_created(notification)
     set_notification(notification)
 

@@ -1,0 +1,26 @@
+- appointment = activity.trackable
+- new_start_time = activity.parameters[:new_start_time]
+- link = url_for(appointment)
+.list-group-item{data: {key: activity.key}}
+  .media
+    .media-left
+      - if activity.owner.present?
+        = link_to image_tag(model_avatar(activity.owner.avatar, 200, true), width: 48, class: "d-flex mr-3 rounded-circle"), link
+      
+    %a{href: link, style: "color: inherit"}
+      .media-body
+        %p.mb-0
+          %span
+            %strong
+              - if activity.owner.present?
+                = activity.owner.display_name
+              
+            rescheduled your appointment for
+            %strong
+              = appointment.name
+            to
+            %strong
+              = new_start_time.strftime("%A %B %e. %l:%M %P")
+          %br
+          %small.text-muted
+            = local_time_ago(activity.created_at)
