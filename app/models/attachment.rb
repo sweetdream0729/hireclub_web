@@ -1,9 +1,13 @@
 class Attachment < ApplicationRecord
   # Extensions
   include HasSmartUrl
+  include UnpublishableActivity
+  include PublicActivity::Model
+  tracked only: [:create], private: true
+
   has_smart_url :link
   dragonfly_accessor :file
-
+  
   # Scopes
   scope :by_oldest, -> {order(created_at: :asc)}
 
