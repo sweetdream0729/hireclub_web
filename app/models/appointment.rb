@@ -39,6 +39,7 @@ class Appointment < ApplicationRecord
   has_one :appointment_review, dependent: :destroy
   #added to support search by appointment_category
   has_one :appointment_category, through: :appointment_type 
+  has_many :attachments, as: :attachable, dependent: :destroy
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
