@@ -56,7 +56,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assignees, only: [:create]
+  resources :assignees, only: [:create] 
+  
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
   

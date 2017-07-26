@@ -2,4 +2,6 @@ $("#appointment_assignees").fadeIn(500, function(){
 $(this).html("#{j render @assignees}");
 });
 
-$('.form-control-feedback').html("#{@count} helpers were added");
+- if @flag == 1
+	$('#assign_me_btn').remove();
+
