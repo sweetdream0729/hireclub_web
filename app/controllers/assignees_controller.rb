@@ -22,4 +22,10 @@ class AssigneesController < ApplicationController
 		@assignees = @appointment.assignees
 		
 	end
+
+	def destroy
+		@assignee = Assignee.find(params[:id])
+		@assignee.destroy
+	end
+
 end
