@@ -5,7 +5,7 @@ class CreatePaymentJob < ApplicationJob
   	payments = AcuityService.get_payment(appointment.acuity_id)
 
     payments.each do |payment|
-      self.payments.where(payable_id: self.id).first_or_create(
+      appointment.payments.where(payable_id: appointment.id).first_or_create(
                 amount_cents: payment["amount"],
                 processor:    payment["processor"],
                 external_id:  payment["transactionID"]

@@ -509,7 +509,7 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.string   "processor",    null: false
     t.string   "external_id",  null: false
     t.string   "payable_type"
-    t.integer  "payable_id"
+    t.integer  "payable_id",   null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["payable_type", "payable_id"], name: "index_payments_on_payable_type_and_payable_id", using: :btree
