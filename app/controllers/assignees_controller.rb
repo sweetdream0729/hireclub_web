@@ -1,5 +1,5 @@
 class AssigneesController < ApplicationController
-	after_action :verify_authorized, only: [:create]
+	after_action :verify_authorized, only: [:create, :destroy]
 
 	def create
 		@appointment = Appointment.find(params[:assignee][:appointment_id])
@@ -14,6 +14,7 @@ class AssigneesController < ApplicationController
 
 	def destroy
 		@assignee = Assignee.find(params[:id])
+		authorize @assignee
 		@assignee.destroy
 	end
 

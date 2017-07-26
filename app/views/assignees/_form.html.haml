@@ -2,7 +2,6 @@
   = f.hidden_field :appointment_id, value: appointment.id
   .form-group
     = select_tag :users,[],{ multiple: true, class: "autocomplete_assignee"}
-    = f.hidden_field :assign_me_id, value: false, id: "assign_me_id"
   .form-control-feedback
       
   = f.submit "Assign", class: 'btn btn-primary btn-sm', data: {disable_with: "Please wait..."}
