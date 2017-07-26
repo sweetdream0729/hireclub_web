@@ -147,7 +147,10 @@
       - @appointment.attachments.by_oldest.each do |attachment|
         .attachment.mb-2
           %p.mb-0
-            = link_to link_display(attachment.link), attachment.link
+            - if attachment.has_link?
+              = link_to link_display(attachment.link), attachment.link
+            - else
+              = link_to attachment.file.name, attachment.file.remote_url
           %small.text-muted
             = local_time_ago(attachment.created_at)
       
