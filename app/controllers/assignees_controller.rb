@@ -1,5 +1,5 @@
 class AssigneesController < ApplicationController
-	after_action :verify_authorized, only: [:create, :assign_me]
+	after_action :verify_authorized, only: [:create]
 
 	def create
 		@flag = 0
