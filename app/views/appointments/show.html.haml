@@ -144,12 +144,10 @@
             = render partial: "assignees/assignee", locals: { assignee: assignee }
 
       - if policy(@appointment).manage?
-        %h6 Assign Helpers
+        %h6.mt-4 Assign Helpers
         = render partial: "assignees/form", locals: {appointment: @appointment}
         
-                
-      
-      %h6 Attachments
+      %h6.mt-4 Attachments
       - @appointment.attachments.by_oldest.each do |attachment|
         .attachment.mb-2
           %p.mb-0
