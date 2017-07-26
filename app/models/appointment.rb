@@ -46,7 +46,7 @@ class Appointment < ApplicationRecord
   validates :acuity_id, presence: true, uniqueness: true
   
   #callbacks
-  after_create :retrieve_payment
+  after_create :retrieve_payments
 
   def name
     appointment_type.try(:name)
@@ -115,7 +115,7 @@ class Appointment < ApplicationRecord
 
   private
 
-  def retrieve_payment
+  def retrieve_payments
     CreatePaymentJob.perform_later(self)
   end
   
