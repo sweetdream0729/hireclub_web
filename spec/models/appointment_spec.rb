@@ -136,4 +136,24 @@ RSpec.describe Appointment, type: :model do
       expect(results.first.appointment_category.name).to eq appointment_category.name
     end
   end
+
+  describe "assignees_count" do
+    it "should cache assignees_count on appointment" do
+      assignee = FactoryGirl.create(:assignee, appointment: appointment)
+      appointment.reload
+
+      expect(appointment.assignees_count).to eq 1
+
+      assignee.destroy
+      appointment.reload      
+
+      expect(appointment.assignees_count).to eq 0
+    end
+  end
+
+  describe "payments" do
+    it "should update_payments" do
+      appointment.update_payments
+    end
+  end
 end

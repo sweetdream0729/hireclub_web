@@ -48,13 +48,19 @@ Rails.application.routes.draw do
       get :completed
       get :canceled
       get :assigned
+      get :unassigned
       get :all
     end
     member do
       get :refresh
       get :complete
     end
+
+    resources :attachments, module: :appointments
   end
+
+  resources :assignees, only: [:create, :destroy] 
+  
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
   
@@ -123,6 +129,8 @@ Rails.application.routes.draw do
 
   resources :user_roles
   resources :roles
+
+  resources :attachments, only: [:destroy]
 
   resources :comments, only: [:destroy] do
     member do

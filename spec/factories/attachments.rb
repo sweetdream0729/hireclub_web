@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :attachment do
-    link "MyString"
+    link "https://hireclub.com"
     attachable { FactoryGirl.create(:appointment) }
   end
 end

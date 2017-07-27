@@ -1,0 +1,7 @@
+$("#appointment_assignees").fadeIn(500, function(){
+$(this).html("#{j render @assignees}");
+});
+
+- if @flag == 1
+	$('#assign_me_btn').remove();
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726124907) do
+ActiveRecord::Schema.define(version: 20170727123938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.datetime "updated_at",                          null: false
     t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
-    t.index ["name"], name: "index_appointment_types_on_name", unique: true, using: :btree
   end
 
   create_table "appointments", force: :cascade do |t|
@@ -116,6 +115,7 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.datetime "canceled_at"
     t.datetime "completed_on"
     t.integer  "completed_by_id"
+    t.integer  "assignees_count",     default: 0, null: false
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
@@ -125,12 +125,11 @@ ActiveRecord::Schema.define(version: 20170726124907) do
   end
 
   create_table "assignees", force: :cascade do |t|
-    t.integer  "appointment_id", null: false
-    t.integer  "user_id",        null: false
+    t.integer  "appointment_id"
+    t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
-    t.index ["user_id", "appointment_id"], name: "index_assignees_on_user_id_and_appointment_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
   end
 
@@ -141,6 +140,7 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.integer  "attachable_id",   null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "file_name"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id", using: :btree
   end
 
@@ -280,10 +280,23 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
+  create_table "facebook_posts", force: :cascade do |t|
+    t.string   "facebook_post_id",  null: false
+    t.string   "facebook_group_id"
+    t.text     "message"
+    t.string   "author_name"
+    t.string   "author_fb_id"
+    t.text     "link"
+    t.string   "post_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["facebook_post_id"], name: "index_facebook_posts_on_facebook_post_id", unique: true, using: :btree
+  end
+
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type"
+    t.string   "followable_type",                 null: false
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type"
+    t.string   "follower_type",                   null: false
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -508,6 +521,7 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.integer  "amount_cents", null: false
     t.string   "processor",    null: false
     t.string   "external_id",  null: false
+    t.datetime "paid_on",      null: false
     t.string   "payable_type"
     t.integer  "payable_id",   null: false
     t.datetime "created_at",   null: false

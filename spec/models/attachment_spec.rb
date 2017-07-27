@@ -15,17 +15,17 @@ RSpec.describe Attachment, type: :model do
     it "should be invalid without link or file" do
       attachment.link = nil
       attachment.file_uid = nil
-      attachment.save
       expect(attachment).not_to be_valid
+    end
 
+    it "should be valid with link" do
       attachment.link = "http://instagram.com/attachmentname"
-      attachment.save
       expect(attachment).to be_valid
+    end
 
+    it "should be valid with file" do
       attachment.link = nil
       attachment.file_uid = "test"
-      attachment.save
-
       expect(attachment).to be_valid
     end
 
@@ -42,11 +42,17 @@ RSpec.describe Attachment, type: :model do
       expect(attachment.link).to eq("http://www.instagram.com/attachmentname")
     end
 
-    it "should ignore invalid urls" do
-      attachment.link = "foo"
-      expect(attachment.link).to eq(nil)
-    end
-
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/attachmentname").for(:link) }
+  end
+
+  describe "activity" do
+    it "should have create activity" do
+      attachment.save
+      activity = Activity.where(key: AttachmentCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq attachment
+      expect(activity.private).to eq true
+    end
   end
 end

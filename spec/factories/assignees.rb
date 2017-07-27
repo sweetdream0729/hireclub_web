@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :assignee do
-    appointment nil
-    user nil
+    appointment
+    user
   end
 end

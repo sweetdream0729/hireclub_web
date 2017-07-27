@@ -23,6 +23,7 @@ class Appointment < ApplicationRecord
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
   scope :incomplete,    -> { where(completed_on: nil) }
+  scope :unassigned,    -> { where(assignees_count: 0) }
   scope :canceled,      -> { where("appointments.canceled_at IS NOT NULL") }
   scope :completed,     -> { where("appointments.completed_on IS NOT NULL") }
   scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
@@ -102,6 +103,7 @@ class Appointment < ApplicationRecord
   def refresh
     json = AcuityService.get_appointment(acuity_id)
     AcuityService.create_appointment(json)
+    self.update_payments
     self.reload
   end
 
@@ -113,10 +115,23 @@ class Appointment < ApplicationRecord
     appointment_review.present?
   end
 
-  private
-
   def retrieve_payments
     CreatePaymentJob.perform_later(self)
+  end
+
+  def update_payments
+    Rails.logger.info "update_payments"
+    payments = AcuityService.get_payment(self.acuity_id)
+    Rails.logger.info puts payments.inspect
+    payments.each do |payment|
+      Rails.logger.info puts payment.inspect
+      self.payments.where(payable_id: self.id).first_or_create(
+                amount_cents: payment["amount"],
+                processor:    payment["processor"],
+                external_id:  payment["transactionID"],
+                paid_on:      Chronic.parse(payment["created"])
+                )
+    end
   end
   
 end
