@@ -1,4 +1,4 @@
-.media.mb-4
+.media.mb-4{id: "assignee_#{assignee.id}"}
   = link_to image_tag(model_avatar(assignee.user.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), assignee.user
   .media-body
     %p.mb-0
@@ -6,4 +6,6 @@
         = link_to assignee.user.display_name, assignee.user
     %small.text-muted
       = local_time_ago(assignee.created_at)
+      ·
+      = link_to "Remove", assignee_path(assignee), class: '', method: :delete, remote: true, data: { confirm: "Are you sure?" }
         
