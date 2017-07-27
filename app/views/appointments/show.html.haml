@@ -163,3 +163,13 @@
       - if policy(@appointment).manage?
         %hr
         = render partial: "attachments/form", locals: {attachable: @appointment}
+
+      %h6.mt-4 Payment
+      - @appointment.payments.by_oldest.each do |payment|
+        .payment.mb-2
+          %p.mb-0
+            = humanized_money_with_symbol(payment.amount)
+          %small.text-muted
+            = local_time_ago(payment.paid_on)
+            ·
+            = payment.processor.titlecase

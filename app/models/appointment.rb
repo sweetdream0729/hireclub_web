@@ -130,7 +130,7 @@ class Appointment < ApplicationRecord
       next if payment_json["amount"].blank?
 
       payment = self.payments.where(  external_id: payment_json["transactionID"], 
-                                      processor: payment_json["processor"]).first_or_initialize
+                                      processor:   payment_json["processor"]).first_or_initialize
       payment.amount_dollars = payment_json["amount"]
       payment.paid_on        = Chronic.parse(payment_json["created"])
       payment.save

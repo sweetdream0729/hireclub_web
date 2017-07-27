@@ -2,6 +2,9 @@ class Payment < ApplicationRecord
   # Extensions
   monetize :amount_cents
 
+  # Scopes
+  scope :by_oldest, -> {order(created_at: :asc)}
+
   # Associations
   belongs_to :payable, polymorphic: true
 
