@@ -153,6 +153,7 @@ RSpec.describe Appointment, type: :model do
 
   describe "payments" do
     it "should update_payments" do
+      appointment.acuity_id = "115819905"
       appointment.update_payments
     end
   end

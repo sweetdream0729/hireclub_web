@@ -121,10 +121,11 @@ class Appointment < ApplicationRecord
 
   def update_payments
     Rails.logger.info "update_payments"
-    payments = AcuityService.get_payment(self.acuity_id)
+    payments = AcuityService.get_payments(self.acuity_id)
     Rails.logger.info puts payments.inspect
     payments.each do |payment|
       Rails.logger.info puts payment.inspect
+      next if payment["amount"].blank?
       self.payments.where(payable_id: self.id).first_or_create(
                 amount_cents: payment["amount"],
                 processor:    payment["processor"],
