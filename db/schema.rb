@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726130841) do
+ActiveRecord::Schema.define(version: 20170727123938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20170726130841) do
     t.datetime "canceled_at"
     t.datetime "completed_on"
     t.integer  "completed_by_id"
+    t.integer  "assignees_count",     default: 0, null: false
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
@@ -293,9 +294,9 @@ ActiveRecord::Schema.define(version: 20170726130841) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type"
+    t.string   "followable_type",                 null: false
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type"
+    t.string   "follower_type",                   null: false
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -472,7 +473,6 @@ ActiveRecord::Schema.define(version: 20170726130841) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
