@@ -7,5 +7,7 @@ class CreatePayments < ActiveRecord::Migration[5.0]
       t.references :payable, polymorphic: true, index: true, null: false
       t.timestamps
     end
+
+    add_index :payments, [:processor, :external_id], unique: true
   end
 end

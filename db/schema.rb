@@ -513,6 +513,7 @@ ActiveRecord::Schema.define(version: 20170726124907) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["payable_type", "payable_id"], name: "index_payments_on_payable_type_and_payable_id", using: :btree
+    t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
