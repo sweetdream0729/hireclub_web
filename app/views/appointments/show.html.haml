@@ -169,9 +169,15 @@
         .payment.mb-2
           %p.mb-0
             = humanized_money_with_symbol(payment.amount)
+            - if payment.description.present?
+              ·
+              = payment.description
           %small.text-muted
             = local_time_ago(payment.paid_on)
             ·
             = payment.processor.titlecase
             ·
             = payment.external_id
+            - if current_user.is_admin
+              ·
+              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id)
