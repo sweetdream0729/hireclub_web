@@ -157,4 +157,9 @@
               = link_to attachment.file.name, attachment.file.remote_url
           %small.text-muted
             = local_time_ago(attachment.created_at)
-      
+            - if policy(attachment).destroy?
+              ·
+              = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
+      - if policy(@appointment).manage?
+        %hr
+        = render partial: "attachments/form", locals: {attachable: @appointment}

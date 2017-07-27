@@ -55,6 +55,8 @@ Rails.application.routes.draw do
       get :refresh
       get :complete
     end
+
+    resources :attachments, module: :appointments
   end
 
   resources :assignees, only: [:create, :destroy] 
@@ -127,6 +129,8 @@ Rails.application.routes.draw do
 
   resources :user_roles
   resources :roles
+
+  resources :attachments, only: [:destroy]
 
   resources :comments, only: [:destroy] do
     member do

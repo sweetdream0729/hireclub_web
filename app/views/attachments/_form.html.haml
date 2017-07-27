@@ -1,0 +1,5 @@
+- if user_signed_in?
+  = form_for [attachable, Attachment.new] do |f|
+    .form-group
+      = f.text_field :link, class: "form-control", placeholder: "Link"
+    = f.submit "Add Attachment", class: "btn btn-primary"
