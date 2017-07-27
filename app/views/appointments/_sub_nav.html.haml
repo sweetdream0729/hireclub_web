@@ -12,6 +12,10 @@
         %span.badge.badge-default
           = current_user.assigned_appointments.count
     - if current_user.is_admin
+      = nav_link_to unassigned_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
+        Unassigned
+        %span.badge.badge-default
+          = Appointment.unassigned.all.count
       = nav_link_to all_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
         All
         %span.badge.badge-default

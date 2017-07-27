@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       get :completed
       get :canceled
       get :assigned
+      get :unassigned
       get :all
     end
     member do
