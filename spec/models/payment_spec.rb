@@ -17,5 +17,12 @@ RSpec.describe Payment, type: :model do
     it { should validate_presence_of(:processor) }
     it { should validate_uniqueness_of(:external_id).scoped_to(:processor) }
   end
-  
+    
+  it "should convert dollars to cents" do
+    payment.amount_dollars = "300.00"
+    expect(payment.amount_cents).to eq 30000
+
+    payment.amount_dollars = "$300.00"
+    expect(payment.amount_cents).to eq 30000
+  end
 end

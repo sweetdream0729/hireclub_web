@@ -121,17 +121,19 @@ class Appointment < ApplicationRecord
 
   def update_payments
     Rails.logger.info "update_payments"
-    payments = AcuityService.get_payments(self.acuity_id)
+    payments_json = AcuityService.get_payments(self.acuity_id)
     Rails.logger.info puts payments.inspect
-    payments.each do |payment|
-      Rails.logger.info puts payment.inspect
-      next if payment["amount"].blank?
-      self.payments.where(payable_id: self.id).first_or_create(
-                amount_cents: payment["amount"],
-                processor:    payment["processor"],
-                external_id:  payment["transactionID"],
-                paid_on:      Chronic.parse(payment["created"])
-                )
+    payments_json.each do |payment_json|
+      Rails.logger.info puts payment_json.inspect
+      next if payment_json["amount"].blank?
+
+      payment = self.payments.where(payable_id: self.id).first_or_initialize
+      payment.amount_dollars = payment_json["amount"]
+      payment.processor      = payment_json["processor"],
+      payment.external_id    = payment_json["transactionID"],
+      payment.paid_on        = Chronic.parse(payment_json["created"])
+      payment.save
+      
     end
   end
   

@@ -1,5 +1,8 @@
 class Payment < ApplicationRecord
-  
+  # Extensions
+  monetize :amount_cents
+
+  # Associations
   belongs_to :payable, polymorphic: true
 
   # Validations
@@ -9,4 +12,10 @@ class Payment < ApplicationRecord
   validates :amount_cents, presence: true
   validates :paid_on, presence: true
   validates_uniqueness_of :external_id, scope: :processor
+
+
+  def amount_dollars=(value)
+    value = value.gsub("$","").gsub(".","")
+    self.amount_cents = value
+  end
 end
