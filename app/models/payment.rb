@@ -1,6 +1,7 @@
 class Payment < ApplicationRecord
   # Extensions
   monetize :amount_cents
+  monetize :processor_fee_cents
 
   # Scopes
   scope :by_oldest, -> {order(created_at: :asc)}
