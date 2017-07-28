@@ -133,6 +133,7 @@ class Appointment < ApplicationRecord
                                       processor:   payment_json["processor"]).first_or_initialize
       payment.amount_dollars = payment_json["amount"]
       payment.paid_on        = Chronic.parse(payment_json["created"])
+      payment.user = self.user
       payment.save
       
     end

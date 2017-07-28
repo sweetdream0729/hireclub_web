@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  
+
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'settings/account'
   get 'settings/links'
   get 'settings/notifications'
+  get 'settings/payments'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'

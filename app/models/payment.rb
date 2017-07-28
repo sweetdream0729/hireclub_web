@@ -7,6 +7,7 @@ class Payment < ApplicationRecord
 
   # Associations
   belongs_to :payable, polymorphic: true
+  belongs_to :user
 
   # Validations
   validates :payable, presence: true
