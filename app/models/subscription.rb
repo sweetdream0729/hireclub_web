@@ -126,10 +126,20 @@ class Subscription < ApplicationRecord
     end
   end
 
+  def set_role
+    return unless is_active?
+    user.is_subscriber = true
+    user.save
+  end
+
+  def remove_role
+    user.is_subscriber = true
+    user.save
+  end
+
   def set_active
     self.update_attribute(:status, ACTIVE)
-    # self.add_user_to_group
-    # self.set_role
+    self.set_role
     # self.user.set_past_due(false)
   end
 
