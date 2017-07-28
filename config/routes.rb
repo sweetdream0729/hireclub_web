@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  mount StripeEvent::Engine, at: '/stripe/webhook' 
+
   get 'dashboard' => 'dashboard#index', as: :dashboard
   get 'dashboard/yesterday' => 'dashboard#yesterday'
   get 'dashboard/this_week' => 'dashboard#this_week'
