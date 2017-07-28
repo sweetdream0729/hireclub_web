@@ -462,6 +462,12 @@ GEM
     sshkit (1.13.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    stripe (3.0.1)
+      faraday (~> 0.9)
+    stripe-rails (1.0.0)
+      rails (>= 3)
+      responders
+      stripe
     terminal-notifier-guard (1.6.4)
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -576,6 +582,8 @@ DEPENDENCIES
   sitemap_generator
   spring
   spring-commands-rspec
+  stripe
+  stripe-rails
   terminal-notifier-guard (~> 1.6.1)
   time_difference
   tzinfo-data

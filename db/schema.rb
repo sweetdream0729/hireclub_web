@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727162322) do
+ActiveRecord::Schema.define(version: 20170728072155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,9 +294,9 @@ ActiveRecord::Schema.define(version: 20170727162322) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -473,6 +473,7 @@ ActiveRecord::Schema.define(version: 20170727162322) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -658,6 +659,21 @@ ActiveRecord::Schema.define(version: 20170727162322) do
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id",                            null: false
+    t.datetime "canceled_at"
+    t.string   "stripe_subscription_id"
+    t.string   "status"
+    t.integer  "price_cents",            default: 0, null: false
+    t.string   "stripe_plan_id"
+    t.string   "stripe_plan_name"
+    t.integer  "card_id"
+    t.datetime "current_period_end"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+  end
+
   create_table "user_badges", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
@@ -742,6 +758,8 @@ ActiveRecord::Schema.define(version: 20170727162322) do
     t.boolean  "is_us_work_authorized"
     t.boolean  "requires_us_visa_sponsorship"
     t.integer  "followers_count_cache",        default: 0,     null: false
+    t.string   "stripe_customer_id"
+    t.boolean  "is_subscriber",                default: false, null: false
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -749,6 +767,7 @@ ActiveRecord::Schema.define(version: 20170727162322) do
     t.index ["is_admin"], name: "index_users_on_is_admin", using: :btree
     t.index ["is_available"], name: "index_users_on_is_available", using: :btree
     t.index ["is_hiring"], name: "index_users_on_is_hiring", using: :btree
+    t.index ["is_subscriber"], name: "index_users_on_is_subscriber", using: :btree
     t.index ["is_us_work_authorized"], name: "index_users_on_is_us_work_authorized", using: :btree
     t.index ["location_id"], name: "index_users_on_location_id", using: :btree
     t.index ["open_to_contract"], name: "index_users_on_open_to_contract", using: :btree

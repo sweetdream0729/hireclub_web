@@ -23,5 +23,9 @@ module HireclubWeb
     # -- all .rb files in that directory are automatically loaded.
 
     config.active_job.queue_adapter = :sidekiq
+
+    # Stripe configuration
+    config.stripe.secret_key = Rails.application.secrets.stripe_secret_key
+    config.stripe.publishable_key = Rails.application.secrets.stripe_publishable_key
   end
 end
