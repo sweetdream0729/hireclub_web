@@ -94,6 +94,7 @@ class User < ApplicationRecord
   has_many :assignees, dependent: :destroy, inverse_of: :user
   has_many :assigned_appointments, through: :assignees, source: :appointment
   has_many :subscriptions, dependent: :destroy, inverse_of: :user
+  has_many :payments, dependent: :nullify, inverse_of: :user
 
   
   # Nested

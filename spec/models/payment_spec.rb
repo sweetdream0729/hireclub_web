@@ -7,6 +7,7 @@ RSpec.describe Payment, type: :model do
 
   describe "associations" do
     it { should belong_to(:payable) }
+    it { should belong_to(:user) }
   end
 
   describe 'validations' do

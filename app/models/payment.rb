@@ -1,12 +1,15 @@
 class Payment < ApplicationRecord
+  include Admin::PaymentAdmin
   # Extensions
   monetize :amount_cents
+  monetize :processor_fee_cents
 
   # Scopes
   scope :by_oldest, -> {order(created_at: :asc)}
 
   # Associations
   belongs_to :payable, polymorphic: true
+  belongs_to :user
 
   # Validations
   validates :payable, presence: true
