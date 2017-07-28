@@ -1,11 +1,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
   post 'webhooks/acuity_canceled' => 'webhooks#acuity_canceled'
+
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
   get 'settings/account'
@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'dashboard/this_month' => 'dashboard#this_month'
   get 'dashboard/last_month' => 'dashboard#last_month'
   get 'dashboard/all' => 'dashboard#all'
+
+  get 'heroes' => 'heroes#index', as: :heroes
 
   get 'notifications' => 'notifications#index', as: :notifications
   get 'search' => 'search#index', as: :search
