@@ -3,6 +3,7 @@ module Admin::PaymentAdmin
 
   included do
     rails_admin do
+      parent User
       
       list do
         field :id
