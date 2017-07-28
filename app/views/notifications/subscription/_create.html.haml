@@ -1,0 +1,3 @@
+- subscription = activity.trackable
+= render partial: "/notifications/item", locals: {activity: activity, verb: "became a hero!", object: "", link: url_for(subscription)}
+/ = render partial: "/notifications/item", locals: {activity: activity, verb: "became a hero", object: "", link: url_for(activity.owner)}
