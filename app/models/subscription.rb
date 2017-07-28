@@ -1,7 +1,7 @@
 class Subscription < ApplicationRecord
 
 	include PublicActivity::Model
-  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
   PENDING = 'pending'
   ACTIVE = "active"

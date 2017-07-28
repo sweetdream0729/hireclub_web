@@ -671,6 +671,9 @@ ActiveRecord::Schema.define(version: 20170728072155) do
     t.datetime "current_period_end"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.index ["stripe_plan_id"], name: "index_subscriptions_on_stripe_plan_id", using: :btree
+    t.index ["stripe_plan_name"], name: "index_subscriptions_on_stripe_plan_name", using: :btree
+    t.index ["stripe_subscription_id"], name: "index_subscriptions_on_stripe_subscription_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end
 
@@ -777,6 +780,7 @@ ActiveRecord::Schema.define(version: 20170728072155) do
     t.index ["open_to_remote"], name: "index_users_on_open_to_remote", using: :btree
     t.index ["requires_us_visa_sponsorship"], name: "index_users_on_requires_us_visa_sponsorship", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
