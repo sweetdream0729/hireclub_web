@@ -1,4 +1,5 @@
 class SubscriptionsController < ApplicationController
+  before_action :sign_up_required
   def new
     if current_user.is_subscriber && current_user.subscriptions.active.any?
       redirect_to current_user.subscriptions.active.last
