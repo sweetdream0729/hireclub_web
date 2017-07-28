@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728125519) do
+ActiveRecord::Schema.define(version: 20170728140102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,33 @@ ActiveRecord::Schema.define(version: 20170728125519) do
     t.integer  "position",    default: 0, null: false
     t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer  "user_id",                            null: false
+    t.string   "stripe_card_id",                     null: false
+    t.string   "stripe_customer_id",                 null: false
+    t.boolean  "active",             default: true,  null: false
+    t.boolean  "deleted_on_stripe",  default: false, null: false
+    t.string   "last4",                              null: false
+    t.string   "brand",                              null: false
+    t.string   "funding"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.string   "country"
+    t.string   "name"
+    t.string   "cvc_check"
+    t.boolean  "is_default",         default: false, null: false
+    t.string   "fingerprint"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["active"], name: "index_cards_on_active", using: :btree
+    t.index ["deleted_on_stripe"], name: "index_cards_on_deleted_on_stripe", using: :btree
+    t.index ["stripe_card_id"], name: "index_cards_on_stripe_card_id", using: :btree
+    t.index ["stripe_customer_id"], name: "index_cards_on_stripe_customer_id", using: :btree
+    t.index ["user_id", "fingerprint"], name: "index_cards_on_user_id_and_fingerprint", unique: true, using: :btree
+    t.index ["user_id", "stripe_card_id"], name: "index_cards_on_user_id_and_stripe_card_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_cards_on_user_id", using: :btree
   end
 
   create_table "comments", force: :cascade do |t|
@@ -796,6 +823,7 @@ ActiveRecord::Schema.define(version: 20170728125519) do
   add_foreign_key "assignees", "appointments"
   add_foreign_key "assignees", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "cards", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
   add_foreign_key "community_invites", "users"

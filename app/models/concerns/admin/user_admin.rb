@@ -20,6 +20,7 @@ module Admin::UserAdmin
         field :username
         field :name
         field :is_subscriber
+        field :stripe_customer_id
         field :last_sign_in_at
         field :created_at
         field :updated_at
@@ -35,6 +36,7 @@ module Admin::UserAdmin
           field :password
           field :company
           field :location
+          field :stripe_customer_id
           field :is_subscriber
           field :is_admin
           field :is_moderator
