@@ -1,19 +1,19 @@
 - content_for :head do
   %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
   
-= title "Become a Hero Today "
-
-%section.dark.pt-2.pb-4
-.container
+.container.content_container
   .row
-    .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4
-      .text-center
-        %h3 Become a Hero Today 
-        .mt-2
-          = form_for @subscription, url: subscriptions_path, method: :post do |f|
-            = render 'card_form'
-            %br
-            %br
-            = f.submit "Subscribe", id: 'subscribe_btn', class: 'btn btn-lg btn-success btn-block'
-           
+    .col-12
+      %h1= title "Become A Hero"
+      %p.lead
+        For just $5 a month, show your support for HireClub.
+  .row
+    .col-6
+      .mt-2
+        = form_for @subscription, url: subscriptions_path, method: :post do |f|
+          = render 'card_form'
+          %br
+          %br
+          = f.submit "Subscribe", id: 'subscribe_btn', class: 'btn btn-lg btn-primary btn-block'
+         
 

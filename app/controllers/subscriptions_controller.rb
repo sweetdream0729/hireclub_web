@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
   	create_subscription = Subscription::CreateSubscription.new(current_user, params[:stripeToken], {}, request)
     @subscription = create_subscription.call
     if @subscription.is_active?
-      redirect_to @subscription, notice: 'You are subscribed to HireCLub Hero plan'
+      redirect_to @subscription, notice: 'You are now a HireClub Hero!'
     else
       render :new
     end
