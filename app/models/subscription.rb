@@ -155,6 +155,22 @@ class Subscription < ApplicationRecord
     end
   end
 
+  def cancel(reason=nil)
+    return if is_canceled?
+    customer = Stripe::Customer.retrieve(self.user.stripe_customer_id)
+    begin
+      # handle if stripe_subscription_id is not found
+      stripe_sub = customer.subscriptions.retrieve(self.stripe_subscription_id).delete
+    rescue
+      Rails.logger.info "Stripe subscription #{self.stripe_subscription_id} not found"
+    end
+    
+    self.update_attribute(:status, CANCELED)
+    self.update_attribute(:canceled_at, DateTime.now)
+    
+  end
+
+
   def self.start(user, card_token, params = nil)
     # Cancel any active subscriptions
     # existing_subs = user.subscriptions.active

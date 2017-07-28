@@ -21,4 +21,20 @@ class SubscriptionsController < ApplicationController
   def show
   	@subscription = Subscription.find(params[:id])
   end
+
+  def cancel_subscription
+  	@subscription = current_user.subscriptions.first
+  end
+
+  def cancel
+    @subscription = current_user.subscriptions.first
+    
+    cancel_subscription = Subscription::CancelSubscription.new(current_user, @subscription, request, nil)
+    @subscription = cancel_subscription.call
+    
+    respond_to do |format|
+      format.html { redirect_to @subscription, notice: 'Subscription was successfully canceled.' }
+      format.json { head :no_content }
+    end
+  end
 end

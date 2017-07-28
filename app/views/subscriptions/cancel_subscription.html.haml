@@ -1,0 +1,13 @@
+- title "Cancel Your Subscripion"
+%section.mt-2.mb-4
+  .container
+    .row
+      .col-md-6.col-md-offset-3
+        .row
+          .col-xs-12
+            %h2.thin.reverse Cancel Your Subscription
+            %p.lead We're sorry to see you go. Could you tell us why?
+
+          .col-xs-12  
+            = form_for @subscription, url: cancel_subscription_path, method: :post do |f|
+              = f.submit 'Cancel Subscription', class: 'btn btn-danger margin_right_xs'

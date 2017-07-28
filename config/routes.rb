@@ -65,7 +65,10 @@ Rails.application.routes.draw do
   end
 
   resources :assignees, only: [:create, :destroy] 
-  resources :subscriptions, only: [:new, :create, :show]
+  resources :subscriptions, only: [:new, :create, :show] 
+  get 'subscription/cancel' => 'subscriptions#cancel_subscription'
+  post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
+
   
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
