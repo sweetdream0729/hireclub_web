@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727123938) do
+ActiveRecord::Schema.define(version: 20170727162322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -515,6 +515,20 @@ ActiveRecord::Schema.define(version: 20170727123938) do
     t.index ["read_at"], name: "index_notifications_on_read_at", using: :btree
     t.index ["user_id", "activity_id"], name: "index_notifications_on_user_id_and_activity_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer  "amount_cents", null: false
+    t.string   "processor",    null: false
+    t.string   "external_id",  null: false
+    t.datetime "paid_on",      null: false
+    t.string   "payable_type"
+    t.integer  "payable_id",   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.text     "description"
+    t.index ["payable_type", "payable_id"], name: "index_payments_on_payable_type_and_payable_id", using: :btree
+    t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
   end
 
   create_table "pg_search_documents", force: :cascade do |t|

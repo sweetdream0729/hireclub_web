@@ -13,6 +13,7 @@ RSpec.describe Appointment, type: :model do
     it { should have_many(:participants).through(:appointment_messages) }
     it { should have_one(:appointment_review) }
     it { should have_many(:attachments) }
+    it { should have_many(:payments) }
   end
 
   describe 'validations' do
@@ -147,6 +148,13 @@ RSpec.describe Appointment, type: :model do
       appointment.reload      
 
       expect(appointment.assignees_count).to eq 0
+    end
+  end
+
+  describe "payments" do
+    it "should update_payments" do
+      appointment.acuity_id = "115819905"
+      appointment.update_payments
     end
   end
 end

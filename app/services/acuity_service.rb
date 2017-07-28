@@ -23,6 +23,11 @@ class AcuityService
     JSON.parse(self.get_client.get(path:"/api/v1/appointments/#{acuity_id}").body) rescue []
   end
 
+  def self.get_payments(acuity_id)
+    puts "get_payments #{acuity_id}"
+    JSON.parse(self.get_client.get(path:"/api/v1/appointments/#{acuity_id}/payments").body) rescue []
+  end
+
   def self.refresh_appointment_types
     acuity_options = AcuityService.get_appointment_types
     appointment_types = []
