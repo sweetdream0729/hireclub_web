@@ -1,1 +1,25 @@
-= @subscription.inspect
+.container.content_container
+  %h1 
+    = title "You Are A Hero!"
+  %p
+    Thank you for becoming a HireClub Hero. Your support helps keep HireClub running.
+  %p
+    Hero Since
+    = @subscription.created_at.strftime("%D")
+    ·
+    = humanized_money_with_symbol(@subscription.price)
+    Per Month
+
+  %h3 Upcoming Hero Features
+  %ul
+    %li
+      Special Profile Design
+    %li
+      See Who Viewed Your Profile
+    %li
+      Resume Analytics
+    %li
+      Upload Attachments to Projects
+    %li
+      Listed on
+      = link_to "Heroes", heroes_path

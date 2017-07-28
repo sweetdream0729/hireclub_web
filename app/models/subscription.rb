@@ -2,6 +2,7 @@ class Subscription < ApplicationRecord
   # Extensions
 	include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
+  monetize :price_cents
 
   # Constants
   PENDING = 'pending'
