@@ -35,6 +35,7 @@ class User < ApplicationRecord
   # Scope
   scope :admin,        -> { where(is_admin: true) }
   scope :normal,       -> { where(is_admin: false) }
+  scope :subscribers,  -> { where(is_subscriber: true) }
   scope :moderators,   -> { where(is_moderator: true) }
   scope :reviewers,    -> { where(is_reviewer: true) }
   scope :has_username, -> { where.not(username: nil) }
