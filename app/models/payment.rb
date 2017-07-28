@@ -1,4 +1,5 @@
 class Payment < ApplicationRecord
+  include Admin::PaymentAdmin
   # Extensions
   monetize :amount_cents
   monetize :processor_fee_cents
