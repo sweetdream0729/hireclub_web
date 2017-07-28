@@ -671,6 +671,8 @@ ActiveRecord::Schema.define(version: 20170728125519) do
     t.datetime "current_period_end"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.index ["stripe_plan_id"], name: "index_subscriptions_on_stripe_plan_id", using: :btree
+    t.index ["stripe_plan_name"], name: "index_subscriptions_on_stripe_plan_name", using: :btree
     t.index ["stripe_subscription_id"], name: "index_subscriptions_on_stripe_subscription_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end

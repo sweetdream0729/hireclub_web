@@ -14,5 +14,7 @@ class CreateSubscriptions < ActiveRecord::Migration[5.0]
     end
 
     add_index :subscriptions, :stripe_subscription_id, unique: true
+    add_index :subscriptions, :stripe_plan_id 
+    add_index :subscriptions, :stripe_plan_name
   end
 end
