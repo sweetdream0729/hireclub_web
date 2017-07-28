@@ -35,6 +35,9 @@ class Subscription < ApplicationRecord
   validates :user, :presence => true
   validates :status, presence: true, inclusion: { in: STATUSES }
 
+  def name
+    stripe_plan_name
+  end
 
   def is_active?
     status == ACTIVE

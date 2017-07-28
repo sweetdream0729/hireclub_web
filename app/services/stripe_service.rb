@@ -11,7 +11,10 @@ class StripeService
     Stripe::Charge.list(limit: 100, 'created[gte]' => from_date.to_i, 'created[lte]' => to_date.to_i).auto_paging_each do |stripe_charge|
       begin
         Rails.logger.info puts stripe_charge
-        #Charge.create_from_stripe_charge(stripe_charge)
+        payment = Payment.create_from_stripe_charge(stripe_charge)
+        Rails.logger.info puts payment.inspect
+
+        Rails.logger.info puts payment.errors.full_messages
       rescue Exception => e
         Rails.logger.error ("Could not update stripe charge #{stripe_charge.inspect} #{e}")
       end
