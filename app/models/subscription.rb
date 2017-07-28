@@ -1,8 +1,9 @@
 class Subscription < ApplicationRecord
-
+  # Extensions
 	include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }
 
+  # Constants
   PENDING = 'pending'
   ACTIVE = "active"
   CANCELED = "canceled"
@@ -16,29 +17,24 @@ class Subscription < ApplicationRecord
     CANCELED,
     PAST_DUE
   ]
-
+  
+  # Scopes
+  scope :active,            -> { where(status: ACTIVE) }
+  scope :canceled,          -> { where(status: CANCELED) }
+  scope :past_due,          -> { where(status: PAST_DUE) }
+  scope :pending,           -> { where(status: PENDING) }
+  scope :not_canceled,      -> { where.not(status: CANCELED) }
+  scope :by_recent,         -> { order(created_at: :desc) }
+  scope :by_oldest,         -> { order(created_at: :asc) }
+  
+  # Assocations
   belongs_to :user, inverse_of: :subscriptions
 
   # Validations
   validates :price_cents, :presence => true
   validates :user, :presence => true
   validates :status, presence: true, inclusion: { in: STATUSES }
-  #validate :user_has_phone
 
-  # def user_has_phone
-  #   if user.present?
-  #     if user.phone.blank?
-  #       errors.add(:phone, "must have a phone number") if !errors.include?(:phone)
-  #     else
-  #       user.valid?
-  #       user_errors = user.errors.to_hash
-  #       user_errors.inspect
-  #       user_errors.each do |key,value|
-  #         errors.add(key, value.first) if !errors.include?(key)
-  #       end
-  #     end
-  #   end
-  # end
 
   def is_active?
     status == ACTIVE

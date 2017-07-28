@@ -1,6 +1,10 @@
 class SubscriptionsController < ApplicationController
   def new
-  	@subscription = Subscription.new(user: current_user)
+    if current_user.is_subscriber && current_user.subscriptions.active.any?
+      redirect_to current_user.subscriptions.active.last
+    else
+  	 @subscription = Subscription.new(user: current_user)
+    end
   end
 
   def create
