@@ -106,6 +106,7 @@ module Admin::UserAdmin
           field :company
           field :location
 
+          field :is_subscriber
           field :is_admin
           field :is_moderator
           field :is_reviewer
