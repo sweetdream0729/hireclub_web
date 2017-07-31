@@ -133,7 +133,7 @@ class Subscription < ApplicationRecord
   end
 
   def remove_role
-    user.is_subscriber = true
+    user.is_subscriber = false
     user.save
   end
 
@@ -168,6 +168,7 @@ class Subscription < ApplicationRecord
     self.update_attribute(:status, CANCELED)
     self.update_attribute(:canceled_at, DateTime.now)
     self.remove_role
+    
   end
 
 

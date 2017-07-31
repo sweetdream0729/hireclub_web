@@ -25,6 +25,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry-byebug'
+  gem 'stripe-ruby-mock', '~> 2.4.1', :require => 'stripe_mock'
   # gem 'guard'
   # gem 'guard-bundler', require: false
   # gem 'guard-rspec', require: false
