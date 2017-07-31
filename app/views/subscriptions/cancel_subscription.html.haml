@@ -1,14 +1,11 @@
 - title "Cancel Your Subscripion"
-%section.mt-2.mb-4
-  .container
-    .row
-      .col-md-6.col-md-offset-3
-        .row
-          .col-xs-12
-            %h2.thin.reverse Cancel Your Subscription
-            %p.lead We're sorry to see you go. Hope your return soon.
 
-          .col-xs-12  
-            = form_for @subscription, url: cancel_subscription_path, method: :post do |f|
-              = f.hidden_field :id, value: @subscription.id
-              = f.submit 'Cancel Subscription', class: 'btn btn-danger margin_right_xs'
+.container.content_container
+  %h1 
+    = title "Cancel Your Subscription"
+  %p
+    We're sorry to see you go.
+  = form_for @subscription, url: cancel_subscription_path, method: :post do |f|
+    = f.hidden_field :id, value: @subscription.id
+    = f.submit 'Cancel Subscription', class: 'btn btn-danger'
+    = link_to "I still want to support HireClub", root_path, class: "btn btn-link ml-2"
