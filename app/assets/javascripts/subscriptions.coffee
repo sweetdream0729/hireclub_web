@@ -21,21 +21,24 @@ $(document).ready ->
         displayError.textContent = event.error.message
       else
         displayError.textContent = ''
+        document.getElementById('subscribe_btn').removeAttribute("disabled");
+
       return
 
   if subscriptionForm
     subscriptionForm.addEventListener 'submit', (event) ->
   	  #check if card is present
+  	  document.getElementById('subscribe_btn').setAttribute("disabled", "disabled");
 	    event.preventDefault()
 	    stripe.createToken(card).then (result) ->
 	      if result.error
 	        # show error
 	        errorElement = document.getElementById('card-errors')
 	        errorElement.textContent = result.error.message
+	        document.getElementById('subscribe_btn').disable = false;
 	      else
 	        # add stripeToken to form and submit
 	        stripeTokenHandler result.token, subscriptionForm
-	        document.getElementById('subscribe_btn').setAttribute("disabled", "disabled");
 	      return
       return
 
