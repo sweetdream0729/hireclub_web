@@ -177,13 +177,10 @@ class Subscription < ApplicationRecord
     # existing_subs.each do |sub|
     #   sub.cancel
     # end
-    subscription = user.subscriptions.first
-    if subscription.nil?
-	    subscription = user.subscriptions.build(status: PENDING)
-	    subscription.update_attributes(params) if params.present?
+    subscription = user.subscriptions.build(status: PENDING)
+    subscription.update_attributes(params) if params.present?
 
-	    subscription.save_with_payment(card_token)
-		end
+    subscription.save_with_payment(card_token)
 
     return subscription
   end

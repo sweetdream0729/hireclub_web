@@ -6,8 +6,9 @@
         .row
           .col-xs-12
             %h2.thin.reverse Cancel Your Subscription
-            %p.lead We're sorry to see you go. Could you tell us why?
+            %p.lead We're sorry to see you go. Hope your return soon.
 
           .col-xs-12  
             = form_for @subscription, url: cancel_subscription_path, method: :post do |f|
+              = f.hidden_field :id, value: @subscription.id
               = f.submit 'Cancel Subscription', class: 'btn btn-danger margin_right_xs'

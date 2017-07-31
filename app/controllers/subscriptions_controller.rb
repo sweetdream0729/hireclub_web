@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-  	create_subscription = Subscription::CreateSubscription.new(current_user, params[:stripeToken], {}, request)
+	  create_subscription = Subscription::CreateSubscription.new(current_user, params[:stripeToken], {}, request)
     @subscription = create_subscription.call
     if @subscription.is_active?
       redirect_to @subscription, notice: 'You are now a HireClub Hero!'
@@ -20,20 +20,26 @@ class SubscriptionsController < ApplicationController
 
   def show
   	@subscription = Subscription.find(params[:id])
+    if @subscription.nil? || !@subscription.is_active?
+      redirect_to '/heroes', notice: 'You are not subscribed to any plans'
+    end
   end
 
   def cancel_subscription
-  	@subscription = current_user.subscriptions.first
+  	@subscription = current_user.subscriptions.active.last
+    if @subscription.nil?
+      redirect_to '/heroes', notice: 'You are not subscribed to any plans'
+    end
   end
 
   def cancel
-    @subscription = current_user.subscriptions.first
+    @subscription = Subscription.find(params[:subscription][:id])
     
     cancel_subscription = Subscription::CancelSubscription.new(current_user, @subscription, request, nil)
     @subscription = cancel_subscription.call
     
     respond_to do |format|
-      format.html { redirect_to @subscription, notice: 'Subscription was successfully canceled.' }
+      format.html { redirect_to '/heroes', notice: 'Your Hireclub Heroes subscription is successfully canceled' }
       format.json { head :no_content }
     end
   end
