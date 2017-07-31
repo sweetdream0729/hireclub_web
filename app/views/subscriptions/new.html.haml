@@ -14,6 +14,6 @@
           = render 'card_form'
           %br
           %br
-          = f.submit "Subscribe", id: 'subscribe_btn', class: 'btn btn-lg btn-primary btn-block'
+          %button{:form => "new_subscription", :type => "submit", :value => "Submit", class: "btn btn-lg btn-primary btn-block", id: "subscribe_btn"} Subscribe
          
 
