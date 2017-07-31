@@ -167,7 +167,7 @@ class Subscription < ApplicationRecord
     
     self.update_attribute(:status, CANCELED)
     self.update_attribute(:canceled_at, DateTime.now)
-    
+    self.remove_role
   end
 
 
