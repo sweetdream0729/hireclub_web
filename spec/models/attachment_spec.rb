@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Attachment, type: :model do
-  let(:attachment) { FactoryGirl.build(:attachment) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:attachment) { FactoryGirl.build(:attachment,user: user) }
 
   subject { attachment }
 
