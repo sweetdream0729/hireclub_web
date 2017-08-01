@@ -4,7 +4,7 @@ class AttachmentsController < ApplicationController
   def create
     @attachment = @attachable.attachments.new attachment_params
     authorize @attachment
-    #@attachment.user = current_user
+    @attachment.user = current_user
     
     if @attachment.save 
       redirect_to @attachable, notice: "Attachment created."

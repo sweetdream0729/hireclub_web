@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728125519) do
+
+ActiveRecord::Schema.define(version: 20170801055401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,7 +142,9 @@ ActiveRecord::Schema.define(version: 20170728125519) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "file_name"
+    t.integer  "user_id"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id", using: :btree
+    t.index ["user_id"], name: "index_attachments_on_user_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -294,9 +297,9 @@ ActiveRecord::Schema.define(version: 20170728125519) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -473,6 +476,7 @@ ActiveRecord::Schema.define(version: 20170728125519) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -774,6 +778,7 @@ ActiveRecord::Schema.define(version: 20170728125519) do
   add_foreign_key "appointments", "users", column: "completed_by_id"
   add_foreign_key "assignees", "appointments"
   add_foreign_key "assignees", "users"
+  add_foreign_key "attachments", "users"
   add_foreign_key "authentications", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"

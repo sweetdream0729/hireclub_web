@@ -13,6 +13,7 @@ class Attachment < ApplicationRecord
 
   # Associations
   belongs_to :attachable, polymorphic: true
+  belongs_to :user
 
   # Validations
   validates :attachable, presence: true
