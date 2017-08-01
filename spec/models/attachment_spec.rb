@@ -27,10 +27,17 @@ RSpec.describe Attachment, type: :model do
     end
 
     it "should be valid with file" do
-      attachment.link = nil
-      attachment.file_uid = "test"
+      attachment.file = File.new("#{Rails.root}/spec/support/fixtures/image.png")
       expect(attachment).to be_valid
     end
+
+    it "size should be less than 10Mb" do
+      attachment.file = File.new("#{Rails.root}/spec/support/fixtures/image.png")
+      attachment.save
+      expect(attachment.file.size).to be <= 10000000
+    end
+   File.new("#{Rails.root}/spec/support/fixtures/image.png")
+
 
   end
 
