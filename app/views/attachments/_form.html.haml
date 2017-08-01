@@ -1,10 +1,10 @@
 - if user_signed_in?
-  = form_for [attachable, Attachment.new] do |f|
+  = form_for [attachable, Attachment.new], html: {class: "form-inline"} do |f|
     .form-group
-      = f.label "Add Link"
-      = f.text_field :link, placeholder: "link", class: 'form-control'
-    %h6.text-center 
-      OR
+      %a.btn.btn-secondary.mr-2
+        %i.fa.fa-file-o
+    .form-group
+      = f.text_field :link, placeholder: "Link", class: 'form-control'
     .form-group
       = f.file_field :file, class: 'form-control-file mt-2'
       = f.hidden_field :retained_file
