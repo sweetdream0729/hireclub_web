@@ -63,7 +63,7 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment_user = @appointment.user
-    @attachment = Attachment.new(user: current_user,attachable: @appointment)
+    @attachment = @appointment.attachments.build
   end
 
   def refresh
