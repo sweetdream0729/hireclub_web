@@ -162,8 +162,9 @@
             - if policy(attachment).destroy?
               ·
               = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
-      - if policy(@appointment).manage?
-        %h6.mt-3 Upload Attachment
+
+      - if policy(@attachment).create?
+        %hr
         = render partial: "attachments/form", locals: {attachable: @appointment}
 
       %h6.mt-5 Payment
