@@ -1,11 +1,17 @@
 - if user_signed_in?
   = form_for [attachable, Attachment.new], html: {class: "form-inline"} do |f|
     .form-group
-      %a.btn.btn-secondary.mr-2
+      %a#upload_attachment.btn.btn-secondary.mr-2
         %i.fa.fa-file-o
+      
     .form-group
       = f.text_field :link, placeholder: "Link", class: 'form-control'
-    .form-group
+    .form-group.hidden-xs-up
       = f.file_field :file, class: 'form-control-file mt-2'
       = f.hidden_field :retained_file
-    = f.submit "Add Attachment", class: "btn btn-primary btn-sm"
+    = f.submit "Add Attachment", class: "btn btn-primary btn-sm mt-2"
+
+:javascript
+  document.getElementById('upload_attachment').onclick = function() {
+      document.getElementById('attachment_file').click();
+  };
