@@ -19,6 +19,7 @@ $(document).ready ->
       displayError = document.getElementById('card-errors')
       if event.error
         displayError.textContent = event.error.message
+        document.getElementById('subscribe_btn').setAttribute("disabled", "disabled");
       else
         displayError.textContent = ''
         document.getElementById('subscribe_btn').removeAttribute("disabled");
