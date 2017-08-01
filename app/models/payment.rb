@@ -24,4 +24,18 @@ class Payment < ApplicationRecord
     value = value.gsub("$","").gsub(".","")
     self.amount_cents = value
   end
+
+  def self.create_from_stripe_charge(stripe_charge)
+    payment = Payment.where(  external_id: stripe_charge.id, processor: "stripe").first_or_initialize
+    payment.amount_cents = stripe_charge.amount
+    payment.paid_on      = Time.at(stripe_charge.created).to_datetime
+    payment.description  = stripe_charge.description
+    payment.user = User.where(stripe_customer_id: stripe_charge.customer).first
+
+    stripe_invoice = Stripe::Invoice.retrieve(stripe_charge.invoice)
+    payment.payable = Subscription.where(stripe_subscription_id: stripe_invoice.subscription).first
+    payment.save
+
+    return payment
+  end
 end

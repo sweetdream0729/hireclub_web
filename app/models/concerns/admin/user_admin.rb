@@ -7,7 +7,7 @@ module Admin::UserAdmin
       weight -1000
 
       list do
-        scopes [nil, :normal, :admin, :moderators, :reviewers]
+        scopes [nil, :normal, :subscribers, :admin, :moderators, :reviewers]
         
         field :id
         field :avatar do
@@ -19,6 +19,8 @@ module Admin::UserAdmin
         field :email
         field :username
         field :name
+        field :is_subscriber
+        field :stripe_customer_id
         field :last_sign_in_at
         field :created_at
         field :updated_at
@@ -34,7 +36,8 @@ module Admin::UserAdmin
           field :password
           field :company
           field :location
-
+          field :stripe_customer_id
+          field :is_subscriber
           field :is_admin
           field :is_moderator
           field :is_reviewer
@@ -103,6 +106,7 @@ module Admin::UserAdmin
           field :company
           field :location
 
+          field :is_subscriber
           field :is_admin
           field :is_moderator
           field :is_reviewer

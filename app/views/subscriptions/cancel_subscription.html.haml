@@ -1,0 +1,11 @@
+- title "Cancel Your Subscripion"
+
+.container.content_container
+  %h1 
+    = title "Cancel Your Subscription"
+  %p
+    We're sorry to see you go.
+  = form_for @subscription, url: cancel_subscription_path, method: :post do |f|
+    = f.hidden_field :id, value: @subscription.id
+    = f.submit 'Cancel Subscription', class: 'btn btn-danger'
+    = link_to "I still want to support HireClub", root_path, class: "btn btn-link ml-2"

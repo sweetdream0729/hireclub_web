@@ -1,0 +1,32 @@
+.container.content_container
+  %h1 
+    = title "You Are A Hero!"
+  %p
+    Thank you for becoming a HireClub Hero. Your support helps keep HireClub running.
+  %p
+    Hero Since
+    = @subscription.created_at.strftime("%D")
+    ·
+    = humanized_money_with_symbol(@subscription.price)
+    Per Month
+  .row
+    .col-sm-6
+      = image_tag "https://media.giphy.com/media/l0HlTPnnfzRsf4f2U/giphy.gif", class: "img-fluid", style: "width: 100%"
+      / <iframe src="https://giphy.com/embed/l0HlTPnnfzRsf4f2U" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pgtips-l0HlTPnnfzRsf4f2U">via GIPHY</a></p>
+    .col-sm-6
+      %h3 Upcoming Hero Features
+      %ul
+        %li
+          Special Profile Design
+        %li
+          See Who Viewed Your Profile
+        %li
+          Resume Analytics
+        %li
+          Upload Full Size Attachments to Projects
+        %li
+          Listed on
+          = link_to "Heroes", heroes_path
+  %p.lead.mt-5
+    %a.btn.btn-danger.btn-sm{:href => subscription_cancel_path, :role => "button"} Cancel
+
