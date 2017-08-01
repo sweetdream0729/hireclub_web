@@ -145,7 +145,7 @@
             = render partial: "assignees/assignee", locals: { assignee: assignee }
 
       - if policy(@appointment).manage?
-        %h6.mt-5 Assign Helpers
+        %h6.mt-3 Assign Helpers
         = render partial: "assignees/form", locals: {appointment: @appointment}
         
       %h6.mt-5 Attachments
@@ -163,7 +163,7 @@
               ·
               = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
       - if policy(@appointment).manage?
-        %hr
+        %h6.mt-3 Upload Attachment
         = render partial: "attachments/form", locals: {attachable: @appointment}
 
       %h6.mt-5 Payment

@@ -9,7 +9,7 @@
     .form-group.hidden-xs-up
       = f.file_field :file, class: 'form-control-file mt-2'
       = f.hidden_field :retained_file
-    = f.submit "Add Attachment", class: "btn btn-primary btn-sm mt-2"
+    = f.submit "Upload", class: "btn btn-primary btn-sm mt-2"
 
 :javascript
   document.getElementById('upload_attachment').onclick = function() {
