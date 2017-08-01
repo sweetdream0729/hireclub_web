@@ -7,10 +7,12 @@ RSpec.describe Attachment, type: :model do
 
   describe "associations" do
     it { should belong_to(:attachable) }
+    it { should belong_to(:user) }
   end
 
   describe 'validations' do
     it { should validate_presence_of(:attachable) }
+    it { should validate_presence_of(:user) }
 
     it "should be invalid without link or file" do
       attachment.link = nil

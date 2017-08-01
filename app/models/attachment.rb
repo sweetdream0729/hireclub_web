@@ -17,6 +17,7 @@ class Attachment < ApplicationRecord
 
   # Validations
   validates :attachable, presence: true
+  validates :user, presence: true
   validate :link_or_file_present
 
   def link_or_file_present
