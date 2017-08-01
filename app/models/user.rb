@@ -35,6 +35,7 @@ class User < ApplicationRecord
   # Scope
   scope :admin,        -> { where(is_admin: true) }
   scope :normal,       -> { where(is_admin: false) }
+  scope :subscribers,  -> { where(is_subscriber: true) }
   scope :moderators,   -> { where(is_moderator: true) }
   scope :reviewers,    -> { where(is_reviewer: true) }
   scope :has_username, -> { where.not(username: nil) }
@@ -94,7 +95,9 @@ class User < ApplicationRecord
   has_many :appointment_messages, dependent: :destroy, inverse_of: :user
   has_many :assignees, dependent: :destroy, inverse_of: :user
   has_many :assigned_appointments, through: :assignees, source: :appointment
+  has_many :subscriptions, dependent: :destroy, inverse_of: :user
   has_many :payments, dependent: :nullify, inverse_of: :user
+  has_many :cards, inverse_of: :user, dependent: :destroy
 
   
   # Nested
@@ -411,7 +414,14 @@ class User < ApplicationRecord
     end
   end
 
+  def set_stripe_customer_id(value)
+    return if value.nil?
+    self.update_attribute(:stripe_customer_id, value)
+  end
 
+  def has_stripe_account?
+    !stripe_customer_id.blank?
+  end
 
   def username_not_in_routes
     if RouteRecognizer.new.initial_path_segments.include?(username)

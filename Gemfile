@@ -25,6 +25,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry-byebug'
+  gem 'stripe-ruby-mock', '~> 2.4.1', :require => 'stripe_mock'
   # gem 'guard'
   # gem 'guard-bundler', require: false
   # gem 'guard-rspec', require: false
@@ -121,3 +122,8 @@ gem 'remotipart', '~> 1.2' #for uploading multipart forms via ajax
 gem 'geocoder'
 gem 'time_difference'
 gem 'money-rails', '~>1'
+
+#payment gateway
+gem 'stripe-rails'
+gem 'stripe'
+gem 'stripe_event'

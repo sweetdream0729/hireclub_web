@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  mount StripeEvent::Engine, at: '/stripe/webhook' 
+
   get 'dashboard' => 'dashboard#index', as: :dashboard
   get 'dashboard/yesterday' => 'dashboard#yesterday'
   get 'dashboard/this_week' => 'dashboard#this_week'
@@ -63,6 +65,10 @@ Rails.application.routes.draw do
   end
 
   resources :assignees, only: [:create, :destroy] 
+  resources :subscriptions, only: [:new, :create, :show] 
+  get 'subscription/cancel' => 'subscriptions#cancel_subscription'
+  post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
+
   
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
