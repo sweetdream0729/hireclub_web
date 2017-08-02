@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Attachment, type: :model do
-  let(:attachment) { FactoryGirl.build(:attachment) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:attachment) { FactoryGirl.build(:attachment,user: user) }
 
   subject { attachment }
 
   describe "associations" do
     it { should belong_to(:attachable) }
+    it { should belong_to(:user) }
   end
 
   describe 'validations' do
     it { should validate_presence_of(:attachable) }
+    it { should validate_presence_of(:user) }
 
     it "should be invalid without link or file" do
       attachment.link = nil
@@ -24,8 +27,7 @@ RSpec.describe Attachment, type: :model do
     end
 
     it "should be valid with file" do
-      attachment.link = nil
-      attachment.file_uid = "test"
+      attachment.file = File.new("#{Rails.root}/spec/support/fixtures/image.png")
       expect(attachment).to be_valid
     end
 

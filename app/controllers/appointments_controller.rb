@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming]
 
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
 
@@ -20,6 +20,11 @@ class AppointmentsController < ApplicationController
 
   def assigned
     @appointments = current_user.assigned_appointments.by_start_time.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
+  def upcoming
+    @appointments = current_user.assigned_appointments.upcoming.by_start_time.includes(:appointment_type).page(params[:page])
     render :index
   end
 
@@ -60,6 +65,7 @@ class AppointmentsController < ApplicationController
     @appointment_user = @appointment.user
     @appointment_message = @appointment.appointment_messages.build
     @appointment_messages = @appointment.appointment_messages.by_oldest.includes(:user)
+    @attachment = @appointment.attachments.build
   end
 
   def refresh

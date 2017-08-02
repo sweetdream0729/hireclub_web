@@ -139,16 +139,18 @@
                   = link_to link_display(@appointment_user.twitter_url), @appointment_user.twitter_url
 
       %h6 Helpers
+      %hr
       #appointment_assignees
         - if @appointment.assignees.any?
           - @appointment.assignees.each do |assignee|
             = render partial: "assignees/assignee", locals: { assignee: assignee }
 
       - if policy(@appointment).manage?
-        %h6.mt-4 Assign Helpers
+        %h6.mt-3 Assign Helpers
         = render partial: "assignees/form", locals: {appointment: @appointment}
         
-      %h6.mt-4 Attachments
+      %h6.mt-5 Attachments
+      %hr
       - @appointment.attachments.by_oldest.each do |attachment|
         .attachment.mb-2
           %p.mb-0
@@ -161,11 +163,13 @@
             - if policy(attachment).destroy?
               ·
               = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
-      - if policy(@appointment).manage?
+
+      - if policy(@attachment).create?
         %hr
         = render partial: "attachments/form", locals: {attachable: @appointment}
 
-      %h6.mt-4 Payment
+      %h6.mt-5 Payment
+      %hr
       - @appointment.payments.by_oldest.each do |payment|
         .payment.mb-2
           %p.mb-0

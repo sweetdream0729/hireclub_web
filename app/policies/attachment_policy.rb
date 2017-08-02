@@ -2,11 +2,10 @@ class AttachmentPolicy < ApplicationPolicy
 
   def create?
     return false if user.nil?
-    Pundit.policy(user, record.attachable).manage?
+    record.attachable.user == user || user.is_admin || record.attachable.assignees.where(user: user).exists?
   end
 
   def destroy?
-    return false if user.nil?
-    Pundit.policy(user, record.attachable).manage?
+    owner_or_admin?
   end
 end
