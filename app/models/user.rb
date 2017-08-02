@@ -73,6 +73,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy, inverse_of: :user
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
   has_one :preference, dependent: :destroy, inverse_of: :user
+  has_many :attachments, dependent: :destroy, inverse_of: :user
   accepts_nested_attributes_for :preference
 
   belongs_to :location

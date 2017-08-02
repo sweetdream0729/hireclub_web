@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       get :search
       get :completed
       get :canceled
+      get :upcoming
       get :assigned
       get :unassigned
       get :all

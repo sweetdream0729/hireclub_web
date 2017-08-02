@@ -13,10 +13,13 @@ class Attachment < ApplicationRecord
 
   # Associations
   belongs_to :attachable, polymorphic: true
+  belongs_to :user
 
   # Validations
   validates :attachable, presence: true
+  validates :user, presence: true
   validate :link_or_file_present
+  validates_size_of :file, maximum: 10.megabytes
 
   def link_or_file_present
     if !has_file? && !has_link?
