@@ -137,9 +137,51 @@
                 %li.list-group-item 
                   = link_to link_display(@appointment_user.twitter_url), @appointment_user.twitter_url
 
-      - if @appointment.assignees.any?
-        %h6 Helpers
-        - @appointment.assignees.each do |assignee|
-          = render partial: "assignees/assignee", locals: { assignee: assignee }
-                
-          
+      %h6 Helpers
+      %hr
+      #appointment_assignees
+        - if @appointment.assignees.any?
+          - @appointment.assignees.each do |assignee|
+            = render partial: "assignees/assignee", locals: { assignee: assignee }
+
+      - if policy(@appointment).manage?
+        %h6.mt-3 Assign Helpers
+        = render partial: "assignees/form", locals: {appointment: @appointment}
+        
+      %h6.mt-5 Attachments
+      %hr
+      - @appointment.attachments.by_oldest.each do |attachment|
+        .attachment.mb-2
+          %p.mb-0
+            - if attachment.has_link?
+              = link_to link_display(attachment.link), attachment.link
+            - else
+              = link_to attachment.file.name, attachment.file.remote_url
+          %small.text-muted
+            = local_time_ago(attachment.created_at)
+            - if policy(attachment).destroy?
+              ·
+              = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
+
+      - if policy(@attachment).create?
+        %hr
+        = render partial: "attachments/form", locals: {attachable: @appointment}
+
+      %h6.mt-5 Payment
+      %hr
+      - @appointment.payments.by_oldest.each do |payment|
+        .payment.mb-2
+          %p.mb-0
+            = humanized_money_with_symbol(payment.amount)
+            - if payment.description.present?
+              ·
+              = payment.description
+          %small.text-muted
+            = local_time_ago(payment.paid_on)
+            ·
+            = payment.processor.titlecase
+            ·
+            = payment.external_id
+            - if current_user.is_admin
+              ·
+              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id)

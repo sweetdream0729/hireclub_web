@@ -1,0 +1,13 @@
+- if user_signed_in?
+  = form_for [attachable, @attachment], html: {class: "form-inline"} do |f|
+    .form-group
+      %a#upload_attachment.btn.btn-secondary.mr-2
+        %i.fa.fa-file-o
+      
+    .form-group
+      = f.text_field :link, placeholder: "Link", class: 'form-control'
+    .form-group.hidden-xs-up
+      = f.file_field :file, class: 'form-control-file mt-2'
+      = f.hidden_field :retained_file
+    = f.submit "Upload", class: "btn btn-primary btn-sm mt-2"
+  #file_selection_msg

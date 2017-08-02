@@ -1,16 +1,17 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
   post 'webhooks/acuity_canceled' => 'webhooks#acuity_canceled'
+
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
   get 'settings/account'
   get 'settings/links'
   get 'settings/notifications'
+  get 'settings/payments'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  mount StripeEvent::Engine, at: '/stripe/webhook' 
+
   get 'dashboard' => 'dashboard#index', as: :dashboard
   get 'dashboard/yesterday' => 'dashboard#yesterday'
   get 'dashboard/this_week' => 'dashboard#this_week'
@@ -28,6 +31,8 @@ Rails.application.routes.draw do
   get 'dashboard/this_month' => 'dashboard#this_month'
   get 'dashboard/last_month' => 'dashboard#last_month'
   get 'dashboard/all' => 'dashboard#all'
+
+  get 'heroes' => 'heroes#index', as: :heroes
 
   get 'notifications' => 'notifications#index', as: :notifications
   get 'search' => 'search#index', as: :search
@@ -47,14 +52,25 @@ Rails.application.routes.draw do
       get :search
       get :completed
       get :canceled
+      get :upcoming
       get :assigned
+      get :unassigned
       get :all
     end
     member do
       get :refresh
       get :complete
     end
+
+    resources :attachments, module: :appointments
   end
+
+  resources :assignees, only: [:create, :destroy] 
+  resources :subscriptions, only: [:new, :create, :show] 
+  get 'subscription/cancel' => 'subscriptions#cancel_subscription'
+  post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
+
+  
   resources :job_referrals, only: [:show]
   resources :community_invites, except: [:edit, :update]
   
@@ -123,6 +139,8 @@ Rails.application.routes.draw do
 
   resources :user_roles
   resources :roles
+
+  resources :attachments, only: [:destroy]
 
   resources :comments, only: [:destroy] do
     member do

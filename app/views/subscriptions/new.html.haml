@@ -1,0 +1,19 @@
+- content_for :head do
+  %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+  
+.container.content_container
+  .row
+    .col-sm-12
+      %h1= title "Become A Hero"
+      %p.lead
+        For just $5 a month, show your support for HireClub.
+  .row
+    .col-sm-6
+      .mt-2
+        = form_for @subscription, url: subscriptions_path, method: :post do |f|
+          = render 'card_form'
+          %br
+          %br
+          %button{:form => "new_subscription", :type => "submit", :value => "Submit", class: "btn btn-lg btn-primary btn-block", id: "subscribe_btn"} Subscribe
+         
+

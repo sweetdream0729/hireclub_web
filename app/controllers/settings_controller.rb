@@ -19,6 +19,10 @@ class SettingsController < ApplicationController
 
   end
 
+  def payments
+    @payments = current_user.payments
+  end
+
   def update
     # What page to return to
     session[:return_to] = request.referer

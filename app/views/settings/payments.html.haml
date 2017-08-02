@@ -1,0 +1,22 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-9.mb-4
+      %h1= title "Payments"
+      %table.table
+        %thead
+        %tr
+          %th Date
+          %th Name
+          %th Amount
+          
+        %tbody
+        - @payments.each do |payment|
+          %tr
+            %td
+              = payment.paid_on.strftime("%B %e, %Y")
+            %td
+              = payment.payable.name
+            %td
+              = humanized_money_with_symbol(payment.amount)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721065147) do
+ActiveRecord::Schema.define(version: 20170801055401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.datetime "canceled_at"
     t.datetime "completed_on"
     t.integer  "completed_by_id"
+    t.integer  "assignees_count",     default: 0, null: false
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
@@ -130,6 +131,19 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
     t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string   "link"
+    t.string   "file_uid"
+    t.string   "attachable_type", null: false
+    t.integer  "attachable_id",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "file_name"
+    t.integer  "user_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id", using: :btree
+    t.index ["user_id"], name: "index_attachments_on_user_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -161,6 +175,33 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.integer  "position",    default: 0, null: false
     t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer  "user_id",                            null: false
+    t.string   "stripe_card_id",                     null: false
+    t.string   "stripe_customer_id",                 null: false
+    t.boolean  "active",             default: true,  null: false
+    t.boolean  "deleted_on_stripe",  default: false, null: false
+    t.string   "last4",                              null: false
+    t.string   "brand",                              null: false
+    t.string   "funding"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.string   "country"
+    t.string   "name"
+    t.string   "cvc_check"
+    t.boolean  "is_default",         default: false, null: false
+    t.string   "fingerprint"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["active"], name: "index_cards_on_active", using: :btree
+    t.index ["deleted_on_stripe"], name: "index_cards_on_deleted_on_stripe", using: :btree
+    t.index ["stripe_card_id"], name: "index_cards_on_stripe_card_id", using: :btree
+    t.index ["stripe_customer_id"], name: "index_cards_on_stripe_customer_id", using: :btree
+    t.index ["user_id", "fingerprint"], name: "index_cards_on_user_id_and_fingerprint", unique: true, using: :btree
+    t.index ["user_id", "stripe_card_id"], name: "index_cards_on_user_id_and_stripe_card_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_cards_on_user_id", using: :btree
   end
 
   create_table "comments", force: :cascade do |t|
@@ -505,6 +546,22 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.integer  "amount_cents",                    null: false
+    t.string   "processor",                       null: false
+    t.string   "external_id",                     null: false
+    t.datetime "paid_on",                         null: false
+    t.string   "payable_type"
+    t.integer  "payable_id",                      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "processor_fee_cents", default: 0, null: false
+    t.index ["payable_type", "payable_id"], name: "index_payments_on_payable_type_and_payable_id", using: :btree
+    t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.string   "searchable_type"
@@ -632,6 +689,23 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id",                            null: false
+    t.datetime "canceled_at"
+    t.string   "stripe_subscription_id"
+    t.string   "status"
+    t.integer  "price_cents",            default: 0, null: false
+    t.string   "stripe_plan_id"
+    t.string   "stripe_plan_name"
+    t.datetime "current_period_end"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["stripe_plan_id"], name: "index_subscriptions_on_stripe_plan_id", using: :btree
+    t.index ["stripe_plan_name"], name: "index_subscriptions_on_stripe_plan_name", using: :btree
+    t.index ["stripe_subscription_id"], name: "index_subscriptions_on_stripe_subscription_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+  end
+
   create_table "user_badges", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
@@ -716,6 +790,8 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.boolean  "is_us_work_authorized"
     t.boolean  "requires_us_visa_sponsorship"
     t.integer  "followers_count_cache",        default: 0,     null: false
+    t.string   "stripe_customer_id"
+    t.boolean  "is_subscriber",                default: false, null: false
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -723,6 +799,7 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.index ["is_admin"], name: "index_users_on_is_admin", using: :btree
     t.index ["is_available"], name: "index_users_on_is_available", using: :btree
     t.index ["is_hiring"], name: "index_users_on_is_hiring", using: :btree
+    t.index ["is_subscriber"], name: "index_users_on_is_subscriber", using: :btree
     t.index ["is_us_work_authorized"], name: "index_users_on_is_us_work_authorized", using: :btree
     t.index ["location_id"], name: "index_users_on_location_id", using: :btree
     t.index ["open_to_contract"], name: "index_users_on_open_to_contract", using: :btree
@@ -732,6 +809,7 @@ ActiveRecord::Schema.define(version: 20170721065147) do
     t.index ["open_to_remote"], name: "index_users_on_open_to_remote", using: :btree
     t.index ["requires_us_visa_sponsorship"], name: "index_users_on_requires_us_visa_sponsorship", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
@@ -746,7 +824,9 @@ ActiveRecord::Schema.define(version: 20170721065147) do
   add_foreign_key "appointments", "users", column: "completed_by_id"
   add_foreign_key "assignees", "appointments"
   add_foreign_key "assignees", "users"
+  add_foreign_key "attachments", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "cards", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
   add_foreign_key "community_invites", "users"

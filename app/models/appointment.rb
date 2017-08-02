@@ -23,6 +23,7 @@ class Appointment < ApplicationRecord
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
   scope :incomplete,    -> { where(completed_on: nil) }
+  scope :unassigned,    -> { where(assignees_count: 0) }
   scope :canceled,      -> { where("appointments.canceled_at IS NOT NULL") }
   scope :completed,     -> { where("appointments.completed_on IS NOT NULL") }
   scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
@@ -39,9 +40,14 @@ class Appointment < ApplicationRecord
   has_one :appointment_review, dependent: :destroy
   #added to support search by appointment_category
   has_one :appointment_category, through: :appointment_type 
+  has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :payments, as: :payable, dependent: :destroy
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
+  
+  #callbacks
+  after_create :retrieve_payments
 
   def name
     appointment_type.try(:name)
@@ -107,6 +113,7 @@ class Appointment < ApplicationRecord
   def refresh
     json = AcuityService.get_appointment(acuity_id)
     AcuityService.create_appointment(json)
+    self.update_payments
     self.reload
   end
 
@@ -116,6 +123,30 @@ class Appointment < ApplicationRecord
 
   def reviewed?
     appointment_review.present?
+  end
+
+  def retrieve_payments
+    CreatePaymentJob.perform_later(self)
+  end
+
+  def update_payments
+    Rails.logger.info "update_payments"
+    payments_json = AcuityService.get_payments(self.acuity_id)
+    Rails.logger.info puts payments_json.inspect
+
+    payments_json.each do |payment_json|
+      Rails.logger.info puts payment_json.inspect
+
+      next if payment_json["amount"].blank?
+
+      payment = self.payments.where(  external_id: payment_json["transactionID"], 
+                                      processor:   payment_json["processor"]).first_or_initialize
+      payment.amount_dollars = payment_json["amount"]
+      payment.paid_on        = Chronic.parse(payment_json["created"])
+      payment.user = self.user
+      payment.save
+      
+    end
   end
   
 end

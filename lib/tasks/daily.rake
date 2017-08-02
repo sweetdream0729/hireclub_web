@@ -9,7 +9,9 @@ namespace :daily do
     Follow.counter_culture_fix_counts
     ConversationUser.counter_culture_fix_counts
     CommunityMember.counter_culture_fix_counts
+    Assignee.counter_culture_fix_counts
     SparkpostService.get_message_events
+    StripeService.process_charges
   end
 
   task run_hourly: :environment do
