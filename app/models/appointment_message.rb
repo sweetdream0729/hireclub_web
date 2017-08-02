@@ -18,6 +18,7 @@ class AppointmentMessage < ApplicationRecord
   validates :appointment, presence: true
   validates :text, presence: true
 
+
   def edited?
     created_at != updated_at
   end
@@ -25,6 +26,15 @@ class AppointmentMessage < ApplicationRecord
   def timestamp
     return created_at if !edited?
     return updated_at
+  end
+
+  def create_update_activity
+    if self.previous_changes.key?('text')
+      self.create_activity({key: "appointment_message.edit", 
+                            owner:self.user,
+                            private: true,
+                            parameters: {old_text: self.previous_changes[:text][0]}})
+    end
   end
 
 end
