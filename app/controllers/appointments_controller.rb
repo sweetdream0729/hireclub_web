@@ -58,6 +58,8 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment_user = @appointment.user
+    @appointment_message = @appointment.appointment_messages.build
+    @appointment_messages = @appointment.appointment_messages.by_oldest.includes(:user)
   end
 
   def refresh

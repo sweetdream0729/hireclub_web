@@ -50,7 +50,8 @@
           - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
             = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-primary"        
       
-      = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
+      = render @appointment_messages
+      
       - if @appointment.completed?
         %hr
         %p.small

@@ -1,0 +1,4 @@
+$("#appointment_message_"+(#{@appointment_message.id})).show(100, function(){
+$(this).replaceWith("#{j render @appointment_message}");
+});
+
