@@ -77,14 +77,13 @@ class Appointment < ApplicationRecord
   end
 
   def reschedule!(new_start_time, new_end_time)
-    appointment_old = self
+    parameters = {old_start_time: self.start_time,
+                  old_end_time: self.end_time}
     self.start_time = new_start_time
     self.end_time = new_end_time
     if self.save
-      parameters = {old_start_time: appointment_old.start_time,
-                    old_time: appointment_old.end_time,
-                    new_start_time: self.start_time,
-                    new_end_time: self.end_time}
+      parameters.merge!({new_start_time: self.start_time,
+                        new_end_time: self.end_time})
       self.create_activity(key: "appointment.reschedule",
                            owner: user,
                            private: true,
