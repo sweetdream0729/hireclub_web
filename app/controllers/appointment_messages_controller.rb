@@ -23,10 +23,6 @@ class AppointmentMessagesController < ApplicationController
     @appointment_message.text = appointment_message_params[:text]
     authorize @appointment_message
     @appointment_message.save 
-    #   redirect_to @appointment, notice: "Message updated"
-    # else
-    #   redirect_to @appointment, notice: "Message not updated"
-    # end
   end
 
   def cancel_edit
