@@ -17,4 +17,14 @@ class AppointmentMessage < ApplicationRecord
   validates :user, presence: true
   validates :appointment, presence: true
   validates :text, presence: true
+
+  def edited?
+    created_at != updated_at
+  end
+
+  def timestamp
+    return created_at if !edited?
+    return updated_at
+  end
+
 end

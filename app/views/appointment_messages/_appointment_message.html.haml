@@ -9,7 +9,8 @@
         = Rinku.auto_link(simple_format(appointment_message.text), :all, 'target="_blank"').html_safe
     
     %small.text-muted
-      = local_time_ago(appointment_message.created_at)
+      = "Edited " if appointment_message.edited?
+      = local_time_ago(appointment_message.timestamp)
       - if policy(appointment_message).edit?
         ·
         = link_to "Edit", edit_appointment_message_path(appointment_message), remote: true, class: "text-muted"
