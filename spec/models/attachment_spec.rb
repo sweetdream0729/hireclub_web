@@ -31,14 +31,6 @@ RSpec.describe Attachment, type: :model do
       expect(attachment).to be_valid
     end
 
-    it "size should be less than 10Mb" do
-      attachment.file = File.new("#{Rails.root}/spec/support/fixtures/image.png")
-      attachment.save
-      expect(attachment.file.size).to be <= 10000000
-    end
-   File.new("#{Rails.root}/spec/support/fixtures/image.png")
-
-
   end
 
   describe "link" do
