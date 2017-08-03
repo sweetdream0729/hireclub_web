@@ -27,11 +27,11 @@
       .form-group
         = f.label "When did this happen?"
         %br
-        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
+        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%d/%m/%Y") unless f.object.new_record?}", class: 'datepicker', style: "width:100%;"
 
       .form-group
         = f.label "Skills"
-        = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
+        = f.text_field :skills_list, placeholder: "Design, Rails, Marketing"
 
       .form-group
         = f.label :link
