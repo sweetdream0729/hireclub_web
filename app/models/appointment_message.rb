@@ -17,6 +17,7 @@ class AppointmentMessage < ApplicationRecord
   validates :user, presence: true
   validates :appointment, presence: true
   validates :text, presence: true
+  after_update :create_update_activity
 
 
   def edited?
@@ -29,11 +30,11 @@ class AppointmentMessage < ApplicationRecord
   end
 
   def create_update_activity
-    if self.previous_changes.key?('text')
+    if self.text_changed?
       self.create_activity({key: "appointment_message.edit", 
                             owner:self.user,
                             private: true,
-                            parameters: {old_text: self.previous_changes[:text][0]}})
+                            parameters: {old_text: self.text_was}})
     end
   end
 

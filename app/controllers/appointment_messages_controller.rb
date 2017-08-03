@@ -23,7 +23,6 @@ class AppointmentMessagesController < ApplicationController
     @appointment_message.text = appointment_message_params[:text]
     authorize @appointment_message
     @appointment_message.save 
-    @appointment_message.create_update_activity
   end
 
   def cancel_edit
