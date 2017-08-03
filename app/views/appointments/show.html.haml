@@ -163,6 +163,9 @@
               - else
                 = link_to attachment.file.name, attachment.file.remote_url
             %small.text-muted
+              = "by "
+              = link_to attachment.user.display_name, attachment.user
+              ·
               = local_time_ago(attachment.created_at)
               - if policy(attachment).destroy?
                 ·
