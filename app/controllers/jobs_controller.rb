@@ -19,6 +19,11 @@ class JobsController < ApplicationController
 
       @job_referrals = @job.job_referrals.where(user: current_user)
     end
+
+    #When old job url is entered it should direct to new url
+    if request.path != job_path(@job)
+      return redirect_to @job, :status => :moved_permanently
+    end
   end
 
   def suggest_skill
@@ -42,6 +47,10 @@ class JobsController < ApplicationController
 
   # GET /jobs/1/edit
   def edit
+    #When old job url is entered it should direct to new url
+    if request.path != edit_job_path(@job)
+      redirect_to edit_job_path(@job)
+    end
   end
 
   # POST /jobs
