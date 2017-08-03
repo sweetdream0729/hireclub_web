@@ -37,5 +37,18 @@ RSpec.describe AppointmentMessage, type: :model do
       notification = notifications.first
       expect(notification.user).to eq appointment.user
     end
+
+    it "should have edit activity" do
+      appointment_message = FactoryGirl.create(:appointment_message, user: user2, appointment: appointment)
+      old_text = appointment_message.text
+      appointment_message.text = "Hi"
+      appointment_message.save
+      activity = appointment_message.activities.where(key: AppointmentMessageUpdateActivity::KEY).first
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(appointment_message)
+      expect(activity.owner).to eq(appointment_message.user)
+      expect(activity.parameters[:old_text]).to eq(old_text)
+      expect(activity.private).to eq(true)
+    end
   end
 end

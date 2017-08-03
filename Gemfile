@@ -127,3 +127,6 @@ gem 'money-rails', '~>1'
 gem 'stripe-rails'
 gem 'stripe'
 gem 'stripe_event'
+
+#date picker
+gem 'bootstrap-datepicker-rails'

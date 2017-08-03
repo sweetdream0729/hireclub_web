@@ -32,4 +32,8 @@ class JobPolicy < ApplicationPolicy
   def refer?
     owner_or_admin?
   end
+
+  def refresh_job_scores?
+    owner_or_admin?
+  end
 end

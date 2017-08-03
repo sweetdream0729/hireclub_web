@@ -1,5 +1,5 @@
 class MilestonesController < ApplicationController
-  before_action :sign_up_required
+  before_action :sign_up_required, except: [:show]
   after_action :verify_authorized, except: [:index]
 
   before_action :set_milestone, only: [:show, :edit, :update, :destroy]

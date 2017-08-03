@@ -98,6 +98,8 @@ GEM
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
+    bootstrap-datepicker-rails (1.6.4.1)
+      railties (>= 3.0)
     builder (3.2.3)
     bullet (5.5.1)
       activesupport (>= 3.0.0)
@@ -521,6 +523,7 @@ DEPENDENCIES
   acts_as_tree
   auto_strip_attributes
   bootstrap (~> 4.0.0.alpha6)
+  bootstrap-datepicker-rails
   bullet
   byebug
   capistrano (~> 3.7, >= 3.7.1)

@@ -46,7 +46,11 @@ Rails.application.routes.draw do
   get 'feed', to: "feed#index", as: :feed
 
   resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
-  resources :appointment_messages, only: [:create, :destroy]
+  resources :appointment_messages, only: [:create, :destroy, :edit, :update] do
+    member do
+      get :cancel_edit
+    end
+  end
   resources :appointments, only: [:index, :show] do
     collection do
       get :search
@@ -104,6 +108,7 @@ Rails.application.routes.draw do
       get :suggest_skill
       get :refer
       get :referral_viewed
+      get :refresh_job_scores
     end
   end
 
