@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed, :refresh_job_scores]
   after_action :verify_authorized, except: [:index]
 
   # GET /jobs
@@ -96,6 +96,11 @@ class JobsController < ApplicationController
     job_referral.update_attributes(viewed_on: DateTime.now) if (job_referral && !job_referral.viewed_on)
 
     redirect_to @job
+  end
+
+  def refresh_job_scores
+    UpdateJobScoresJob.perform_later(@job)
+    redirect_to @job, notice: 'Refreshing scores in background'
   end
 
   # DELETE /jobs/1

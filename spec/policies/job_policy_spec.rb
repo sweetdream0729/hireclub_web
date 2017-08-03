@@ -14,6 +14,7 @@ RSpec.describe JobPolicy do
     it { should forbid_action(:create) }
     it { should forbid_action(:update) }
     it { should forbid_action(:destroy) }
+    it { should forbid_action(:refresh_job_scores) }
   end
 
   context 'being the owner' do
@@ -22,6 +23,7 @@ RSpec.describe JobPolicy do
     it { should permit_action(:create) }
     it { should permit_action(:update) }
     it { should permit_action(:destroy) }
+    it { should permit_action(:refresh_job_scores) }
   end
 
   context 'being an another user' do
@@ -31,6 +33,7 @@ RSpec.describe JobPolicy do
     it { should permit_action(:create) }
     it { should forbid_action(:update) }
     it { should forbid_action(:destroy) }
+    it { should forbid_action(:refresh_job_scores) }
   end
 
   context 'being an admin' do
@@ -40,6 +43,7 @@ RSpec.describe JobPolicy do
     it { should permit_action(:create) }
     it { should permit_action(:update) }
     it { should permit_action(:destroy) }
+    it { should permit_action(:refresh_job_scores) }
   end
 
   # context 'being a moderator' do

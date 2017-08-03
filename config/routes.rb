@@ -108,6 +108,7 @@ Rails.application.routes.draw do
       get :suggest_skill
       get :refer
       get :referral_viewed
+      get :refresh_job_scores
     end
   end
 
