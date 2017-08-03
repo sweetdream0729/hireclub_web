@@ -15,5 +15,5 @@
       .form-group
         = f.label "Date"
         %br
-        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
+        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%d/%m/%Y") unless f.object.new_record?}", class: 'datepicker', style: "width:100%;"
     

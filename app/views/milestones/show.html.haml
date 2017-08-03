@@ -15,7 +15,7 @@
         = @milestone.name
 
       %p.text-muted
-        = @milestone.start_date.strftime("%b %Y")
+        = @milestone.start_date.strftime("%d %b %Y")
         - if @milestone.end_date      
           = "-"
           = @milestone.end_date.strftime("%b %Y")
