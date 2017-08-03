@@ -53,6 +53,11 @@ class Appointment < ApplicationRecord
     appointment_type.try(:name)
   end
   
+  def user_name
+    return user.name if user.present?
+    return "#{first_name} #{last_name}"
+  end
+    
   def category_name
     appointment_type.try(:appointment_category).try(:name)
   end

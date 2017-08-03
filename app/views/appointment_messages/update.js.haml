@@ -1,0 +1,4 @@
+$("#appointment_message_"+(#{@appointment_message.id})).fadeOut(500, function(){
+$(this).replaceWith("#{j render @appointment_message}");
+});
+
