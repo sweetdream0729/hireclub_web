@@ -60,8 +60,13 @@ class Job < ApplicationRecord
 
   def slug_candidates
     [
-      [:name, :company_name, :id]
+      [:name, :company_name],
+      [:name, :company_name, :company_jobs_count]
     ]
+  end
+
+  def company_jobs_count
+    company.jobs.count + 1 if company.present?
   end
 
   def skills_exist
