@@ -1,7 +1,7 @@
 class Job < ApplicationRecord
   # Extensions
   extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :history]
   auto_strip_attributes :name, squish: true
   include HasSmartUrl
   include ActsAsLikeable

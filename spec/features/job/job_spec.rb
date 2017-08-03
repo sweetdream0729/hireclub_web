@@ -27,4 +27,24 @@ RSpec.feature "Jobs", :type => :feature do
   	expect(page).to have_content job1.description
   	
   end
+
+  scenario "old job show url should redirect to new when slug is changed" do
+    job = FactoryGirl.create(:job)
+    old_url = job_path(job)
+    job.slug = "newslug"
+    job.save
+    visit(old_url)
+    expect(current_path).to eq job_path(job)
+  end
+
+  scenario "old job edit url should redirect to new url" do
+    admin = FactoryGirl.create(:admin)
+    signin(admin.email, admin.password)
+    job = FactoryGirl.create(:job)
+    old_url = edit_job_path(job)
+    job.slug = "newslug"
+    job.save
+    visit(old_url)
+    expect(current_path).to eq edit_job_path(job)
+  end
 end
