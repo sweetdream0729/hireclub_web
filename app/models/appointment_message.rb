@@ -31,7 +31,7 @@ class AppointmentMessage < ApplicationRecord
 
   def create_update_activity
     if self.text_changed?
-      self.create_activity({key: "appointment_message.edit", 
+      self.create_activity({key: AppointmentMessageUpdateActivity::KEY, 
                             owner:self.user,
                             private: true,
                             parameters: {old_text: self.text_was}})

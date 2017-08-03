@@ -43,7 +43,7 @@ RSpec.describe AppointmentMessage, type: :model do
       old_text = appointment_message.text
       appointment_message.text = "Hi"
       appointment_message.save
-      activity = appointment_message.activities.where(key: "appointment_message.edit").first
+      activity = appointment_message.activities.where(key: AppointmentMessageUpdateActivity::KEY).first
       expect(activity).to be_present
       expect(activity.trackable).to eq(appointment_message)
       expect(activity.owner).to eq(appointment_message.user)
