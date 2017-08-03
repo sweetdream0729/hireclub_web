@@ -27,6 +27,10 @@
 
       - if policy(@job).edit?
         %p.mt-3
+          = link_to refresh_job_scores_job_path(id: @job.id) do
+            %span.badge.badge-pill-outline.text-uppercase.mr-2
+              Refresh Job Scores
+
           = link_to edit_job_path(@job) do
             %span.badge.badge-pill-outline.text-uppercase.mr-2
               Edit
