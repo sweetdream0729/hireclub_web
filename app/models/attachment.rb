@@ -34,4 +34,5 @@ class Attachment < ApplicationRecord
   def has_file?
     file_uid.present?
   end
+
 end

@@ -262,7 +262,27 @@
           - if viewing_self?(@user)
             %a.btn.btn-primary{href: new_resume_path}
               = "Upload Resume"
-
+.container.mb-5
+  - if is_admin?
+    .row
+      .col-sm-12
+        
+        %h6.mt-4.mb-4
+          Appointments
+    .row
+      .col-sm-12
+        - if @user.appointments.any?
+          %table.table
+            %thead
+              %tr
+                - if current_user.is_admin || current_user.has_assignments?
+                  %th User
+                %th Appointment
+                %th Status
+                %th Date
+                %th Time
+            %tbody
+              = render @user.appointments.by_start_time
 
 
 

@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed, :refresh_job_scores]
   after_action :verify_authorized, except: [:index]
 
   # GET /jobs
@@ -18,6 +18,11 @@ class JobsController < ApplicationController
       @job_score.update_score
 
       @job_referrals = @job.job_referrals.where(user: current_user)
+    end
+
+    #When old job url is entered it should direct to new url
+    if request.path != job_path(@job)
+      return redirect_to @job, :status => :moved_permanently
     end
   end
 
@@ -42,6 +47,10 @@ class JobsController < ApplicationController
 
   # GET /jobs/1/edit
   def edit
+    #When old job url is entered it should direct to new url
+    if request.path != edit_job_path(@job)
+      redirect_to edit_job_path(@job)
+    end
   end
 
   # POST /jobs
@@ -87,6 +96,11 @@ class JobsController < ApplicationController
     job_referral.update_attributes(viewed_on: DateTime.now) if (job_referral && !job_referral.viewed_on)
 
     redirect_to @job
+  end
+
+  def refresh_job_scores
+    UpdateJobScoresJob.perform_later(@job)
+    redirect_to @job, notice: 'Refreshing scores in background'
   end
 
   # DELETE /jobs/1

@@ -17,4 +17,25 @@ class AppointmentMessage < ApplicationRecord
   validates :user, presence: true
   validates :appointment, presence: true
   validates :text, presence: true
+  after_update :create_update_activity
+
+
+  def edited?
+    created_at != updated_at
+  end
+
+  def timestamp
+    return created_at if !edited?
+    return updated_at
+  end
+
+  def create_update_activity
+    if self.text_changed?
+      self.create_activity({key: AppointmentMessageUpdateActivity::KEY, 
+                            owner:self.user,
+                            private: true,
+                            parameters: {old_text: self.text_was}})
+    end
+  end
+
 end

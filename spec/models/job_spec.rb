@@ -252,4 +252,17 @@ Also helpful:
     end
   end
 
+
+  describe "friendly_id" do
+    it "should create a slug based on name, company id" do
+      company = FactoryGirl.create(:company, name: "company")
+
+      job = FactoryGirl.create(:job, name: "job title", company: company)
+      expect(job.friendly_id).to eq("job-title-#{job.company.name}".downcase)
+
+      job2 = FactoryGirl.create(:job, name: "job title", company: company)
+
+      expect(job2.friendly_id).to eq("job-title-#{job2.company.name}-#{company.jobs.count}".downcase)
+    end
+  end
 end

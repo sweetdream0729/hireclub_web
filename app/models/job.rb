@@ -1,7 +1,7 @@
 class Job < ApplicationRecord
   # Extensions
   extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :history]
   auto_strip_attributes :name, squish: true
   include HasSmartUrl
   include ActsAsLikeable
@@ -60,8 +60,13 @@ class Job < ApplicationRecord
 
   def slug_candidates
     [
-      [:name, :company_name, :id]
+      [:name, :company_name],
+      [:name, :company_name, :company_jobs_count]
     ]
+  end
+
+  def company_jobs_count
+    company.jobs.count + 1 if company.present?
   end
 
   def skills_exist
