@@ -2,6 +2,7 @@ class AppointmentType < ApplicationRecord
   # Extensions
   auto_strip_attributes :name, :squish => true
   monetize :price_cents
+  dragonfly_accessor :image
 
    # Scopes
   scope :by_priority,    -> { order(priority: :asc) }

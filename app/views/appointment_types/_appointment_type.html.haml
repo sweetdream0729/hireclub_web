@@ -1,7 +1,7 @@
 .row.mb-5
   .col-md-4
     = link_to appointment_type.acuity_link do
-      = image_tag(model_image(appointment_type.appointment_category.image, 400,300), class: "img-fluid")
+      = image_tag(model_image(appointment_type.image, 400,300), class: "img-fluid")
     
   .col-md-7
     %h2.bold
@@ -24,12 +24,3 @@
     %p
       = link_to "Book #{appointment_type.name}", appointment_type.acuity_link, class: "btn btn-primary btn-lg"
       
-
-/ .card{:style => "width: 400px;"}
-
-/   %img.card-img-top{:alt => "Card image cap", :src => model_image(appointment_type.appointment_category.image, 400,300)}
-/   .card-block
-/     %h4.card-title
-/       = appointment_type.name
-/     %p.card-text Some quick example text to build on the card title and make up the bulk of the card's content.
-/     %a.btn.btn-primary{:href => "#"} Go somewhere
