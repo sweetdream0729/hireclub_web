@@ -46,7 +46,7 @@
       - if current_user.is_admin
         .form-group
           = f.label "User"
-          = f.text_field :user, class: "form-control autocomplete_user", placeholder: "Name", autocomplete: "off"
+          = f.text_field :user, class: "form-control autocomplete_user", placeholder: "Name", autocomplete: "off", value: nil
           = f.hidden_field :user_id, value: @job.user_id, class: "autocomplete_user_id"
 
       = f.label "Options"
