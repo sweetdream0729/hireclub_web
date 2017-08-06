@@ -1,7 +1,14 @@
-.container.content_container
-  %h1
-    = title "Helpers"
+- title "HireClub Helpers"
 
-  
+.jumbotron.jumbotron-fluid{style: "background-color: #6070e9;"}
+  .container
+    %h1.display-3.text-white HireClub Helpers
+    %p.lead.text-white HireClub Helpers are affordable, private and professional career coaches.
+    %p.lead.text-white With resume reviews, career coaching, mock interviews and more, HireClub Helpers can help you land your dream job.
+    %p.lead
+      %a.btn.btn-info.btn-lg{:href => Rails.application.secrets.acuity_link, :role => "button"} Get Help
+      %a.btn.btn-link.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
+
+.container.content_container#learn-more
   = render @appointment_types
 
