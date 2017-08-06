@@ -55,7 +55,13 @@ class JobsController < ApplicationController
 
   # POST /jobs
   def create
-    @job = current_user.jobs.build(job_params)
+    @job = Job.new(job_params)
+
+    if current_user.is_admin && job_params[:user_id].present?
+      @job.user_id 
+    else
+      @job.user_id = current_user.id
+    end
 
     authorize @job
 
@@ -124,6 +130,7 @@ class JobsController < ApplicationController
         :part_time,
         :remote,
         :contract,
-        :internship)
+        :internship,
+        :user_id)
     end
 end
