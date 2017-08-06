@@ -1,6 +1,7 @@
 .row.mb-5
   .col-md-4
-    = image_tag(model_image(appointment_type.appointment_category.image, 400,300), class: "img-fluid")
+    = link_to appointment_type.acuity_link do
+      = image_tag(model_image(appointment_type.appointment_category.image, 400,300), class: "img-fluid")
     
   .col-md-7
     %h2.bold
