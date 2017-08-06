@@ -3,20 +3,25 @@
     = image_tag(model_image(appointment_type.appointment_category.image, 400,300), class: "img-fluid")
     
   .col-md-7
-    %h3
+    %h2.bold
       = appointment_type.name
-    %p.text-muted
+    %h4.text-muted.light
       = appointment_type.duration
       Minutes
-      ·
+      \/
       = humanized_money_with_symbol(appointment_type.price_cents)
-      - if current_user && current_user.is_admin
-        ·
-        = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
+      
     %p
+      - if appointment_type.appointment_category.present?
+        .mb-3
+          %span.badge.badge-default
+            = appointment_type.appointment_category.name
       = appointment_type.description
+      - if current_user && current_user.is_admin
+        = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
+      
     %p
-      = link_to 'Book Now', appointment_type.acuity_link, class: "btn btn-primary btn-lg"
+      = link_to "Book #{appointment_type.name}", appointment_type.acuity_link, class: "btn btn-primary btn-lg"
       
 
 / .card{:style => "width: 400px;"}
