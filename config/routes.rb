@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
   post 'webhooks/acuity_canceled' => 'webhooks#acuity_canceled'
 
+  get 'helpers' => 'helpers#index', as: :helpers
+
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
   get 'settings/account'
