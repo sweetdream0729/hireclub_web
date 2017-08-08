@@ -192,4 +192,4 @@
             = payment.external_id
             - if current_user.is_admin
               ·
-              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id)
+              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
