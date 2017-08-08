@@ -23,4 +23,15 @@ class StripeService
     return true
   end
   
+  def self.process_cards
+    users = User.has_stripe
+    users.find_each do |user|
+      cards = Stripe::Customer.retrieve(user.stripe_customer_id).sources.all(:object => "card")
+      cards.data.each do |stripe_card|
+        card = Card.create_or_update_card_from_stripe_card(user, stripe_card)
+      end
+      
+    end
+  end
+
 end

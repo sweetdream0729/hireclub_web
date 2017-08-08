@@ -41,4 +41,28 @@ class Card < ApplicationRecord
 
     return true
   end
+
+  def self.create_or_update_card_from_stripe_card(user, stripe_card)
+    # check even soft deleted cards for fingerprint
+    card = user.cards.where(fingerprint: stripe_card[:fingerprint]).first_or_initialize
+
+    card.user = user
+    card.stripe_card_id = stripe_card[:id]
+    card.stripe_customer_id = stripe_card[:customer]
+    card.brand = stripe_card.brand
+    card.last4 = stripe_card.last4
+    card.funding = stripe_card.funding
+    card.exp_month = stripe_card.exp_month
+    card.exp_year = stripe_card.exp_year
+    card.country = stripe_card.country
+    card.cvc_check = stripe_card.cvc_check
+    card.name = stripe_card.name
+    card.deleted_on_stripe = false
+    card.save
+    
+    puts card.inspect
+    puts stripe_card.inspect
+
+    return card
+  end
 end
