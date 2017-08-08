@@ -4,6 +4,3 @@ StripeEvent.configure do |events|
   events.subscribe 'customer.source.created', StripeAction::CardCreated.new
   events.subscribe 'customer.source.updated', StripeAction::CardCreated.new
 end
-
-
-Stripe.api_version = "2016-03-07"
