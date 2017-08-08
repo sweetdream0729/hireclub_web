@@ -3,7 +3,7 @@ class NotificationMailer < ApplicationMailer
   def user_welcome(notification)
     set_notification(notification)
 
-    @url_url = get_utm_url user_url(@user)
+    @user_url = get_utm_url user_url(@user)
 
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
