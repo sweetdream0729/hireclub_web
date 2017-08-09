@@ -68,9 +68,14 @@
           Internship
       .form-check
         %label.form-check-label
+          = f.check_box :relocation_offered, class: 'form-check-input'
+          Relocation Offered
+      .form-check
+        %label.form-check-label
           = f.check_box :remote, class: 'form-check-input'
           %i.fa.fa-plane
           Remote
+
 
 
   = f.submit 'Save', class: "btn btn-lg btn-primary"

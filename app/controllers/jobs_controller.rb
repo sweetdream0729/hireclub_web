@@ -131,6 +131,7 @@ class JobsController < ApplicationController
         :remote,
         :contract,
         :internship,
+        :relocation_offered,
         :user_id)
     end
 end
