@@ -15,7 +15,7 @@ class Job < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
-  multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
+  multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name, :relocation_offered_name]
 
   acts_as_taggable_array_on :skills
   include HasTagsList
@@ -112,6 +112,10 @@ class Job < ApplicationRecord
 
   def internship_name
     return "internship" if internship
+  end
+
+  def relocation_offered_name
+    return "relocation offered" if relocation_offered
   end
 
   def publish!
