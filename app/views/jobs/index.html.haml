@@ -2,7 +2,7 @@
   %h1
     = title "Jobs"
     %small
-      = link_to 'Post A Job', new_job_path, class: "btn btn-primary btn-sm" if policy(Job).new?
+      = link_to 'Post A Job', new_job_path, class: "btn btn-info btn-sm" if policy(Job).new?
   %p
     %small
       = pluralize(Job.all.count, "job")
