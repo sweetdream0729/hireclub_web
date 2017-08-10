@@ -9,13 +9,13 @@
 
   #navbarSupportedContent.collapse.navbar-collapse
     = form_tag search_path, :method => 'get', class: 'form-inline my-2 my-lg-0', id: "nav_search_form" do
-      = text_field_tag :q, params[:q], {placeholder: "Search", class: "form-control mr-sm-2", type: "search", id: "nav_search_input"}
+      = text_field_tag :q, params[:q], {placeholder: "Search Jobs, People or Companies", class: "form-control mr-sm-2", type: "search", id: "nav_search_input"}
 
     %ul.nav.navbar-nav.mr-auto
       %li.nav-item
-        %a.nav-link{:href => helpers_path} Get Coaching
-      %li.nav-item
         %a.nav-link{:href => jobs_path} Jobs
+      %li.nav-item
+        %a.nav-link{:href => helpers_path} Get Coaching
       %li.nav-item
         %a.nav-link{:href => projects_path} Projects
       / %li.nav-item
