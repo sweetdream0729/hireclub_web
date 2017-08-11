@@ -2,7 +2,7 @@
   %h1 
     = title "Roles"
     %small
-      = link_to 'New', new_role_path, class: "btn btn-primary btn-sm" if policy(Role).new?
+      = link_to 'New', new_role_path, class: "btn btn-info btn-sm" if policy(Role).new?
   
   .dropdown
     %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
