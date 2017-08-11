@@ -75,6 +75,7 @@ class User < ApplicationRecord
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
   has_one :preference, dependent: :destroy, inverse_of: :user
   has_many :attachments, dependent: :destroy, inverse_of: :user
+  has_one :provider, dependent: :destroy
   accepts_nested_attributes_for :preference
 
   belongs_to :location
@@ -422,6 +423,10 @@ class User < ApplicationRecord
 
   def has_stripe_account?
     !stripe_customer_id.blank?
+  end
+
+  def is_provider?
+    !provider.nil?
   end
 
   def username_not_in_routes
