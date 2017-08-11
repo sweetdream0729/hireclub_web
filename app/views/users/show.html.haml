@@ -11,7 +11,7 @@
       %strong 
         = "#{@user_completion.percent_complete}% Complete"
     .container.text-center
-      %a.btn.btn-primary.btn-sm{href: next_user_completion_path(@user_completion)}
+      %a.btn.btn-info.btn-sm{href: next_user_completion_path(@user_completion)}
         = @user_completion.next_step
       .row.justify-content-center.mt-2
         .col-lg-3.col-md-4
@@ -57,7 +57,7 @@
                   = comma
 
               - if @user == current_user
-                %a.add_role_btn.btn.btn-primary.btn-sm{href: new_user_role_path}
+                %a.add_role_btn.btn.btn-info.btn-sm{href: new_user_role_path}
                   %i.fa.fa-plus
             
           %small
@@ -99,14 +99,14 @@
         /     = link_to "Request Review", new_review_request_path, class: "btn btn-success btn-block"
           
         - unless @user.onboarded?
-          = link_to "Complete Profile", onboarding_index_path, class: "btn btn-primary btn-block"
+          = link_to "Complete Profile", onboarding_index_path, class: "btn btn-info btn-block"
         - else
-          = link_to "Edit", settings_path, class: "btn btn-primary btn-block"
+          = link_to "Edit", settings_path, class: "btn btn-info btn-block"
       - else
-        = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-primary btn-block" if policy(Conversation).create?
+        = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-info btn-block" if policy(Conversation).create?
         
       - if viewing_self?(@user) || is_admin?
-        = link_to "Print", print_user_path(@user), class: "btn btn-info btn-block"
+        = link_to "Print", print_user_path(@user), class: "btn btn-secondary btn-block"
       - if is_admin? 
         = link_to "Admin", rails_admin.edit_path(model_name: 'user', id: @user.id), class: "btn btn-danger btn-block"
       %p.mt-4
@@ -160,7 +160,7 @@
         %h6.mt-4.mb-4
           Milestones
           - if @user == current_user
-            %a.btn.btn-primary.btn-sm{href: new_milestone_path}
+            %a.btn.btn-info.btn-sm{href: new_milestone_path}
               %i.fa.fa-plus
         - if viewing_self?(@user) && @user.milestones.count < 5
           %p
@@ -184,7 +184,7 @@
         %h6.mt-4.mb-4
           Skills
           - if @user == current_user
-            %a.btn.btn-primary.btn-sm{href: new_user_skill_path}
+            %a.btn.btn-info.btn-sm{href: new_user_skill_path}
               %i.fa.fa-plus
       
       - if viewing_self?(@user)
@@ -210,7 +210,7 @@
     %h6.mt-4.mb-4
       Projects
       - if viewing_self?(@user)
-        %a.btn.btn-primary.btn-sm{href: new_project_path}
+        %a.btn.btn-info.btn-sm{href: new_project_path}
           %i.fa.fa-plus
 
     - if viewing_self?(@user) && @user.projects.count < 3
@@ -255,12 +255,12 @@
                 %tr
                   - if resume.file_uid.present?
                     %td
-                      = link_to resume.file_name, resume.file.remote_url, class: "btn btn-primary"  
+                      = link_to resume.file_name, resume.file.remote_url, class: "btn btn-info"  
                     %td
                       = link_to resume.created_at.strftime("%D %r"), resume
         - else
           - if viewing_self?(@user)
-            %a.btn.btn-primary{href: new_resume_path}
+            %a.btn.btn-info{href: new_resume_path}
               = "Upload Resume"
 .container.mb-5
   - if is_admin?
