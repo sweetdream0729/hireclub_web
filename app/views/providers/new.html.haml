@@ -1,0 +1,14 @@
+.container.content_container
+  .row
+    .col-sm-12
+      %h1= title "Become A Provider"
+  .row
+    .col-sm-6
+      .mt-2
+        = form_for @provider, url: providers_path, method: 'POST' do |f|
+          = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, class:"form-control"
+          .form-control.tos
+            %input{ type: 'checkbox', name: 'tos', checked: false }
+            I accept the
+            %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service
+          %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-primary", id: "create_provider_btn"} Create Account

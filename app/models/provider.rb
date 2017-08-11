@@ -1,12 +1,18 @@
 class Provider < ApplicationRecord
+
+	COUNTRIES = [
+    { name: 'United States', code: 'US' },
+    { name: 'Canada', code: 'CA' }
+  ]
   belongs_to :user
 
   #validations
   validates :user, presence:true
   validates :stripe_account_id, presence: true
-
+  validates :tos_acceptance_ip, presence: true
+  validates :tos_acceptance_date, presence: true
   #for creating stripe account
-  def self.create_account(user, country)
+  def self.create_account(user, country, ip)
   	if !user.is_provider?
 	  	account = Stripe::Account.create(
 			  :type => 'custom',
@@ -17,6 +23,8 @@ class Provider < ApplicationRecord
 			provider.stripe_account_id = account["id"]
 			provider.charges_enabled = account["charges_enabled"]
 			provider.payouts_enabled = account["payouts_enabled"]
+			provider.tos_acceptance_ip = ip
+			provider.tos_acceptance_date = DateTime.now
 			provider.save														
 		end
 		return provider

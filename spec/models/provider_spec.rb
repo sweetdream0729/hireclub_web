@@ -18,12 +18,14 @@ RSpec.describe Provider, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to validate_presence_of(:stripe_account_id) }
+    it { is_expected.to validate_presence_of(:tos_acceptance_ip) }
+    it { is_expected.to validate_presence_of(:tos_acceptance_ip) }
   end
 
   describe 'providers' do
 
 		it "should create new account" do
-      provider = Provider::CreateProvider.new(user, "US").call
+      provider = Provider::CreateProvider.new(user, "US","127.0.0.1").call
       
       expect(provider).to be_valid
       expect(provider.stripe_account_id).not_to be_nil
