@@ -1,14 +1,57 @@
 - title "HireClub Helpers"
 
-.jumbotron.jumbotron-fluid{style: "background-color: #6070e9;"}
+.jumbotron.jumbotron-fluid{style: "background-color: #2B3369;"}
   .container
-    %h1.display-3.text-white HireClub Helpers
-    %p.lead.text-white HireClub Helpers are affordable, private and professional career coaches.
-    %p.lead.text-white With resume reviews, career coaching, mock interviews and more, HireClub Helpers can help you land your dream job.
-    %p.lead
-      %a.btn.btn-info.btn-lg{:href => Rails.application.secrets.acuity_link, :role => "button"} Get Help
-      %a.btn.btn-link.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
+    %h1.display-4.text-white.mb-4 Get Professional Career Coaching
+    .row
+      .col-sm-6
+        %p.lead.text-white HireClub Helpers are affordable, private career coaches that help you land your dream job.
+    / %p.lead.text-white With resume reviews, career coaching, mock interviews and more, HireClub Helpers can help you land your dream job.
+    %p.lead.mt-5
+      %a.btn.btn-info.btn-lg.mr-4{:href => Rails.application.secrets.acuity_link, :role => "button"} Book Now
+      %a.btn.btn-outline-secondary.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
 
 .container.content_container#learn-more
-  = render @appointment_types
+  - @appointment_categories.each do |category|
+    .row
+      .col-md-8
+        %h6= category.name
+    .row.mb-4
+      .col-md-8
+        .card-deck
+          - category.appointment_types.by_priority.each do |appointment_type|
+            .card.mb-3
+              = link_to appointment_type.acuity_link do
+                = image_tag(model_image(appointment_type.image, 800,400), class: "card-img-top img-fluid")
+              .card-block
+                %h4.bold.card-title
+                  = appointment_type.name
+                %h6.light
+                  = appointment_type.duration
+                  Minutes
+                  \/
+                  = humanized_money_with_symbol(appointment_type.price_cents)
+                %p.card-text
+                  = appointment_type.description
+                  - if is_admin?
+                    = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
+              .card-footer{style: "background-color:transparent; border-top: none;"}
+                = link_to appointment_type.acuity_link, class: "btn btn-info" do
+                  Book
+                  = appointment_type.duration
+                  Minutes
+                  %i.fa.fa-long-arrow-right.ml-2
+              
+                  
 
+      
+
+
+  / = render @appointment_types
+
+  .text-center
+    %h2
+      FAQ
+  / %h5.semi_bold What should I wear?
+  / %p
+  /   Answer

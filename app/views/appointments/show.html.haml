@@ -48,7 +48,7 @@
               Refresh
           
           - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
-            = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-primary"        
+            = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-info"        
       
       = render @appointment_messages
       

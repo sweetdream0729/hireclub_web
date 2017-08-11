@@ -2,8 +2,8 @@
   %h1 
     = title "Companies"
     %small
-      = link_to 'New', new_company_path, class: "btn btn-primary btn-sm" if policy(Company).new?
-      = link_to 'Import', new_company_import_path, class: "btn btn-info btn-sm" if policy(Company).import?
+      = link_to 'New', new_company_path, class: "btn btn-info btn-sm" if policy(Company).new?
+      = link_to 'Import', new_company_import_path, class: "btn btn-secondary btn-sm" if policy(Company).import?
   .dropdown
     %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
       - if params[:sort_by]

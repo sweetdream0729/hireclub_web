@@ -1,10 +1,11 @@
-$brand-primary:         #6070E9;
+$brand-primary:         #2B3369;
+// #333e7f
 $brand-success:         #1FE267;
 $brand-info:            #2EC0F9;
 $brand-warning:         #FF904C;
 $brand-danger:          #F2545B;
 
-$accent-primary:        #8783D1;
+$accent-primary:        #6070E9;
 $accent-info:           #3066BE;
 $accent-gray:           #33628E;
 $accent-warning:        #FDC898;
@@ -17,6 +18,7 @@ $gray-lighter:              #C0D3E8 !default;
 $gray-lightest:             #EAEEF1 !default;
 
 $input-color: $gray-dark;
+$link-color: #4A58B5;
 
 .accent-primary-bg {
   background-color: $accent-primary !important;

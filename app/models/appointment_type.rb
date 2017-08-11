@@ -4,7 +4,7 @@ class AppointmentType < ApplicationRecord
   monetize :price_cents
   dragonfly_accessor :image
 
-   # Scopes
+  # Scopes
   scope :by_priority,    -> { order(priority: :asc) }
 
   # Associations

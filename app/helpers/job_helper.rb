@@ -15,7 +15,7 @@ module JobHelper
 
       options[:method] = :get
       options[:remote] = true if user.present?
-      options[:class] += " job_refer_btn_#{user.id} btn btn-primary btn-sm"
+      options[:class] += " job_refer_btn_#{user.id} btn btn-info btn-sm"
 
 
       link_to("Refer", url, options)

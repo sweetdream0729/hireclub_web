@@ -12,7 +12,7 @@
     = @resume.created_at.strftime("%D %r")
 
   - if @resume.file_uid.present?
-    = link_to "Download", @resume.file.remote_url, class: "btn btn-primary"  
+    = link_to "Download", @resume.file.remote_url, class: "btn btn-info"  
     = link_to 'Delete', @resume, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger"
 
   = link_to 'Back', resumes_path, class: "btn btn-link"

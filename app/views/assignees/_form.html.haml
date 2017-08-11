@@ -4,6 +4,6 @@
     = select_tag :users,[],{ multiple: true, class: "autocomplete_assignee"}
   .form-control-feedback
       
-  = f.submit "Assign", class: 'btn btn-primary btn-sm', data: {disable_with: "Please wait..."}
+  = f.submit "Assign", class: 'btn btn-info btn-sm', data: {disable_with: "Please wait..."}
   - if !appointment.assignees.where(user: current_user).exists?
     = link_to "Assign me", assignees_path(assignee: {appointment_id: appointment.id},users: [current_user.id]), method: :post, remote: true,id: 'assign_me_btn', class: 'btn btn-outline-primary btn-sm',data: {disable_with: "Please wait..."}
