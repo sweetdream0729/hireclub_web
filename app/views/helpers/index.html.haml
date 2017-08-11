@@ -2,12 +2,14 @@
 
 .jumbotron.jumbotron-fluid{style: "background-color: #2B3369;"}
   .container
-    %h1.display-3.text-white HireClub Helpers
-    %p.lead.text-white HireClub Helpers are affordable, private and professional career coaches.
-    %p.lead.text-white With resume reviews, career coaching, mock interviews and more, HireClub Helpers can help you land your dream job.
-    %p.lead
-      %a.btn.btn-info.btn-lg{:href => Rails.application.secrets.acuity_link, :role => "button"} Get Help
-      %a.btn.btn-link.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
+    %h1.display-4.text-white.mb-4 Get Professional Career Coaching
+    .row
+      .col-sm-6
+        %p.lead.text-white HireClub Helpers are affordable, private career coaches that help you land your dream job.
+    / %p.lead.text-white With resume reviews, career coaching, mock interviews and more, HireClub Helpers can help you land your dream job.
+    %p.lead.mt-5
+      %a.btn.btn-info.btn-lg.mr-4{:href => Rails.application.secrets.acuity_link, :role => "button"} Book Now
+      %a.btn.btn-outline-secondary.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
 
 .container.content_container#learn-more
   - @appointment_categories.each do |category|
