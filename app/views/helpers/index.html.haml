@@ -35,11 +35,13 @@
                   = appointment_type.description
                   - if is_admin?
                     = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
+              .card-footer{style: "background-color:transparent; border-top: none;"}
                 = link_to appointment_type.acuity_link, class: "btn btn-info" do
                   Book
                   = appointment_type.duration
                   Minutes
                   %i.fa.fa-long-arrow-right.ml-2
+              
                   
 
       
