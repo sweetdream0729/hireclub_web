@@ -1,4 +1,5 @@
 StripeEvent.configure do |events|
+  events.all BillingEventLogger.new(Rails.logger)
   events.subscribe 'customer.subscription.created', StripeAction::SubscriptionCreated.new
   events.subscribe 'charge.succeeded', StripeAction::ChargeSucceeded.new
   events.subscribe 'customer.source.created', StripeAction::CardCreated.new
