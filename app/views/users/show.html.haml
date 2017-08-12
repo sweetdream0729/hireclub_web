@@ -88,6 +88,12 @@
             = link_to following_user_path(@user) do
               = @user.follows_scoped.count
               Following
+
+          - if @user.is_subscriber
+            %br
+            = link_to heroes_path do 
+              %span.badge.badge-info.text-uppercase
+                Hero
         
 
     .col-sm-3
