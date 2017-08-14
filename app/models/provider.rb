@@ -27,21 +27,27 @@ class Provider < ApplicationRecord
   def self.create_account(user, params, ip)
   	if !user.is_provider?
   		options = {
-  			:type => 'custom',
-		    :country => params[:country],
-		    :email => user.email
+  			type: 'custom',
+		    country: params[:country],
+		    email: user.email
   		}
 	  	account = Stripe::Account.create(options)
-			provider = Provider.new(params)
-			provider.user_id = user.id
-			provider.stripe_account_id = account["id"]
-			provider.charges_enabled = account["charges_enabled"]
-			provider.payouts_enabled = account["payouts_enabled"]
-			provider.tos_acceptance_ip = ip
-			provider.tos_acceptance_date = DateTime.now
-			provider.save														
-		end
-		return provider
+		provider = Provider.new(params)
+		provider.user_id = user.id
+		provider.stripe_account_id = account["id"]
+		provider.charges_enabled = account["charges_enabled"]
+		provider.payouts_enabled = account["payouts_enabled"]
+		provider.tos_acceptance_ip = ip
+		provider.tos_acceptance_date = DateTime.now
+		#update stripe account details if all details
+		if provider.save
+			ProviderRelayJob.perform_later(account["id"], "update")
+		else
+		#delete the account if verifcation detail not provided
+			ProviderRelayJob.perform_later(account["id"], "delete")
+		end														
+	end
+	return provider
   end
 
 end
