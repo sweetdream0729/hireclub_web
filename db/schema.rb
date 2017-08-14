@@ -646,6 +646,8 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.string   "stripe_account_id"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "phone"
+    t.datetime "date_of_birth"
     t.text     "address_line_1"
     t.text     "address_line_2"
     t.string   "city"

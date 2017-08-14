@@ -1,13 +1,51 @@
 .container.content_container
   .row
-    .col-sm-12
+    .col-sm-6.offset-sm-3.text-center
       %h1= title "Become A Provider"
   .row
-    .col-sm-6
+    .col-sm-6.offset-sm-3
       .mt-2
         = form_for @provider, url: providers_path, method: 'POST' do |f|
-          .form-group
-            = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
+          - if @provider.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@provider.errors.count, "error")} prohibited this job from being saved:"
+              %ul
+                - @provider.errors.full_messages.each do |msg|
+                  %li= msg
+          .form-group.row
+            .col-12
+              = f.label "Legal Name"
+            .col-6
+              = f.text_field :first_name, class: 'form-control',placeholder: "First Name"
+            .col-6
+              = f.text_field :last_name, class: 'form-control', placeholder: "Last Name"
+          .form-group.row
+            .col-6
+              = f.label :phone
+              = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
+            .col-6
+              = f.label "SSN last 4"
+              = f.text_field :ssn_last_4, class: 'form-control', placeholder: "Last 4 digits of SSN"
+          .form-group.row
+            .col-12
+              = f.label "Date of Birth"
+              %br
+              = f.text_field :date_of_birth, class: 'datepicker', style: "width:50%;"
+          .form-group.row
+            .col-12
+              = f.label "Address"
+            .col-12.mb-3
+              = f.text_field :address_line_1, class: 'form-control',placeholder: "address line 1"
+            .col-12.mb-3
+              = f.text_field :address_line_2, class: 'form-control',placeholder: "address line 2"
+            .col-6.mb-3
+              = f.text_field :city, class: 'form-control', placeholder: "Enter City"
+            .col-6.mb-3
+              = f.text_field :state, class: 'form-control',  placeholder: "Enter State"
+            .col-6.mb-3
+              = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
+            .col-6.mb-3
+              = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
           .form-group.tos
             %input{ type: 'checkbox', name: 'tos', checked: false }
             I accept the
