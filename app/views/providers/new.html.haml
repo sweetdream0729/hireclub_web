@@ -6,8 +6,9 @@
     .col-sm-6
       .mt-2
         = form_for @provider, url: providers_path, method: 'POST' do |f|
-          = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, class:"form-control"
-          .form-control.tos
+          .form-group
+            = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
+          .form-group.tos
             %input{ type: 'checkbox', name: 'tos', checked: false }
             I accept the
             %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service

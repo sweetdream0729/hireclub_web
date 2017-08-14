@@ -5,6 +5,7 @@ class Provider < ApplicationRecord
     { name: 'Canada', code: 'CA' }
   ]
   belongs_to :user
+  has_many :bank_accounts
 
   #validations
   validates :user, presence:true

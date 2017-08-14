@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170811083840) do
+ActiveRecord::Schema.define(version: 20170814084844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,19 @@ ActiveRecord::Schema.define(version: 20170811083840) do
     t.integer  "position",    default: 0, null: false
     t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
+  end
+
+  create_table "bank_accounts", force: :cascade do |t|
+    t.integer  "provider_id",            null: false
+    t.string   "stripe_bank_account_id"
+    t.string   "bank_name"
+    t.string   "routing_number"
+    t.string   "country"
+    t.string   "fingerprint"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["provider_id"], name: "index_bank_accounts_on_provider_id", using: :btree
+    t.index ["stripe_bank_account_id"], name: "index_bank_accounts_on_stripe_bank_account_id", unique: true, using: :btree
   end
 
   create_table "cards", force: :cascade do |t|
@@ -843,6 +856,7 @@ ActiveRecord::Schema.define(version: 20170811083840) do
   add_foreign_key "assignees", "users"
   add_foreign_key "attachments", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "bank_accounts", "providers"
   add_foreign_key "cards", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
