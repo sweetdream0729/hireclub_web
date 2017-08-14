@@ -31,9 +31,7 @@ class Provider < ApplicationRecord
 		    :country => params[:country],
 		    :email => user.email
   		}
-	  	account = Stripe::Account.create(
-			  
-			)
+	  	account = Stripe::Account.create(options)
 			provider = Provider.new(params)
 			provider.user_id = user.id
 			provider.stripe_account_id = account["id"]

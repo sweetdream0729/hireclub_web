@@ -5,10 +5,8 @@ class ProvidersController < ApplicationController
   end
 
   def create
-    logger.debug "\n\n\n\n#{provider_params[:country]}\n\n\n\n"
   	create_provider = Provider::CreateProvider.new(current_user, provider_params, request.remote_ip)
   	@provider = create_provider.call
-    logger.debug "\n\n\n\n#{@provider.inspect}\n\n\n\n"
   	if !@provider.id.nil?
   		redirect_to @provider, notice: "Your are a provider"
   	else
