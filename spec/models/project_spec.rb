@@ -231,4 +231,17 @@ RSpec.describe Project, type: :model do
 
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:link) }
   end
+
+  describe "display_date", :focus do
+    it "should return created if completed_on is nil" do
+      project.save
+      expect(project.display_date).to eq(project.created_at)
+    end
+
+    it "should return completed_on if present" do
+      project.completed_on = Date.today
+      project.save
+      expect(project.display_date).to eq(Date.today)
+    end
+  end
 end
