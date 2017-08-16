@@ -36,7 +36,7 @@
         .media-body
           = link_to @project.user.display_name, @project.user
           %br
-          = local_time(@project.created_at)
+          = local_time(@project.display_date, "%B %e, %Y")
       %hr
       = render partial: "/likes/like_button", locals: { likeable: @project }
       %hr

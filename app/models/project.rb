@@ -117,6 +117,11 @@ class Project < ApplicationRecord
     return nil if index == 0
     return projects[index - 1]
   end
+
+  def display_date
+    return created_at if completed_on.nil?
+    completed_on
+  end
   
   def self.privatize_projects_without_image
     activities = Activity.only_public.where(key: "project.create")
