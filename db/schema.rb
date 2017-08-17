@@ -135,7 +135,6 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
-    t.index ["user_id", "appointment_id"], name: "index_assignees_on_user_id_and_appointment_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
   end
 
@@ -187,6 +186,8 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.integer  "provider_id",            null: false
     t.string   "stripe_bank_account_id"
     t.string   "bank_name"
+    t.string   "holder_name"
+    t.string   "account_number"
     t.string   "routing_number"
     t.string   "country"
     t.string   "fingerprint"
@@ -328,10 +329,23 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
+  create_table "facebook_posts", force: :cascade do |t|
+    t.string   "facebook_post_id",  null: false
+    t.string   "facebook_group_id"
+    t.text     "message"
+    t.string   "author_name"
+    t.string   "author_fb_id"
+    t.text     "link"
+    t.string   "post_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["facebook_post_id"], name: "index_facebook_posts_on_facebook_post_id", unique: true, using: :btree
+  end
+
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -510,6 +524,7 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end

@@ -1,7 +1,11 @@
 class ProvidersController < ApplicationController
   before_action :sign_up_required
   def new
-  	@provider = Provider.new
+    if current_user.is_provider?
+      redirect_to current_user.provider
+    else
+  	 @provider = Provider.new
+    end
   end
 
   def create

@@ -1,0 +1,27 @@
+- content_for :head do
+  %script{:src => "https://js.stripe.com/v3/", :type => "text/javascript"}
+.container.content_container
+  .row
+    .col-sm-6.offset-sm-3.text-center
+      %h1= title "Add Bank Account"
+  .row
+    .col-sm-6.offset-sm-3
+      .mt-2
+        = form_for @bank_account, url: bank_accounts_path, method: 'POST' do |f|
+          - if @bank_account.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@bank_account.errors.count, "error")} prohibited this account from being saved:"
+              %ul
+                - @bank_account.errors.full_messages.each do |msg|
+                  %li= msg
+          = f.hidden_field :provider_id, value: @provider.id
+          .form-group
+            = f.label :holder_name
+            = f.text_field :holder_name, class: "form-control", data: {stripe: "Account Holder Name"}
+          .form-group
+            = f.label :account_number
+            = f.text_field :account_number, class: "form-control", data: {stripe: "Account Number"}
+          .form-group
+            = f.label :routing_number
+            = f.text_field :routing_number, class: "form-control", data: {stripe: "Routing Number"}
+          = f.submit "Create", class: 'btn btn-info btn-lg', id: 'bank_account_btn'

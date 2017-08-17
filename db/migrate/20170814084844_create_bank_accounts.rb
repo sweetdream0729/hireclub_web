@@ -4,6 +4,8 @@ class CreateBankAccounts < ActiveRecord::Migration[5.0]
       t.references :provider, foreign_key: true, index: true, :null => false
       t.string :stripe_bank_account_id, unique: true
       t.string :bank_name
+      t.string :holder_name
+      t.string :account_number
       t.string :routing_number
       t.string :country
       t.string :fingerprint, unique: true
