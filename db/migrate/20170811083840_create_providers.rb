@@ -20,6 +20,7 @@ class CreateProviders < ActiveRecord::Migration[5.0]
       t.boolean :payouts_enabled, default: false
       t.string :client_secret_key
       t.string :client_publishable_key
+      t.string :verification_status
 
       t.timestamps
     end

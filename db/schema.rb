@@ -676,6 +676,7 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.boolean  "payouts_enabled",        default: false
     t.string   "client_secret_key"
     t.string   "client_publishable_key"
+    t.string   "verification_status"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.index ["stripe_account_id"], name: "index_providers_on_stripe_account_id", unique: true, using: :btree
