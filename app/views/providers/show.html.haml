@@ -1,4 +1,77 @@
-%h1
-  = @provider.user.name
-/todo :add show code
-= link_to "Add Bank Account", new_bank_account_path
+.container-fluid.content_container
+  .row
+    .col-sm-6.offset-sm-3
+      %h1
+        = title "#{@provider.user.name}"
+      .card
+        %h3.card-header User details
+        .card-block
+          %p.card-text 
+            .row 
+              .col-3 
+                Email
+              .col-9
+                = @provider.user.email
+              .col-3 
+                Country
+              .col-9
+                = @provider.country
+              .col-3 
+                Service Agreement
+              .col-9
+                = "Accepted on" + @provider.tos_acceptance_date.to_s
+      .card
+        %h3.card-header Legal details
+        .card-block
+          %p.card-text 
+            .row 
+              .col-3 
+                First Name
+              .col-9
+                = @provider.first_name
+            .row
+              .col-3 
+                Last Name
+              .col-9
+                = @provider.last_name
+            .row
+              .col-3 
+                Date of birth
+              .col-9
+                = @provider.date_of_birth
+            .row
+              .col-3 
+                SSN last 4
+              .col-9
+                = @provider.ssn_last_4.nil? ? "Not provided" : "Provided"
+            .row
+              .col-3 
+                Address
+              .col-9
+                = @provider.address_line_1
+              .col-3
+              .col-9
+                = @provider.address_line_2
+              .col-3
+              .col-9
+                = @provider.city + ", " + @provider.state + ", " + @provider.country
+      .card
+        %h3.card-header Bank Accounts
+        .card-block
+          %ul.list-group.list-group-flush 
+            - @provider.bank_accounts.each do |bank_account|
+              %li.list-group-item
+                .col-3 
+                  Account Holder Name
+                .col-9
+                  = bank_account.holder_name
+                .col-3 
+                  Bank Name
+                .col-9
+                  = bank_account.bank_name
+                .col-3 
+                  Routing Number
+                .col-9
+                  = bank_account.routing_number
+          .mt-3
+          %a.btn.btn-primary{:href => new_bank_account_path} Add Bank Account
