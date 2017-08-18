@@ -22,4 +22,5 @@ StripeEvent.configure do |events|
   events.subscribe 'customer.source.created', StripeAction::CardCreated.new
   events.subscribe 'customer.source.updated', StripeAction::CardCreated.new
   events.subscribe 'account.updated', StripeAction::AccountUpdated.new
+  events.subscribe 'account.external_account.created', StripeAction::BankAccountCreated.new
 end
