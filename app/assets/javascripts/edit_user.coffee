@@ -40,13 +40,13 @@ $(document).ready ->
     
     if data.field == "user[username]" && data.validator == "remote"
       hint = $('#username_hint')
-      hint.text("hireclub.co/" + data.element.val())
+      hint.text("hireclub.com/" + data.element.val())
     return
   ).on('err.validator.fv', (e, data) ->
     
     if data.field == "user[username]" && data.validator == "remote"
       hint = $('#username_hint')
-      hint.text("hireclub.co/" + data.element.val())
+      hint.text("hireclub.com/" + data.element.val())
     return
   )
 

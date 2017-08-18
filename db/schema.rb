@@ -130,11 +130,12 @@ ActiveRecord::Schema.define(version: 20170814084844) do
   end
 
   create_table "assignees", force: :cascade do |t|
-    t.integer  "appointment_id"
-    t.integer  "user_id"
+    t.integer  "appointment_id", null: false
+    t.integer  "user_id",        null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
+    t.index ["user_id", "appointment_id"], name: "index_assignees_on_user_id_and_appointment_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
   end
 
@@ -327,19 +328,6 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.integer  "messages_count", default: 0, null: false
     t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
-  end
-
-  create_table "facebook_posts", force: :cascade do |t|
-    t.string   "facebook_post_id",  null: false
-    t.string   "facebook_group_id"
-    t.text     "message"
-    t.string   "author_name"
-    t.string   "author_fb_id"
-    t.text     "link"
-    t.string   "post_type"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["facebook_post_id"], name: "index_facebook_posts_on_facebook_post_id", unique: true, using: :btree
   end
 
   create_table "follows", force: :cascade do |t|
@@ -650,7 +638,9 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.string   "skills",       default: [],              array: true
     t.integer  "likes_count",  default: 0,  null: false
     t.integer  "company_id"
+    t.date     "completed_on"
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
+    t.index ["completed_on"], name: "index_projects_on_completed_on", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree

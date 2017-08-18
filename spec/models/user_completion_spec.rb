@@ -26,7 +26,7 @@ RSpec.describe UserCompletion, :type => :model do
     end
 
     it "should return 10 when website_url set" do
-      user.website_url = "http://hireclub.co"
+      user.website_url = "http://hireclub.com"
       expect(user_completion.percent_complete).to eq 10
     end
 

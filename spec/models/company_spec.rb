@@ -43,8 +43,8 @@ RSpec.describe Company, type: :model do
 
   describe "domain" do
     it "should get domain from website_url" do
-      company.website_url = "https://hireclub.co"
-      expect(company.domain).to eq("hireclub.co")
+      company.website_url = "https://hireclub.com"
+      expect(company.domain).to eq("hireclub.com")
     end
   end
 
@@ -151,7 +151,7 @@ RSpec.describe Company, type: :model do
   #     expect(hireclub.name).to eq "HireClub"
   #     expect(hireclub.slug).to eq "hireclub"
   #     expect(hireclub.twitter_url).to eq "https://twitter.com/hireclub"
-  #     expect(hireclub.website_url).to eq "http://hireclub.co"
+  #     expect(hireclub.website_url).to eq "http://hireclub.com"
   #     expect(hireclub.facebook_url).to eq "https://facebook.com/hireclub"
   #     expect(hireclub.tagline).to eq "Invite only job referrals."      
   #   end

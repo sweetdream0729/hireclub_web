@@ -30,7 +30,7 @@
 
                            <div class="min_pad" style="height: 32px; line-height: 32px; font-size: 30px;">&nbsp;</div>
 
-                           <%= render partial: "/email/elements/p", locals: { text: "I'm #{link_to 'Ketan Anjaria', 'https://hireclub.co/kidbombay'} and I'm the founder of HireClub.<br/>When I started HireClub in 2011 with 25 of my friends, I had no idea it would grow to over 10,000 people!<br/><strong>Our goal is to help friends find jobs.</strong>"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "I'm #{link_to 'Ketan Anjaria', 'https://hireclub.com/kidbombay'} and I'm the founder of HireClub.<br/>When I started HireClub in 2011 with 25 of my friends, I had no idea it would grow to over 10,000 people!<br/><strong>Our goal is to help friends find jobs.</strong>"} %>
 
                            <%= render partial: "/email/elements/h2", locals: { text: "Pick One Role"} %>
                            <%= render partial: "/email/elements/p", locals: { text: "Even if you wear a lot of hats, we suggest adding only one role based on recruiter feedback."} %>
@@ -46,8 +46,12 @@
                            <%= render partial: "/email/elements/p", locals: { text: "Use numbers, metrics, and accomplishments #humblebrag."} %>
                            <%= render partial: "/email/elements/p", locals: { text: "Don't just put what you did, but how you did it better."} %>
 
+                           <%= render partial: "/email/elements/h2", locals: { text: "Get Coaching"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "Feeling stuck in your career? Meet with one of our HireClub Helpers for Career Coaching."} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "#{link_to 'Get Coaching', 'https://hireclub.com/helpers'}"} %>
+                          
                            <%= render partial: "/email/elements/h2", locals: { text: "Send Me Feedback"} %>
-                           <%= render partial: "/email/elements/p", locals: { text: "I love hearing your feedback! Email me at #{link_to 'ketan@hireclub.co', 'mailto:ketan@hireclub.co'}. <br/><strong>I read every email you send.</td>"} %>
+                           <%= render partial: "/email/elements/p", locals: { text: "I love hearing your feedback! Email me at #{link_to 'ketan@hireclub.com', 'mailto:ketan@hireclub.com'}. <br/><strong>I read every email you send.</td>"} %>
 
                            <div style="height: 48px; line-height: 48px; font-size: 46px;">&nbsp;</div>
                         </td>
