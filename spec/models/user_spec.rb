@@ -108,7 +108,7 @@ RSpec.describe User, type: :model do
   #     expect(user).to be_valid
   #     expect(user).to be_persisted
 
-  #     expect(user.email).to eq("ketan@hireclub.co")
+  #     expect(user.email).to eq("ketan@hireclub.com")
   #     expect(user.name).to eq("Ketan Anjaria")
   #     expect(user.avatar_uid).to be_present
 

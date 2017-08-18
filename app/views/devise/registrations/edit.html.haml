@@ -37,7 +37,7 @@
                   - username = @user.errors.details[:username][0][:value]
                 %small
                   %span#username_hint
-                    = "hireclub.co/#{username}"
+                    = "hireclub.com/#{username}"
 
             .form-group
               = f.label :location
@@ -59,7 +59,7 @@
 
             .form-group
               = f.label "Website"
-              = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
+              = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.com"
 
             .form-group
               = f.label "Twitter"
