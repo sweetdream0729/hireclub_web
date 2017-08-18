@@ -3,6 +3,23 @@
     .col-sm-6.offset-sm-3
       %h1
         = title "#{@provider.user.name}"
+      %p
+        - if @provider.charges_enabled
+          %span.badge.badge-success
+            Charges enabled
+        - else 
+          %span.badge.badge-warning
+            Charges disabled
+
+        - if @provider.payouts_enabled
+          %span.badge.badge-success
+            Payouts enabled
+        - else 
+          %span.badge.badge-warning
+            Payouts disabled
+        
+        %span.badge.badge-default
+          = @provider.verification_status
       .card
         %h3.card-header User details
         .card-block
