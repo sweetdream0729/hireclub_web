@@ -39,6 +39,8 @@ class Provider < ApplicationRecord
 		provider.payouts_enabled = account["payouts_enabled"]
 		provider.tos_acceptance_ip = ip
 		provider.tos_acceptance_date = DateTime.now
+    provider.client_secret_key = account["keys"]["secret"]
+    provider.client_publishable_key = account["keys"]["publishable"]
 		#update stripe account details if all details
 		if provider.save
 			ProviderRelayJob.perform_later(account["id"], "update")

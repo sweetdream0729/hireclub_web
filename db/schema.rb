@@ -657,7 +657,7 @@ ActiveRecord::Schema.define(version: 20170814084844) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.integer  "user_id",                             null: false
+    t.integer  "user_id",                                null: false
     t.string   "stripe_account_id"
     t.string   "first_name"
     t.string   "last_name"
@@ -672,10 +672,12 @@ ActiveRecord::Schema.define(version: 20170814084844) do
     t.string   "ssn_last_4"
     t.datetime "tos_acceptance_date"
     t.string   "tos_acceptance_ip"
-    t.boolean  "charges_enabled",     default: false
-    t.boolean  "payouts_enabled",     default: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.boolean  "charges_enabled",        default: false
+    t.boolean  "payouts_enabled",        default: false
+    t.string   "client_secret_key"
+    t.string   "client_publishable_key"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.index ["stripe_account_id"], name: "index_providers_on_stripe_account_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_providers_on_user_id", using: :btree
   end

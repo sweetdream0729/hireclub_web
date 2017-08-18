@@ -18,6 +18,8 @@ class CreateProviders < ActiveRecord::Migration[5.0]
       t.string :tos_acceptance_ip
       t.boolean :charges_enabled, default: false
       t.boolean :payouts_enabled, default: false
+      t.string :client_secret_key
+      t.string :client_publishable_key
 
       t.timestamps
     end
