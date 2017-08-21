@@ -15,10 +15,8 @@ $(document).ready ->
         account_holder_name: $('input[name="bank_account[holder_name]"]').val(),
         account_holder_type: 'individual',
       }).then (result) ->
-        console.log(result)
         if result.error
           error_field = $('input[name="'+ result.error.param + '"]').data('stripe')
-          console.log(error_field)
           submitBtn.removeAttribute("disabled")
           alert( error_field + " " + result.error.message )
         else
@@ -27,7 +25,6 @@ $(document).ready ->
     return
 
 stripeBankTokenHandler = (token, form) ->
-  console.log(token)
   hiddenInput = document.createElement('input')
   hiddenInput.setAttribute 'type', 'hidden'
   hiddenInput.setAttribute 'name', 'stripeToken'

@@ -9,7 +9,6 @@ class Provider::DeleteProvider
   def call
     #delete the account
     account = Stripe::Account.retrieve(@stripe_account_id)
-    Rails.logger.debug "\n\n\n\n #{account.inspect} \n\n\n\n"
     account.delete
   end
 

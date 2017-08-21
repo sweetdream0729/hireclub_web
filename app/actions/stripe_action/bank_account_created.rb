@@ -1,7 +1,6 @@
 class StripeAction::BankAccountCreated < StripeAction::Base
 
   def call(stripe_event)
-    Rails.logger.info "Inside BankAccountCreated #{stripe_event.inspect}"
     stripe_bank_account = stripe_event.data.object
     provider = Provider.find_by(stripe_account_id: stripe_bank_account.account)
     stripe_account = Stripe::Account.retrieve(provider.stripe_account_id)

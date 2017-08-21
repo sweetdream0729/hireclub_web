@@ -7,7 +7,6 @@ class StripeAction::AccountUpdated < StripeAction::Base
     
     if provider.present?
       provider.update_attributes(charges_enabled: stripe_account.charges_enabled, payouts_enabled: stripe_account.payouts_enabled,verification_status: stripe_account.legal_entity.verification.status)
-      Rails.logger.info "AccountUpdated #{provider.inspect}"
       ProviderRelayJob.perform_later(provider.stripe_account_id, "update")
       return provider
     end
