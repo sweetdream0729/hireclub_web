@@ -15,7 +15,7 @@ class Provider < ApplicationRecord
   validates :first_name , presence: true
   validates :last_name , presence: true
   validates :phone , presence: true
-  validates :ssn_last_4 , presence: true
+  validates :ssn , presence: true
   validates :date_of_birth , presence: true
   validates :address_line_1, presence: true
   validates :city, presence: true

@@ -17,9 +17,13 @@
         - else 
           %span.badge.badge-warning
             Payouts disabled
-        
-        %span.badge.badge-default
-          = @provider.verification_status
+
+        - if @provider.verification_status == "verified"
+          %span.badge.badge-success
+            = @provider.verification_status
+        - else
+          %span.badge.badge-danger
+            = "unverified"
       .card
         %h3.card-header User details
         .card-block
@@ -60,7 +64,7 @@
               .col-3 
                 SSN last 4
               .col-9
-                = @provider.ssn_last_4.nil? ? "Not provided" : "Provided"
+                = @provider.ssn.nil? ? "Not provided" : "Provided"
             .row
               .col-3 
                 Address

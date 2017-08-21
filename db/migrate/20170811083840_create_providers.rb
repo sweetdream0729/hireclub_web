@@ -13,7 +13,7 @@ class CreateProviders < ActiveRecord::Migration[5.0]
       t.string :state
       t.string :country
       t.string :postal_code
-      t.string :ssn_last_4
+      t.string :ssn
       t.datetime :tos_acceptance_date
       t.string :tos_acceptance_ip
       t.boolean :charges_enabled, default: false

@@ -28,7 +28,7 @@ RSpec.describe BankAccount, type: :model do
     it "should create bank account" do  
       params = {first_name: "test",
                 last_name: "name",
-                ssn_last_4: "1234",
+                ssn: "123456789",
                 phone: "0000000000",
                 date_of_birth: "01-01-2001",
                 address_line_1: "test",

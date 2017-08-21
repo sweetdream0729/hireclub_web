@@ -10,7 +10,7 @@ FactoryGirl.define do
     postal_code "MyString"
     tos_acceptance_date "2017-08-11 14:08:40"
     tos_acceptance_ip "MyString"
-    ssn_last_4 "MyString"
+    ssn "MyString"
     user nil
   end
 end

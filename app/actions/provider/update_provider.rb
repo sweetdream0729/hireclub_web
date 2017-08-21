@@ -29,7 +29,8 @@ class Provider::UpdateProvider
     account.legal_entity.address.state = provider.state
     account.legal_entity.address.postal_code = provider.postal_code
     
-    account.legal_entity.ssn_last_4 = provider.ssn_last_4
+    account.legal_entity.ssn_last_4 = provider.ssn.last(4)
+    account.legal_entity.personal_id_number = provider.ssn
     account.save
     account = Stripe::Account.retrieve(@stripe_account_id)
   end
