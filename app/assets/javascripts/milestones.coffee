@@ -24,7 +24,7 @@ $(document).ready ->
       return
 
   options =
-    format: 'dd/mm/yyyy'
+    format: 'mm/dd/yyyy'
     endDate: new Date()
 
   $('.datepicker').datepicker options
