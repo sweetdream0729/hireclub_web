@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.hireclub.co"
+SitemapGenerator::Sitemap.default_host = "http://www.hireclub.com"
 # pick a place safe to write the files
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 
