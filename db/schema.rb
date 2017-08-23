@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815210606) do
+ActiveRecord::Schema.define(version: 20170823113700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,9 +343,9 @@ ActiveRecord::Schema.define(version: 20170815210606) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type"
+    t.string   "followable_type",                 null: false
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type"
+    t.string   "follower_type",                   null: false
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -524,7 +524,6 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -681,6 +680,8 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.string   "verification_status"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.boolean  "approved",               default: false, null: false
+    t.index ["approved"], name: "index_providers_on_approved", using: :btree
     t.index ["stripe_account_id"], name: "index_providers_on_stripe_account_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_providers_on_user_id", using: :btree
   end
