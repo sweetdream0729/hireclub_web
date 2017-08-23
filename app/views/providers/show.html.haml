@@ -3,6 +3,10 @@
     .col-sm-6.offset-sm-3
       %h1
         = title "#{@provider.user.name}"
+      - if is_admin?
+        = link_to rails_admin.edit_path(model_name: 'provider', id: @provider.id) do
+          %span.badge.badge-pill-outline.badge-warning.text-uppercase.mr-2
+            Admin
       %p
         - if @provider.approved
           %span.badge.badge-success
@@ -60,6 +64,11 @@
                 Date of birth
               .col-9
                 = @provider.date_of_birth.strftime("%D")
+            .row
+              .col-3
+                Phone
+              .col-9
+                = @provider.phone.phony_formatted(format: :international, spaces: '-')
             .row
               .col-3 
                 SSN

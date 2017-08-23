@@ -7,8 +7,7 @@ class Provider < ApplicationRecord
 
   # Constants
   COUNTRIES = [
-    { name: 'United States', code: 'US' },
-    { name: 'Canada', code: 'CA' }
+    { name: 'United States', code: 'US' }
   ]
 
   # Associations
@@ -20,16 +19,20 @@ class Provider < ApplicationRecord
   validates :stripe_account_id, presence: true
   validates :tos_acceptance_ip, presence: true
   validates :tos_acceptance_date, presence: true
-  validates :first_name , presence: true
-  validates :last_name , presence: true
-  validates :phone , presence: true
-  validates :ssn , presence: true
-  validates :date_of_birth , presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :ssn, presence: true, uniqueness: { case_sensitive: false }
+  validates :date_of_birth, presence: true
   validates :address_line_1, presence: true
   validates :city, presence: true
   validates :state, presence: true
   validates :country, presence: true
   validates :postal_code, presence: true
+
+  phony_normalize :phone, :default_country_code => 'US', :add_plus => false
+  validates_plausible_phone :phone, country_code: 'US'
+  validates_uniqueness_of :phone, allow_blank: true, message: '%{value} has already been taken'
+  validates :phone, uniqueness: true, presence: true
 
   #for creating stripe account
   def self.create_account(user, params, ip)

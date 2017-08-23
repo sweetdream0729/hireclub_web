@@ -24,20 +24,20 @@
               = f.label :phone
               = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
             .col-6
-              = f.label "SSN"
-              = f.text_field :ssn, class: 'form-control', placeholder: "SSN"
+              = f.label "Date of Birth"
+              = f.date_field :date_of_birth, class: 'datepicker', placeholder: "mm/dd/yyyy"
           .form-group.row
             .col-12
-              = f.label "Date of Birth"
-              %br
-              = f.date_field :date_of_birth, class: 'form-control'
+              = f.label "Social Security Number"
+              = f.text_field :ssn, class: 'form-control', placeholder: "SSN"
+              
           .form-group.row
             .col-12
               = f.label "Address"
             .col-12.mb-3
-              = f.text_field :address_line_1, class: 'form-control',placeholder: "address line 1"
+              = f.text_field :address_line_1, class: 'form-control',placeholder: "123 Main St"
             .col-12.mb-3
-              = f.text_field :address_line_2, class: 'form-control',placeholder: "address line 2"
+              = f.text_field :address_line_2, class: 'form-control'
             .col-6.mb-3
               = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
             .col-6.mb-3
@@ -50,7 +50,7 @@
             %input{ type: 'checkbox', name: 'tos', checked: false }
             I accept the
             %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service
-          %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-primary", id: "create_provider_btn"} Create Account
+          %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-info", id: "create_provider_btn"} Create Account
 
           .mt-5
           .text-center
