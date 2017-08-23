@@ -1,13 +1,13 @@
 class ProvidersController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :new]
 
   def new
     if current_user.is_provider?
-      redirect_to current_user.provider
+      redirect_to provider_path(current_user.provider)
     else
-  	 @provider = Provider.new(user: current_user)
-     authorize @provider
+      @provider = Provider.new(user: current_user)
+      authorize @provider
     end
   end
 

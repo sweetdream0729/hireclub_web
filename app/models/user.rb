@@ -426,7 +426,7 @@ class User < ApplicationRecord
   end
 
   def is_provider?
-    !provider.nil?
+    provider.present?
   end
 
   def username_not_in_routes
