@@ -12,7 +12,7 @@ class Provider < ApplicationRecord
 
   # Associations
   belongs_to :user
-  has_many :bank_accounts
+  has_many :bank_accounts, dependent: :destroy
 
   # Validations
   validates :user, presence:true
