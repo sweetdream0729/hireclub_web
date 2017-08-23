@@ -47,7 +47,7 @@ class Provider < ApplicationRecord
     rescue Stripe::InvalidRequestError
       Rails.logger.warn "Can't delete provider #{id}. Stripe Account ID #{stripe_account_id} not found."
     end
-    
+
     return true
   end
 
@@ -61,6 +61,7 @@ class Provider < ApplicationRecord
   		}
 	  	account = Stripe::Account.create(options)
 		provider = Provider.new(params)
+    provider.date_of_birth = Date.strptime(params[:date_of_birth],"%m/%d/%Y")
 		provider.user_id = user.id
 		provider.stripe_account_id = account["id"]
 		provider.charges_enabled = account["charges_enabled"]
@@ -75,7 +76,7 @@ class Provider < ApplicationRecord
 		else
 		#delete the account if verifcation detail not provided
 			ProviderRelayJob.perform_later(account["id"], "delete")
-		end														
+		end
 	end
 	 return provider
   end
