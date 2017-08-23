@@ -4,28 +4,34 @@
       %h1
         = title "#{@provider.user.name}"
       %p
-        - if @provider.charges_enabled
+        - if @provider.approved
           %span.badge.badge-success
-            Charges enabled
+            Approved
         - else 
           %span.badge.badge-warning
-            Charges disabled
+            Pending
+        - if @provider.charges_enabled
+          %span.badge.badge-success
+            Charges Enabled
+        - else 
+          %span.badge.badge-warning
+            Charges Disabled
 
         - if @provider.payouts_enabled
           %span.badge.badge-success
-            Payouts enabled
+            Payouts Enabled
         - else 
           %span.badge.badge-warning
-            Payouts disabled
+            Payouts Disabled
 
         - if @provider.verification_status == "verified"
           %span.badge.badge-success
             = @provider.verification_status
         - else
-          %span.badge.badge-danger
-            = "unverified"
-      .card
-        %h3.card-header User details
+          %span.badge.badge-warning
+            = "Unverified"
+      .card.mb-4
+        %h3.card-header Details
         .card-block
           %p.card-text 
             .row 
@@ -34,16 +40,10 @@
               .col-9
                 = @provider.user.email
               .col-3 
-                Country
+                Terms
               .col-9
-                = @provider.country
-              .col-3 
-                Service Agreement
-              .col-9
-                = "Accepted on" + @provider.tos_acceptance_date.to_s
-      .card
-        %h3.card-header Legal details
-        .card-block
+                = "Accepted on"
+                = @provider.tos_acceptance_date.strftime("%D")
           %p.card-text 
             .row 
               .col-3 
@@ -59,10 +59,10 @@
               .col-3 
                 Date of birth
               .col-9
-                = @provider.date_of_birth
+                = @provider.date_of_birth.strftime("%D")
             .row
               .col-3 
-                SSN last 4
+                SSN
               .col-9
                 = @provider.ssn.nil? ? "Not provided" : "Provided"
             .row

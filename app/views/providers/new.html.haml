@@ -30,7 +30,7 @@
             .col-12
               = f.label "Date of Birth"
               %br
-              = f.text_field :date_of_birth, class: 'datepicker', style: "width:50%;"
+              = f.date_field :date_of_birth, class: 'form-control'
           .form-group.row
             .col-12
               = f.label "Address"
@@ -39,9 +39,9 @@
             .col-12.mb-3
               = f.text_field :address_line_2, class: 'form-control',placeholder: "address line 2"
             .col-6.mb-3
-              = f.text_field :city, class: 'form-control', placeholder: "Enter City"
+              = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
             .col-6.mb-3
-              = f.text_field :state, class: 'form-control',  placeholder: "Enter State"
+              = f.select :state, Location.us_states, {}, {class: "form-control"}
             .col-6.mb-3
               = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
             .col-6.mb-3

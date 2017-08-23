@@ -1,25 +1,31 @@
 class ProvidersController < ApplicationController
   before_action :sign_up_required
+  after_action :verify_authorized, except: [:index]
+
   def new
     if current_user.is_provider?
       redirect_to current_user.provider
     else
-  	 @provider = Provider.new
+  	 @provider = Provider.new(user: current_user)
+     authorize @provider
     end
   end
 
   def create
   	create_provider = Provider::CreateProvider.new(current_user, provider_params, request.remote_ip)
   	@provider = create_provider.call
-  	if !@provider.id.nil?
-  		redirect_to @provider, notice: "Your are a provider"
+    authorize @provider
+
+  	if @provider.persisted?
+  		redirect_to @provider, notice: "Add Your Bank Account"
   	else
   		render :new
     end
   end
 
   def show
-  	@provider = Provider.find_by(user_id: current_user.id)
+    @provider = Provider.find(params[:id])
+    authorize @provider
   end
 
   private
