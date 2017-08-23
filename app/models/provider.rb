@@ -4,6 +4,7 @@ class Provider < ApplicationRecord
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
+  nilify_blanks
 
   # Constants
   COUNTRIES = [
