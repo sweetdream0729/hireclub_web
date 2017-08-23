@@ -75,7 +75,8 @@ class Project < ApplicationRecord
 
   def slug_candidates
     [
-      [:name, :id]
+      [:name]
+      [:name, :user_username]
     ]
   end
 
