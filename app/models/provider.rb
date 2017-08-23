@@ -1,13 +1,21 @@
 class Provider < ApplicationRecord
+  # Extensions
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
+  # Constants
   COUNTRIES = [
     { name: 'United States', code: 'US' },
     { name: 'Canada', code: 'CA' }
   ]
+
+  # Associations
   belongs_to :user
   has_many :bank_accounts
 
-  #validations
+  # Validations
   validates :user, presence:true
   validates :stripe_account_id, presence: true
   validates :tos_acceptance_ip, presence: true
@@ -49,7 +57,7 @@ class Provider < ApplicationRecord
 			ProviderRelayJob.perform_later(account["id"], "delete")
 		end														
 	end
-	return provider
+	 return provider
   end
 
 end

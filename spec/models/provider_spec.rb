@@ -19,7 +19,6 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to validate_presence_of(:user) }
     it { is_expected.to validate_presence_of(:stripe_account_id) }
     it { is_expected.to validate_presence_of(:tos_acceptance_ip) }
-    it { is_expected.to validate_presence_of(:tos_acceptance_ip) }
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:ssn) }
@@ -55,4 +54,25 @@ RSpec.describe Provider, type: :model do
   
 	  end
 	end
+
+  it "should have create activity" do
+    params = {first_name: "test",
+                last_name: "name",
+                ssn: "123456789",
+                phone: "0000000000",
+                date_of_birth: "01-01-2001",
+                address_line_1: "test",
+                city: "SF",
+                state: "CA",
+                country: "US",
+                postal_code: "111111"}
+
+    provider = Provider::CreateProvider.new(user, params ,"127.0.0.1").call
+
+    activity = Activity.where(key: ProviderCreateActivity::KEY).last
+    expect(activity).to be_present
+    expect(activity.trackable).to eq(provider)
+    expect(activity.owner).to eq(user)
+    expect(activity.private).to eq(true)
+  end
 end

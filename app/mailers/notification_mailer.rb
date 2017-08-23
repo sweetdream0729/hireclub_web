@@ -241,6 +241,19 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: @subject)
   end
 
+
+  def provider_created(notification)
+    set_notification(notification)
+
+    @provider = @notification.activity.trackable
+    @provider_user = @provider.user
+
+    @provider_url = get_utm_url url_for(@provider)
+    @user_url = get_utm_url url_for(@provider_user)
+
+    mail(to: @user.email, subject: "#{@provider_user.display_name} became a provider")
+  end
+
   def set_notification(notification)
     @notification = Notification.find(notification.id)
     @user = @notification.user
