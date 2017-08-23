@@ -90,4 +90,12 @@ RSpec.describe Provider, type: :model do
     expect(activity.owner).to eq(user)
     expect(activity.private).to eq(true)
   end
+
+  it "should delete from stripe" do
+    provider.save
+    stripe_account_id = provider.stripe_account_id
+    provider.destroy
+
+    expect(provider).not_to be_persisted
+  end
 end

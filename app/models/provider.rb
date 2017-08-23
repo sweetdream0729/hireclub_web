@@ -34,6 +34,23 @@ class Provider < ApplicationRecord
   validates_uniqueness_of :phone, allow_blank: true, message: '%{value} has already been taken'
   validates :phone, uniqueness: true, presence: true
 
+  before_destroy :remove_from_stripe
+
+  def remove_from_stripe
+    # destroy account on stripe
+    begin
+      account = Stripe::Account.retrieve(stripe_account_id)
+      begin
+        account.delete
+      rescue Stripe::InvalidRequestError
+      end
+    rescue Stripe::InvalidRequestError
+      Rails.logger.warn "Can't delete provider #{id}. Stripe Account ID #{stripe_account_id} not found."
+    end
+    
+    return true
+  end
+
   #for creating stripe account
   def self.create_account(user, params, ip)
   	if !user.is_provider?
