@@ -1,20 +1,76 @@
-.jumbotron.mb-0.home_banner
+.jumbotron.jumbotron-fluid.mb-0{style: "background-color: #2B3369;"}
   .container
-    / %h2.black.letterspace
-    /   HireClub
+    %h1.display-4.text-white.mb-4 Help Friends Find Jobs
+    .row
+      .col-md-6
+        %p.lead.text-white
+          HireClub helps you
+          #{link_to 'find a job', jobs_path, class: 'text-info bold'},
+          get
+          = link_to "professional career coaching", helpers_path, class: "text-info bold"
+          or show off
+          #{link_to 'your projects', projects_path, class: 'text-info bold'}.
+          
+        / %p.lead.text-white
+        /   Join our 16,000+ members today
+
+    .row.mt-4
+      .col-md-5.col-sm-8.col-lg-4.mb-4
+        %a.btn.btn-info.btn-lg.btn-block{:href => user_facebook_omniauth_authorize_path, :role => "button"}
+          %i.fa.fa-facebook-square.mr-2{"aria-hidden" => "true"}
+          Sign Up With Facebook
+      .col-md-3.col-sm-4
+        %a.btn.btn-outline-secondary.btn-lg.btn-block.text-white{:href => new_user_registration_path, :role => "button"} Join Now
+
+.container-fluid.p-0
+  .row.no-gutters
+    .col-1
+      = image_tag "headshots/roshni_mistry.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/roger_toor_3725-2_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/anita_sansguiri_2.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/anita_shaw_1.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/ben_seidl.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/annie_jalota_4033_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/carlos_martinez_1.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/neha_khetan_5898.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/chloe_lauer_2.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/coraly_rosario_2.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/hien_phan_6711.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/emily_yau_2.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/hasan_korre_3.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/linda_pham_4331_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/jake_hytken_1.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/sarah_juhn_5819.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/shweta-balasubramanian_5175_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/jennifer_barnhart.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/rikin_mathur_6670_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/kristina_vulgan_2.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/parker_commans_1.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/vandita_arora_4808_high.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/kinh_demaree_5662.jpg", class: 'img-fluid'
+    .col-1
+      = image_tag "headshots/jason_ng_6225_high.jpg", class: 'img-fluid'
     
-    %h1.display-3
-      Help Friends Find Jobs
-    %hr.inverse
-    %p.lead.mt-5
-      HireClub is an invite only job referral network.
-    %p.mt-5
-      = link_to user_facebook_omniauth_authorize_path, class: "btn btn-info btn-lg btn_facebook" do
-        %i.fa.fa-facebook-square{"aria-hidden" => "true"}
-        Sign Up with Facebook
-    - if user_signed_in? && !current_user.has_linkedin?
-      %p
-        = link_to user_linkedin_omniauth_authorize_path, class: "btn btn-info btn-lg btn_linkedin" do
-          %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
-          Add LinkedIn
-      / %a.btn.btn-info.btn-lg{:href => "http://facebook.com/groups/hireclub", :role => "button"} Apply To Join »
+    
