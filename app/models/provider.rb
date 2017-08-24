@@ -62,7 +62,7 @@ class Provider < ApplicationRecord
   		}
 	  	account = Stripe::Account.create(options)
 		provider = Provider.new(params)
-    provider.date_of_birth = Date.strptime(params[:date_of_birth],"%m/%d/%Y")
+    provider.date_of_birth = Chronic.parse(params[:date_of_birth])
 		provider.user_id = user.id
 		provider.stripe_account_id = account["id"]
 		provider.charges_enabled = account["charges_enabled"]
