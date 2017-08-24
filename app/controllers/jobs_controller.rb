@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed, :refresh_job_scores]
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :new]
 
   # GET /jobs
   def index
@@ -41,6 +41,13 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
+
+    unless user_signed_in?
+      # take us to sign up if we aren't logged in
+      store_location(new_job_path)
+      redirect_to(new_user_registration_path, format: :html) and return
+    end
+
     @job = Job.new
     authorize @job
   end

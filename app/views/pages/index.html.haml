@@ -1,20 +1,23 @@
-.jumbotron.mb-0.home_banner
+.jumbotron.jumbotron-fluid{style: "background-color: #2B3369;"}
   .container
-    / %h2.black.letterspace
-    /   HireClub
-    
-    %h1.display-3
-      Help Friends Find Jobs
-    %hr.inverse
-    %p.lead.mt-5
-      HireClub is an invite only job referral network.
-    %p.mt-5
-      = link_to user_facebook_omniauth_authorize_path, class: "btn btn-info btn-lg btn_facebook" do
-        %i.fa.fa-facebook-square{"aria-hidden" => "true"}
-        Sign Up with Facebook
-    - if user_signed_in? && !current_user.has_linkedin?
-      %p
-        = link_to user_linkedin_omniauth_authorize_path, class: "btn btn-info btn-lg btn_linkedin" do
-          %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
-          Add LinkedIn
-      / %a.btn.btn-info.btn-lg{:href => "http://facebook.com/groups/hireclub", :role => "button"} Apply To Join »
+    %h1.display-4.text-white.mb-4 Help Friends Find Jobs
+    .row
+      .col-md-6
+        %p.lead.text-white
+          HireClub helps you
+          #{link_to 'find a job', jobs_path, class: 'text-info bold'},
+          get
+          = link_to "professional career coaching", jobs_path, class: "text-info bold"
+          or show off
+          #{link_to 'your projects', projects_path, class: 'text-info bold'}.
+          
+        / %p.lead.text-white
+        /   Join our 16,000+ members today
+
+    .row.mt-4
+      .col-md-5.col-sm-8.col-lg-4.mb-4
+        %a.btn.btn-info.btn-lg.btn-block{:href => user_facebook_omniauth_authorize_path, :role => "button"}
+          %i.fa.fa-facebook-square.mr-2{"aria-hidden" => "true"}
+          Sign Up With Facebook
+      .col-md-3.col-sm-4
+        %a.btn.btn-outline-secondary.btn-lg.btn-block.text-white{:href => new_user_registration_path, :role => "button"} Join Now
