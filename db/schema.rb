@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815210606) do
+ActiveRecord::Schema.define(version: 20170825141545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,12 +130,11 @@ ActiveRecord::Schema.define(version: 20170815210606) do
   end
 
   create_table "assignees", force: :cascade do |t|
-    t.integer  "appointment_id", null: false
-    t.integer  "user_id",        null: false
+    t.integer  "appointment_id"
+    t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["appointment_id"], name: "index_assignees_on_appointment_id", using: :btree
-    t.index ["user_id", "appointment_id"], name: "index_assignees_on_user_id_and_appointment_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_assignees_on_user_id", using: :btree
   end
 
@@ -181,6 +180,21 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.integer  "position",    default: 0, null: false
     t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
+  end
+
+  create_table "bank_accounts", force: :cascade do |t|
+    t.integer  "provider_id",            null: false
+    t.string   "stripe_bank_account_id"
+    t.string   "bank_name"
+    t.string   "holder_name"
+    t.string   "account_number"
+    t.string   "routing_number"
+    t.string   "country"
+    t.string   "fingerprint"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["provider_id"], name: "index_bank_accounts_on_provider_id", using: :btree
+    t.index ["stripe_bank_account_id"], name: "index_bank_accounts_on_stripe_bank_account_id", unique: true, using: :btree
   end
 
   create_table "cards", force: :cascade do |t|
@@ -315,10 +329,23 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
+  create_table "facebook_posts", force: :cascade do |t|
+    t.string   "facebook_post_id",  null: false
+    t.string   "facebook_group_id"
+    t.text     "message"
+    t.string   "author_name"
+    t.string   "author_fb_id"
+    t.text     "link"
+    t.string   "post_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["facebook_post_id"], name: "index_facebook_posts_on_facebook_post_id", unique: true, using: :btree
+  end
+
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type"
+    t.string   "followable_type",                 null: false
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type"
+    t.string   "follower_type",                   null: false
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -432,6 +459,7 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.datetime "published_on"
     t.string   "suggested_skills",   default: [],                 array: true
     t.boolean  "relocation_offered", default: false, null: false
+    t.string   "source_url"
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
@@ -630,6 +658,37 @@ ActiveRecord::Schema.define(version: 20170815210606) do
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.integer  "user_id",                                null: false
+    t.string   "stripe_account_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.datetime "date_of_birth"
+    t.text     "address_line_1"
+    t.text     "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "postal_code"
+    t.string   "ssn"
+    t.datetime "tos_acceptance_date"
+    t.string   "tos_acceptance_ip"
+    t.boolean  "charges_enabled",        default: false
+    t.boolean  "payouts_enabled",        default: false
+    t.string   "client_secret_key"
+    t.string   "client_publishable_key"
+    t.string   "verification_status"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "approved",               default: false, null: false
+    t.index ["approved"], name: "index_providers_on_approved", using: :btree
+    t.index ["phone"], name: "index_providers_on_phone", unique: true, using: :btree
+    t.index ["ssn"], name: "index_providers_on_ssn", unique: true, using: :btree
+    t.index ["stripe_account_id"], name: "index_providers_on_stripe_account_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_providers_on_user_id", using: :btree
+  end
+
   create_table "resumes", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "file_uid"
@@ -823,6 +882,7 @@ ActiveRecord::Schema.define(version: 20170815210606) do
   add_foreign_key "assignees", "users"
   add_foreign_key "attachments", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "bank_accounts", "providers"
   add_foreign_key "cards", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
@@ -857,6 +917,7 @@ ActiveRecord::Schema.define(version: 20170815210606) do
   add_foreign_key "preferences", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
+  add_foreign_key "providers", "users"
   add_foreign_key "resumes", "users"
   add_foreign_key "review_requests", "users"
   add_foreign_key "stories", "users"

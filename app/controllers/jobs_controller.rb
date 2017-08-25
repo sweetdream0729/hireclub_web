@@ -63,13 +63,8 @@ class JobsController < ApplicationController
   # POST /jobs
   def create
     @job = Job.new(job_params)
-
-    if current_user.is_admin && job_params[:user_id].present?
-      @job.user_id 
-    else
-      @job.user_id = current_user.id
-    end
-
+    set_user_id
+    
     authorize @job
 
     if @job.save
@@ -84,6 +79,8 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1
   def update
+    set_user_id
+
     if @job.update(job_params)
       @job.update_suggested_skills!
       UpdateJobScoresJob.perform_later(@job)
@@ -129,6 +126,14 @@ class JobsController < ApplicationController
       authorize @job
     end
 
+    def set_user_id
+      if current_user.is_admin && job_params[:user_id].present?
+        @job.user_id 
+      else
+        @job.user_id = current_user.id
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def job_params
       params.require(:job).permit(:name, :slug, :company_id, :location_id, :role_id, :skills_list,
@@ -139,6 +144,7 @@ class JobsController < ApplicationController
         :contract,
         :internship,
         :relocation_offered,
+        :source_url,
         :user_id)
     end
 end
