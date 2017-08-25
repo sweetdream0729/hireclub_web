@@ -75,8 +75,14 @@
           %p.mt-3
             = markdown(@job.description)
 
-          %p
-            = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
+          - if @job.link.present?
+            %h6.mt-5 Link
+            = link_to link_display(@job.link), @job.link, target: "_blank"
+      
+          - if @job.source_url.present?
+            %h6.mt-5 Source
+            = link_to link_display(@job.source_url), @job.source_url, target: "_blank"
+      
       
       - if current_user && current_user.is_admin
         %h6.mt-5 Suggested Members
@@ -156,8 +162,3 @@
           - if @company.website_url.present?
             %li.list-group-item 
               = link_to link_display(@company.website_url), @company.website_url 
-
-      - if @job.source_url.present?
-        %h6.mt-5 Source
-        = link_to link_display(@job.source_url), @job.source_url, target: "_blank"
-              
