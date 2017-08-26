@@ -14,8 +14,8 @@
             %strong
               = link_to @post.user.display_name, @post.user
           %p.mb-0
-            = mentioned_users(@post.text)
-          
+            = Rinku.auto_link(mentioned_users(@post.text), :all, 'target="_blank"').html_safe
+
           %small.text-muted
             = local_time_ago(@post.created_at)
             - if policy(@post).destroy?
