@@ -5,7 +5,14 @@
 footer {
   padding-top: 2rem;
   padding-bottom: 1rem;
-  background: rgb(234, 237, 243);
+  background: #5f82b3;
+  .nav {
+    line-height: 2rem;
+    letter-spacing: 0.5px;
+  }
+  hr {
+    border-top: 1px solid rgba(255,255,255,0.4);
+  }
 }
 
 .home_banner {
