@@ -9,7 +9,13 @@ footer {
   .nav {
     line-height: 2rem;
     letter-spacing: 0.5px;
+    font-size: 0.95rem;
   }
+
+  a {
+    color: rgba(255,255,255,0.75);
+  }
+  
   hr {
     border-top: 1px solid rgba(255,255,255,0.4);
   }

@@ -7,54 +7,54 @@
         %ul.nav.flex-column
           - if user_signed_in? && current_user.is_admin
             %li.nav-item
-              = link_to "Admin", rails_admin_path, class: "text-white"
+              = link_to "Admin", rails_admin_path
 
           %li.nav-item
-            = link_to "Find Jobs", jobs_path, class: "text-white"
+            = link_to "Find Jobs", jobs_path
           %li.nav-item
-            = link_to "Post Job", new_job_path, class: "text-white"
+            = link_to "Post Job", new_job_path
           
       .col-sm-3.mb-4
         %h6 Features
         %ul.nav.flex-column
           %li.nav-item
-            = link_to "Members", members_path, class: "text-white"
+            = link_to "Members", members_path
           %li.nav-item
-            = link_to "Companies", companies_path, class: "text-white"
+            = link_to "Companies", companies_path
           %li.nav-item
-            = link_to "Stories", stories_path, class: "text-white"
+            = link_to "Stories", stories_path
           %li.nav-item
-            = link_to "Skills", skills_path, class: "text-white"
+            = link_to "Skills", skills_path
           %li.nav-item
-            = link_to "Roles", roles_path, class: "text-white"
+            = link_to "Roles", roles_path
           %li.nav-item
-            = link_to "Badges", badges_path, class: "text-white"
+            = link_to "Badges", badges_path
 
       .col-sm-3.mb-4
         %h6 Company
         %ul.nav.flex-column
           %li.nav-item
-            = link_to "About", about_path, class: "text-white"
+            = link_to "About", about_path
           %li.nav-item
-            = link_to "Heroes", heroes_path, class: "text-white"
+            = link_to "Heroes", heroes_path
           %li.nav-item
-            = link_to "Privacy", privacy_path, class: "text-white"
+            = link_to "Privacy", privacy_path
           %li.nav-item
-            = link_to "Styles", styles_path, class: "text-white"
+            = link_to "Styles", styles_path
             
       .col-sm-3.mb-4
         %h6 Contact
         %ul.nav.flex-column
           %li.nav-item
-            = link_to "Help", "mailto:help@hireclub.com", class: "text-white"
+            = link_to "Help", "mailto:help@hireclub.com"
           %li.nav-item
-            = link_to "Get Coaching", helpers_path, class: "text-white"
+            = link_to "Get Coaching", helpers_path
           %li.nav-item
-            = link_to "https://facebook.com/groups/hireclub", class: "text-white" do
+            = link_to "https://facebook.com/groups/hireclub" do
               %i.fa.fa-facebook.mr-1
               Facebook
           %li.nav-item
-            = link_to "https://twitter.com/hireclub", class: "text-white" do
+            = link_to "https://twitter.com/hireclub" do
               %i.fa.fa-twitter.mr-1
               Twitter
 
