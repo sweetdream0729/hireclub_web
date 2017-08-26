@@ -27,6 +27,8 @@
 //= require jquery.infinite-pages
 //= require jquery.remotipart
 //= require jquery.barrating.min
+//= require js.cookie
+//= require jstz.min
 //= require bootstrap-datepicker
 //= require cocoon
 //= require init
