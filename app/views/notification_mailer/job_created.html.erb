@@ -1,0 +1,94 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f5f8fa; min-width: 340px; font-size: 1px; line-height: normal;">
+  <tr>
+    <td align="center" valign="top">
+      <!--[if (gte mso 9)|(IE)]>
+         <table border="0" cellspacing="0" cellpadding="0">
+         <tr><td align="center" valign="top" width="750"><![endif]-->
+      <table cellpadding="0" cellspacing="0" border="0" width="750" class="table750" style="width: 100%; max-width: 750px; min-width: 340px; background: #f5f8fa;">
+        <tr>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+          <td align="center" valign="top" style="background: #ffffff;">
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100% !important; min-width: 100%; max-width: 100%; background: #f5f8fa;">
+                     <tr>
+                        <td align="right" valign="top">
+                           <div class="top_pad" style="height: 25px; line-height: 25px; font-size: 23px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <%= render partial: "/email/shared/logo" %>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
+                     <tr>
+                        <td align="left" valign="top">
+                          <a href="<%= @job_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #A9BCD0; font-size: 17px; line-height: 22px; font-weight: 600; text-transform: uppercase; text-decoration: none">
+                              <%= @user.display_name %> posted a job
+                           </a>
+                           <div style="height: 28px; line-height: 28px; font-size: 26px;">&nbsp;</div>
+                        </td>
+                     </tr>
+                  </table>
+
+                  <table cellpadding="0" cellspacing="0" border="0" width="65%" style="width: 65% !important; min-width: 270px; max-width: 65%; border-width: 1px; border-style: solid; border-color: #e5e5e5; border-radius: 5px;">
+                     <tr>
+                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">
+                          &nbsp;
+                        </td>
+                        <td align="center" valign="top">
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
+
+                           <a href="<%= @job_url %>" style="display: block; max-width: 100px;">
+                              <img src="<%= company_avatar(@job.company.avatar, 200, true) %>" alt="img" width="100" border="0" style="display: block; width: 100px; border-radius: 4px;" />
+                           </a>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
+
+                           <a href="<%= @job_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                              <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                                 <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 19px; line-height: 25px; font-weight: 600; text-decoration: none;">
+                                   <%= @job.company.name %>
+                                   <br/>
+                                   <%= @job.name %>
+                                 </span>
+                              </font>
+                           </a>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
+
+                           <a href="<%= @job_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
+                              <font face="'Source Sans Pro', sans-serif" color="#5E5E5E" style="font-size: 19px; line-height: 22px; text-decoration: none;">
+                                 <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #5E5E5E; font-size: 19px; line-height: 22px; text-decoration: none;">
+                                    <%= @job.role.try(:name) %>
+                                    ·
+                                    <%= @job.location.cached_display_name %>
+                                 </span>
+                              </font>
+                           </a>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
+
+                           <%= render partial: "/email/elements/button", locals: { url: @job_url, text: "View Job"} %>
+
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>
+
+                        </td>
+                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">&nbsp;</td>
+                     </tr>
+                  </table>
+
+                  <div class="top_pad2" style="height: 70px; line-height: 70px; font-size: 68px;">&nbsp;</div>
+
+                  <%= render partial: "/email/shared/footer" %>
+
+               </td>
+               <td class="mob_pad" width="25" style="width: 25px; max-width: 25px; min-width: 25px;">&nbsp;</td>
+            </tr>
+         </table>
+         <!--[if (gte mso 9)|(IE)]>
+         </td></tr>
+         </table><![endif]-->
+      </td>
+   </tr>
+</table>

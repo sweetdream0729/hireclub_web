@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825141545) do
+ActiveRecord::Schema.define(version: 20170827115126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -848,6 +848,7 @@ ActiveRecord::Schema.define(version: 20170825141545) do
     t.integer  "followers_count_cache",        default: 0,     null: false
     t.string   "stripe_customer_id"
     t.boolean  "is_subscriber",                default: false, null: false
+    t.string   "timezone"
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree

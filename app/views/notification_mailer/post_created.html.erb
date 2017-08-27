@@ -68,7 +68,7 @@
                                        <a href="<%= @post_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #888888; font-size: 19px; line-height: 22px; text-decoration: none;">   
                                           <font face="'Source Sans Pro', sans-serif" color="#888888" style="font-size: 19px; line-height: 22px; text-decoration: none;">
                                              <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #888888; font-size: 19px; line-height: 22px; text-decoration: none;">
-                                             <%= @post.created_at.strftime("%B %e at %l:%M%P") %>
+                                             <%= @post.created_at.in_time_zone(@user.timezone).strftime("%B %e at %l:%M%P") %>
                                              </span>
                                           </font>
                                        </a>
