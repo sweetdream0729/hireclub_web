@@ -31,6 +31,19 @@ class ResumesController < ApplicationController
     end
   end
 
+  # GET /resumes/1/edit
+  def edit
+  end
+
+  # PATCH/PUT /milestones/1
+  def update
+    if @resume.update(resume_params)
+      redirect_to @resume, notice: 'Resume updated'
+    else
+      render :edit
+    end
+  end
+
   # DELETE /resumes/1
   def destroy
     @resume.destroy
@@ -46,6 +59,6 @@ class ResumesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def resume_params
-      params.require(:resume).permit(:file, :retained_file, :remove_file, :file_url)
+      params.require(:resume).permit(:file, :retained_file, :remove_file, :file_url, :private)
     end
 end

@@ -70,6 +70,18 @@ class Location < ApplicationRecord
     return "#{name}, #{parent.name}"
   end
 
+  def get_timezone
+    return if latitude.nil? || longitude.nil?
+    begin
+      timezone_obj = Timezone.lookup(latitude, longitude)
+      self.timezone = timezone_obj.name
+      self.save
+    rescue
+      Rails.logger.info(puts "Could not set timezone for #{self.inspect}")
+    end
+    return self.timezone
+  end
+
 
   def self.create_root
     root = Location.find_or_create_by(name: 'Anywhere', level: Location::ROOT, parent_id: nil)
@@ -183,6 +195,12 @@ class Location < ApplicationRecord
       puts "   errors = #{e.inspect}"
     end
 
+  end
+
+  def self.update_timezones
+    Location.where(timezone:nil).find_each do |l|
+      l.get_timezone
+    end
   end
 
 

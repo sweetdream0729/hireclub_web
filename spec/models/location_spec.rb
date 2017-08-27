@@ -142,6 +142,16 @@ RSpec.describe Location, type: :model do
 
   end 
 
+  describe "timezone" do
+    it "should look up timezone" do
+      location.latitude = -34.92771808058
+      location.longitude = 138.477041423321
+      location.save
+
+      expect(location.get_timezone).to eq("Australia/Adelaide")
+    end
+  end
+
   # describe "facebook import" do
   #   let(:user)  { FactoryGirl.create(:user, username: 'kidbombay') }
   #   let!(:kidbombay_auth) { FactoryGirl.create(:authentication, :kidbombay, user: user) }

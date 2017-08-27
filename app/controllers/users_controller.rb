@@ -35,6 +35,13 @@ class UsersController < ApplicationController
     @first_skills = @user_skills.limit(5)
     @rest_skills = @user_skills.offset(5)
 
+    resume_scope = @user.resumes.only_public
+    if user_signed_in? && (current_user == @user || current_user.is_admin)
+      resume_scope = @user.resumes
+    end
+
+    @resumes = resume_scope.by_newest
+    
     if @user == current_user
       @user_completion = UserCompletion.new(@user)
     end
