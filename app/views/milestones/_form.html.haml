@@ -4,7 +4,7 @@
       %h2= "#{pluralize(@milestone.errors.count, "error")} prohibited this milestone from being saved:"
       %ul
         - @milestone.errors.full_messages.each do |msg|
-          %li= msg
+          %li.text-danger= msg
 
   .row
     .col-sm-6
@@ -24,10 +24,12 @@
         %small.form-text.text-muted
           Which Company, School or Organization was this milestone for?
         = f.hidden_field :company_id, value: @milestone.company_id, class: "autocomplete_company_id"
-      .form-group
+      .form-group{class: ('has-danger' if f.object.errors.any? && f.object.errors.details[:start_date].present?)}
         = f.label "When did this happen?"
-        %br
-        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%m/%d/%Y") unless f.object.new_record?}", class: 'datepicker form-control'
+        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%m/%d/%Y") if f.object.start_date.present?}", class: 'datepicker form-control'
+        .form-control-feedback
+          - if f.object.errors.any? && f.object.errors.details[:start_date].present?
+            = f.object.errors.full_messages[0]
 
       .form-group
         = f.label "Skills"

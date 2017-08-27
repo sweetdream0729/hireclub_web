@@ -40,6 +40,7 @@ class Milestone < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :name, presence: true
+  validates :start_date, presence: true
   validates :facebook_id, uniqueness: true, allow_blank: true
   validate :skills_exist
 
