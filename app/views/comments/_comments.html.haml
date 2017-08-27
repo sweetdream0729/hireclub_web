@@ -6,8 +6,8 @@
         %strong
           = link_to comment.user.display_name, comment.user
       %p.mb-0
-        = mentioned_users(comment.text)
-      
+        = Rinku.auto_link(mentioned_users(comment.text), :all, 'target="_blank"').html_safe
+
       %small.text-muted
         = local_time_ago(comment.created_at)
         = render partial: "/comments/like", locals: { likeable: comment }      

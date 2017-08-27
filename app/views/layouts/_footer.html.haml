@@ -1,44 +1,82 @@
 %footer
-  .container
-    %small
-      .bold
-        %ul.list-inline
-          %li.list-inline-item
-            = link_to "Home", root_path
-          %li.list-inline-item
-            = link_to "About", about_path
-          %li.list-inline-item
-            = link_to "Contact", contact_path
-          %li.list-inline-item
-            = link_to "Privacy", privacy_path
-          
-          %li.list-inline-item
-            = link_to "Members", members_path
-          %li.list-inline-item
-            = link_to "Companies", companies_path
-          %li.list-inline-item
-            = link_to "Stories", stories_path
-          %li.list-inline-item
-            = link_to "Skills", skills_path
-          %li.list-inline-item
-            = link_to "Roles", roles_path
-          %li.list-inline-item
-            = link_to "Badges", badges_path
-          %li.list-inline-item
-            = link_to "Heroes", heroes_path
-          %li.list-inline-item
-            = link_to "Facebook", "http://facebook.com/groups/hireclub"
-          %li.list-inline-item
-            = link_to "Help", "mailto:help@hireclub.com"
-
+  .container.text-white
+    .row
+      .col-sm-3.mb-4
+        %a{href: root_path}
+          %h6.black.text-white HireClub
+        %ul.nav.flex-column
           - if user_signed_in? && current_user.is_admin
-            %li.list-inline-item
-              = link_to "Styles", styles_path
-            %li.list-inline-item
+            %li.nav-item
               = link_to "Admin", rails_admin_path
 
+          %li.nav-item
+            = link_to "Find Jobs", jobs_path
+          %li.nav-item
+            = link_to "Post Job", new_job_path
+          
+      .col-sm-3.mb-4
+        %h6 Features
+        %ul.nav.flex-column
+          %li.nav-item
+            = link_to "Members", members_path
+          %li.nav-item
+            = link_to "Companies", companies_path
+          %li.nav-item
+            = link_to "Stories", stories_path
+          %li.nav-item
+            = link_to "Skills", skills_path
+          %li.nav-item
+            = link_to "Roles", roles_path
+          %li.nav-item
+            = link_to "Badges", badges_path
+
+      .col-sm-3.mb-4
+        %h6 Company
+        %ul.nav.flex-column
+          %li.nav-item
+            = link_to "About", about_path
+          %li.nav-item
+            = link_to "Heroes", heroes_path
+          %li.nav-item
+            = link_to "Privacy", privacy_path
+          %li.nav-item
+            = link_to "Styles", styles_path
+            
+      .col-sm-3.mb-4
+        %h6 Contact
+        %ul.nav.flex-column
+          %li.nav-item
+            = link_to "Help", "mailto:help@hireclub.com"
+          %li.nav-item
+            = link_to "Get Coaching", helpers_path
+          %li.nav-item
+            = link_to "https://facebook.com/groups/hireclub" do
+              %span.fa-stack
+                %i.fa.fa-square-o.fa-stack-2x
+                %i.fa.fa-facebook.fa-stack-1x
+              Facebook
+          %li.nav-item
+            = link_to "https://twitter.com/hireclub" do
+              %span.fa-stack
+                %i.fa.fa-square-o.fa-stack-2x
+                %i.fa.fa-twitter.fa-stack-1x
+              Twitter
+          %li.nav-item
+            = link_to "https://instagram.com/hireclub" do
+              %span.fa-stack
+                %i.fa.fa-square-o.fa-stack-2x
+                %i.fa.fa-instagram.fa-stack-1x
+              Instagram
+
+
+    %small
       %p
-        © 2017 HireClub. All rights reserved.
+        %hr
+        .letterspace
+          © 2017 HireClub
+          .pull-right
+            Made with &hearts; in San Francisco
+      
 :javascript
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -6,5 +6,7 @@ App.init = ->
   if App.currentUser
     OneSignal.push(["sendTags", {user_id: App.currentUser}]);
 
+  Cookies.set('browser.timezone', jstz.determine().name(), { expires: 30 });
+
 $(document).ready ->
   App.init()

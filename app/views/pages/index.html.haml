@@ -24,6 +24,33 @@
 
 .container-fluid.p-0
   .row.no-gutters
+    .col-sm-4
+      %a{href: helpers_path}
+        .card.card-inverse.text-center.card-primary
+          %img.card-img{src: "http://placehold.it/800x200/79ADDC/ffffff?text=+", style: "border-radius: 0"}
+          .card-img-overlay
+            %h4.card-title.letterspace_min.bold{style: "font-size: 1.25rem;"}
+              Get Coaching
+            %p.card-text.text-white.letterspace_min Private, affordable coaching tailored for you.
+    .col-sm-4
+      %a{href: new_job_path}
+        .card.card-inverse.text-center
+          %img.card-img{src: "http://placehold.it/800x200/6B4E71/ffffff?text=+", style: "border-radius: 0"}
+          .card-img-overlay
+            %h4.card-title.letterspace_min.bold{style: "font-size: 1.25rem;"}
+              Post a Job
+            %p.card-text.text-white.letterspace_min Reach 16,000 qualified candidates.
+    .col-sm-4
+      %a{href: communities_path}
+        .card.card-inverse.text-center
+          %img.card-img{src: "http://placehold.it/800x200/52AA5E/ffffff?text=+", style: "border-radius: 0"}
+          .card-img-overlay
+            %h4.card-title.letterspace_min.bold{style: "font-size: 1.25rem;"}
+              Join the Community
+            %p.card-text.text-white.letterspace_min HireClub is here for you.
+          
+.container-fluid.p-0
+  .row.no-gutters
     .col-1
       = image_tag "headshots/roshni_mistry.jpg", class: 'img-fluid'
     .col-1

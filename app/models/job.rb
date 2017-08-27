@@ -7,6 +7,7 @@ class Job < ApplicationRecord
   include ActsAsLikeable
   include FeedDisplayable
   has_smart_url :link
+  has_smart_url :source_url
   is_impressionable
 
   include UnpublishableActivity

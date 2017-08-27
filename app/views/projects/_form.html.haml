@@ -50,7 +50,7 @@
 
       .form-group
         = f.label :completed_on
-        = f.date_field :completed_on, class: 'form-control'
+        = f.text_field :completed_on, class: 'form-control datepicker', value: "#{f.object.completed_on.strftime('%m/%d/%Y') if f.object.completed_on.present?}"
 
       %hr
       = f.submit 'Save', class: "btn btn-info btn-lg"

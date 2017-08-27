@@ -5,7 +5,23 @@
 footer {
   padding-top: 2rem;
   padding-bottom: 1rem;
-  background: rgb(234, 237, 243);
+  background: #708CB3;
+  .nav {
+    line-height: 2rem;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+  }
+
+  a {
+    color: rgba(255,255,255,0.75);
+  }
+  a:hover {
+    color: #fff;
+  }
+  
+  hr {
+    border-top: 1px solid rgba(255,255,255,0.4);
+  }
 }
 
 .home_banner {
