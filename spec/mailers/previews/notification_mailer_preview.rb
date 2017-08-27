@@ -4,7 +4,7 @@ class NotificationMailerPreview < ActionMailer::Preview
   def user_welcome
     user = User.first
     user.welcome!
-    notification = Notification.where(user: user, activity_key: UserWelcomeActivity::KEY).first
+    notification = Notification.where(user: user, activity_key: UserWelcomeActivity::KEY).last
     NotificationMailer.user_welcome(notification)
   end
 
@@ -23,17 +23,17 @@ class NotificationMailerPreview < ActionMailer::Preview
   end
 
   def comment_created
-    notification = Notification.where(activity_key: CommentCreateActivity::KEY).last
+    notification = Notification.where(activity_key: CommentCreateActivity::KEY, published: true).last
     NotificationMailer.comment_created(notification)
   end
 
   def comment_mentioned
-    notification = Notification.where(activity_key: MentionCreateActivity::KEY).last
+    notification = Notification.where(activity_key: MentionCreateActivity::KEY, published: true).last
     NotificationMailer.comment_mentioned(notification)
   end
 
   def job_created
-    notification = Notification.where(activity_key: JobCreateActivity::KEY).first
+    notification = Notification.where(activity_key: JobCreateActivity::KEY, published: true).last
     NotificationMailer.job_created(notification)
   end
 
@@ -43,17 +43,17 @@ class NotificationMailerPreview < ActionMailer::Preview
   end
 
   def user_followed
-    notification = Notification.where(activity_key: UserFollowActivity::KEY).first
+    notification = Notification.where(activity_key: UserFollowActivity::KEY).last
     NotificationMailer.user_followed(notification)
   end
 
   def story_published
-    notification = Notification.where(activity_key: StoryPublishActivity::KEY).first
+    notification = Notification.where(activity_key: StoryPublishActivity::KEY, published: true).last
     NotificationMailer.story_published(notification)
   end
 
   def project_created
-    notification = Notification.where(activity_key: ProjectCreateActivity::KEY).first
+    notification = Notification.where(activity_key: ProjectCreateActivity::KEY, published: true).last
     NotificationMailer.project_created(notification)
   end
 
