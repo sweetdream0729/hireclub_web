@@ -31,7 +31,13 @@ class ApplicationController < ActionController::Base
                                                                                  
   def set_time_zone
     old_time_zone = Time.zone
-    Time.zone = browser_timezone if browser_timezone.present?
+    if browser_timezone.present?
+      Time.zone = browser_timezone 
+      if user_signed_in? && current_user.timezone.blank?
+        current_user.timezone = browser_timezone
+        current_user.save
+      end
+    end
     yield
   ensure
     Time.zone = old_time_zone
@@ -41,3 +47,4 @@ class ApplicationController < ActionController::Base
     cookies["browser.timezone"]
   end
 end
+  

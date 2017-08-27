@@ -46,7 +46,7 @@ class SettingsController < ApplicationController
 
     def user_params
       params.require(:user).permit(:username, :name, :email, :password, :avatar, :retained_avatar, :remove_avatar, 
-      :location_id, :company_id, :bio,
+      :location_id, :company_id, :bio, :timezone,
       :is_available, :is_hiring, :is_reviewer,
       :open_to_remote, :open_to_full_time, :open_to_part_time, :open_to_contract, :open_to_internship, :open_to_relocation, :open_to_new_opportunities,
       :is_us_work_authorized, :requires_us_visa_sponsorship,

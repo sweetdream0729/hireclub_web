@@ -36,6 +36,7 @@ module Admin::UserAdmin
           field :password
           field :company
           field :location
+          field :timezone
           field :stripe_customer_id
           field :is_subscriber
           field :is_admin
@@ -105,6 +106,7 @@ module Admin::UserAdmin
           field :password
           field :company
           field :location
+          field :timezone
 
           field :is_subscriber
           field :is_admin
