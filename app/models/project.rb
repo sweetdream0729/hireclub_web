@@ -123,6 +123,14 @@ class Project < ApplicationRecord
     return created_at if completed_on.nil?
     completed_on
   end
+
+  def completed_on_formatted
+    completed_on.strftime("%m/%d/%Y") if completed_on
+  end
+
+  def completed_on_formatted=(value)
+    self.completed_on = Chronic.parse(value)
+  end
   
   def self.privatize_projects_without_image
     activities = Activity.only_public.where(key: "project.create")

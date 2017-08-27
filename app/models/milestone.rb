@@ -64,4 +64,12 @@ class Milestone < ApplicationRecord
       end
     end
   end
+
+  def start_date_formatted
+    start_date.strftime("%m/%d/%Y") if start_date
+  end
+
+  def start_date_formatted=(value)
+    self.start_date = Chronic.parse(value)
+  end
 end
