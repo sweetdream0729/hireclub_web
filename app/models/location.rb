@@ -71,9 +71,13 @@ class Location < ApplicationRecord
 
   def get_timezone
     return if latitude.nil? || longitude.nil?
-    timezone_obj = Timezone.lookup(latitude, longitude)
-    self.timezone = timezone_obj.name
-    self.save
+    begin
+      timezone_obj = Timezone.lookup(latitude, longitude)
+      self.timezone = timezone_obj.name
+      self.save
+    rescue
+      Rails.logger.info(puts "Could not set timezone for #{self.inspect}")
+    end
     return self.timezone
   end
 
