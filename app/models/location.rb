@@ -69,6 +69,14 @@ class Location < ApplicationRecord
     return "#{name}, #{parent.name}"
   end
 
+  def get_timezone
+    return if latitude.nil? || longitude.nil?
+    timezone_obj = Timezone.lookup(latitude, longitude)
+    self.timezone = timezone_obj.name
+    self.save
+    return self.timezone
+  end
+
 
   def self.create_root
     root = Location.find_or_create_by(name: 'Anywhere', level: Location::ROOT, parent_id: nil)

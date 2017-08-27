@@ -122,6 +122,7 @@ gem 'remotipart', '~> 1.2' #for uploading multipart forms via ajax
 gem 'geocoder'
 gem 'time_difference'
 gem 'money-rails', '~>1'
+gem 'timezone', '~> 1.0'
 
 #payment gateway
 gem 'stripe-rails'
