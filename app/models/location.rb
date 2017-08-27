@@ -196,5 +196,11 @@ class Location < ApplicationRecord
 
   end
 
+  def self.update_timezones
+    Location.where(timezone:nil).find_each do |l|
+      l.get_timezone
+    end
+  end
+
 
 end

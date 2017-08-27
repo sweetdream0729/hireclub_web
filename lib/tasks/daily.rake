@@ -12,6 +12,7 @@ namespace :daily do
     Assignee.counter_culture_fix_counts
     SparkpostService.get_message_events
     StripeService.process_charges
+    Location.update_timezones
   end
 
   task run_hourly: :environment do
