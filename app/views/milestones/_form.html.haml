@@ -27,7 +27,7 @@
       .form-group
         = f.label "When did this happen?"
         %br
-        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%d/%m/%Y") unless f.object.new_record?}", class: 'datepicker', style: "width:100%;"
+        = f.text_field :start_date, value: "#{f.object.start_date.strftime("%m/%d/%Y") unless f.object.new_record?}", class: 'datepicker form-control'
 
       .form-group
         = f.label "Skills"
