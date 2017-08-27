@@ -10,8 +10,22 @@
     = f.file_field :file, class: 'form-control-file mt-2'
     = f.hidden_field :retained_file
   .form-group
-    = f.label "Or Paste URL"
-    = f.text_field :file_url, placeholder: "http://hireclub.com/resume.pdf", class: 'form-control'      
+    = f.label "Or Paste PDF URL"
+    = f.text_field :file_url, placeholder: "http://hireclub.com/resume.pdf", class: 'form-control'
 
-  
-  = f.submit 'Save', class: "btn btn-info"
+  / .form-check
+  /   %label.form-check-label
+  /     = f.check_box :private, class: 'form-check-input'
+  /     Private (Only You Can See)
+  .form-check
+    %label.form-check-label
+      = f.radio_button :private, false, class: "form-check-input"
+      Public (Everyone can see my resume)
+  .form-check
+    %label.form-check-label
+      = f.radio_button :private, true, class: "form-check-input"
+      Private (Only Helpers can see my resume)
+
+  %hr
+  = f.submit 'Save', class: "btn btn-info btn-lg"
+  = link_to 'Cancel', url_for(:back), class: "btn btn-link btn-lg"

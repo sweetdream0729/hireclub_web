@@ -126,7 +126,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :resumes, except: [:edit, :update]
+  resources :resumes
   resources :likes, only: [:index, :new, :create, :destroy]
 
   resources :badges
