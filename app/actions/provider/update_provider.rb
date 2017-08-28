@@ -9,9 +9,7 @@ class Provider::UpdateProvider
   def call
     #update the verifications details
     provider = Provider.find_by(stripe_account_id: @stripe_account_id)
-    Rails.logger.debug "DROGON\n\n\n#{provider.inspect}\n\n\n"
     account = Stripe::Account.retrieve(@stripe_account_id)
-    Rails.logger.debug "DROGON\n\n\n#{account.inspect}\n\n\n"
 
     account.legal_entity.type = "individual"
     account.legal_entity.first_name = provider.first_name
