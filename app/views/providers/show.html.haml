@@ -75,6 +75,11 @@
               .col-9
                 = @provider.ssn.nil? ? "Not provided" : "Provided"
             .row
+              .col-3
+                Id Proof
+              .col-9
+                = @provider.stripe_file_id.nil? ? "Not provided" : "Provided"
+            .row
               .col-3 
                 Address
               .col-9
@@ -105,3 +110,4 @@
                   = bank_account.routing_number
           .mt-3
           %a.btn.btn-primary{:href => new_bank_account_path} Add Bank Account
+          = @provider.id_proof.url

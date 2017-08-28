@@ -9,7 +9,9 @@ class Provider::UpdateProvider
   def call
     #update the verifications details
     provider = Provider.find_by(stripe_account_id: @stripe_account_id)
+    Rails.logger.debug "DROGON\n\n\n#{provider.inspect}\n\n\n"
     account = Stripe::Account.retrieve(@stripe_account_id)
+    Rails.logger.debug "DROGON\n\n\n#{account.inspect}\n\n\n"
 
     account.legal_entity.type = "individual"
     account.legal_entity.first_name = provider.first_name
@@ -31,6 +33,17 @@ class Provider::UpdateProvider
     
     account.legal_entity.ssn_last_4 = provider.ssn.last(4)
     account.legal_entity.personal_id_number = provider.ssn
+
+    #upload id proof for provider
+    stripe_file = Stripe::FileUpload.create({
+        :purpose => 'identity_document',
+        :file => File.new(provider.id_proof.path)
+      },
+      {:stripe_account => provider.stripe_account_id}
+    )
+    provider.stripe_file_id = stripe_file["id"]
+    provider.save
+    account.legal_entity.verification.document = provider.stripe_file_id
     account.save
     account = Stripe::Account.retrieve(@stripe_account_id)
   end

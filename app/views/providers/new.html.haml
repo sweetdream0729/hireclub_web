@@ -46,6 +46,11 @@
               = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
             .col-6.mb-3
               = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
+          .form-group.row
+            .col-12
+              = f.label :id_proof
+            .col-12.mb-3
+              = f.file_field :id_proof, class: 'form-control-file'
           .form-group.tos
             %input{ type: 'checkbox', name: 'tos', checked: false }
             I accept the

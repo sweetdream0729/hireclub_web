@@ -1,5 +1,6 @@
 class Provider < ApplicationRecord
   # Extensions
+  dragonfly_accessor :id_proof
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
@@ -16,6 +17,8 @@ class Provider < ApplicationRecord
   has_many :bank_accounts, dependent: :destroy
 
   # Validations
+  validates_size_of :id_proof, maximum: 5.megabytes
+
   validates :user, presence:true
   validates :stripe_account_id, presence: true
   validates :tos_acceptance_ip, presence: true
@@ -29,6 +32,7 @@ class Provider < ApplicationRecord
   validates :state, presence: true
   validates :country, presence: true
   validates :postal_code, presence: true
+  validates :id_proof, presence: true
 
   phony_normalize :phone, :default_country_code => 'US', :add_plus => false
   validates_plausible_phone :phone, country_code: 'US'
@@ -60,25 +64,25 @@ class Provider < ApplicationRecord
 		    country: params[:country],
 		    email: user.email
   		}
-	  	account = Stripe::Account.create(options)
-		provider = Provider.new(params)
-    provider.date_of_birth = Chronic.parse(params[:date_of_birth])
-		provider.user_id = user.id
-		provider.stripe_account_id = account["id"]
-		provider.charges_enabled = account["charges_enabled"]
-		provider.payouts_enabled = account["payouts_enabled"]
-		provider.tos_acceptance_ip = ip
-		provider.tos_acceptance_date = DateTime.now
-    provider.client_secret_key = account["keys"]["secret"]
-    provider.client_publishable_key = account["keys"]["publishable"]
-		#update stripe account details if all details
-		if provider.save
-			ProviderRelayJob.perform_later(account["id"], "update")
-		else
-		#delete the account if verifcation detail not provided
-			ProviderRelayJob.perform_later(account["id"], "delete")
-		end
-	end
+  	  account = Stripe::Account.create(options)
+  		provider = Provider.new(params)
+      provider.date_of_birth = Chronic.parse(params[:date_of_birth])
+  		provider.user_id = user.id
+  		provider.stripe_account_id = account["id"]
+  		provider.charges_enabled = account["charges_enabled"]
+  		provider.payouts_enabled = account["payouts_enabled"]
+  		provider.tos_acceptance_ip = ip
+  		provider.tos_acceptance_date = DateTime.now
+      provider.client_secret_key = account["keys"]["secret"]
+      provider.client_publishable_key = account["keys"]["publishable"]
+  		#update stripe account details if all details
+  		if provider.save
+  			ProviderRelayJob.perform_later(account["id"], "update")
+  		else
+  		#delete the account if verifcation detail not provided
+  			ProviderRelayJob.perform_later(account["id"], "delete")
+  		end
+  	end
 	 return provider
   end
 
