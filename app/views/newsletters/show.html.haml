@@ -1,0 +1,28 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Newsletters", newsletters_path
+    %li.breadcrumb-item.active
+      = @newsletter.name
+
+%p
+  %b Name:
+  = @newsletter.name
+%p
+  %b Campaign:
+  = @newsletter.campaign_id
+%p
+  %b Sent on:
+  = @newsletter.sent_on
+%p
+  %b Subject:
+  = @newsletter.subject
+%p
+  %b Preheader:
+  = @newsletter.preheader
+%p
+  %b Html:
+  = @newsletter.html
+
+%hr
+= link_to 'Edit', edit_newsletter_path(@newsletter), class: "btn btn-primary btn-lg"

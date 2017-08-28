@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :newsletters
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'

@@ -1,0 +1,24 @@
+.container.content_container
+  %h1 Newsletters
+
+  %table.table
+    %thead
+      %tr
+        %th Subject
+        %th Preheader
+        %th Sent On
+        %th
+        %th
+
+    %tbody
+      - @newsletters.each do |newsletter|
+        %tr
+          %td= link_to newsletter.subject, newsletter
+          %td= newsletter.preheader
+          %td= newsletter.sent_on
+          %td= link_to 'Edit', edit_newsletter_path(newsletter)
+          %td= link_to 'Destroy', newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  %br
+
+  = link_to 'Create Newsletter', new_newsletter_path, class: "btn btn-primary"
