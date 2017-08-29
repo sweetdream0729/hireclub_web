@@ -45,6 +45,19 @@ RSpec.describe Appointment, type: :model do
     end
   end
 
+  describe "activity" do
+    it "should have create" do
+      appointment.save
+
+      activity = Activity.where(key: AppointmentCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq appointment
+      expect(activity.owner).to eq appointment.user
+      expect(activity.private).to eq true
+    end
+  end
+
   describe "complete!" do
     let(:completer) { FactoryGirl.build(:user) }
     it "should complete!" do
