@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   resources :appointments, only: [:index, :show] do
     collection do
       get :search
+      get :incomplete
+      get :in_progress
       get :completed
       get :canceled
       get :upcoming
