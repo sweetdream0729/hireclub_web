@@ -17,7 +17,7 @@ class Provider < ApplicationRecord
   has_many :bank_accounts, dependent: :destroy
 
   # Validations
-  validates_size_of :id_proof, maximum: 5.megabytes
+  validates_size_of :id_proof, maximum: 10.megabytes
 
   validates :user, presence:true
   validates :stripe_account_id, presence: true
