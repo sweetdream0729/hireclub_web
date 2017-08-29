@@ -4,8 +4,14 @@
     %p.mb-0
       %strong
         = link_to assignee.user.display_name, assignee.user
+      - if assignee.user == @appointment.payee
+        %span.badge.badge-success
+          Payee
     %small.text-muted
       = local_time_ago(assignee.created_at)
       ·
       = link_to "Remove", assignee_path(assignee), class: '', method: :delete, remote: true, data: { confirm: "Are you sure?" }
+      - if @appointment.payee.nil? && policy(@appointment).add_payee?
+        ·
+        = link_to "Set Payee", "#"
         

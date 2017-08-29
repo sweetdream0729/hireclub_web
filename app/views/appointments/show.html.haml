@@ -175,6 +175,25 @@
         %hr
         = render partial: "attachments/form", locals: {attachable: @appointment}
 
+      %h6.mt-5 Payment
+      %hr
+      - @appointment.payments.by_oldest.each do |payment|
+        .payment.mb-2
+          %p.mb-0
+            = humanized_money_with_symbol(payment.amount)
+            - if payment.description.present?
+              ·
+              = payment.description
+          %small.text-muted
+            = local_time_ago(payment.paid_on)
+            ·
+            = payment.processor.titlecase
+            ·
+            = payment.external_id
+            - if current_user.is_admin
+              ·
+              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
+              
       - if policy(@appointment).manage?
         %h6.mt-5 Payee
         %hr
@@ -194,21 +213,4 @@
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
           = f.submit 'Add Payee', class: 'btn btn-outline-primary btn-sm'
       
-      %h6.mt-5 Payment
-      %hr
-      - @appointment.payments.by_oldest.each do |payment|
-        .payment.mb-2
-          %p.mb-0
-            = humanized_money_with_symbol(payment.amount)
-            - if payment.description.present?
-              ·
-              = payment.description
-          %small.text-muted
-            = local_time_ago(payment.paid_on)
-            ·
-            = payment.processor.titlecase
-            ·
-            = payment.external_id
-            - if current_user.is_admin
-              ·
-              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
+      
