@@ -191,7 +191,7 @@
         = form_for @appointment, url: add_payee_appointment_path, method: :post do |f|
           .form-group
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
-          = f.submit 'Add', class: 'btn btn-outline-primary btn-sm'
+          = f.submit 'Add Payee', class: 'btn btn-outline-primary btn-sm'
         
       - @appointment.payments.by_oldest.each do |payment|
         .payment.mb-2
