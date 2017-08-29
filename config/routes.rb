@@ -67,6 +67,8 @@ Rails.application.routes.draw do
     member do
       get :refresh
       get :complete
+      post :add_payee
+      get :remove_payee
     end
 
     resources :attachments, module: :appointments

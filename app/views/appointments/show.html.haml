@@ -177,6 +177,22 @@
 
       %h6.mt-5 Payment
       %hr
+      - if @appointment.payee && policy(@appointment).manage?
+        .media.mb-4
+          = link_to image_tag(model_avatar(@appointment.payee.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.payee
+          .media-body
+            %p.mb-0
+              %strong
+                = link_to @appointment.payee.display_name, @appointment.payee
+            %small.text-muted
+              - if policy(@appointment).remove_payee?
+                = link_to "Remove", remove_payee_appointment_path(id: @appointment.id), class: '', data: { confirm: "Are you sure?" }
+      - if @appointment.payee.nil? && policy(@appointment).add_payee?
+        = form_for @appointment, url: add_payee_appointment_path, method: :post do |f|
+          .form-group
+            = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
+          = f.submit 'Add', class: 'btn btn-outline-primary btn-sm'
+        
       - @appointment.payments.by_oldest.each do |payment|
         .payment.mb-2
           %p.mb-0
