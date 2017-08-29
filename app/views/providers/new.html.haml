@@ -36,6 +36,10 @@
               .form-group
                 %label Social Security Number
                 = f.text_field :ssn, class: 'form-control', placeholder: "111-11-1111"
+                .form-text.text-muted{data: {toggle:"tooltip", placement: "bottom"}, title: "Stripe, our credit card payment processor, also helps us disburse funds to you. Any organization that sends funds to individuals, businesses, etc., is required to collect and verify information about people, known as “Know Your Customer” (or KYC) checks. To perform these checks, Stripe needs to gather certain information so they can verify your identity. Stripe first attempts to verify you off of the minimum requested information (legal name, date of birth (DOB), and your Social Security Number) "}
+                  We need your Social Security Number to verify your identity and process payments.
+
+                  
               
           .row
             .col-12
