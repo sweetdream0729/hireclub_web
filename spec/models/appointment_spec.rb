@@ -7,6 +7,7 @@ RSpec.describe Appointment, type: :model do
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:payee) }
     it { should belong_to(:completed_by) }
     it { should belong_to(:appointment_type) }
     it { should have_many(:appointment_messages) }

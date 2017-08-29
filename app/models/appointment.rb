@@ -34,6 +34,7 @@ class Appointment < ApplicationRecord
   belongs_to :user
   belongs_to :appointment_type
   belongs_to :completed_by, class_name: 'User'
+  belongs_to :payee, class_name: 'User'
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
   has_many :assignees, dependent: :destroy

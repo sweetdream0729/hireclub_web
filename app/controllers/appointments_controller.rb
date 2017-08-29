@@ -2,7 +2,7 @@ class AppointmentsController < ApplicationController
   before_action :sign_up_required
   after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming, :in_progress, :incomplete]
 
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete, :add_payee, :remove_payee]
 
   def index
     @appointments = current_user.appointments.active.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
@@ -94,6 +94,24 @@ class AppointmentsController < ApplicationController
       notice = "Appointment Completed by #{current_user.display_name}"
     end
     redirect_to @appointment, notice: notice
+  end
+
+  def add_payee
+    @appointment.payee_id = params[:appointment][:payee_id]
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully added"
+    else
+      redirect_to @appointment, notice: "Payee was not added"
+    end
+  end
+
+  def remove_payee
+    @appointment.payee_id = nil
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully removed"
+    else
+      redirect_to @appointment, notice: "Payee was not removed"
+    end
   end
 
   private

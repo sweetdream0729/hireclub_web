@@ -39,4 +39,13 @@ class AppointmentPolicy < ApplicationPolicy
     return false if user.nil?
     return true if record.completable? && (user.is_admin || record.assignees.where(user: user).exists?)
   end
+
+  def add_payee?
+    return false if user.nil?
+    return true if user.is_admin
+  end
+
+  def remove_payee?
+    add_payee?
+  end
 end

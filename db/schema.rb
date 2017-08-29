@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828142928) do
+ActiveRecord::Schema.define(version: 20170829130010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 20170828142928) do
     t.datetime "completed_on"
     t.integer  "completed_by_id"
     t.integer  "assignees_count",     default: 0, null: false
+    t.integer  "payee_id"
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
