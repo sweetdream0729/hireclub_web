@@ -193,7 +193,7 @@
             - if current_user.is_admin
               ·
               = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
-              
+
       - if policy(@appointment).manage?
         %h6.mt-5 Payee
         %hr
@@ -211,6 +211,6 @@
         = form_for @appointment, url: add_payee_appointment_path, method: :post do |f|
           .form-group
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
-          = f.submit 'Add Payee', class: 'btn btn-outline-primary btn-sm'
+          = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
       
       
