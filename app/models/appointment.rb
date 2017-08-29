@@ -3,6 +3,7 @@ class Appointment < ApplicationRecord
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
   pg_search_scope :text_search,

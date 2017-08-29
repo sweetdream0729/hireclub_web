@@ -93,7 +93,7 @@
 
                            <font class="mob_txt" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 22px; line-height: 27px;">
                               <a href="<%= @appointment_url %>" class="mob_txt" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 22px; line-height: 27px; text-decoration: none">
-                                <%= @appointment_message.text %>
+                                 <%= truncate(markdown_stripped(@appointment_message.text), length: 160) %>
                               </a>
                            </font>
 
