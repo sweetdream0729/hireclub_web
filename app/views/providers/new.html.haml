@@ -48,9 +48,11 @@
               = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
           .form-group.row
             .col-12
-              = f.label :id_proof
+              = f.label "Upload US Photo Identifiation"
             .col-12.mb-3
               = f.file_field :id_proof, class: 'form-control-file'
+              %p.form-text.text-muted
+                You must provide a valid US Photo ID.
           .form-group.tos
             %input{ type: 'checkbox', name: 'tos', checked: false }
             I accept the
