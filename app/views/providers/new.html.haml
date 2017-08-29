@@ -12,44 +12,45 @@
               %ul
                 - @provider.errors.full_messages.each do |msg|
                   %li= msg
-          .form-group.row
+          .row
             .col-12
               = f.label "Legal Name"
-            .col-6
+            .col-6.form-group
               = f.text_field :first_name, class: 'form-control',placeholder: "First Name"
-            .col-6
+            .col-6.form-group
               = f.text_field :last_name, class: 'form-control', placeholder: "Last Name"
-          .form-group.row
-            .col-6
+          .row
+            .col-6.form-group
               = f.label :phone
               = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
-            .col-6
+            .col-6.form-group
               = f.label "Date of Birth"
               = f.text_field :date_of_birth, class: 'datepicker', placeholder: "mm/dd/yyyy"
-          .form-group.row
-            .col-12
+              .form-control-feedback
+          .row
+            .col-12.form-group
               = f.label "Social Security Number"
               = f.text_field :ssn, class: 'form-control', placeholder: "111-11-1111"
               
-          .form-group.row
+          .row
             .col-12
               = f.label "Address"
-            .col-12.mb-3
+            .col-12.mb-3.form-group
               = f.text_field :address_line_1, class: 'form-control',placeholder: "123 Main St"
-            .col-12.mb-3
+            .col-12.mb-3.form-group
               = f.text_field :address_line_2, class: 'form-control'
-            .col-6.mb-3
+            .col-6.mb-3.form-group
               = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
-            .col-6.mb-3
+            .col-6.mb-3.form-group
               = f.select :state, Location.us_states, {}, {class: "form-control"}
-            .col-6.mb-3
+            .col-6.mb-3.form-group
               = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
-            .col-6.mb-3
+            .col-6.mb-3.form-group
               = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
-          .form-group.row
+          .row
             .col-12
               = f.label "Upload US Photo Identifiation"
-            .col-12.mb-3
+            .col-12.mb-3.form-group
               = f.file_field :id_proof, class: 'form-control-file'
               %p.form-text.text-muted
                 You must provide a valid US Photo ID.
