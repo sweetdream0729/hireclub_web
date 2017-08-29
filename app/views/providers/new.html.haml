@@ -14,53 +14,65 @@
                   %li= msg
           .row
             .col-12
-              = f.label "Legal Name"
-            .col-6.form-group
-              = f.text_field :first_name, class: 'form-control',placeholder: "First Name"
-            .col-6.form-group
-              = f.text_field :last_name, class: 'form-control', placeholder: "Last Name"
+              %label Legal Name
+            .col-6
+              .form-group
+                = f.text_field :first_name, class: 'form-control',placeholder: "First Name"
+            .col-6
+              .form-group
+                = f.text_field :last_name, class: 'form-control', placeholder: "Last Name"
           .row
-            .col-6.form-group
-              = f.label :phone
-              = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
-            .col-6.form-group
-              = f.label "Date of Birth"
-              = f.text_field :date_of_birth, class: 'datepicker', placeholder: "mm/dd/yyyy"
-              .form-control-feedback
+            .col-6
+              .form-group
+                = f.label :phone
+                = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
+            .col-6
+              .form-group
+                %label Date Of Birth
+                = f.text_field :date_of_birth, class: 'datepicker form-control', placeholder: "mm/dd/yyyy"
+                .form-control-feedback
           .row
-            .col-12.form-group
-              = f.label "Social Security Number"
-              = f.text_field :ssn, class: 'form-control', placeholder: "111-11-1111"
+            .col-12
+              .form-group
+                %label Social Security Number
+                = f.text_field :ssn, class: 'form-control', placeholder: "111-11-1111"
               
           .row
             .col-12
               = f.label "Address"
-            .col-12.mb-3.form-group
-              = f.text_field :address_line_1, class: 'form-control',placeholder: "123 Main St"
-            .col-12.mb-3.form-group
-              = f.text_field :address_line_2, class: 'form-control'
-            .col-6.mb-3.form-group
-              = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
-            .col-6.mb-3.form-group
-              = f.select :state, Location.us_states, {}, {class: "form-control"}
-            .col-6.mb-3.form-group
-              = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
-            .col-6.mb-3.form-group
-              = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
+            .col-12.mb-3
+              .form-group
+                = f.text_field :address_line_1, class: 'form-control',placeholder: "123 Main St"
+            .col-12.mb-3
+              .form-group
+                = f.text_field :address_line_2, class: 'form-control'
+            .col-6.mb-3
+              .form-group
+                = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
+            .col-6.mb-3
+              .form-group
+                = f.select :state, Location.us_states, {}, {class: "form-control"}
+            .col-6.mb-3
+              .form-group
+                = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
+            .col-6.mb-3
+              .form-group
+                = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
           .row
-            .col-12
-              = f.label "Upload US Photo Identifiation"
-            .col-12.mb-3.form-group
-              = f.file_field :id_proof, class: 'form-control-file'
-              %p.form-text.text-muted
-                You must provide a valid US Photo ID.
-          .form-group.tos
-            %input{ type: 'checkbox', name: 'tos', checked: false }
-            I accept the
-            %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service
-          %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-info", id: "create_provider_btn"} Create Account
+            .col-12.mb-3
+              .form-group
+                %label Upload US Photo ID
+                = f.file_field :id_proof, class: 'form-control-file'
+                %p.form-text.text-muted
+                  You must provide a valid US Photo ID.
+            .col-12.mb-3
+              .form-group.tos
+                %input{ type: 'checkbox', name: 'tos', checked: false }
+                I accept the
+                %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service
+              %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-info btn-lg btn-block", id: "create_provider_btn"} Create Account
 
-          .mt-5
-          .text-center
-            %a.stripe-logo{ target: '_blank', href: 'https://stripe.com' }
-              = image_tag 'powered-by-stripe.png', width: 238 / 2, height: 52 / 2, alt: ''
+            .col-12.mt-5
+              .text-center
+                %a.stripe-logo{ target: '_blank', href: 'https://stripe.com' }
+                  = image_tag 'powered-by-stripe.png', width: 238 / 2, height: 52 / 2, alt: ''

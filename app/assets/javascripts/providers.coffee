@@ -7,15 +7,15 @@ $(document).ready ->
       'provider[first_name]':
         validators:
           notEmpty: 
-            message: 'Your First name is required.'
+            message: 'Your first name is required.'
       'provider[last_name]':
         validators:
           notEmpty: 
-            message: 'Your Last name is required.'
+            message: 'Your last name is required.'
       'provider[date_of_birth]':
         validators:
           notEmpty: 
-            message: 'date of birth is required.'
+            message: 'Date of birth is required.'
       'provider[ssn]':
         validators:
           notEmpty: 
@@ -23,7 +23,7 @@ $(document).ready ->
       'provider[phone]':
         validators:
           notEmpty: 
-            message: 'Your Phone is required.'
+            message: 'Your phone is required.'
       'provider[address_line_1]':
         validators:
           notEmpty: 
@@ -47,11 +47,11 @@ $(document).ready ->
       'provider[id_proof]':
         validators:
           notEmpty: 
-            message: 'ID proof is required.'
+            message: 'A valid US ID is required.'
       'tos':
         validators:
           notEmpty: 
-            message: 'Terms of condition should be accepted'
+            message: 'Required'
   ).on('success.validator.fv', (e, data) ->
     
   ).on('err.validator.fv', (e, data) ->
