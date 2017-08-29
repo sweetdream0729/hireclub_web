@@ -41,7 +41,7 @@ class Provider < ApplicationRecord
 
   before_destroy :remove_from_stripe
 
-  def remove_from_stripe
+  def remove_from_stripe(stripe_account_id)
     # destroy account on stripe
     begin
       account = Stripe::Account.retrieve(stripe_account_id)
@@ -64,7 +64,10 @@ class Provider < ApplicationRecord
 		    country: params[:country],
 		    email: user.email
   		}
-  	  account = Stripe::Account.create(options)
+      begin
+  	   account = Stripe::Account.create(options)
+      rescue Stripe::InvalidRequestError
+      end
   		provider = Provider.new(params)
       provider.date_of_birth = Chronic.parse(params[:date_of_birth])
   		provider.user_id = user.id
