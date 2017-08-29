@@ -17,7 +17,7 @@
           = f.hidden_field :provider_id, value: @provider.id
           .form-group
             = f.label :holder_name
-            = f.text_field :holder_name, class: "form-control", data: {stripe: "Account Holder Name"}, placeholder: "Jane Doe"
+            = f.text_field :holder_name, class: "form-control", data: {stripe: "Account Holder Name"}, placeholder: "Jane Doe", value: "#{(@provider.first_name.present? && @provider.last_name.present?) ? @provider.first_name + " " + @provider.last_name : ""}"
           .form-group
             = f.label :account_number
             = f.text_field :account_number, class: "form-control", data: {stripe: "Account Number"}
