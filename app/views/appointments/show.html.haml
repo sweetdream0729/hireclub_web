@@ -175,8 +175,9 @@
         %hr
         = render partial: "attachments/form", locals: {attachable: @appointment}
 
-      %h6.mt-5 Payment
-      %hr
+      - if policy(@appointment).manage?
+        %h6.mt-5 Payee
+        %hr
       - if @appointment.payee && policy(@appointment).manage?
         .media.mb-4
           = link_to image_tag(model_avatar(@appointment.payee.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.payee
@@ -192,7 +193,9 @@
           .form-group
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
           = f.submit 'Add Payee', class: 'btn btn-outline-primary btn-sm'
-        
+      
+      %h6.mt-5 Payment
+      %hr
       - @appointment.payments.by_oldest.each do |payment|
         .payment.mb-2
           %p.mb-0
