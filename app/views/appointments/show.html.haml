@@ -42,10 +42,15 @@
             = link_to complete_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-check.mr-1
               Complete
-          - if policy(@appointment).refresh?
+          - if policy(@appointment).refresh? 
             = link_to refresh_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-refresh.mr-1
               Refresh
+          - if policy(@appointment).show? && !@appointment.completed?
+            = link_to @appointment.confirmation_page_url, class: "btn btn-secondary", target: "_blank" do
+              %i.fa.fa-clock-o.mr-1
+              Reschedule
+
           
           - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
             = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-info"        

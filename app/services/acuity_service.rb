@@ -69,6 +69,7 @@ class AcuityService
     a.start_time = appointment['date'] + " " + appointment['time']
     a.end_time = appointment['date'] + " " + appointment['endTime']
     a.timezone = appointment['timezone']
+    a.confirmation_page_url = appointment['confirmationPage']
 
     #if user is not registered on hireclub
     a.user_id = user.id if a.user.nil? && user.present?
