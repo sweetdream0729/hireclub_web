@@ -6,6 +6,10 @@ class AppointmentCategory < ApplicationRecord
   dragonfly_accessor :image
   auto_strip_attributes :name, :squish => true
 
+  # Scopes
+  scope :by_priority,    -> { order(priority: :asc) }
+  scope :published,      -> { where(published: true) }
+  
   # Associations
   has_many :appointment_types
 

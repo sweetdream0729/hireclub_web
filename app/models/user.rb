@@ -44,6 +44,7 @@ class User < ApplicationRecord
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
   scope :scoreable,    -> { where.not(confirmed_at: nil).where.not(avatar_uid: nil)}
+  scope :has_stripe,   -> { where.not(stripe_customer_id: nil)}
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
@@ -74,6 +75,7 @@ class User < ApplicationRecord
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
   has_one :preference, dependent: :destroy, inverse_of: :user
   has_many :attachments, dependent: :destroy, inverse_of: :user
+  has_one :provider, dependent: :destroy
   accepts_nested_attributes_for :preference
 
   belongs_to :location
@@ -421,6 +423,10 @@ class User < ApplicationRecord
 
   def has_stripe_account?
     !stripe_customer_id.blank?
+  end
+
+  def is_provider?
+    provider.present?
   end
 
   def username_not_in_routes

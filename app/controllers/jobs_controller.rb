@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed]
-  after_action :verify_authorized, except: [:index]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :suggest_skill, :refer, :referral_viewed, :refresh_job_scores]
+  after_action :verify_authorized, except: [:index, :new]
 
   # GET /jobs
   def index
@@ -19,6 +19,11 @@ class JobsController < ApplicationController
 
       @job_referrals = @job.job_referrals.where(user: current_user)
     end
+
+    #When old job url is entered it should direct to new url
+    if request.path != job_path(@job)
+      return redirect_to @job, :status => :moved_permanently
+    end
   end
 
   def suggest_skill
@@ -36,18 +41,30 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
+
+    unless user_signed_in?
+      # take us to sign up if we aren't logged in
+      store_location(new_job_path)
+      redirect_to(new_user_registration_path, format: :html) and return
+    end
+
     @job = Job.new
     authorize @job
   end
 
   # GET /jobs/1/edit
   def edit
+    #When old job url is entered it should direct to new url
+    if request.path != edit_job_path(@job)
+      redirect_to edit_job_path(@job)
+    end
   end
 
   # POST /jobs
   def create
-    @job = current_user.jobs.build(job_params)
-
+    @job = Job.new(job_params)
+    set_user_id
+    
     authorize @job
 
     if @job.save
@@ -62,6 +79,8 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1
   def update
+    set_user_id
+
     if @job.update(job_params)
       @job.update_suggested_skills!
       UpdateJobScoresJob.perform_later(@job)
@@ -89,6 +108,11 @@ class JobsController < ApplicationController
     redirect_to @job
   end
 
+  def refresh_job_scores
+    UpdateJobScoresJob.perform_later(@job)
+    redirect_to @job, notice: 'Refreshing scores in background'
+  end
+
   # DELETE /jobs/1
   def destroy
     @job.destroy
@@ -102,6 +126,14 @@ class JobsController < ApplicationController
       authorize @job
     end
 
+    def set_user_id
+      if current_user.is_admin && job_params[:user_id].present?
+        @job.user_id 
+      else
+        @job.user_id = current_user.id
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def job_params
       params.require(:job).permit(:name, :slug, :company_id, :location_id, :role_id, :skills_list,
@@ -110,6 +142,9 @@ class JobsController < ApplicationController
         :part_time,
         :remote,
         :contract,
-        :internship)
+        :internship,
+        :relocation_offered,
+        :source_url,
+        :user_id)
     end
 end

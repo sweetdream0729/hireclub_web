@@ -2,7 +2,7 @@
   %h1 
     = title @title
     %small
-      = link_to 'Write Story', new_story_path, class: "btn btn-primary btn-sm" if policy(Story).new?
+      = link_to 'Write Story', new_story_path, class: "btn btn-info btn-sm" if policy(Story).new?
   .dropdown
     %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
       - if params[:sort_by]

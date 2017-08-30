@@ -1,18 +1,38 @@
 .container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Members", members_path
+    %li.breadcrumb-item
+      = link_to "#{@resume.user.display_name}", @resume.user
+    %li.breadcrumb-item
+      = link_to "Resumes", resumes_path
+    %li.breadcrumb-item.active
+      Resume
+      = @resume.user.resumes.count
+
   %h1= title "Resume #{@resume.file_name}"
   
   %h6
     Name
   %p
-    = @resume.file_name
+    = link_to @resume.file_name, @resume.file.remote_url
+
+  %h6
+    Privacy
+  %p
+    = @resume.privacy_display
 
   %h6
     Uploaded
   %p
-    = @resume.created_at.strftime("%D %r")
+    = local_time(@resume.created_at)
+
 
   - if @resume.file_uid.present?
-    = link_to "Download", @resume.file.remote_url, class: "btn btn-primary"  
-    = link_to 'Delete', @resume, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger"
+    = link_to "Download", @resume.file.remote_url, class: "btn btn-info"
 
-  = link_to 'Back', resumes_path, class: "btn btn-link"
+  - if policy(@resume).edit?
+    = link_to 'Edit', edit_resume_path(@resume), class: "btn btn-secondary"
+
+  - if policy(@resume).destroy?
+    = link_to 'Delete', @resume, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger"

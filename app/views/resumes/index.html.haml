@@ -1,13 +1,20 @@
 .container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Members", members_path
+    %li.breadcrumb-item
+      = link_to "#{current_user.display_name}", current_user
+
   %h1
-    = title "Your Resumes"
+    = title "Resumes"
     %small
-      = link_to 'Upload Resume', new_resume_path, class: "btn btn-primary btn-sm"
+      = link_to 'Upload Resume', new_resume_path, class: "btn btn-info btn-sm"
 
   %table.table
     %thead
       %tr
         %th Name
+        %th Privacy
         %th Uploaded
         %th
 
@@ -15,5 +22,7 @@
       - @resumes.each do |resume|
         %tr
           %td= link_to resume.file_name, resume
+          %td= resume.privacy_display
           %td= resume.created_at.strftime("%D %r")
-          %td= link_to 'Delete', resume, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %td
+            = link_to 'Delete', resume, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-sm btn-danger" if policy(resume).destroy?

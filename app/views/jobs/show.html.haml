@@ -27,9 +27,14 @@
 
       - if policy(@job).edit?
         %p.mt-3
+          
           = link_to edit_job_path(@job) do
             %span.badge.badge-pill-outline.text-uppercase.mr-2
               Edit
+
+          = link_to refresh_job_scores_job_path(@job) do
+            %span.badge.badge-pill-outline.text-uppercase.mr-2
+              Refresh
 
           = link_to @job, :method => :delete, :data => { :confirm => "Are you sure you want to delete this job post?" } do
             %span.badge.badge-pill-outline.badge-danger.text-uppercase.mr-2
@@ -70,8 +75,14 @@
           %p.mt-3
             = markdown(@job.description)
 
-          %p
-            = link_to link_display(@job.link), @job.link, target: "_blank" if @job.link.present?
+          - if @job.link.present?
+            %h6.mt-5 Link
+            = link_to link_display(@job.link), @job.link, target: "_blank"
+      
+          - if @job.source_url.present?
+            %h6.mt-5 Source
+            = link_to link_display(@job.source_url), @job.source_url, target: "_blank"
+      
       
       - if current_user && current_user.is_admin
         %h6.mt-5 Suggested Members
@@ -111,6 +122,9 @@
       - if @job.internship
         %span.badge.badge-pill.badge-default
           Internship
+      - if @job.relocation_offered
+        %span.badge.badge-pill.badge-info
+          Relocation Offered
       - if @job.remote
         %span.badge.badge-pill.badge-success
           %i.fa.fa-plane
@@ -148,4 +162,3 @@
           - if @company.website_url.present?
             %li.list-group-item 
               = link_to link_display(@company.website_url), @company.website_url 
-              

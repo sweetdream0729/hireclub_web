@@ -2,7 +2,7 @@
   %h1 
     = title "Badges"
     %small
-      = link_to 'New', new_badge_path, class: "btn btn-primary btn-sm" if policy(Badge).new?
+      = link_to 'New', new_badge_path, class: "btn btn-info btn-sm" if policy(Badge).new?
   %p
     %small
       = pluralize(Badge.all.count, "badge")

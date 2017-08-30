@@ -34,7 +34,7 @@
               - username = @user.errors.details[:username][0][:value]
             %small
               %span#username_hint
-                = "hireclub.co/#{username}"
+                = "hireclub.com/#{username}"
 
         .form-group
           = f.label :location
@@ -45,9 +45,13 @@
           = f.label :bio
           = f.text_area :bio, class: 'form-control', rows: 3, maxlength: 140
 
+        .form-group
+          = f.label :timezone
+          = time_zone_select( "user", 'timezone', ActiveSupport::TimeZone.all.sort, {model: ActiveSupport::TimeZone, default: "Pacific Time (US & Canada)"}, {class:'form-control'})
+
 
         %hr.mt-4
-        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+        = f.submit "Save Changes", class: "btn btn-info btn-lg btn-block"
     .col-sm-3.mb-4
       = link_to headshots_path do
         %h5 Get a New Profile Pic

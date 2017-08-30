@@ -4,7 +4,7 @@
     %small
       - if @role.parent
         = link_to @role.parent.name, @role.parent
-      = link_to 'Edit', edit_role_path(@role), class: "btn btn-primary btn-sm" if policy(@role).edit?
+      = link_to 'Edit', edit_role_path(@role), class: "btn btn-info btn-sm" if policy(@role).edit?
       = link_to "Admin", rails_admin.edit_path(model_name: 'role', id: @role.id), class: "btn btn-danger btn-sm" if current_user && current_user.is_admin
 
 

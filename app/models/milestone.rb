@@ -40,6 +40,7 @@ class Milestone < ApplicationRecord
   # Validations
   validates :user, presence: true
   validates :name, presence: true
+  validates :start_date, presence: true
   validates :facebook_id, uniqueness: true, allow_blank: true
   validate :skills_exist
 
@@ -62,5 +63,13 @@ class Milestone < ApplicationRecord
         errors.add(:skills, "#{name} isn't a valid skill")
       end
     end
+  end
+
+  def start_date_formatted
+    start_date.strftime("%m/%d/%Y") if start_date
+  end
+
+  def start_date_formatted=(value)
+    self.start_date = Chronic.parse(value)
   end
 end

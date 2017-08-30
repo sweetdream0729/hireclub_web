@@ -7,6 +7,7 @@ RSpec.describe Appointment, type: :model do
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:payee) }
     it { should belong_to(:completed_by) }
     it { should belong_to(:appointment_type) }
     it { should have_many(:appointment_messages) }
@@ -42,6 +43,19 @@ RSpec.describe Appointment, type: :model do
 
       expect(appointment.start_time).to eq new_start_time
       expect(appointment.end_time).to eq new_end_time
+    end
+  end
+
+  describe "activity" do
+    it "should have create" do
+      appointment.save
+
+      activity = Activity.where(key: AppointmentCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq appointment
+      expect(activity.owner).to eq appointment.user
+      expect(activity.private).to eq true
     end
   end
 

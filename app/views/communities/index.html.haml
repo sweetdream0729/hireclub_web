@@ -2,7 +2,7 @@
   %h1 
     = title "Communities"
     %small
-      = link_to 'Create Community', new_community_path, class: "btn btn-primary btn-sm" if policy(Community).new?
+      = link_to 'Create Community', new_community_path, class: "btn btn-info btn-sm" if policy(Community).new?
 
   .dropdown
     %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}

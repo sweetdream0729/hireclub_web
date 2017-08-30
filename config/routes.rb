@@ -1,10 +1,13 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
   post 'webhooks/acuity_canceled' => 'webhooks#acuity_canceled'
+
+  get 'helpers' => 'helpers#index', as: :helpers
 
   get 'settings' => 'settings#index', as: :settings
   get 'settings/status'
@@ -46,10 +49,16 @@ Rails.application.routes.draw do
   get 'feed', to: "feed#index", as: :feed
 
   resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
-  resources :appointment_messages, only: [:create, :destroy]
+  resources :appointment_messages, only: [:create, :destroy, :edit, :update] do
+    member do
+      get :cancel_edit
+    end
+  end
   resources :appointments, only: [:index, :show] do
     collection do
       get :search
+      get :incomplete
+      get :in_progress
       get :completed
       get :canceled
       get :upcoming
@@ -60,6 +69,8 @@ Rails.application.routes.draw do
     member do
       get :refresh
       get :complete
+      post :add_payee
+      get :remove_payee
     end
 
     resources :attachments, module: :appointments
@@ -67,6 +78,8 @@ Rails.application.routes.draw do
 
   resources :assignees, only: [:create, :destroy] 
   resources :subscriptions, only: [:new, :create, :show] 
+  resources :providers, only: [:new, :create, :show]
+  resources :bank_accounts, only: [:new, :create]
   get 'subscription/cancel' => 'subscriptions#cancel_subscription'
   post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
 
@@ -104,6 +117,7 @@ Rails.application.routes.draw do
       get :suggest_skill
       get :refer
       get :referral_viewed
+      get :refresh_job_scores
     end
   end
 
@@ -119,7 +133,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :resumes, except: [:edit, :update]
+  resources :resumes
   resources :likes, only: [:index, :new, :create, :destroy]
 
   resources :badges

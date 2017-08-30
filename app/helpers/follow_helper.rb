@@ -16,7 +16,7 @@ module FollowHelper
 
       options[:method] = :get
       options[:remote] = true if user.present?
-      options[:class] += " company_follow_btn_#{company.id} btn btn-primary"
+      options[:class] += " company_follow_btn_#{company.id} btn btn-info"
 
 
       link_to("Follow", url, options)
@@ -39,7 +39,7 @@ module FollowHelper
 
       options[:method] = :get
       options[:remote] = true if user.present?
-      options[:class] += " user_follow_btn_#{user_to_follow.id} btn btn-primary"
+      options[:class] += " user_follow_btn_#{user_to_follow.id} btn btn-info"
 
       link_to("Follow", url, options)
     end

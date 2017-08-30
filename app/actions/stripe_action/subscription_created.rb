@@ -1,6 +1,8 @@
 class StripeAction::SubscriptionCreated < StripeAction::Base
 
   def call(stripe_event)
+    Rails.logger.info "SubscriptionCreated #{stripe_event.inspect}"
+    
     stripe_subscription = stripe_event.data.object
 
     user = User.find_by(stripe_customer_id: stripe_subscription.customer)

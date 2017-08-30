@@ -4,7 +4,7 @@
       %h2= "#{pluralize(@milestone.errors.count, "error")} prohibited this milestone from being saved:"
       %ul
         - @milestone.errors.full_messages.each do |msg|
-          %li= msg
+          %li.text-danger= msg
 
   .row
     .col-sm-6
@@ -24,14 +24,16 @@
         %small.form-text.text-muted
           Which Company, School or Organization was this milestone for?
         = f.hidden_field :company_id, value: @milestone.company_id, class: "autocomplete_company_id"
-      .form-group
+      .form-group{class: ('has-danger' if f.object.errors.any? && f.object.errors.details[:start_date].present?)}
         = f.label "When did this happen?"
-        %br
-        = f.date_select :start_date, {end_year: Date.today.year + 1, start_year: Date.today.year - 30, discard_day: true, order: [:month,:year]}
+        = f.text_field :start_date_formatted, class: 'datepicker form-control'
+        .form-control-feedback
+          - if f.object.errors.any? && f.object.errors.details[:start_date].present?
+            = f.object.errors.full_messages[0]
 
       .form-group
         = f.label "Skills"
-        = f.text_field :skills_list, class: 'form-control', placeholder: "Design, Rails, Marketing"
+        = f.text_field :skills_list, placeholder: "Design, Rails, Marketing"
 
       .form-group
         = f.label :link
@@ -74,10 +76,10 @@
       %p
         Milestones should be the things you are proud of.
       %p
-        = link_to "Check out a sample profile", "http://hireclub.co/kidbombay", target: "_blank"
+        = link_to "Check out a sample profile", "http://hireclub.com/kidbombay", target: "_blank"
 
   %hr
-  = f.submit 'Save', class: "btn btn-primary btn-lg"
+  = f.submit 'Save', class: "btn btn-info btn-lg"
   = link_to "Cancel", current_user, class: "btn btn-link btn-lg"
 
 = render '/companies/add_company_modal'

@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery with: :exception
 
+  around_action :set_time_zone
+
   def after_sign_in_path_for(user)
     if user.onboarded?
       stored_location_for(:user) || root_path
@@ -20,9 +22,29 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, path)
   end
 
+
   private
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)
   end
+                                                                                 
+  def set_time_zone
+    old_time_zone = Time.zone
+    if browser_timezone.present?
+      Time.zone = browser_timezone 
+      if user_signed_in? && current_user.timezone.blank?
+        current_user.timezone = browser_timezone
+        current_user.save
+      end
+    end
+    yield
+  ensure
+    Time.zone = old_time_zone
+  end
+                                                                                   
+  def browser_timezone
+    cookies["browser.timezone"]
+  end
 end
+  

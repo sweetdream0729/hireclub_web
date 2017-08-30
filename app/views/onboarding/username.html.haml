@@ -24,7 +24,7 @@
             - if @user.errors.any? && @user.errors.details[:username].present?
               - username = @user.errors.details[:username][0][:value]
             %span#username_hint
-              = "hireclub.co/#{username}"
+              = "hireclub.com/#{username}"
 
             - if @user.errors.any?
               is not available
@@ -35,4 +35,4 @@
             %br
             You can change this at any time.
 
-        = f.submit "Next", class: "btn btn-primary btn-lg btn-block"
+        = f.submit "Next", class: "btn btn-info btn-lg btn-block"

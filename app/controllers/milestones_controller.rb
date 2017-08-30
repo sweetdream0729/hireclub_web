@@ -1,5 +1,5 @@
 class MilestonesController < ApplicationController
-  before_action :sign_up_required
+  before_action :sign_up_required, except: [:show]
   after_action :verify_authorized, except: [:index]
 
   before_action :set_milestone, only: [:show, :edit, :update, :destroy]
@@ -62,6 +62,6 @@ class MilestonesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def milestone_params
-      params.require(:milestone).permit(:name, :start_date, :end_date, :link, :description, :company_id, :printable, :skills_list)
+      params.require(:milestone).permit(:name, :start_date, :start_date_formatted, :end_date, :link, :description, :company_id, :printable, :skills_list)
     end
 end

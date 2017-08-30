@@ -3,6 +3,7 @@ class Appointment < ApplicationRecord
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
   pg_search_scope :text_search,
@@ -33,6 +34,7 @@ class Appointment < ApplicationRecord
   belongs_to :user
   belongs_to :appointment_type
   belongs_to :completed_by, class_name: 'User'
+  belongs_to :payee, class_name: 'User'
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
   has_many :assignees, dependent: :destroy
@@ -53,6 +55,11 @@ class Appointment < ApplicationRecord
     appointment_type.try(:name)
   end
   
+  def user_name
+    return user.name if user.present?
+    return "#{first_name} #{last_name}"
+  end
+    
   def category_name
     appointment_type.try(:appointment_category).try(:name)
   end

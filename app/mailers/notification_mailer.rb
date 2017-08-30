@@ -3,7 +3,7 @@ class NotificationMailer < ApplicationMailer
   def user_welcome(notification)
     set_notification(notification)
 
-    @url_url = get_utm_url user_url(@user)
+    @user_url = get_utm_url user_url(@user)
 
     mail(to: @user.email, subject: 'Welcome to HireClub! 🍾')
   end
@@ -250,6 +250,19 @@ class NotificationMailer < ApplicationMailer
 
     @subject = "You have a message on HireClub"
     mail(to: @user.email, subject: @subject)
+  end
+
+
+  def provider_created(notification)
+    set_notification(notification)
+
+    @provider = @notification.activity.trackable
+    @provider_user = @provider.user
+
+    @provider_url = get_utm_url url_for(@provider)
+    @user_url = get_utm_url url_for(@provider_user)
+
+    mail(to: @user.email, subject: "#{@provider_user.display_name} became a provider")
   end
 
   def set_notification(notification)

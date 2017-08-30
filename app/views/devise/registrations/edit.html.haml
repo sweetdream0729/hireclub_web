@@ -37,7 +37,7 @@
                   - username = @user.errors.details[:username][0][:value]
                 %small
                   %span#username_hint
-                    = "hireclub.co/#{username}"
+                    = "hireclub.com/#{username}"
 
             .form-group
               = f.label :location
@@ -59,7 +59,7 @@
 
             .form-group
               = f.label "Website"
-              = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
+              = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.com"
 
             .form-group
               = f.label "Twitter"
@@ -163,20 +163,20 @@
           /   %h2 Social
           /   %hr
           /     - if !resource.has_facebook?
-          /       = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-primary btn_facebook" do
+          /       = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-info btn_facebook" do
           /         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
           /         Add Facebook
           /     - else
-          /       = link_to "", class: "btn btn-primary btn_facebook" do
+          /       = link_to "", class: "btn btn-info btn_facebook" do
           /         %i.fa.fa-facebook-square{"aria-hidden" => "true"}
           /         Facebook Connected
           /     %p
           /     - if !resource.has_linkedin?
-          /       = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-primary btn_linkedin" do
+          /       = link_to omniauth_authorize_path(User, 'linkedin'), class: "btn btn-info btn_linkedin" do
           /         %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
           /         Add LinkedIn
           /     - else
-          /       = link_to "", class: "btn btn-primary btn_linkedin" do
+          /       = link_to "", class: "btn btn-info btn_linkedin" do
           /         %i.fa.fa-linkedin-square{"aria-hidden" => "true"}
           /         LinkedIn Connected
 
@@ -203,7 +203,7 @@
                   characters minimum.
 
           .mt-4
-            = f.submit "Save Changes", class: "btn btn-primary btn-block"
+            = f.submit "Save Changes", class: "btn btn-info btn-block"
         / %hr
         / %h3.m-t-3 Delete Account
         / %p

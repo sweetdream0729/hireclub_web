@@ -8,7 +8,7 @@
       = form_for @user, url: settings_update_path, method: :put do |f|
         .form-group
           = f.label "Website"
-          = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.co"
+          = f.text_field :website_url, class: 'form-control', placeholder: "http://hireclub.com"
 
         .form-group
           = f.label "Twitter"
@@ -43,4 +43,4 @@
           = f.text_field :imdb_url, class: 'form-control', placeholder: "http://www.imdb.com/name/nm000000/"
 
         %hr.mt-4
-        = f.submit "Save Changes", class: "btn btn-primary btn-lg btn-block"
+        = f.submit "Save Changes", class: "btn btn-info btn-lg btn-block"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801055401) do
+ActiveRecord::Schema.define(version: 20170829130010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,13 +51,16 @@ ActiveRecord::Schema.define(version: 20170801055401) do
   end
 
   create_table "appointment_categories", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.citext   "slug",        null: false
+    t.string   "name",                       null: false
+    t.citext   "slug",                       null: false
     t.text     "description"
     t.string   "image_uid"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "priority",    default: 0,    null: false
+    t.boolean  "published",   default: true, null: false
     t.index ["name"], name: "index_appointment_categories_on_name", unique: true, using: :btree
+    t.index ["published"], name: "index_appointment_categories_on_published", using: :btree
     t.index ["slug"], name: "index_appointment_categories_on_slug", unique: true, using: :btree
   end
 
@@ -93,6 +96,8 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.integer  "appointment_category_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "priority",                default: 0, null: false
+    t.string   "image_uid"
     t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
   end
@@ -116,6 +121,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.datetime "completed_on"
     t.integer  "completed_by_id"
     t.integer  "assignees_count",     default: 0, null: false
+    t.integer  "payee_id"
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
@@ -175,6 +181,21 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.integer  "position",    default: 0, null: false
     t.index ["name"], name: "index_badges_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_badges_on_slug", unique: true, using: :btree
+  end
+
+  create_table "bank_accounts", force: :cascade do |t|
+    t.integer  "provider_id",            null: false
+    t.string   "stripe_bank_account_id"
+    t.string   "bank_name"
+    t.string   "holder_name"
+    t.string   "account_number"
+    t.string   "routing_number"
+    t.string   "country"
+    t.string   "fingerprint"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["provider_id"], name: "index_bank_accounts_on_provider_id", using: :btree
+    t.index ["stripe_bank_account_id"], name: "index_bank_accounts_on_stripe_bank_account_id", unique: true, using: :btree
   end
 
   create_table "cards", force: :cascade do |t|
@@ -419,25 +440,27 @@ ActiveRecord::Schema.define(version: 20170801055401) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "name",                             null: false
-    t.citext   "slug",                             null: false
-    t.integer  "company_id",                       null: false
-    t.integer  "user_id",                          null: false
+    t.string   "name",                               null: false
+    t.citext   "slug",                               null: false
+    t.integer  "company_id",                         null: false
+    t.integer  "user_id",                            null: false
     t.text     "description"
     t.string   "link"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "full_time",        default: true,  null: false
-    t.boolean  "part_time",        default: false, null: false
-    t.boolean  "remote",           default: false, null: false
-    t.boolean  "contract",         default: false, null: false
-    t.boolean  "internship",       default: false, null: false
-    t.integer  "location_id",                      null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "full_time",          default: true,  null: false
+    t.boolean  "part_time",          default: false, null: false
+    t.boolean  "remote",             default: false, null: false
+    t.boolean  "contract",           default: false, null: false
+    t.boolean  "internship",         default: false, null: false
+    t.integer  "location_id",                        null: false
     t.integer  "role_id"
-    t.string   "skills",           default: [],                 array: true
-    t.integer  "likes_count",      default: 0,     null: false
+    t.string   "skills",             default: [],                 array: true
+    t.integer  "likes_count",        default: 0,     null: false
     t.datetime "published_on"
-    t.string   "suggested_skills", default: [],                 array: true
+    t.string   "suggested_skills",   default: [],                 array: true
+    t.boolean  "relocation_offered", default: false, null: false
+    t.string   "source_url"
     t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
     t.index ["contract"], name: "index_jobs_on_contract", using: :btree
     t.index ["full_time"], name: "index_jobs_on_full_time", using: :btree
@@ -445,6 +468,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.index ["location_id"], name: "index_jobs_on_location_id", using: :btree
     t.index ["part_time"], name: "index_jobs_on_part_time", using: :btree
     t.index ["published_on"], name: "index_jobs_on_published_on", using: :btree
+    t.index ["relocation_offered"], name: "index_jobs_on_relocation_offered", using: :btree
     t.index ["remote"], name: "index_jobs_on_remote", using: :btree
     t.index ["role_id"], name: "index_jobs_on_role_id", using: :btree
     t.index ["skills"], name: "index_jobs_on_skills", using: :gin
@@ -477,6 +501,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.string   "cached_display_name"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "timezone"
     t.index ["facebook_id"], name: "index_locations_on_facebook_id", unique: true, using: :btree
     t.index ["parent_id", "name"], name: "index_locations_on_parent_id_and_name", unique: true, using: :btree
     t.index ["parent_id", "slug"], name: "index_locations_on_parent_id_and_slug", unique: true, using: :btree
@@ -528,6 +553,17 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.index ["skills"], name: "index_milestones_on_skills", using: :gin
     t.index ["start_date"], name: "index_milestones_on_start_date", using: :btree
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree
+  end
+
+  create_table "newsletters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "campaign_id"
+    t.datetime "sent_on"
+    t.string   "subject",     null: false
+    t.string   "preheader"
+    t.text     "html"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -627,18 +663,55 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.string   "skills",       default: [],              array: true
     t.integer  "likes_count",  default: 0,  null: false
     t.integer  "company_id"
+    t.date     "completed_on"
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
+    t.index ["completed_on"], name: "index_projects_on_completed_on", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.integer  "user_id",                                null: false
+    t.string   "stripe_account_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.datetime "date_of_birth"
+    t.text     "address_line_1"
+    t.text     "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "postal_code"
+    t.string   "ssn"
+    t.datetime "tos_acceptance_date"
+    t.string   "tos_acceptance_ip"
+    t.boolean  "charges_enabled",        default: false
+    t.boolean  "payouts_enabled",        default: false
+    t.string   "client_secret_key"
+    t.string   "client_publishable_key"
+    t.string   "verification_status"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "approved",               default: false, null: false
+    t.string   "id_proof_uid"
+    t.string   "stripe_file_id"
+    t.index ["approved"], name: "index_providers_on_approved", using: :btree
+    t.index ["phone"], name: "index_providers_on_phone", unique: true, using: :btree
+    t.index ["ssn"], name: "index_providers_on_ssn", unique: true, using: :btree
+    t.index ["stripe_account_id"], name: "index_providers_on_stripe_account_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_providers_on_user_id", using: :btree
   end
 
   create_table "resumes", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "file_uid"
     t.string   "file_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "private",    default: false, null: false
+    t.index ["private"], name: "index_resumes_on_private", using: :btree
     t.index ["user_id"], name: "index_resumes_on_user_id", using: :btree
   end
 
@@ -792,6 +865,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
     t.integer  "followers_count_cache",        default: 0,     null: false
     t.string   "stripe_customer_id"
     t.boolean  "is_subscriber",                default: false, null: false
+    t.string   "timezone"
     t.index ["company_id"], name: "index_users_on_company_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -826,6 +900,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
   add_foreign_key "assignees", "users"
   add_foreign_key "attachments", "users"
   add_foreign_key "authentications", "users"
+  add_foreign_key "bank_accounts", "providers"
   add_foreign_key "cards", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "community_invites", "communities"
@@ -860,6 +935,7 @@ ActiveRecord::Schema.define(version: 20170801055401) do
   add_foreign_key "preferences", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
+  add_foreign_key "providers", "users"
   add_foreign_key "resumes", "users"
   add_foreign_key "review_requests", "users"
   add_foreign_key "stories", "users"

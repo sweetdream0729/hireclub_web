@@ -2,7 +2,9 @@
   %h1
     = title @title
     %small
-      = link_to 'Add Project', new_project_path, class: "btn btn-primary btn-sm" if policy(Project).new?
+      = link_to 'Add Project', new_project_path, class: "btn btn-info btn-sm" if policy(Project).new?
+  %p
+    Projects are where you can show off your work.
   .dropdown
     %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
       - if params[:sort_by]
@@ -14,6 +16,7 @@
       %a.dropdown-item{href: projects_path(sort_by: "popular")} Popular
       %a.dropdown-item{href: projects_path(sort_by: "oldest")} Oldest
   %p
+
     %small
       = pluralize(@count, "project")
       

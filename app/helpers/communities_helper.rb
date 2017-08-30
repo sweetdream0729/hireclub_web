@@ -15,7 +15,7 @@ module CommunitiesHelper
 
       options[:method] = :get
       options[:remote] = true if user.present?
-      options[:class] += " community_join_btn_#{community.id} btn btn-primary btn-sm"
+      options[:class] += " community_join_btn_#{community.id} btn btn-info btn-sm"
 
 
       link_to("Join", url, options)

@@ -1,5 +1,6 @@
 class AppointmentMessagesController < ApplicationController
   after_action :verify_authorized, except: [:index]
+  before_action :set_appointment_message, only: [:edit, :update, :cancel_edit, :destroy]
 
   def create
     @appointment = Appointment.find(appointment_message_params[:appointment_id])
@@ -14,8 +15,20 @@ class AppointmentMessagesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    @appointment = @appointment_message.appointment
+    @appointment_message.text = appointment_message_params[:text]
+    authorize @appointment_message
+    @appointment_message.save 
+  end
+
+  def cancel_edit
+  end
+
   def destroy
-    set_appointment_message
     @appointment_message.destroy
     redirect_to @appointment_message.appointment, alert: "Message deleted."
   end

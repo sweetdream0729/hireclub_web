@@ -48,9 +48,10 @@
               Refresh
           
           - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
-            = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-primary"        
+            = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-info"        
       
-      = render partial: "appointment_messages/appointment_messages", locals: {appointment: @appointment}
+      = render @appointment_messages
+      
       - if @appointment.completed?
         %hr
         %p.small
@@ -151,17 +152,24 @@
       %h6.mt-5 Attachments
       %hr
       - @appointment.attachments.by_oldest.each do |attachment|
-        .attachment.mb-2
-          %p.mb-0
-            - if attachment.has_link?
-              = link_to link_display(attachment.link), attachment.link
-            - else
-              = link_to attachment.file.name, attachment.file.remote_url
-          %small.text-muted
-            = local_time_ago(attachment.created_at)
-            - if policy(attachment).destroy?
-              ·
-              = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
+        .media.attachment.mb-3
+          - if attachment.has_file?
+            = link_to attachment.file.remote_url do
+              = image_tag(model_image(attachment.file, 200, 200, true), class: "d-flex mr-2", width: "50")
+          .media-body
+            %p.mb-0
+              - if attachment.has_link?
+                = link_to link_display(attachment.link), attachment.link
+              - else
+                = link_to attachment.file.name, attachment.file.remote_url
+            %small.text-muted
+              - if attachment.user.present?
+                = link_to attachment.user.display_name, attachment.user
+                ·
+              = local_time_ago(attachment.created_at)
+              - if policy(attachment).destroy?
+                ·
+                = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
 
       - if policy(@attachment).create?
         %hr
@@ -184,4 +192,25 @@
             = payment.external_id
             - if current_user.is_admin
               ·
-              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id)
+              = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
+
+      - if policy(@appointment).manage?
+        %h6.mt-5 Payee
+        %hr
+      - if @appointment.payee && policy(@appointment).manage?
+        .media.mb-4
+          = link_to image_tag(model_avatar(@appointment.payee.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.payee
+          .media-body
+            %p.mb-0
+              %strong
+                = link_to @appointment.payee.display_name, @appointment.payee
+            %small.text-muted
+              - if policy(@appointment).remove_payee?
+                = link_to "Remove", remove_payee_appointment_path(id: @appointment.id), class: '', data: { confirm: "Are you sure?" }
+      - if @appointment.payee.nil? && policy(@appointment).add_payee?
+        = form_for @appointment, url: add_payee_appointment_path, method: :post do |f|
+          .form-group
+            = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
+          = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
+      
+      

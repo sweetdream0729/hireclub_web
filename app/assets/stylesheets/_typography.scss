@@ -49,6 +49,9 @@ em {
 .letterspace {
   letter-spacing: 1px
 }
+.letterspace_min {
+  letter-spacing: 0.5px
+}
 
 
 .light {
@@ -108,4 +111,7 @@ h6 {
 
 label {
   @include semibold-font; 
+}
+.text-white-faded {
+  color: rgba(255,255,255,0.65)
 }

@@ -1,12 +1,13 @@
 class Job < ApplicationRecord
   # Extensions
   extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :history]
   auto_strip_attributes :name, squish: true
   include HasSmartUrl
   include ActsAsLikeable
   include FeedDisplayable
   has_smart_url :link
+  has_smart_url :source_url
   is_impressionable
 
   include UnpublishableActivity
@@ -15,7 +16,7 @@ class Job < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
-  multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name]
+  multisearchable :against => [:name, :skills_list, :user_display_name, :user_username, :company_name, :location_name, :full_time_name, :part_time_name, :remote_name, :contract_name, :internship_name, :relocation_offered_name]
 
   acts_as_taggable_array_on :skills
   include HasTagsList
@@ -60,8 +61,13 @@ class Job < ApplicationRecord
 
   def slug_candidates
     [
-      [:name, :company_name, :id]
+      [:name, :company_name],
+      [:name, :company_name, :company_jobs_count]
     ]
+  end
+
+  def company_jobs_count
+    company.jobs.count + 1 if company.present?
   end
 
   def skills_exist
@@ -107,6 +113,10 @@ class Job < ApplicationRecord
 
   def internship_name
     return "internship" if internship
+  end
+
+  def relocation_offered_name
+    return "relocation offered" if relocation_offered
   end
 
   def publish!

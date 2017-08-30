@@ -7,6 +7,10 @@
   %ol.breadcrumb
     %li.breadcrumb-item
       = link_to "Communities", communities_path
+    %li.breadcrumb-item.active
+      = @community.name
+    %li.breadcrumb-item
+      = link_to "Admin", rails_admin.edit_path(model_name: 'community', id: @community.id) if is_admin?
   .row
     .col-sm-8.mb-4
       .media
@@ -23,9 +27,9 @@
             
 
     .col-sm-3
-      = link_to "Invite",new_community_invite_path(community_id: @community.id), class: "btn btn-primary btn-block"  if policy(CommunityInvite).new?
-      = link_to 'Edit', edit_community_path(@community), class: "btn btn-info btn-block" if policy(@community).edit?
-      = link_to "Admin", rails_admin.edit_path(model_name: 'community', id: @community.id), class: "btn btn-danger btn-block" if current_user && current_user.is_admin
+      = link_to "Invite",new_community_invite_path(community_id: @community.id), class: "btn btn-info btn-block"  if policy(CommunityInvite).new?
+      = link_to 'Edit', edit_community_path(@community), class: "btn btn-secondary btn-block" if policy(@community).edit?
+      
   .row
     .col-sm-8.mt-4
       = render "posts/form"

@@ -1,8 +1,8 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming, :in_progress, :incomplete]
 
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete, :add_payee, :remove_payee]
 
   def index
     @appointments = current_user.appointments.active.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
@@ -18,6 +18,11 @@ class AppointmentsController < ApplicationController
     render :index
   end
 
+  def in_progress
+    @appointments = current_user.assigned_appointments.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
   def assigned
     @appointments = current_user.assigned_appointments.by_start_time.includes(:appointment_type).page(params[:page])
     render :index
@@ -28,6 +33,15 @@ class AppointmentsController < ApplicationController
     render :index
   end
 
+  def incomplete
+    if !current_user.is_admin
+      redirect_to appointments_path 
+    else
+      @appointments = Appointment.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
+      render :index
+    end
+  end
+  
   def unassigned
     if !current_user.is_admin
       redirect_to appointments_path 
@@ -63,6 +77,8 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment_user = @appointment.user
+    @appointment_messages = @appointment.appointment_messages.by_oldest.includes(:user)
+    @appointment_message = @appointment.appointment_messages.build
     @attachment = @appointment.attachments.build
   end
 
@@ -78,6 +94,24 @@ class AppointmentsController < ApplicationController
       notice = "Appointment Completed by #{current_user.display_name}"
     end
     redirect_to @appointment, notice: notice
+  end
+
+  def add_payee
+    @appointment.payee_id = params[:appointment][:payee_id]
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully added"
+    else
+      redirect_to @appointment, notice: "Payee was not added"
+    end
+  end
+
+  def remove_payee
+    @appointment.payee_id = nil
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully removed"
+    else
+      redirect_to @appointment, notice: "Payee was not removed"
+    end
   end
 
   private

@@ -122,8 +122,13 @@ gem 'remotipart', '~> 1.2' #for uploading multipart forms via ajax
 gem 'geocoder'
 gem 'time_difference'
 gem 'money-rails', '~>1'
+gem 'timezone', '~> 1.0'
+gem 'phony_rails'
 
 #payment gateway
 gem 'stripe-rails'
 gem 'stripe'
 gem 'stripe_event'
+
+#date picker
+gem 'bootstrap-datepicker-rails'

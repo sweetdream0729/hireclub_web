@@ -48,10 +48,12 @@
         = f.label :position
         = f.number_field :position, class: 'form-control', min: 0
 
-
+      .form-group
+        = f.label :completed_on
+        = f.text_field :completed_on_formatted, class: 'form-control datepicker'
 
       %hr
-      = f.submit 'Save', class: "btn btn-primary btn-lg"
+      = f.submit 'Save', class: "btn btn-info btn-lg"
       = link_to "Cancel", current_user, class: "btn btn-link btn-lg"
 
 = render '/companies/add_company_modal'

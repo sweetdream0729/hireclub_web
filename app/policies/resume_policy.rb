@@ -6,6 +6,7 @@ class ResumePolicy < ApplicationPolicy
   end
 
   def show?
+    return true unless record.private
     owner_or_admin?
   end
 

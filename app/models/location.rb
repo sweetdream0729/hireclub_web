@@ -31,6 +31,7 @@ class Location < ApplicationRecord
 
   # Scope
   scope :by_users_count, -> { order(users_count: :desc) }
+  scope :by_short,       -> { order(short: :asc)}
 
   # Validations
   validates_presence_of :name, :slug
@@ -67,6 +68,18 @@ class Location < ApplicationRecord
   def name_and_parent
     return name if parent.nil?
     return "#{name}, #{parent.name}"
+  end
+
+  def get_timezone
+    return if latitude.nil? || longitude.nil?
+    begin
+      timezone_obj = Timezone.lookup(latitude, longitude)
+      self.timezone = timezone_obj.name
+      self.save
+    rescue
+      Rails.logger.info(puts "Could not set timezone for #{self.inspect}")
+    end
+    return self.timezone
   end
 
 
@@ -184,5 +197,16 @@ class Location < ApplicationRecord
 
   end
 
+  def self.update_timezones
+    Location.where(timezone:nil).find_each do |l|
+      l.get_timezone
+    end
+  end
+
+
+  def self.us_states
+    country = Location.where(level: Location::COUNTRY, slug: "united-states").first
+    Location.where(level: Location::STATE, parent: country).by_short.pluck(:short)
+  end
 
 end

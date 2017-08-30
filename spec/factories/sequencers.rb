@@ -45,7 +45,11 @@ FactoryGirl.define do
   end
 
   sequence :phone do |n|
-    "1415555#{n}".ljust(11, '0')
+    Faker::PhoneNumber.cell_phone
+  end
+
+  sequence :ssn do |n|
+    "111111#{n}".ljust(9, '0')
   end
 
   sequence :password do |n|
