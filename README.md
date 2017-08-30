@@ -146,3 +146,4 @@ git push staging +HEAD:master && heroku run rake db:migrate -r staging
 https://coolors.co/6070e9-2ec0f9-1fe267-ff904c-f2545b
 https://coolors.co/403f4c-6b717e-8e9aaf-c0d3e8-eaeef1
 https://coolors.co/eaeef1-8783d1-8e9aaf-78c0e0-449dd1
+https://coolors.co/2b3369-2ec0f9-708cb3-232020-6b4e71
