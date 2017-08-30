@@ -20,7 +20,7 @@
               = appointment.name
             to
             %strong
-              = new_start_time.strftime("%A %B %e. %l:%M %P")
+              = local_time(new_start_time, "%A %B %e. %l:%M %P")
           %br
           %small.text-muted
             = local_time_ago(activity.created_at)

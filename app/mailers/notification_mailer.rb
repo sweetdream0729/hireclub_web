@@ -114,7 +114,7 @@ class NotificationMailer < ApplicationMailer
     set_notification(notification)
     @appointment = notification.activity.trackable
     @appointment_url = get_utm_url appointment_url(@appointment)
-    @new_start_time = notification.activity.parameters[:new_start_time].strftime("%A %B %e. %l:%M %P")
+    @new_start_time = local_time(notification.activity.parameters[:new_start_time].in_time_zone(@user.timezone), "%A %B %e. %l:%M %P")
 
     add_metadata(:appointment_id, @appointment.id)
     
