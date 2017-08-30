@@ -79,7 +79,11 @@ class Appointment < ApplicationRecord
   def cancel!
     if canceled_at.nil?
       self.canceled_at = DateTime.now
-      self.save
+      if self.save
+        self.create_activity(key: AppointmentCancelActivity::KEY,
+                           owner: user,
+                           private: true)
+      end
     end
   end
 
