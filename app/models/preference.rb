@@ -13,6 +13,7 @@ class Preference < ApplicationRecord
       self.email_on_comment = false
       self.email_on_mention = false
       self.email_on_unread = false
+      self.email_on_job_post = false
     end
   end
 end
