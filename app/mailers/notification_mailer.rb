@@ -110,6 +110,26 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Appointment Completed')  
   end
 
+  def appointment_rescheduled(notification)
+    set_notification(notification)
+    @appointment = notification.activity.trackable
+    @appointment_url = get_utm_url appointment_url(@appointment)
+    @new_start_time = notification.activity.parameters[:new_start_time].in_time_zone(@user.timezone).strftime("%A %B %e. %l:%M %P")
+
+    add_metadata(:appointment_id, @appointment.id)
+    
+    mail(to: @user.email, subject: 'Appointment Rescheduled')
+  end
+
+  def appointment_canceled(notification)
+    set_notification(notification)
+    @appointment = notification.activity.trackable
+    @appointment_url = get_utm_url appointment_url(@appointment)
+    add_metadata(:appointment_id, @appointment.id)
+    
+    mail(to: @user.email, subject: 'Appointment Canceled')
+  end
+
   def comment_created(notification)
     set_notification(notification)
 

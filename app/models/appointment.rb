@@ -79,14 +79,27 @@ class Appointment < ApplicationRecord
   def cancel!
     if canceled_at.nil?
       self.canceled_at = DateTime.now
-      self.save
+      if self.save
+        self.create_activity(key: AppointmentCancelActivity::KEY,
+                           owner: user,
+                           private: true)
+      end
     end
   end
 
   def reschedule!(new_start_time, new_end_time)
+    parameters = {old_start_time: self.start_time,
+                  old_end_time: self.end_time}
     self.start_time = new_start_time
     self.end_time = new_end_time
-    self.save
+    if self.save
+      parameters.merge!({new_start_time: self.start_time,
+                        new_end_time: self.end_time})
+      self.create_activity(key: "appointment.reschedule",
+                           owner: user,
+                           private: true,
+                           parameters: parameters)
+    end
   end
 
   def complete!(completer)
