@@ -95,7 +95,7 @@ class Appointment < ApplicationRecord
     if self.save
       parameters.merge!({new_start_time: self.start_time,
                         new_end_time: self.end_time})
-      self.create_activity(key: "appointment.reschedule",
+      self.create_activity(key: AppointmentRescheduleActivity::KEY,
                            owner: user,
                            private: true,
                            parameters: parameters)
