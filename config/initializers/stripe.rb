@@ -3,8 +3,8 @@ class EventRetriever
 
     # Events that occur in connected accounts contain a `account` parameter.  
     if params[:account].present?
-      account = Provider.find_by!(stripe_account_id: params[:account])
-      return nil if account.empty? || account.client_secret_key.nil?
+      account = Provider.find_by(stripe_account_id: params[:account])
+      return nil if account.nil? || account.client_secret_key.nil?
       event = Stripe::Event.retrieve(params[:id], account.client_secret_key)
   	else
   	  event = Stripe::Event.retrieve(params[:id])
