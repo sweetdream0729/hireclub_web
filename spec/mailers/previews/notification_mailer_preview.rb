@@ -106,4 +106,9 @@ class NotificationMailerPreview < ActionMailer::Preview
     notification = Notification.where(activity_key: AppointmentReviewCreateActivity::KEY).last
     NotificationMailer.appointment_reviewed(notification)
   end
+
+  def appointment_rescheduled
+    notification = Notification.where(activity_key: AppointmentRescheduleActivity::KEY).last
+    NotificationMailer.appointment_rescheduled(notification)
+  end
 end
