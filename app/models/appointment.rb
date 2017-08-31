@@ -102,6 +102,10 @@ class Appointment < ApplicationRecord
     end
   end
 
+  def reschedulable?
+    !completed? && !canceled?
+  end
+
   def complete!(completer)
     return false if completed_on.present?
     self.completed_by = completer
