@@ -2,7 +2,9 @@
   .row
     .col-sm-6.offset-sm-3
       %h1
-        = title "#{@provider.user.name}"
+        = title "#{@provider.user.display_name}"
+      %p
+        = link_to link_display(user_url(@provider.user)), user_path(@provider.user)
       - if is_admin?
         = link_to rails_admin.edit_path(model_name: 'provider', id: @provider.id) do
           %span.badge.badge-pill-outline.badge-warning.text-uppercase.mr-2
