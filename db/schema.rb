@@ -605,10 +605,12 @@ ActiveRecord::Schema.define(version: 20170901124508) do
     t.integer  "payoutable_id",    null: false
     t.integer  "amount_cents",     null: false
     t.string   "stripe_charge_id", null: false
+    t.datetime "transferred_on"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
     t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+    t.index ["transferred_on"], name: "index_payouts_on_transferred_on", using: :btree
   end
 
   create_table "pg_search_documents", force: :cascade do |t|

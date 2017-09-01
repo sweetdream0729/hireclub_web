@@ -20,4 +20,12 @@ RSpec.describe Payout, type: :model do
     it { should validate_presence_of(:stripe_charge_id) }
     it { should validate_numericality_of(:amount_cents).is_greater_than_or_equal_to(1) }
   end
+
+  describe "transfer!" do
+    it "should transfer payout for an appointment" do
+      payout.transfer!
+
+      expect(payout.transferred_on).to be_present
+    end
+  end
 end
