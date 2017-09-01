@@ -1,5 +1,10 @@
 .container-fluid.content_container
   .row
+    - if current_user.is_admin
+      .col-sm-6.offset-sm-3
+        %ol.breadcrumb
+          %li.breadcrumb-item
+            = link_to "Providers", providers_path
     .col-sm-6.offset-sm-3
       %h1
         = title "#{@provider.user.display_name}"

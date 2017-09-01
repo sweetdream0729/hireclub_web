@@ -2,6 +2,14 @@ class ProvidersController < ApplicationController
   before_action :sign_up_required
   after_action :verify_authorized, except: [:index, :new]
 
+  def index
+    unless current_user.is_admin
+      redirect_to new_provider_path
+    end
+
+    @providers = Provider.by_recent.page(params[:page])
+  end
+
   def new
     if current_user.is_provider?
       redirect_to provider_path(current_user.provider)

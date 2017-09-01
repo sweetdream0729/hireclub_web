@@ -1,0 +1,49 @@
+.container.content_container  
+  %h1
+    = title "Providers"
+
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Approved
+        %th Charges
+        %th Payouts
+        %th Verified
+        %th Created
+
+    %tbody
+      - @providers.each do |provider|
+        %tr
+          %td= link_to provider.user.display_name, provider
+          %td
+            - if provider.approved
+              %span.badge.badge-success
+                Approved
+            - else 
+              %span.badge.badge-warning
+                Pending
+          %td
+            - if provider.charges_enabled
+              %span.badge.badge-success
+                Charges Enabled
+            - else 
+              %span.badge.badge-warning
+                Charges Disabled
+          %td
+            - if provider.payouts_enabled
+              %span.badge.badge-success
+                Payouts Enabled
+            - else 
+              %span.badge.badge-warning
+                Payouts Disabled
+          %td
+            - if provider.verification_status == "verified"
+              %span.badge.badge-success
+                = provider.verification_status
+            - else
+              %span.badge.badge-warning
+                = "Unverified"
+          %td= local_time(provider.created_at)
+          
+  = paginate @providers
