@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831063441) do
+ActiveRecord::Schema.define(version: 20170901124508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -599,6 +599,18 @@ ActiveRecord::Schema.define(version: 20170831063441) do
     t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
   end
 
+  create_table "payouts", force: :cascade do |t|
+    t.integer  "provider_id",      null: false
+    t.string   "payoutable_type"
+    t.integer  "payoutable_id",    null: false
+    t.integer  "amount_cents",     null: false
+    t.string   "stripe_charge_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
+    t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.string   "searchable_type"
@@ -933,6 +945,7 @@ ActiveRecord::Schema.define(version: 20170831063441) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payouts", "providers"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
   add_foreign_key "preferences", "users"

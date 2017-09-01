@@ -13,7 +13,8 @@ FactoryGirl.define do
     tos_acceptance_ip "MyString"
     ssn { FactoryGirl.generate(:ssn) }
     user
-    phone { FactoryGirl.generate(:phone) }
+    phone "14155551212"
     date_of_birth "1987-09-01"
+    id_proof { File.new("#{Rails.root}/spec/support/fixtures/image.png") }
   end
 end
