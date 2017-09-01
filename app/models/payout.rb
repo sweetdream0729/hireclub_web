@@ -28,8 +28,15 @@ class Payout < ApplicationRecord
         :source_transaction => stripe_charge_id,
         :destination => provider.stripe_account_id,
       })
-      self.stripe_transfer_id = stripe_transfer.id
-      self.save
+
+      puts stripe_transfer.inspect
+
+      if stripe_transfer.present?
+        self.stripe_transfer_id = stripe_transfer.id
+        self.trasferred_on = DateTime.now
+        self.save
+      end
+      
     rescue
       Rails.logger.warn(puts "Could not create transfer for #{payout.id}")
     end

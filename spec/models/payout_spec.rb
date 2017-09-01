@@ -23,8 +23,17 @@ RSpec.describe Payout, type: :model do
 
   describe "transfer!" do
     it "should transfer payout for an appointment" do
-      payout.transfer!
+      card_token = StripeMock.generate_card_token(last4: "9191", exp_year: 1984)
+      stripe_charge = Stripe::Charge.create(
+        :amount => 2000,
+        :currency => "usd",
+        :source => card_token
+      )
+      payout.stripe_charge_id = stripe_charge.id
+      payout.save
 
+      payout.transfer!
+      
       expect(payout.transferred_on).to be_present
     end
   end
