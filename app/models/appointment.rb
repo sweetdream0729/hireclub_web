@@ -168,7 +168,7 @@ class Appointment < ApplicationRecord
   end
 
   def payout!
-    charge = self.payments.first
+    charge = self.payments.where(amount_cents: self.price_cents)
     payout_ammount = COMMISSION * self.price_cents
     provider = self.user.provider
     if charge.present? && provider.present?
