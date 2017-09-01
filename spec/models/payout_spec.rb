@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Payout, type: :model do
+  let(:stripe_helper) { StripeMock.create_test_helper }
+  before { StripeMock.start }
+  after { StripeMock.stop }
+
   let(:payout) { FactoryGirl.build(:payout) }
 
   subject { payout }
