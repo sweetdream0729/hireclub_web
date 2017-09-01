@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901124508) do
+ActiveRecord::Schema.define(version: 20170901154404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -345,9 +345,9 @@ ActiveRecord::Schema.define(version: 20170901124508) do
   end
 
   create_table "follows", force: :cascade do |t|
-    t.string   "followable_type",                 null: false
+    t.string   "followable_type"
     t.integer  "followable_id",                   null: false
-    t.string   "follower_type",                   null: false
+    t.string   "follower_type"
     t.integer  "follower_id",                     null: false
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(version: 20170901124508) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -554,17 +555,6 @@ ActiveRecord::Schema.define(version: 20170901124508) do
     t.index ["skills"], name: "index_milestones_on_skills", using: :gin
     t.index ["start_date"], name: "index_milestones_on_start_date", using: :btree
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree
-  end
-
-  create_table "newsletters", force: :cascade do |t|
-    t.string   "name"
-    t.string   "campaign_id"
-    t.datetime "sent_on"
-    t.string   "subject",     null: false
-    t.string   "preheader"
-    t.text     "html"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -611,6 +601,7 @@ ActiveRecord::Schema.define(version: 20170901124508) do
     t.datetime "updated_at",         null: false
     t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
     t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+    t.index ["stripe_charge_id", "provider_id", "payoutable_type", "payoutable_id"], name: "index_payouts_on_charge", unique: true, using: :btree
     t.index ["transferred_on"], name: "index_payouts_on_transferred_on", using: :btree
   end
 
