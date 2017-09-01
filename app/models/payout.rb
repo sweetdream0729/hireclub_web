@@ -12,8 +12,27 @@ class Payout < ApplicationRecord
   def transfer!
     begin
       stripe_charge = Stripe::Charge.retrieve(stripe_charge_id)
+      if stripe_charge.present?
+        create_transfer
+      end
     rescue
       Rails.logger.warn(puts "Stripe Charge #{self.stripe_charge_id} not found")
     end
+  end
+
+  def create_transfer
+    begin
+      stripe_transfer = Stripe::Transfer.create({
+        :amount => amount_cents,
+        :currency => "usd",
+        :source_transaction => stripe_charge_id,
+        :destination => provider.stripe_account_id,
+      })
+      self.stripe_transfer_id = stripe_transfer.id
+      self.save
+    rescue
+      Rails.logger.warn(puts "Could not create transfer for #{payout.id}")
+    end
+
   end
 end
