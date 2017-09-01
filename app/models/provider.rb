@@ -15,6 +15,7 @@ class Provider < ApplicationRecord
   # Associations
   belongs_to :user
   has_many :bank_accounts, dependent: :destroy
+  has_many :payouts, dependent: :destroy
 
   # Validations
   validates_size_of :id_proof, maximum: 10.megabytes

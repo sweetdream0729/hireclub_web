@@ -13,6 +13,7 @@ RSpec.describe Provider, type: :model do
 
   describe "subscriptions" do
     it { is_expected.to belong_to(:user) }
+    it { should have_many(:payouts) }
   end
 
   describe "validations" do

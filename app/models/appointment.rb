@@ -1,4 +1,7 @@
 class Appointment < ApplicationRecord
+
+  #constants
+  COMMISSION = 0.7
   # Extensions
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
@@ -44,6 +47,7 @@ class Appointment < ApplicationRecord
   has_one :appointment_category, through: :appointment_type 
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :payments, as: :payable, dependent: :destroy
+  has_one :payout, as: :payoutable, dependent: :destroy
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
@@ -161,6 +165,22 @@ class Appointment < ApplicationRecord
       payment.save
       
     end
+  end
+
+  def payout!
+    charge = self.payments.first
+    payout_ammount = COMMISSION * charge.amount_cents
+    provider = self.user.provider
+    if charge.present? && provider.present?
+      payout = self.create_payout(provider: provider,
+                         stripe_charge_id: charge.external_id,
+                         amount_cents: payout_amount)
+    end
+
+    if payout.present?
+      payout.transfer!
+    end
+
   end
   
 end

@@ -15,6 +15,8 @@ RSpec.describe Appointment, type: :model do
     it { should have_one(:appointment_review) }
     it { should have_many(:attachments) }
     it { should have_many(:payments) }
+    it { should have_one(:payout) }
+
   end
 
   describe 'validations' do
@@ -171,4 +173,5 @@ RSpec.describe Appointment, type: :model do
       appointment.update_payments
     end
   end
+
 end
