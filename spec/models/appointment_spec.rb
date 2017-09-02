@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
+  let(:stripe_helper) { StripeMock.create_test_helper }
+  before { StripeMock.start }
+  after { StripeMock.stop }
   let(:appointment) { FactoryGirl.build(:appointment) }
 
   subject { appointment }
@@ -15,7 +18,7 @@ RSpec.describe Appointment, type: :model do
     it { should have_one(:appointment_review) }
     it { should have_many(:attachments) }
     it { should have_many(:payments) }
-    it { should have_one(:payout) }
+    it { should have_many(:payouts) }
 
   end
 
@@ -173,5 +176,29 @@ RSpec.describe Appointment, type: :model do
       appointment.update_payments
     end
   end
+
+  describe "payout" do
+    it "should create payout" do
+      StripeMock.toggle_debug(true)
+      payee = FactoryGirl.create(:user)
+      provider = FactoryGirl.create(:provider, user: payee)
+      appointment.payee = payee
+      appointment.save
+      card_token = StripeMock.generate_card_token(last4: "9191", exp_year: 1984)
+      stripe_charge = Stripe::Charge.create(
+        :amount => appointment.price_cents,
+        :currency => "usd",
+        :source => card_token
+      )
+      payment = Payment.create_from_stripe_charge(stripe_charge)
+      payout = appointment.payout!
+
+      expect(payout).to be_valid
+      expect(payout.transferred_on).to be_present
+
+    end
+  end
+  
+
 
 end

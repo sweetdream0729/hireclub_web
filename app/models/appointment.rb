@@ -181,6 +181,8 @@ class Appointment < ApplicationRecord
       payout.transfer!
     end
 
+    return payout
+
   end
   
 end
