@@ -19,6 +19,13 @@
         = f.label :end_time
         = f.datetime_select :end_time
       .form-group
+        = f.label :location
+        = f.text_field :location, class: "form-control autocomplete_location", value: @event.location.try(:display_name), placeholder: "My City, CA", autocomplete: "off"
+        = f.hidden_field :location_id, value: @event.location_id, class: "autocomplete_location_id"
+        %small.form-text.text-muted
+          Where is the event located? Use Anywhere for remote events.
+
+      .form-group
         = f.label :venue
         = f.text_field :venue, class: "form-control"
       .form-group

@@ -21,13 +21,15 @@
         RSVP
   .row
     .col-sm-8
-      %h6.mt-5 Start time
+      %h6.mt-4 Start time
       = @event.start_time.strftime("%A %B %e, %l:%M%p")
-      %h6.mt-5 End time
+      %h6.mt-4 End time
       = @event.end_time.strftime("%A %B %e, %l:%M%p")
-      %h6.mt-5 Description:
+      %h6.mt-4 Description:
       = @event.description
     .col-sm-4
-      %h6.mt-5 Venue
+      %h6.mt-4 Location
+      = @event.location.try(:cached_display_name)
+      %h6.mt-4 Venue
       = @event.venue
   

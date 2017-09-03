@@ -15,10 +15,12 @@ class Event < ApplicationRecord
 
   # Associations
   belongs_to :user
+  belongs_to :location
 
   # Validations
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :start_time, presence: true
   validates :source_url, presence: true
+  validates :location, presence: true
 end

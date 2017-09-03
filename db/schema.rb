@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903205531) do
+ActiveRecord::Schema.define(version: 20170903232513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,6 +343,8 @@ ActiveRecord::Schema.define(version: 20170903205531) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "location_id"
+    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
     t.index ["slug"], name: "index_events_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_events_on_user_id", using: :btree
   end
@@ -944,6 +946,7 @@ ActiveRecord::Schema.define(version: 20170903205531) do
   add_foreign_key "community_members", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "events", "locations"
   add_foreign_key "events", "users"
   add_foreign_key "invites", "contacts"
   add_foreign_key "invites", "users"

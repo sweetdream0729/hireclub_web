@@ -7,6 +7,7 @@ RSpec.describe Event, type: :model do
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:location) }
   end
 
   describe 'validations' do
@@ -15,6 +16,7 @@ RSpec.describe Event, type: :model do
     it { event.save; should validate_uniqueness_of(:slug).case_insensitive }
     it { should validate_presence_of(:start_time) }
     it { should validate_presence_of(:source_url) }
+    it { should validate_presence_of(:location) }
 
   end
 
