@@ -1,0 +1,49 @@
+= form_for @event do |f|
+  - if @event.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+      %ul
+        - @event.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col-sm-6
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: "form-control"
+  
+      .form-group
+        = f.label :start_time
+        = f.datetime_select :start_time
+      .form-group
+        = f.label :end_time
+        = f.datetime_select :end_time
+      .form-group
+        = f.label :venue
+        = f.text_field :venue, class: "form-control"
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: "form-control"
+      .form-group
+        = f.label :source_url
+        = f.text_field :source_url, class: "form-control"
+
+    .col-sm-6
+      .form-group
+        = f.label 'Image'
+        = image_tag(model_image(@event.image, 1920, 710, true), class: 'm-b-1 img-fluid')
+        %p
+
+        = f.file_field :image
+        = f.hidden_field :retained_image
+        %br
+        = f.text_field :image_url, class: 'form-control', placeholder: "http://site.com/image.jpg"
+  
+  / .form-group
+  /   = f.label :slug
+  /   = f.text_field :slug, class: "form-control"
+
+
+  %hr
+  = f.submit 'Save', class: "btn btn-info btn-lg"
+  = link_to 'Cancel', events_path, class: "btn btn-link btn-lg"

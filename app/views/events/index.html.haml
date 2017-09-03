@@ -1,0 +1,39 @@
+.container.content_container
+  %h1
+    = title "Events"
+    - if policy(Event).new?
+      %small
+        = link_to 'Create Event', new_event_path, class: "btn btn-info btn-sm"
+  
+  .dropdown.mb-4
+    %button#dropdownMenuButton.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+      = @scope.count
+      - if current_page?(events_path)
+        Upcoming
+      - else
+        Past
+    .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
+      %a.dropdown-item{href: events_path } Upcoming
+      %a.dropdown-item{href: past_events_path} Past
+
+  .row
+    - @events.each do |event|
+      .col-sm-6.col-md-4
+        .card.mb-4
+          .card
+            %a{href: event.source_url, target: "_blank"}
+              = image_tag(model_image(event.image, 1920, 710, true), class: "card-img-top img-fluid")
+            .card-block
+              %h5.bold.card-title
+                = link_to event.name, event
+              %p.card-text
+                = event.start_time.strftime("%A %B %e, %l:%M%p")
+                %br
+                - if policy(event).edit?
+                  = link_to 'Edit', edit_event_path(event), class: "text-warning"
+
+              %a.btn.btn-info{:href => event.source_url, target: "_blank"}
+                RSVP
+
+  .mt-4
+    = paginate @events

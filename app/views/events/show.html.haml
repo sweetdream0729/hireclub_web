@@ -1,0 +1,33 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Events", events_path
+    %li.breadcrumb-item.active
+      = link_to @event.name, @event
+
+  - if policy(@event).edit?
+    = link_to edit_event_path(@event) do
+      %span.badge.badge-pill-outline.text-uppercase.mr-2
+        Edit
+
+  %a{:href => @event.source_url, target: "_blank"}
+    = image_tag(model_image(@event.image, 1920, 710, true), class: 'm-b-1 img-fluid')
+  .row.mt-5
+    .col-sm-8
+      %h1
+        = @event.name
+    .col-sm-4
+      %a.btn.btn-info.btn-lg.btn-block{:href => @event.source_url, target: "_blank"}
+        RSVP
+  .row
+    .col-sm-8
+      %h6.mt-5 Start time
+      = @event.start_time.strftime("%A %B %e, %l:%M%p")
+      %h6.mt-5 End time
+      = @event.end_time.strftime("%A %B %e, %l:%M%p")
+      %h6.mt-5 Description:
+      = @event.description
+    .col-sm-4
+      %h6.mt-5 Venue
+      = @event.venue
+  
