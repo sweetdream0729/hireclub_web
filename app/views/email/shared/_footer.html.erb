@@ -57,7 +57,7 @@
 
                      <%= render partial: "/email/elements/v_spacer", locals: { height: 4} %>
                      <% if @unsubscribe_url %> 
-                        <a href="<%= @unsubscribe_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 14px; line-height: 20px; text-decoration: none; white-space: nowrap; font-weight: bold;">
+                        <a target="_blank" href="<%= @unsubscribe_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 14px; line-height: 20px; text-decoration: none; white-space: nowrap; font-weight: bold;">
                            Unsubscribe
                         </a>
                      <% end %>
