@@ -118,6 +118,31 @@ RSpec.describe NotificationMailer, type: :mailer do
     end
   end
 
+  describe "event_published" do
+    let(:user2) { FactoryGirl.create(:user) }
+    let(:event) { FactoryGirl.create(:event, user: user) }
+    let(:mail) do 
+      user2.follow(user)
+      expect(event).to be_persisted
+      event.publish!
+
+      activity = Activity.where(key: EventPublishActivity::KEY).last
+      expect(activity).to be_present
+
+      CreateNotificationJob.perform_now(activity)
+
+      notification = Notification.where(activity: activity).last
+      expect(notification).to be_present
+
+      NotificationMailer.event_published(notification)
+    end
+
+    it 'renders the email' do
+      expect(mail.subject).to eq("#{event.user.display_name} added event #{event.name}")
+      expect(mail.to).to eq([user2.email])
+    end
+  end
+
   describe "project_created" do
     let(:user2) { FactoryGirl.create(:user) }
     let(:project) { FactoryGirl.create(:project, user: user) }

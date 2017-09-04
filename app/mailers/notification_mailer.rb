@@ -180,6 +180,18 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
   end
 
+  def event_published(notification)
+    set_notification(notification)
+
+    @event = @notification.activity.trackable
+
+    @event_url = get_utm_url url_for(@event)
+
+    add_metadata(:event_id, @event.id)
+
+    mail(to: @user.email, subject: "#{@event.user.display_name} added event #{@event.name}")
+  end
+
   def project_created(notification)
     set_notification(notification)
 
