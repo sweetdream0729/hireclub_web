@@ -56,10 +56,11 @@
                      </font>
 
                      <%= render partial: "/email/elements/v_spacer", locals: { height: 4} %>
-
-                     <a href="<%= settings_notifications_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 14px; line-height: 20px; text-decoration: none; white-space: nowrap; font-weight: bold;">
-                        Unsubscribe
-                     </a>
+                     <% if @unsubscribe_url %> 
+                        <a href="<%= @unsubscribe_url %>" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 14px; line-height: 20px; text-decoration: none; white-space: nowrap; font-weight: bold;">
+                           Unsubscribe
+                        </a>
+                     <% end %>
                      <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
 
 <!--                      <font face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 17px; line-height: 20px;">

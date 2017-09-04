@@ -38,6 +38,16 @@ class SettingsController < ApplicationController
     end
   end
 
+  def unsubscribe
+    if data = User.read_access_token(params[:signature])
+      user = User.find(data[:user_id])
+      user.update_preference(data[:preference])
+      render text: "You have been unsubscribed"
+    else
+      render text: "Invalid Link"
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

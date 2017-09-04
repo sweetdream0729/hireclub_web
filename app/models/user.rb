@@ -510,4 +510,30 @@ class User < ApplicationRecord
     return user
   end
 
+  # Access token for a user
+  def access_token(preference)
+    User.create_access_token(self, preference)
+  end
+
+  # Verifier based on our application secret
+  def self.verifier
+    ActiveSupport::MessageVerifier.new(Rails.application.secrets.secret_key_base)
+  end
+
+  # Get a user from a token
+  def self.read_access_token(signature)
+    parameters = verifier.verify(signature)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  # Class method for token generation
+  def self.create_access_token(user, preference)
+    verifier.generate({user_id: user.id, preference: preference})
+  end
+
+  def update_preference(preference_field)
+    preference.update_attribute(preference_field.to_sym , false)
+  end
+
 end

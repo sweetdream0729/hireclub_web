@@ -464,4 +464,18 @@ describe "unread_messages_count" do
       expect(user.community_members.count).to eq 0
     end
   end
+
+  describe "preferences" do
+
+    it "should update preference" do
+      user.save
+      user.create_preference
+      user.update_preference("email_on_comment")
+      expect(user.preference.email_on_comment).to be_falsey
+    end
+
+  end
+
+
+
 end
