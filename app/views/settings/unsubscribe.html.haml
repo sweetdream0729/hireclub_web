@@ -9,11 +9,13 @@
 
       %p.mt-4
         %strong
-          fire@kidbombay.com
-        was unsubscribed from follow emails
+          = @user.name
+        was unsubscribed from 
+        = @mail_type
+        mails
 
       %p
-        %a.btn.btn-lg.btn-info{href:"#"}
+        %a.btn.btn-lg.btn-info{href: settings_notifications_path}
           Resubscribe
 
       %hr
