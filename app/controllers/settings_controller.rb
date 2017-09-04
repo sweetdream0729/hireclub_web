@@ -42,10 +42,12 @@ class SettingsController < ApplicationController
     if data = User.read_access_token(params[:signature])
       user = User.find(data[:user_id])
       user.update_preference(data[:preference])
-      render text: "You have been unsubscribed"
+      #render text: "You have been unsubscribed"
     else
-      render text: "Invalid Link"
+      # render text: "Invalid Link"
     end
+
+    render :layout => 'minimal'
   end
 
   private
