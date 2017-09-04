@@ -186,6 +186,7 @@ class NotificationMailer < ApplicationMailer
     @event = @notification.activity.trackable
 
     @event_url = get_utm_url url_for(@event)
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_event_publish"))
 
     add_metadata(:event_id, @event.id)
 
