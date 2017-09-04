@@ -39,9 +39,10 @@ class SettingsController < ApplicationController
   end
 
   def unsubscribe
-    if data = User.read_access_token(params[:signature])
+    data = User.read_access_token(params[:signature])
+    if data && data[:user] && data[:preference]
       user = User.find(data[:user_id])
-      user.update_preference(data[:preference])
+      user.unsubscribe_preference(data[:preference])
       render text: "You have been unsubscribed"
     else
       render text: "Invalid Link"

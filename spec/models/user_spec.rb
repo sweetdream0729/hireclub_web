@@ -467,9 +467,9 @@ describe "unread_messages_count" do
 
   describe "preferences" do
 
-    it "should update preference" do
+    it "should set relevant preference field to false" do
       user.save
-      user.update_preference("email_on_comment")
+      user.unsubscribe_preference("email_on_comment")
       expect(user.preference.email_on_comment).to be_falsey
     end
 

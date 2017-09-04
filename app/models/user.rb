@@ -511,7 +511,7 @@ class User < ApplicationRecord
   end
 
   # Access token for a user
-  def access_token(preference)
+  def preference_access_token(preference)
     User.create_access_token(self, preference)
   end
 
@@ -532,7 +532,7 @@ class User < ApplicationRecord
     verifier.generate({user_id: user.id, preference: preference})
   end
 
-  def update_preference(preference_field)
+  def unsubscribe_preference(preference_field)
     preference.update_attribute(preference_field.to_sym , false)
   end
 
