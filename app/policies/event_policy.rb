@@ -16,4 +16,8 @@ class EventPolicy < ApplicationPolicy
   def destroy?
     owner_or_admin?
   end
+
+  def publish?
+    owner_or_admin?
+  end
 end

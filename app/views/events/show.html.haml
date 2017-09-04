@@ -5,10 +5,16 @@
     %li.breadcrumb-item.active
       = link_to @event.name, @event
 
+  - if @event.unpublished? && policy(@event).publish?
+    = link_to publish_event_path(@event) do
+      %span.badge.badge-pill.badge-primary.text-uppercase.mr-2
+        Publish
+
   - if policy(@event).edit?
     = link_to edit_event_path(@event) do
       %span.badge.badge-pill-outline.text-uppercase.mr-2
         Edit
+
   - if is_admin?
     = link_to rails_admin.edit_path(model_name: 'event', id: @event.id) do
       %span.badge.badge-pill-outline.badge-warning.text-uppercase
@@ -35,5 +41,5 @@
       %h6.mt-4 Location
       = @event.location.try(:cached_display_name)
       %h6.mt-4 Venue
-      = @event.venue
+      = Rinku.auto_link(@event.venue).html_safe
   

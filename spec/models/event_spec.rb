@@ -31,11 +31,35 @@ RSpec.describe Event, type: :model do
       expect(event.source_url).to eq("http://www.instagram.com/username")
     end
 
-    it "should ignore invalid urls" do
-      event.source_url = "foo"
-      expect(event.source_url).to eq(nil)
-    end
-
     it { is_expected.to allow_value("foo.com", "foo.co", "foo.design", "foo.design/username").for(:source_url) }
+  end
+
+  describe 'publish!' do
+    it "publishes the event" do
+      other_user = FactoryGirl.create(:user)
+      other_user.follow(event.user)
+
+      event.save
+      expect(event).to be_valid
+      event.publish!
+
+      expect(event.published?).to eq(true)
+      expect(event.published_on).not_to be_nil
+
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.key).to eq EventPublishActivity::KEY
+      expect(activity.trackable).to eq(event)
+      expect(activity.owner).to eq(event.user)
+      expect(activity.private).to eq(false)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(1)
+      
+      notification = notifications.first
+      expect(notification.user).to eq other_user
+    end
   end
 end

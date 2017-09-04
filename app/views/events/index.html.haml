@@ -10,11 +10,15 @@
       = @scope.count
       - if current_page?(events_path)
         Upcoming
+      - elsif current_page?(drafts_events_path)
+        Drafts
       - else
         Past
     .dropdown-menu{"aria-labelledby" => "dropdownMenuButton"}
       %a.dropdown-item{href: events_path } Upcoming
       %a.dropdown-item{href: past_events_path} Past
+      - if user_signed_in? && policy(Event).new?
+        %a.dropdown-item{href: drafts_events_path} Drafts
 
   .row
     - @events.each do |event|

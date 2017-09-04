@@ -1,21 +1,31 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-  after_action :verify_authorized, except: [:index, :past]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :publish, :unpublish]
+  after_action :verify_authorized, except: [:index, :past, :drafts]
 
   # GET /events
   def index
-    @scope = Event.upcoming.by_start_time
+    @scope = Event.published.upcoming.by_start_time
     @events = @scope.page(params[:page]).per(10)
   end
 
   def past
-    @scope = Event.past.by_recent
+    @scope = Event.published.past.by_recent
+    @events = @scope.page(params[:page]).per(10)
+    render :index
+  end
+
+  def drafts
+    @scope = current_user.events.drafts.by_recent
     @events = @scope.page(params[:page]).per(10)
     render :index
   end
 
   # GET /events/1
   def show
+    #When old event url is entered it should direct to new url
+    if request.path != event_path(@event)
+      return redirect_to @event, :status => :moved_permanently
+    end
   end
 
   # GET /events/new
@@ -56,6 +66,11 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
+  end
+
+  def publish
+    @event.publish!
+    redirect_to @event, notice: 'Your event was published!'
   end
 
   private

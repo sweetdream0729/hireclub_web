@@ -50,6 +50,11 @@ Rails.application.routes.draw do
   resources :events do
     collection do
       get :past
+      get :drafts
+    end
+
+    member do
+      get :publish
     end
   end
   
