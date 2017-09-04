@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831063441) do
+ActiveRecord::Schema.define(version: 20170904135347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,6 +331,26 @@ ActiveRecord::Schema.define(version: 20170831063441) do
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string   "name",         null: false
+    t.citext   "slug",         null: false
+    t.datetime "start_time",   null: false
+    t.datetime "end_time"
+    t.text     "description"
+    t.string   "source_url"
+    t.string   "image_uid"
+    t.string   "venue"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "location_id"
+    t.datetime "published_on"
+    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
+    t.index ["published_on"], name: "index_events_on_published_on", using: :btree
+    t.index ["slug"], name: "index_events_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_events_on_user_id", using: :btree
+  end
+
   create_table "facebook_posts", force: :cascade do |t|
     t.string   "facebook_post_id",  null: false
     t.string   "facebook_group_id"
@@ -599,6 +619,21 @@ ActiveRecord::Schema.define(version: 20170831063441) do
     t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
   end
 
+  create_table "payouts", force: :cascade do |t|
+    t.integer  "provider_id",        null: false
+    t.string   "payoutable_type"
+    t.integer  "payoutable_id",      null: false
+    t.integer  "amount_cents",       null: false
+    t.string   "stripe_charge_id",   null: false
+    t.string   "stripe_transfer_id"
+    t.datetime "transferred_on"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
+    t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+    t.index ["transferred_on"], name: "index_payouts_on_transferred_on", using: :btree
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.string   "searchable_type"
@@ -634,15 +669,17 @@ ActiveRecord::Schema.define(version: 20170831063441) do
   end
 
   create_table "preferences", force: :cascade do |t|
-    t.integer  "user_id",                          null: false
-    t.boolean  "email_on_follow",   default: true, null: false
-    t.boolean  "email_on_comment",  default: true, null: false
-    t.boolean  "email_on_mention",  default: true, null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "email_on_unread",   default: true, null: false
-    t.boolean  "email_on_job_post", default: true, null: false
+    t.integer  "user_id",                               null: false
+    t.boolean  "email_on_follow",        default: true, null: false
+    t.boolean  "email_on_comment",       default: true, null: false
+    t.boolean  "email_on_mention",       default: true, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "email_on_unread",        default: true, null: false
+    t.boolean  "email_on_job_post",      default: true, null: false
+    t.boolean  "email_on_event_publish", default: true, null: false
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
+    t.index ["email_on_event_publish"], name: "index_preferences_on_email_on_event_publish", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
     t.index ["email_on_job_post"], name: "index_preferences_on_email_on_job_post", using: :btree
     t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
@@ -913,6 +950,8 @@ ActiveRecord::Schema.define(version: 20170831063441) do
   add_foreign_key "community_members", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "events", "locations"
+  add_foreign_key "events", "users"
   add_foreign_key "invites", "contacts"
   add_foreign_key "invites", "users"
   add_foreign_key "job_referrals", "jobs"
@@ -933,6 +972,7 @@ ActiveRecord::Schema.define(version: 20170831063441) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payouts", "providers"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
   add_foreign_key "preferences", "users"

@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
@@ -48,6 +47,17 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :events do
+    collection do
+      get :past
+      get :drafts
+    end
+
+    member do
+      get :publish
+    end
+  end
+  
   resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
   resources :appointment_messages, only: [:create, :destroy, :edit, :update] do
     member do
