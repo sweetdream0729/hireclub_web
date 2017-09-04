@@ -9,6 +9,10 @@
     = link_to edit_event_path(@event) do
       %span.badge.badge-pill-outline.text-uppercase.mr-2
         Edit
+  - if is_admin?
+    = link_to rails_admin.edit_path(model_name: 'event', id: @event.id) do
+      %span.badge.badge-pill-outline.badge-warning.text-uppercase
+        Admin
 
   %a{:href => @event.source_url, target: "_blank"}
     = image_tag(model_image(@event.image, 1920, 710, true), class: 'm-b-1 img-fluid')
@@ -22,7 +26,7 @@
   .row
     .col-sm-8
       %h6.mt-4 Start time
-      = @event.start_time.strftime("%A %B %e, %l:%M%p")
+      = @event.start_time.strftime("%A %B %e, %l:%M%p · %Y")
       %h6.mt-4 End time
       = @event.end_time.strftime("%A %B %e, %l:%M%p")
       %h6.mt-4 Description:

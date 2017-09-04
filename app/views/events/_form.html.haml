@@ -14,10 +14,10 @@
   
       .form-group
         = f.label :start_time
-        = f.datetime_select :start_time
+        = f.datetime_select :start_time, {order: [:month, :day, :year], ampm: true}
       .form-group
         = f.label :end_time
-        = f.datetime_select :end_time
+        = f.datetime_select :end_time, {order: [:month, :day, :year], ampm: true}
       .form-group
         = f.label :location
         = f.text_field :location, class: "form-control autocomplete_location", value: @event.location.try(:display_name), placeholder: "My City, CA", autocomplete: "off"
