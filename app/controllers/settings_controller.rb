@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  before_action :sign_up_required
+  before_action :sign_up_required, except: [:unsubscribe]
   before_action :set_user
 
   def index
@@ -40,13 +40,14 @@ class SettingsController < ApplicationController
 
   def unsubscribe
     data = User.read_access_token(params[:signature])
-    if data && data[:user] && data[:preference]
+    if data && data[:user_id] && data[:preference]
       user = User.find(data[:user_id])
       user.unsubscribe_preference(data[:preference])
-      render text: "You have been unsubscribed"
+      render :layout => 'minimal'
     else
-      render text: "Invalid Link"
+      redirect_to new_user_session_path, notice: "Couldn't unsubscribe email notification."
     end
+
   end
 
   private
