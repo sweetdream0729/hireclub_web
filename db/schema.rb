@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904130206) do
+ActiveRecord::Schema.define(version: 20170904135347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -669,15 +669,17 @@ ActiveRecord::Schema.define(version: 20170904130206) do
   end
 
   create_table "preferences", force: :cascade do |t|
-    t.integer  "user_id",                          null: false
-    t.boolean  "email_on_follow",   default: true, null: false
-    t.boolean  "email_on_comment",  default: true, null: false
-    t.boolean  "email_on_mention",  default: true, null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "email_on_unread",   default: true, null: false
-    t.boolean  "email_on_job_post", default: true, null: false
+    t.integer  "user_id",                               null: false
+    t.boolean  "email_on_follow",        default: true, null: false
+    t.boolean  "email_on_comment",       default: true, null: false
+    t.boolean  "email_on_mention",       default: true, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "email_on_unread",        default: true, null: false
+    t.boolean  "email_on_job_post",      default: true, null: false
+    t.boolean  "email_on_event_publish", default: true, null: false
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
+    t.index ["email_on_event_publish"], name: "index_preferences_on_email_on_event_publish", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
     t.index ["email_on_job_post"], name: "index_preferences_on_email_on_job_post", using: :btree
     t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
