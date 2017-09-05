@@ -13,6 +13,8 @@ class Event < ApplicationRecord
   dragonfly_accessor :image
   auto_strip_attributes :name, squish: true
 
+  is_impressionable
+
   # Scope
   scope :published,      -> { where.not(published_on: nil) }
   scope :drafts,         -> { where(published_on: nil) }
