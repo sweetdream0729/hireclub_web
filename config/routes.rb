@@ -80,10 +80,7 @@ Rails.application.routes.draw do
   resources :subscriptions, only: [:new, :create, :show] 
   resources :providers, only: [:new, :create, :show]
   resources :bank_accounts, only: [:new, :create]
-  resources :payouts, only: [:create] do
-    member do
-      get :preview
-    end
+  resources :payouts, only: [:new, :create] do
   end
   get 'subscription/cancel' => 'subscriptions#cancel_subscription'
   post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription

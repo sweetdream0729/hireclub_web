@@ -10,7 +10,7 @@ class PayoutsController < ApplicationController
     end
   end
 
-  def preview
+  def new
   	@appointment = Appointment.friendly.find(params[:id])
     @provider = @appointment.payee.provider
     if @provider.nil?

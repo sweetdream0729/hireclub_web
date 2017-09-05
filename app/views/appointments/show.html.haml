@@ -219,7 +219,7 @@
           = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
       - if policy(@appointment.payouts.build).create?
         .mt-5
-        = link_to "Payout", preview_payout_path, class: 'btn btn-info'
+        = link_to "Payout", new_payout_path({id: @appointment.id}), class: 'btn btn-info'
       
       
 

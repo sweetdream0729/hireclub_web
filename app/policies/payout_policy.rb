@@ -5,7 +5,7 @@ class PayoutPolicy < ApplicationPolicy
     return true if user.is_admin
   end
 
-  def preview?
+  def new?
   	create?
   end
 
