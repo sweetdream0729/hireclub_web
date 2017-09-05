@@ -29,6 +29,8 @@ class User < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
+  nilify_blanks
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin, :google_oauth2]
 
