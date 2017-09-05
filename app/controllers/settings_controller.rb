@@ -41,12 +41,12 @@ class SettingsController < ApplicationController
   def unsubscribe
     data = User.read_access_token(params[:signature])
     if data && data[:user_id] && data[:preference]
-      user = User.find(data[:user_id])
-      user.unsubscribe_preference(data[:preference])
+      @user = User.find(data[:user_id])
+      @user.unsubscribe_preference(data[:preference])
       @mail_type = data[:preference].split('_')[2..-1].join(" ")
       render :layout => 'minimal'
     else
-      redirect_to new_user_session_path, notice: "Couldn't unsubscribe email notification."
+      redirect_to new_user_session_path
     end
 
   end
