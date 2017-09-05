@@ -12,5 +12,9 @@ class PayoutsController < ApplicationController
 
   def preview
   	@appointment = Appointment.friendly.find(params[:id])
+    @provider = @appointment.payee.provider
+    if @provider.nil?
+      redirect_to @appointment, notice: "Payee should be registered as provider to receive funds"
+    end
   end
 end
