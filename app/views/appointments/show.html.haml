@@ -217,5 +217,11 @@
           .form-group
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
           = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
+      - if policy(@appointment.payouts.build).create?
+        .mt-5
+        = link_to "Payout", preview_payout_path, class: 'btn btn-info'
+      
+      
+
       
       

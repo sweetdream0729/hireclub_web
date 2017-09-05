@@ -195,6 +195,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(payout).to be_valid
       expect(payout.transferred_on).to be_present
+      expect(payout.amount_cents).to eq appointment.price_cents
 
     end
   end
