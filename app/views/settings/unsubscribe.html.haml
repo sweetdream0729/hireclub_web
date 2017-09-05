@@ -15,15 +15,20 @@
         mails
 
       / %p
-      /   %a.btn.btn-lg.btn-info{href: settings_notifications_path}
-      /     Resubscribe
+      /   %a.btn.btn-lg.btn-info{href: settings_update_path}
+      /     Resubscribe\
+      %p
+        - if @mail_type == "all"
+          /= link_to "Resubscribe All", "#", class: 'btn btn-link'
+        - else
+          = link_to "Resubscribe", resubscribe_path(@user.preference_access_token(@preference, true)), class: 'btn btn-link'
 
       %hr
       %p
         %a.btn.btn-secondary{href: settings_notifications_path}
           Notification Settings
-        / %a.btn.btn-link{href: '#'}
-        /   Unsubscribe All
+        - if @mail_type != "all"
+          = link_to "Unsubscribe All", unsubscribe_path(@user.preference_access_token("unsubscribe_all", true)), class: 'btn btn-link'
       %p
         %small
           You will continue to receive essential account related information.

@@ -1,0 +1,28 @@
+.container.mt-3.mb-5
+  .row.justify-content-center
+    .col-lg-6.col-md-8.col-sm-10
+      .text-center.mt-3.mb-5
+        %a{href: root_path}
+          = image_tag("logo.svg", width: 30, height: 30, alt: "HireClub Logo")
+
+      %h1 Subscribed
+
+      %p.mt-4
+        %strong
+          = @user.email
+        was subscribed to
+        = @mail_type
+        mails
+
+      %p
+        = link_to "Unsubscribe", unsubscribe_path(@user.preference_access_token(@preference, false)), class: 'btn btn-link'
+
+      %hr
+      %p
+        %a.btn.btn-secondary{href: settings_notifications_path}
+          Notification Settings
+        = link_to "Unsubscribe All", unsubscribe_path(@user.preference_access_token("unsubscribe_all", true)), class: 'btn btn-link'
+      
+      %p
+        %small
+          You will continue to receive essential account related information.

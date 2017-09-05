@@ -514,8 +514,8 @@ class User < ApplicationRecord
   end
 
   # Access token for a user
-  def preference_access_token(preference)
-    User.create_access_token(self, preference)
+  def preference_access_token(preference, value = false)
+    User.create_access_token(self, preference, value)
   end
 
   # Verifier based on our application secret
@@ -531,12 +531,18 @@ class User < ApplicationRecord
   end
 
   # Class method for token generation
-  def self.create_access_token(user, preference)
-    verifier.generate({user_id: user.id, preference: preference})
+  def self.create_access_token(user, preference, value = false)
+    verifier.generate({user_id: user.id, preference: preference, value: value})
   end
 
-  def unsubscribe_preference(preference_field)
-    preference.update_attribute(preference_field.to_sym , false)
+  def update_preference(preference_field, value)
+    if preference_field == "unsubscribe_all"
+      p = self.preference
+      p.unsubscribe_all = true
+      p.save
+    else
+      preference.update_attribute(preference_field.to_sym , value)
+    end
   end
 
 end

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   get 'settings/links'
   get 'settings/notifications'
   get 'settings/payments'
+  get 'settings/unsubscribe_all'
   get 'settings/unsubscribe/:signature' => 'settings#unsubscribe', as: 'unsubscribe'
+  get 'settings/resubscribe/:signature' => 'settings#resubscribe', as: 'resubscribe'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'

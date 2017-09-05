@@ -471,8 +471,25 @@ describe "unread_messages_count" do
 
     it "should set relevant preference field to false" do
       user.save
-      user.unsubscribe_preference("email_on_comment")
+      user.update_preference("email_on_comment", false)
       expect(user.preference.email_on_comment).to be_falsey
+    end
+
+    it "should set relevant preference field to true" do
+      user.save
+      user.update_preference("email_on_comment", true)
+      expect(user.preference.email_on_comment).to be_truthy
+    end
+
+    it "should set all preference field to false" do
+      user.save
+      user.update_preference("unsubscribe_all", true)
+      expect(user.preference.email_on_comment).to be_falsey
+      expect(user.preference.email_on_follow).to be_falsey
+      expect(user.preference.email_on_mention).to be_falsey
+      expect(user.preference.email_on_unread).to be_falsey
+      expect(user.preference.email_on_job_post).to be_falsey
+      expect(user.preference.email_on_event_publish).to be_falsey
     end
 
   end

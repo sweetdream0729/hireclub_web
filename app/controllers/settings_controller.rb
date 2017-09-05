@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  before_action :sign_up_required, except: [:unsubscribe]
+  before_action :sign_up_required, except: [:unsubscribe, :resubscribe]
   before_action :set_user
 
   def index
@@ -40,10 +40,33 @@ class SettingsController < ApplicationController
 
   def unsubscribe
     data = User.read_access_token(params[:signature])
+    @preference = data[:preference]
     if data && data[:user_id] && data[:preference]
       @user = User.find(data[:user_id])
-      @user.unsubscribe_preference(data[:preference])
+      @user.update_preference(data[:preference], data[:value])
+
+      if data[:preference] == "unsubscribe_all"
+        @mail_type = "all"
+      else
+        @mail_type = data[:preference].split('_')[2..-1].join(" ")
+      end
+
+      render :layout => 'minimal'
+    else
+      redirect_to new_user_session_path
+    end
+
+  end
+
+  def resubscribe
+    data = User.read_access_token(params[:signature])
+    @preference = data[:preference]
+    if data && data[:user_id] && data[:preference]
+      @user = User.find(data[:user_id])
+      @user.update_preference(data[:preference], data[:value])
+
       @mail_type = data[:preference].split('_')[2..-1].join(" ")
+
       render :layout => 'minimal'
     else
       redirect_to new_user_session_path
