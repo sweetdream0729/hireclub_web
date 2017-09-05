@@ -13,11 +13,19 @@ RSpec.describe Event, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     #it { should validate_presence_of(:slug) }
-    it { event.save; should validate_uniqueness_of(:slug).case_insensitive }
+    # it { event.save; should validate_uniqueness_of(:slug).case_insensitive }
     it { should validate_presence_of(:start_time) }
     it { should validate_presence_of(:source_url) }
     it { should validate_presence_of(:location) }
 
+
+
+    it "should validate end_time is after start_time" do
+      event.end_time = DateTime.now
+      event.start_time = DateTime.now + 1.hour
+
+      expect(event).to be_invalid
+    end
   end
 
   describe "source_url" do
