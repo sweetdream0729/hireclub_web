@@ -14,9 +14,6 @@
         = @mail_type
         mails
 
-      / %p
-      /   %a.btn.btn-lg.btn-info{href: settings_update_path}
-      /     Resubscribe\
       %p
         - if @mail_type == "all"
           /= link_to "Resubscribe All", "#", class: 'btn btn-link'

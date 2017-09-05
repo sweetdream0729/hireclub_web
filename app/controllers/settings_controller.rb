@@ -38,16 +38,21 @@ class SettingsController < ApplicationController
     end
   end
 
+  # unsubscribe from mail notification without being logged in
   def unsubscribe
+    #decode params received in the request
     data = User.read_access_token(params[:signature])
+    
     @preference = data[:preference]
     if data && data[:user_id] && data[:preference]
       @user = User.find(data[:user_id])
       @user.update_preference(data[:preference], data[:value])
 
+      #mail_type used in view
       if data[:preference] == "unsubscribe_all"
         @mail_type = "all"
       else
+        #preference has format eg. mail_on_comment ignoring mail_on
         @mail_type = data[:preference].split('_')[2..-1].join(" ")
       end
 
@@ -58,6 +63,7 @@ class SettingsController < ApplicationController
 
   end
 
+  # resubscribe to mail notification without being logged in
   def resubscribe
     data = User.read_access_token(params[:signature])
     @preference = data[:preference]
