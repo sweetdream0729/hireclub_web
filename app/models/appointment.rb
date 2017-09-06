@@ -170,7 +170,7 @@ class Appointment < ApplicationRecord
 
   def payout!
     charge = self.payments.first
-    provider = self.user.provider
+    provider = self.payee.provider
     if charge.present? && provider.present?
       payout = self.payouts.where(provider: provider,
                                   stripe_charge_id: charge.external_id,
