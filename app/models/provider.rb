@@ -41,7 +41,6 @@ class Provider < ApplicationRecord
   phony_normalize :phone, :default_country_code => 'US', :add_plus => false
   validates_plausible_phone :phone, country_code: 'US'
   validates_uniqueness_of :phone, allow_blank: true, message: '%{value} has already been taken'
-  validates :phone, uniqueness: true, presence: true
 
   before_destroy :remove_from_stripe
 

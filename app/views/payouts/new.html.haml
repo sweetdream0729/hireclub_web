@@ -1,29 +1,32 @@
-.col-sm-6.offset-sm-3
-  %h1
-    Confirm Transfer
-  .row
-    .col-6
-      Payee Name
-    .col-6
-      = @appointment.payee.name
-  .row
-    .col-6
-      Appointment name
-    .col-6
-      = @appointment.name
-  .row
-    .col-6
-      Appointment fees
-    .col-6
-      $
-      = @appointment.price_cents
-  .row
-    .col-6
-      Amount to be paid
-    .col-6
-      $
-      = 0.7 * @appointment.price_cents
+.container.content_container
+  .col-sm-6.offset-sm-3
+    %h1
+      Confirm Payout
+    .row
+      .col-6
+        Appointment
+      .col-6
+        = @appointment.name
+    .row
+      .col-6
+        Completed
+      .col-6
+        = @appointment.completed_on.in_time_zone(@appointment.payee.timezone).strftime("%B %e %l:%M %P")
+    .row
+      .col-6
+        Price
+      .col-6
+        = humanized_money_with_symbol(@appointment.price_cents)
+    .row
+      .col-6
+        Transfer
+      .col-6
+        = humanized_money_with_symbol(@appointment.payout_price_cents)
+    .row
+      .col-6
+        To
+      .col-6
+        = @appointment.payee.name
 
-
-
-  = link_to "Save", payouts_path({appointment_id: @appointment.id}), method: :post, class: 'btn btn-info'
+    %hr
+    = link_to "Complete Payout", payouts_path({appointment_id: @appointment.id}), method: :post, class: 'btn btn-info btn-lg'

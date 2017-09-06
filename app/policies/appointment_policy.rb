@@ -41,11 +41,14 @@ class AppointmentPolicy < ApplicationPolicy
   end
 
   def add_payee?
-    return false if user.nil?
-    return true if user.is_admin
+    admin?
   end
 
   def remove_payee?
-    add_payee?
+    admin?
+  end
+
+  def payout?
+    admin?
   end
 end

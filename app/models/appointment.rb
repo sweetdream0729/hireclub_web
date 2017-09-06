@@ -23,6 +23,7 @@ class Appointment < ApplicationRecord
   paginates_per 10
 
   monetize :price_cents
+  monetize :payout_price_cents
 
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
@@ -180,6 +181,10 @@ class Appointment < ApplicationRecord
     payout.transfer! if payout.present?
 
     return payout
+  end
+
+  def payout_price_cents
+    COMMISSION * price_cents
   end
 
   def users

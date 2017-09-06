@@ -38,6 +38,9 @@
         = humanized_money_with_symbol(@appointment.appointment_type.price_cents)
       %p
         .btn-group
+          - if policy(@appointment).payout?
+            = link_to "Payout", new_payout_path({appointment_id: @appointment.friendly_id}), class: 'btn btn-danger'
+      
           - if policy(@appointment).complete?
             = link_to complete_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-check.mr-1
@@ -218,9 +221,6 @@
           .form-group
             = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
           = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
-      - if policy(@appointment.payouts.build).create?
-        .mt-5
-        = link_to "Payout", new_payout_path({id: @appointment.id}), class: 'btn btn-info'
       
       
 
