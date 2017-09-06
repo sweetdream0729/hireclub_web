@@ -29,6 +29,8 @@ class User < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
+  nilify_blanks
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin, :google_oauth2]
 
@@ -509,6 +511,44 @@ class User < ApplicationRecord
     user.import_google_omniauth(omniauth)
 
     return user
+  end
+
+  # Access token for a user
+  def preference_access_token(preference, value = false)
+    User.create_access_token(self, preference, value)
+  end
+
+  # Verifier based on our application secret
+  def self.verifier
+    ActiveSupport::MessageVerifier.new(Rails.application.secrets.secret_key_base)
+  end
+
+  # Get a user from a token
+  def self.read_access_token(signature)
+    parameters = verifier.verify(signature)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  # Class method for token generation
+  def self.create_access_token(user, preference, value = false)
+    verifier.generate({user_id: user.id, preference: preference, value: value})
+  end
+
+  def update_preference(preference_field, value)
+    if preference_field == "unsubscribe_all"
+      p = self.preference
+      p.unsubscribe_all = true
+      p.save
+      create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+    else
+      preference.update_attribute(preference_field.to_sym , value)
+      if value
+        create_activity :resubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      else
+        create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      end
+    end
   end
 
 end

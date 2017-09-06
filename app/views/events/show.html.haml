@@ -36,7 +36,7 @@
       %h6.mt-4 End time
       = @event.end_time.strftime("%A %B %e, %l:%M%p")
       %h6.mt-4 Description:
-      = @event.description
+      = Rinku.auto_link(markdown(@event.description), :all, 'target="_blank"').html_safe if @event.description.present?
     .col-sm-4
       %h6.mt-4 Location
       = @event.location.try(:cached_display_name)

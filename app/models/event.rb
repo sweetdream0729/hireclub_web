@@ -13,6 +13,8 @@ class Event < ApplicationRecord
   dragonfly_accessor :image
   auto_strip_attributes :name, squish: true
 
+  is_impressionable
+
   # Scope
   scope :published,      -> { where.not(published_on: nil) }
   scope :drafts,         -> { where(published_on: nil) }
@@ -31,6 +33,7 @@ class Event < ApplicationRecord
   validates :start_time, presence: true
   validates :source_url, presence: true
   validates :location, presence: true
+  validate  :end_time_is_after_start_time
 
   def should_generate_new_friendly_id?
     name_changed? || super
@@ -54,5 +57,11 @@ class Event < ApplicationRecord
 
   def in_future?
     self.start_time > Time.current
+  end
+
+  def end_time_is_after_start_time
+    if self.start_time.present? && self.end_time.present? && self.end_time < self.start_time
+      errors.add(:end_time, "End Time must be after Start Time")
+    end
   end
 end

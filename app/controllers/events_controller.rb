@@ -22,6 +22,7 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
+    impressionist(@event)
     #When old event url is entered it should direct to new url
     if request.path != event_path(@event)
       return redirect_to @event, :status => :moved_permanently

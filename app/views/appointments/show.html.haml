@@ -29,9 +29,9 @@
               %i.fa.fa-star.star_rating
 
       %p
-        = @appointment.start_time.strftime("%A %B %e")
+        = @appointment.start_time.in_time_zone(@appointment.timezone).strftime("%A %B %e")
         ·
-        = @appointment.start_time.strftime("%l:%M %P") 
+        = @appointment.start_time.in_time_zone(@appointment.timezone).strftime("%l:%M %P") 
         ·
         = pluralize(@appointment.duration.to_i, "minutes")
         ·
