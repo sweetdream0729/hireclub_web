@@ -24,7 +24,7 @@ class Payout < ApplicationRecord
 
   def create_transfer
     return if transferred_on.present?
-    
+
     begin
       stripe_transfer = Stripe::Transfer.create({
         :amount => amount_cents,
@@ -33,12 +33,14 @@ class Payout < ApplicationRecord
         :destination => provider.stripe_account_id,
       })
 
-      puts stripe_transfer.inspect
+      Rails.logger.info(puts stripe_transfer.inspect)
 
       if stripe_transfer.present?
         self.stripe_transfer_id = stripe_transfer.id
         self.trasferred_on = DateTime.now
         self.save
+
+        Rails.logger.info(puts self.inspect)
       end
       
     rescue
