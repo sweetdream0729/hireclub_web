@@ -35,7 +35,7 @@
         ·
         = pluralize(@appointment.duration.to_i, "minutes")
         ·
-        = humanized_money_with_symbol(@appointment.appointment_type.price_cents)
+        = humanized_money_with_symbol(@appointment.price_cents)
       %p
         .btn-group
           - if policy(@appointment).payout?
