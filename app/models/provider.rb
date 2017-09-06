@@ -83,10 +83,10 @@ class Provider < ApplicationRecord
       provider.client_publishable_key = account["keys"]["publishable"]
   		#update stripe account details if all details
   		if provider.save
-  			ProviderRelayJob.perform_later(account["id"], "update")
+  			ProviderUpdateJob.perform_later(account["id"], provider)
   		else
   		#delete the account if verifcation detail not provided
-  			ProviderRelayJob.perform_later(account["id"], "delete")
+  			ProviderDeleteJob.perform_later(account["id"])
   		end
   	end
 	 return provider
