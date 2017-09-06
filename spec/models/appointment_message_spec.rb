@@ -23,6 +23,7 @@ RSpec.describe AppointmentMessage, type: :model do
 
     it "should have create activity" do
       appointment_message = FactoryGirl.create(:appointment_message, user: user2, appointment: appointment)
+      assignee = FactoryGirl.create(:assignee, appointment: appointment)
 
       activity = Activity.where(key: AppointmentMessageCreateActivity::KEY).last
       expect(activity).to be_present
@@ -33,9 +34,11 @@ RSpec.describe AppointmentMessage, type: :model do
       CreateNotificationJob.perform_now(activity.id)
 
       notifications = Notification.where(activity: activity)
-      expect(notifications.count).to eq(1)
-      notification = notifications.first
-      expect(notification.user).to eq appointment.user
+      expect(notifications.count).to eq(2)
+
+      notifications.each do |notification|
+        expect(appointment.users).to include(notification.user)  
+      end
     end
 
     it "should have edit activity" do

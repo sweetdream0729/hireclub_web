@@ -162,5 +162,9 @@ class Appointment < ApplicationRecord
       
     end
   end
+
+  def users
+    participants + assigned_users + [user]
+  end
   
 end
