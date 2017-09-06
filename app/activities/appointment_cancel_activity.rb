@@ -2,8 +2,7 @@ class AppointmentCancelActivity
   KEY = "appointment.cancel"
 
   def self.get_recipients_for(activity)
-    recipients = activity.trackable.assigned_users.to_ary
-    recipients << activity.trackable.user
+    activity.trackable.users
   end
 
   def self.send_notification(notification)
