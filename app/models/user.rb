@@ -540,8 +540,14 @@ class User < ApplicationRecord
       p = self.preference
       p.unsubscribe_all = true
       p.save
+      create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
     else
       preference.update_attribute(preference_field.to_sym , value)
+      if value
+        create_activity :resubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      else
+        create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      end
     end
   end
 

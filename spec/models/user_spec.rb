@@ -473,12 +473,26 @@ describe "unread_messages_count" do
       user.save
       user.update_preference("email_on_comment", false)
       expect(user.preference.email_on_comment).to be_falsey
+
+      activity = Activity.where(key: UserUnsubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "email_on_comment"})
     end
 
     it "should set relevant preference field to true" do
       user.save
       user.update_preference("email_on_comment", true)
       expect(user.preference.email_on_comment).to be_truthy
+
+      activity = Activity.where(key: UserResubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "email_on_comment"})
     end
 
     it "should set all preference field to false" do
@@ -490,6 +504,13 @@ describe "unread_messages_count" do
       expect(user.preference.email_on_unread).to be_falsey
       expect(user.preference.email_on_job_post).to be_falsey
       expect(user.preference.email_on_event_publish).to be_falsey
+
+      activity = Activity.where(key: UserUnsubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "unsubscribe_all"})
     end
 
   end
