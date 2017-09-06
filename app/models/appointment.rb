@@ -1,7 +1,7 @@
 class Appointment < ApplicationRecord
-
-  #constants
+  # Constants
   COMMISSION = 0.7
+  
   # Extensions
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
@@ -169,7 +169,7 @@ class Appointment < ApplicationRecord
 
   def payout!
     charge = self.payments.where(amount_cents: self.price_cents)
-    payout_ammount = COMMISSION * self.price_cents
+    payout_amount = COMMISSION * self.price_cents
     provider = self.user.provider
     if charge.present? && provider.present?
       payout = self.payouts.where(provider: provider,
@@ -177,9 +177,7 @@ class Appointment < ApplicationRecord
                                   amount_cents: payout_amount).first_or_create
     end
 
-    if payout.present?
-      payout.transfer!
-    end
+    payout.transfer! if payout.present?
 
     return payout
   end

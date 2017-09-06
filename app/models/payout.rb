@@ -10,6 +10,8 @@ class Payout < ApplicationRecord
   validates :amount_cents, presence: true, numericality: { greater_than_or_equal_to: 1 }
 
   def transfer!
+    return if transferred_on.present?
+
     begin
       stripe_charge = Stripe::Charge.retrieve(stripe_charge_id)
       if stripe_charge.present?
@@ -21,6 +23,8 @@ class Payout < ApplicationRecord
   end
 
   def create_transfer
+    return if transferred_on.present?
+    
     begin
       stripe_transfer = Stripe::Transfer.create({
         :amount => amount_cents,

@@ -36,5 +36,15 @@ RSpec.describe Payout, type: :model do
       
       expect(payout.transferred_on).to be_present
     end
+
+    it "should not transfer if already transfered" do
+      transfer_time = DateTime.now
+      payout.transferred_on = transfer_time
+      payout.save
+
+      payout.transfer!
+
+      expect(payout.transferred_on).to eq(transfer_time)
+    end
   end
 end
