@@ -16,12 +16,12 @@
       .col-6
         Price
       .col-6
-        = humanized_money_with_symbol(@appointment.price_cents)
+        = humanized_money_with_symbol(@appointment.price)
     .row
       .col-6
         Transfer
       .col-6
-        = humanized_money_with_symbol(@appointment.payout_price_cents)
+        = humanized_money_with_symbol(@appointment.payout_price)
     .row
       .col-6
         To
