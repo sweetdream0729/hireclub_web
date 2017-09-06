@@ -169,7 +169,7 @@ class Appointment < ApplicationRecord
   end
 
   def payout!
-    charge = self.payments.where(amount_cents: self.price_cents)
+    charge = self.payments.first
     provider = self.user.provider
     if charge.present? && provider.present?
       payout = self.payouts.where(provider: provider,
