@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
@@ -15,6 +14,9 @@ Rails.application.routes.draw do
   get 'settings/links'
   get 'settings/notifications'
   get 'settings/payments'
+  get 'settings/unsubscribe_all'
+  get 'settings/unsubscribe/:signature' => 'settings#unsubscribe', as: 'unsubscribe'
+  get 'settings/resubscribe/:signature' => 'settings#resubscribe', as: 'resubscribe'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'
@@ -48,6 +50,17 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :events do
+    collection do
+      get :past
+      get :drafts
+    end
+
+    member do
+      get :publish
+    end
+  end
+  
   resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
   resources :appointment_messages, only: [:create, :destroy, :edit, :update] do
     member do
@@ -78,7 +91,7 @@ Rails.application.routes.draw do
 
   resources :assignees, only: [:create, :destroy] 
   resources :subscriptions, only: [:new, :create, :show] 
-  resources :providers, only: [:new, :create, :show]
+  resources :providers, only: [:new, :create, :show, :index]
   resources :bank_accounts, only: [:new, :create]
   resources :payouts, only: [:new, :create] do
   end

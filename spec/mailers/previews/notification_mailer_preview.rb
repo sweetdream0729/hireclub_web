@@ -57,6 +57,11 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.story_published(notification)
   end
 
+  def event_published
+    notification = Notification.where(activity_key: EventPublishActivity::KEY, published: true).last
+    NotificationMailer.event_published(notification)
+  end
+
   def project_created
     notification = Notification.where(activity_key: ProjectCreateActivity::KEY, published: true).last
     NotificationMailer.project_created(notification)

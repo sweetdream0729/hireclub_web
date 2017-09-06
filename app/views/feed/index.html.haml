@@ -5,13 +5,28 @@
       .col-md-8.col-lg-6.activities
         = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
       .col-md-4.col-lg-4
+        = render partial: "/users/user_completion_card"
+
         = link_to headshots_path do
           = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
-        = link_to heroes_path do
-          = image_tag("heroes_preview.jpg", class: 'img-fluid rounded mt-4')
+        / = link_to heroes_path do
+        /   = image_tag("heroes_preview.jpg", class: 'img-fluid rounded mt-4')
         - @placements.each do |placement|
           = render partial: "placements/#{placement.placeable_type.downcase}", locals: {placement: placement}
-        = render partial: "/users/user_completion_card"
+        
+
+        .events.mt-5
+          %h6 Upcoming Events
+          .card
+            %a{href: "https://www.facebook.com/events/292576404556316/", target: "_blank"}
+              = image_tag("events/sheel_mohnot_live_01.jpg", class: "card-img-top img-fluid")
+            .card-block
+              %h5.bold.card-title
+                HireClub Live with Sheel Mohnot
+              %p.card-text
+                Tuesday September 5, 6PM
+              %a.btn.btn-info{:href => "https://www.facebook.com/events/292576404556316/", target: "_blank"}
+                RSVP
           
     .row
       .col-sm-12

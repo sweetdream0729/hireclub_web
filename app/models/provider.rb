@@ -12,6 +12,9 @@ class Provider < ApplicationRecord
     { name: 'United States', code: 'US' }
   ]
 
+  # Scopes
+  scope :by_recent,       -> { order(created_at: :desc) }
+
   # Associations
   belongs_to :user
   has_many :bank_accounts, dependent: :destroy

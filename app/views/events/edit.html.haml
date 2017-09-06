@@ -1,0 +1,10 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Events", events_path
+    %li.breadcrumb-item
+      = link_to @event.name, @event
+    
+  %h1= title "Edit Event" 
+
+  = render 'form'

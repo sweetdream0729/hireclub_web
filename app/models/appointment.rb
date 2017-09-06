@@ -60,7 +60,7 @@ class Appointment < ApplicationRecord
   end
   
   def user_name
-    return user.name if user.present?
+    return user.display_name if user.present?
     return "#{first_name} #{last_name}"
   end
     
@@ -182,7 +182,10 @@ class Appointment < ApplicationRecord
     end
 
     return payout
+  end
 
+  def users
+    participants + assigned_users + [user]
   end
   
 end

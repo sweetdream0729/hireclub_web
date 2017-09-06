@@ -66,9 +66,13 @@ class AcuityService
     a.email = appointment['email']
     a.price_cents = appointment['price']
     a.amount_paid_cents = appointment['amountPaid']
-    a.start_time = appointment['date'] + " " + appointment['time']
-    a.end_time = appointment['date'] + " " + appointment['endTime']
-    a.timezone = appointment['timezone']
+
+    timezone = appointment['timezone']
+    a.timezone = timezone
+
+    a.start_time = (appointment['date'] + " " + appointment['time']).in_time_zone(a.timezone)
+    a.end_time = (appointment['date'] + " " + appointment['endTime']).in_time_zone(a.timezone)
+    
     a.confirmation_page_url = appointment['confirmationPage']
 
     #if user is not registered on hireclub

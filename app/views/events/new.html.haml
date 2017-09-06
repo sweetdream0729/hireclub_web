@@ -1,0 +1,8 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Events", events_path
+
+  %h1= title "Create Event" 
+
+  = render 'form'
