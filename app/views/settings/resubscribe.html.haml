@@ -12,10 +12,10 @@
           = @user.email
         was subscribed to
         = @mail_type
-        mails
+        emails
 
       %p
-        = link_to "Unsubscribe", unsubscribe_path(@user.preference_access_token(@preference, false)), class: 'btn btn-link'
+        = link_to "Unsubscribe", unsubscribe_path(@user.preference_access_token(@preference, false)), class: 'btn btn-secondary'
 
       %hr
       %p

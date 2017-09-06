@@ -12,13 +12,13 @@
           = @user.email
         was unsubscribed from 
         = @mail_type
-        mails
+        emails
 
       %p
         - if @mail_type == "all"
           /= link_to "Resubscribe All", "#", class: 'btn btn-link'
         - else
-          = link_to "Resubscribe", resubscribe_path(@user.preference_access_token(@preference, true)), class: 'btn btn-link'
+          = link_to "Resubscribe", resubscribe_path(@user.preference_access_token(@preference, true)), class: 'btn btn-info'
 
       %hr
       %p
