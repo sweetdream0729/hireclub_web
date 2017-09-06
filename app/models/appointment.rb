@@ -170,12 +170,11 @@ class Appointment < ApplicationRecord
 
   def payout!
     charge = self.payments.where(amount_cents: self.price_cents)
-    payout_amount = COMMISSION * self.price_cents
     provider = self.user.provider
     if charge.present? && provider.present?
       payout = self.payouts.where(provider: provider,
                                   stripe_charge_id: charge.external_id,
-                                  amount_cents: payout_amount).first_or_create
+                                  amount_cents: payout_price_cents).first_or_create
     end
 
     payout.transfer! if payout.present?
