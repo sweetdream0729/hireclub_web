@@ -6,7 +6,7 @@ class PayoutsController < ApplicationController
   	if @payout.present?
   		redirect_to @appointment, notice: "Transfer successful"
     else
-      redirect_to @appointment, notice: "Transfer failed"
+      redirect_to @appointment, alert: "Transfer failed"
     end
   end
 
