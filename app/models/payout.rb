@@ -21,7 +21,7 @@ class Payout < ApplicationRecord
     return if transferred_on.present?
 
     begin
-      stripe_charge = Stripe::Charge.retrieve(stripe_charge_id)
+      stripe_charge = Stripe::Charge.retrieve(id: stripe_charge_id)
       if stripe_charge.present?
         create_transfer
       end
