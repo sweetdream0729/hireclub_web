@@ -95,8 +95,21 @@
             %small.text-muted
               Reviewed
               = local_time_ago(@appointment.appointment_review.created_at)
-        
-          
+        %hr
+
+      - if @appointment.paid_out && policy(@appointment).manage?
+        %small
+          - @appointment.payouts.each do |payout|
+            - if is_admin?
+              = link_to rails_admin.show_path(model_name: 'payout', id: payout.id), class: "text-warning" do
+                = humanized_money_with_symbol(payout.amount)
+                Paid Out
+            - else
+              = humanized_money_with_symbol(payout.amount)
+              Paid Out
+            = local_time_ago(payout.created_at)
+            to
+            = link_to payout.provider.user.display_name, payout.provider
         %hr
 
       - if @appointment.active?
