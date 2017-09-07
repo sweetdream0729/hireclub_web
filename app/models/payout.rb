@@ -1,7 +1,15 @@
 class Payout < ApplicationRecord
+  # Extensions
+  include UnpublishableActivity
+  include PublicActivity::CreateActivityOnce
+  include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.provider.user }, private: true
+
+  monetize :amount_cents
+
+  # Associations
   belongs_to :provider
   belongs_to :payoutable, polymorphic: true
-
 
   # Validations
   validates :provider, presence: true

@@ -1,0 +1,2 @@
+- payout = activity.trackable
+= render partial: "/notifications/item", locals: {activity: activity, verb: "was paid out", object: "#{payout.amount} for #{payout.payoutable_type} #{payout.payoutable.friendly_id}", link: url_for(payout.payoutable)}

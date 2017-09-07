@@ -47,4 +47,17 @@ RSpec.describe Payout, type: :model do
       expect(payout.transferred_on).to eq(transfer_time)
     end
   end
+
+  describe "activity" do
+    it "should have create" do
+      payout.save
+
+      activity = Activity.where(key: PayoutCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq payout
+      expect(activity.owner).to eq payout.provider.user
+      expect(activity.private).to eq true
+    end
+  end
 end
