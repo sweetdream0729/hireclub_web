@@ -59,7 +59,7 @@ class Payout < ApplicationRecord
       end
       
     rescue
-      Rails.logger.warn(puts "Could not create transfer for #{payout.id}")
+      Rails.logger.warn(puts "Could not create transfer for payout #{self.id}, #{stripe_transfer.inspect}")
     end
 
   end
