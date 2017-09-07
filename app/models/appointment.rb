@@ -186,6 +186,10 @@ class Appointment < ApplicationRecord
     COMMISSION * price_cents
   end
 
+  def paid_out?
+    self.payouts.count > 0
+  end
+
   def users
     participants + assigned_users + [user]
   end

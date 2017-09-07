@@ -20,6 +20,9 @@
         - if @appointment.completed?
           %span.badge.badge-success
             Completed
+        - if policy(@appointment).payout? && @appointment.paid_out? 
+          %span.badge.badge-info
+            Paid
         - if @appointment.canceled?
           %span.badge.badge-warning
             Canceled
@@ -38,7 +41,7 @@
         = humanized_money_with_symbol(@appointment.price)
       %p
         .btn-group
-          - if policy(@appointment).payout?
+          - if policy(@appointment).payout? && !@appointment.paid_out?
             = link_to "Payout", new_payout_path({appointment_id: @appointment.friendly_id}), class: 'btn btn-danger'
       
           - if policy(@appointment).complete?
