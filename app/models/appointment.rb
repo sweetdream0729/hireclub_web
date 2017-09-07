@@ -177,17 +177,20 @@ class Appointment < ApplicationRecord
                                   amount_cents: payout_price_cents).first_or_create
     end
 
-    payout.transfer! if payout.present?
+    if payout.present?
+      payout.transfer!
+    end
 
     return payout
   end
 
-  def payout_price_cents
-    COMMISSION * price_cents
+  def paid_out!
+    self.paid_out = true
+    self.save
   end
 
-  def paid_out?
-    self.payouts.count > 0
+  def payout_price_cents
+    COMMISSION * price_cents
   end
 
   def users

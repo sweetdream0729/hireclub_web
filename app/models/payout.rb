@@ -40,6 +40,8 @@ class Payout < ApplicationRecord
         self.trasferred_on = DateTime.now
         self.save
 
+        self.payoutable.paid_out!
+
         Rails.logger.info(puts self.inspect)
       end
       
