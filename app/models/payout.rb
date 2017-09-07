@@ -27,10 +27,15 @@ class Payout < ApplicationRecord
 
     begin
       stripe_transfer = Stripe::Transfer.create({
-        :amount => amount_cents,
-        :currency => "usd",
-        :source_transaction => stripe_charge_id,
-        :destination => provider.stripe_account_id,
+        amount: amount_cents,
+        currency: "usd",
+        source_transaction: stripe_charge_id,
+        destination: provider.stripe_account_id,
+        metadata: {
+          provider_id: provider.id,
+          payoutable_id: payoutable_id,
+          payoutable_type: payoutable_type
+        }
       })
 
       Rails.logger.info(puts stripe_transfer.inspect)
