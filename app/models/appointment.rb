@@ -23,6 +23,7 @@ class Appointment < ApplicationRecord
   paginates_per 10
 
   monetize :price_cents
+  monetize :amount_paid_cents
   monetize :payout_price_cents
 
   # Scopes
