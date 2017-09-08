@@ -225,6 +225,9 @@ RSpec.describe Appointment, type: :model do
       appointment.reload
       expect(appointment.paid_out).to eq true
 
+      provider.destroy
+      expect(provider).not_to be_persisted
+
     end
   end
   
