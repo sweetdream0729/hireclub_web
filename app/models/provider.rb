@@ -44,7 +44,7 @@ class Provider < ApplicationRecord
 
   before_destroy :remove_from_stripe
 
-  def remove_from_stripe(stripe_account_id)
+  def remove_from_stripe
     # destroy account on stripe
     begin
       account = Stripe::Account.retrieve(stripe_account_id)
