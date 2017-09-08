@@ -35,6 +35,14 @@ RSpec.describe Payout, type: :model do
       payout.transfer!
       
       expect(payout.transferred_on).to be_present
+      expect(payout.payoutable.paid_out).to eq(true)
+
+      activity = Activity.where(key: PayoutCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq payout
+      expect(activity.owner).to eq payout.provider.user
+      expect(activity.private).to eq true
     end
 
     it "should not transfer if already transfered" do
@@ -48,16 +56,16 @@ RSpec.describe Payout, type: :model do
     end
   end
 
-  describe "activity" do
-    it "should have create" do
-      payout.save
+  # describe "activity" do
+  #   it "should have create" do
+  #     payout.save
 
-      activity = Activity.where(key: PayoutCreateActivity::KEY).last
-      expect(activity).to be_present
+  #     activity = Activity.where(key: PayoutCreateActivity::KEY).last
+  #     expect(activity).to be_present
 
-      expect(activity.trackable).to eq payout
-      expect(activity.owner).to eq payout.provider.user
-      expect(activity.private).to eq true
-    end
-  end
+  #     expect(activity.trackable).to eq payout
+  #     expect(activity.owner).to eq payout.provider.user
+  #     expect(activity.private).to eq true
+  #   end
+  # end
 end

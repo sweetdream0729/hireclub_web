@@ -3,8 +3,7 @@ class Payout < ApplicationRecord
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
-  tracked only: [:create], owner: Proc.new{ |controller, model| model.provider.user }, private: true
-
+  
   monetize :amount_cents
 
   # Associations
@@ -54,6 +53,8 @@ class Payout < ApplicationRecord
         self.save
 
         self.payoutable.paid_out!
+
+        self.create_activity_once :create, owner: provider.user, private: true
 
         Rails.logger.info(puts self.inspect)
       end
