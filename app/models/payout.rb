@@ -27,7 +27,6 @@ class Payout < ApplicationRecord
     rescue Exception => error
       Rails.logger.warn(puts "Stripe Charge #{self.stripe_charge_id} not found")
       Rails.logger.warn(puts error.message)
-      Rails.logger.warn(puts error.backtrace.inspect)
     end
   end
 
@@ -64,7 +63,6 @@ class Payout < ApplicationRecord
     rescue Exception => error
       Rails.logger.warn(puts "Could not create transfer for payout #{self.id}, #{stripe_transfer.inspect}")
       Rails.logger.warn(puts error.message)
-      Rails.logger.warn(puts error.backtrace.inspect)
     end
 
   end
