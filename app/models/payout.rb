@@ -50,7 +50,7 @@ class Payout < ApplicationRecord
 
       if stripe_transfer.present?
         self.stripe_transfer_id = stripe_transfer.id
-        self.trasferred_on = DateTime.now
+        self.transferred_on = DateTime.now
         self.save
 
         self.payoutable.paid_out!
