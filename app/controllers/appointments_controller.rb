@@ -24,7 +24,7 @@ class AppointmentsController < ApplicationController
   end
 
   def assigned
-    @appointments = current_user.assigned_appointments.by_start_time.includes(:appointment_type).page(params[:page])
+    @appointments = current_user.assigned_appointments.by_recent.includes(:appointment_type).page(params[:page])
     render :index
   end
 
@@ -34,7 +34,7 @@ class AppointmentsController < ApplicationController
   end
 
   def paid
-    @appointments = current_user.assigned_appointments.paid.by_start_time.includes(:appointment_type).page(params[:page])
+    @appointments = current_user.assigned_appointments.paid.by_recent.includes(:appointment_type).page(params[:page])
     render :index
   end
 
@@ -65,7 +65,7 @@ class AppointmentsController < ApplicationController
     if !current_user.is_admin
       redirect_to appointments_path 
     else
-      @appointments = Appointment.by_start_time.includes(:appointment_type).page(params[:page])
+      @appointments = Appointment.by_recent.includes(:appointment_type).page(params[:page])
       render :index
     end
   end
