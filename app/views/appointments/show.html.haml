@@ -212,10 +212,13 @@
           %small.text-muted
             = local_time_ago(payment.paid_on)
             ·
-            = payment.processor.titlecase
+            - if payment.stripe? && is_admin?
+              = link_to payment.processor.titlecase, "https://dashboard.stripe.com/payments/#{payment.external_id}"
+            - else
+              = payment.processor.titlecase
             ·
             = payment.external_id
-            - if current_user.is_admin
+            - if is_admin?
               ·
               = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
 
