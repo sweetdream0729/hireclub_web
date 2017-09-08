@@ -178,38 +178,45 @@ RSpec.describe Appointment, type: :model do
   end
 
   describe "payout" do
+    let(:params) {  {
+                    first_name: "test",
+                    last_name: "name",
+                    ssn: FactoryGirl.generate(:ssn),
+                    phone: FactoryGirl.generate(:phone),
+                    date_of_birth: "01-01-2001",
+                    address_line_1: "test",
+                    city: "SF",
+                    state: "CA",
+                    country: "US",
+                    postal_code: "111111",
+                    id_proof: File.new("#{Rails.root}/spec/support/fixtures/image.png")
+                    }
+                  }
     it "should create payout" do
       StripeMock.stop
       payee = FactoryGirl.create(:user)
-      provider = FactoryGirl.create(:provider, user: payee)
-      options = {
-        type: 'custom',
-        country: "US",
-        email: payee.email
-      }
-      account = Stripe::Account.create(options)
-      provider.stripe_account_id = account["id"]
-      provider.charges_enabled = account["charges_enabled"]
-      provider.payouts_enabled = account["payouts_enabled"]
-      provider.tos_acceptance_date = DateTime.now
-      provider.client_secret_key = account["keys"]["secret"]
-      provider.client_publishable_key = account["keys"]["publishable"]
-      provider.save
-      provider.reload
+
+      provider = Provider::CreateProvider.new(payee, params ,"127.0.0.1").call
+
       Provider::UpdateProvider.new(provider.stripe_account_id, provider).call
+
       appointment.payee = payee
       appointment.save
+      appointment.reload
+
       stripe_charge = Stripe::Charge.create(
         :amount => appointment.price_cents,
         :currency => "usd",
         :source => "tok_mastercard"
       )
+
       payment = appointment.payments.where(external_id: stripe_charge.id, 
                                   processor: "Stripe").first_or_initialize
       payment.amount_cents = stripe_charge.amount
       payment.paid_on = DateTime.now
       payment.user = appointment.user
       payment.save
+
       payout = appointment.payout!
 
       expect(payout).to be_valid
