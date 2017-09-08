@@ -3,7 +3,7 @@ class PayoutsController < ApplicationController
   def create
   	@appointment = Appointment.find(params[:appointment_id])
   	@payout = @appointment.payout!
-  	if @payout.present?
+  	if @payout.present? && @payout.payoutable.paid_out
   		redirect_to @appointment, notice: "Transfer successful"
     else
       redirect_to @appointment, alert: "Transfer failed"
