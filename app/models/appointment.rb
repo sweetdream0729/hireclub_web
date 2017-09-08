@@ -30,10 +30,13 @@ class Appointment < ApplicationRecord
   scope :active,        -> { where(canceled_at: nil) }
   scope :incomplete,    -> { where(completed_on: nil) }
   scope :unassigned,    -> { where(assignees_count: 0) }
+  scope :paid,          -> { where(paid_out: true) }
+  scope :unpaid,        -> { where(paid_out: false) }
   scope :canceled,      -> { where("appointments.canceled_at IS NOT NULL") }
   scope :completed,     -> { where("appointments.completed_on IS NOT NULL") }
   scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
   scope :by_start_time, -> { order('appointments.start_time', 'appointments.id') }
+  scope :by_recent,     -> { order('appointments.start_time desc', 'appointments.id') }
 
   # Associations
   belongs_to :user

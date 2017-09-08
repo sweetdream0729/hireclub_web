@@ -6,6 +6,9 @@
       = link_to appointment.user_name, appointment
   %td
     = link_to appointment.name, appointment
+    - if policy(appointment).manage? && appointment.paid_out?
+      %span.badge.badge-info
+        Paid
   %td
     - if appointment.canceled?
       %span.badge.badge-warning
@@ -20,9 +23,12 @@
     - elsif current_user.is_admin || current_user.has_assignments?
       - if appointment.assigned_users.exists?
         = link_to image_tag(model_avatar(appointment.assigned_users.first.avatar, 200, true), width: 32, class: 'mr-1 rounded-circle'), appointment.assigned_users.first
+      - if appointment.paid_out?
+        %span.badge.badge-info
+          Paid
   %td
-    = appointment.start_time.in_time_zone(appointment.timezone).strftime("%A %B %e")
+    = appointment.start_time.in_time_zone(appointment.timezone).strftime("%a %B %e")
   %td
     = appointment.start_time.in_time_zone(appointment.timezone).strftime("%l:%M %P") 
-    ·
-    = pluralize(appointment.duration.to_i, "minutes")
+    · #{appointment.duration.to_i}m
+    

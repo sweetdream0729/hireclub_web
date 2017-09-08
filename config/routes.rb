@@ -77,6 +77,8 @@ Rails.application.routes.draw do
       get :upcoming
       get :assigned
       get :unassigned
+      get :paid
+      get :unpaid
       get :all
     end
     member do

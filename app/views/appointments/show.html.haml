@@ -20,7 +20,7 @@
         - if @appointment.completed?
           %span.badge.badge-success
             Completed
-        - if policy(@appointment).payout? && @appointment.paid_out? 
+        - if policy(@appointment).manage? && @appointment.paid_out?
           %span.badge.badge-info
             Paid
         - if @appointment.canceled?
