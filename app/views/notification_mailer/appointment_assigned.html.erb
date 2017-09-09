@@ -21,49 +21,33 @@
 
                   <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
-                        <td align="center" valign="top">
-                           <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                              <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
-                              	You've been assigned to 
-                                <%= @appointment.name %>
-                              </span>
-                           </font>
-                           <div class="top_pad3" style="height: 30px; line-height: 30px; font-size: 28px;">
-                             &nbsp;
-                           </div>
+                        <td align="left" valign="top">
+                          <font class="mob_title1" face="'Source Sans Pro', sans-serif" color="#1a1a1a" style="font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
+                            <span class="mob_title1" style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 55px; font-weight: 300; letter-spacing: -1.5px;">
+                               You've been assigned to <%= @appointment.name %>
+                            </span>
+                          </font>
+
+                          <%= render partial: "/email/elements/v_spacer", locals: { height: 24} %>
+
+                          <%= render partial: "/email/elements/h2", locals: { text: @start_time } %>
+
+                          <%= render partial: "/email/elements/p", locals: { text: pluralize(@appointment.duration.to_i, "minutes") } %>
                         </td>
                      </tr>
                   </table>
 
-                  <table cellpadding="0" cellspacing="0" border="0" width="65%" style="width: 65% !important; min-width: 270px; max-width: 65%; border-width: 1px; border-style: solid; border-color: #e5e5e5; border-radius: 5px;">
+                  <table cellpadding="0" cellspacing="0" border="0" width="88%" style="width: 88% !important; min-width: 88%; max-width: 88%;">
                      <tr>
-                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">
-                          &nbsp;
-                        </td>
                         <td align="center" valign="top">
-
-                           <%= render partial: "/email/elements/v_spacer", locals: { height: 38} %>
-
-
-                           <%= render partial: "/email/elements/v_spacer", locals: { height: 15} %>
-
-
-                           <%= render partial: "/email/elements/v_spacer", locals: { height: 3} %>
-
-                    
-                           <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 24} %>
 
                            <%= render partial: "/email/elements/button", locals: { url: @appointment_url, text: "View Appointment"} %>
-                           
 
-                           <%= render partial: "/email/elements/v_spacer", locals: { height: 34} %>
-
+                           <%= render partial: "/email/elements/v_spacer", locals: { height: 48} %>
                         </td>
-                        <td width="15" style="width: 15px; max-width: 15px; min-width: 15px;">&nbsp;</td>
                      </tr>
-                  </table>
-
-                  <div class="top_pad2" style="height: 70px; line-height: 70px; font-size: 68px;">&nbsp;</div>
+                  </table> 
 
                   <%= render partial: "/email/shared/footer" %>
 
