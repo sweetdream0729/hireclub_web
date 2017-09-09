@@ -15,18 +15,20 @@
           = render partial: "placements/#{placement.placeable_type.downcase}", locals: {placement: placement}
         
 
-        .events.mt-5
-          %h6 Upcoming Events
-          .card
-            %a{href: "https://www.facebook.com/events/292576404556316/", target: "_blank"}
-              = image_tag("events/sheel_mohnot_live_01.jpg", class: "card-img-top img-fluid")
-            .card-block
-              %h5.bold.card-title
-                HireClub Live with Sheel Mohnot
-              %p.card-text
-                Tuesday September 5, 6PM
-              %a.btn.btn-info{:href => "https://www.facebook.com/events/292576404556316/", target: "_blank"}
-                RSVP
+        - if @event.present?
+          .events.mt-5
+            %h6 Upcoming Events
+            .card
+              %a{href: @event.source_url, target: "_blank"}
+                = image_tag(model_image(@event.image, 1920, 710, true), class: "card-img-top img-fluid")
+              .card-block
+                %h5.bold.card-title
+                  = link_to @event.name, @event
+                %p.card-text
+                  = @event.start_time.strftime("%A %B %e, %l:%M%p")
+                %a.btn.btn-info{:href => @event.source_url, target: "_blank"}
+                  RSVP
+
           
     .row
       .col-sm-12
