@@ -37,7 +37,7 @@ class AcuityService
       appointment_type_options = { name: acuity_option["name"], 
                        description: acuity_option["description"], 
                        duration: acuity_option["duration"], 
-                       price_cents: acuity_option["price"], 
+                       price: acuity_option["price"], 
                        appointment_category_id: appointment_category.id }
       appointment_type = AppointmentType.where(acuity_id: acuity_option["id"]).first_or_create(appointment_type_options)
       appointment_types << appointment_type
