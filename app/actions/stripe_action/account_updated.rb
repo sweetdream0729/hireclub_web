@@ -11,7 +11,6 @@ class StripeAction::AccountUpdated < StripeAction::Base
                                  verification_status: stripe_account.legal_entity.verification.status,
                                  stripe_file_id: stripe_account.legal_entity.verification.document
                                 )
-      #ProviderUpdateJob.perform_later(provider.stripe_account_id, provider)
       return provider
     end
   end
