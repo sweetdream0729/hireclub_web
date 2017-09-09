@@ -41,42 +41,42 @@ RSpec.describe Location, type: :model do
     end
   end
 
-  describe "imports" do
-    it "should import countries" do
-      Location.import_countries
+  # describe "imports" do
+  #   it "should import countries" do
+  #     Location.import_countries
 
-      countries = Location.where(level: Location::COUNTRY)
-      expect(countries.count).to be > 1
+  #     countries = Location.where(level: Location::COUNTRY)
+  #     expect(countries.count).to be > 1
 
-      usa = Location.where(short:'US', level: Location::COUNTRY).first
-      expect(usa).to be_present
-    end
+  #     usa = Location.where(short:'US', level: Location::COUNTRY).first
+  #     expect(usa).to be_present
+  #   end
 
-    it "should import states" do
-      Location.import_states
+  #   it "should import states" do
+  #     Location.import_states
 
-      states = Location.where(level: Location::STATE)
-      expect(states.count).to be > 1
+  #     states = Location.where(level: Location::STATE)
+  #     expect(states.count).to be > 1
 
-      california = Location.where(name:'California', level: Location::STATE).first
-      expect(california.short).to eq "CA"
-      expect(california.parent).to eq Location.where(short:'US', level: Location::COUNTRY).first
+  #     california = Location.where(name:'California', level: Location::STATE).first
+  #     expect(california.short).to eq "CA"
+  #     expect(california.parent).to eq Location.where(short:'US', level: Location::COUNTRY).first
 
-    end
+  #   end
 
-    it "should import cities" do
+  #   it "should import cities" do
 
-      Location.import_cities
+  #     Location.import_cities
 
-      la = Location.where(name:'Los Angeles').first
-      expect(la).to be_present
-      expect(la.parent.name).to eq "California"
+  #     la = Location.where(name:'Los Angeles').first
+  #     expect(la).to be_present
+  #     expect(la.parent.name).to eq "California"
 
-      sf = Location.where(name:'San Francisco').first
-      expect(sf).to be_present
-      expect(sf.parent.name).to eq "California"
-    end
-  end
+  #     sf = Location.where(name:'San Francisco').first
+  #     expect(sf).to be_present
+  #     expect(sf.parent.name).to eq "California"
+  #   end
+  # end
 
   describe "search" do
     it "should search_by_name" do
@@ -116,21 +116,7 @@ RSpec.describe Location, type: :model do
 
   describe "name_and_parent for meta-tags" do 
     let(:user) { FactoryGirl.create(:user) }
-
-    it "should have city and state" do
-      Location.import_cities
-      user.location = Location.where(level: Location::CITY).last
-      user.save
-      expect(user.key_words).to eq([user.location.name_and_parent])
-    end
-
-    it "should return location name and parent" do 
-      Location.import_cities
-      user.location = Location.where(level: Location::CITY).last
-      user.save
-      expect(user.location.name_and_parent).to eq("Berkeley, California")
-    end 
-    
+     
     it "should return name and parent for location meta-tag" do
       expect(location.name_and_parent).to eq("#{location.name}#{location.parent}")
     end

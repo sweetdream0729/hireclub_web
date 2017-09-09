@@ -40,6 +40,6 @@ class ProvidersController < ApplicationController
     def provider_params
       params.require(:provider).permit(:first_name, :last_name, :phone,
        :ssn, :date_of_birth, :address_line_1, :address_line_2, :city,
-       :state, :country, :postal_code, :id_proof)
+       :state, :country, :postal_code, :id_proof, :retained_id_proof)
   end
 end

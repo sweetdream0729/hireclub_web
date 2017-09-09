@@ -18,6 +18,7 @@ class Provider < ApplicationRecord
   # Associations
   belongs_to :user
   has_many :bank_accounts, dependent: :destroy
+  has_many :payouts, dependent: :destroy
 
   # Validations
   validates_size_of :id_proof, maximum: 10.megabytes
@@ -40,11 +41,10 @@ class Provider < ApplicationRecord
   phony_normalize :phone, :default_country_code => 'US', :add_plus => false
   validates_plausible_phone :phone, country_code: 'US'
   validates_uniqueness_of :phone, allow_blank: true, message: '%{value} has already been taken'
-  validates :phone, uniqueness: true, presence: true
 
   before_destroy :remove_from_stripe
 
-  def remove_from_stripe(stripe_account_id)
+  def remove_from_stripe
     # destroy account on stripe
     begin
       account = Stripe::Account.retrieve(stripe_account_id)
@@ -83,10 +83,10 @@ class Provider < ApplicationRecord
       provider.client_publishable_key = account["keys"]["publishable"]
   		#update stripe account details if all details
   		if provider.save
-  			ProviderRelayJob.perform_later(account["id"], "update")
+  			ProviderUpdateJob.perform_later(account["id"], provider)
   		else
   		#delete the account if verifcation detail not provided
-  			ProviderRelayJob.perform_later(account["id"], "delete")
+  			ProviderDeleteJob.perform_later(account["id"])
   		end
   	end
 	 return provider

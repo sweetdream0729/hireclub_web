@@ -64,8 +64,8 @@ class AcuityService
     a.last_name = appointment['lastName']
     a.phone = appointment['phone']
     a.email = appointment['email']
-    a.price_cents = appointment['price']
-    a.amount_paid_cents = appointment['amountPaid']
+    a.price = appointment['price']
+    a.amount_paid = appointment['amountPaid']
 
     timezone = appointment['timezone']
     a.timezone = timezone

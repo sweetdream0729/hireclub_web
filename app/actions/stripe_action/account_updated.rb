@@ -6,8 +6,11 @@ class StripeAction::AccountUpdated < StripeAction::Base
     provider = Provider.find_by(stripe_account_id: stripe_account.id)
     
     if provider.present?
-      provider.update_attributes(charges_enabled: stripe_account.charges_enabled, payouts_enabled: stripe_account.payouts_enabled,verification_status: stripe_account.legal_entity.verification.status)
-      ProviderRelayJob.perform_later(provider.stripe_account_id, "update")
+      provider.update_attributes(charges_enabled: stripe_account.charges_enabled, 
+                                 payouts_enabled: stripe_account.payouts_enabled,
+                                 verification_status: stripe_account.legal_entity.verification.status,
+                                 stripe_file_id: stripe_account.legal_entity.verification.document
+                                )
       return provider
     end
   end

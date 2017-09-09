@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904135347) do
+ActiveRecord::Schema.define(version: 20170907142654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20170904135347) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "acuity_id",                         null: false
+    t.string   "acuity_id",                             null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone"
@@ -115,18 +115,20 @@ ActiveRecord::Schema.define(version: 20170904135347) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "timezone"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.datetime "canceled_at"
     t.datetime "completed_on"
     t.integer  "completed_by_id"
-    t.integer  "assignees_count",       default: 0, null: false
+    t.integer  "assignees_count",       default: 0,     null: false
     t.integer  "payee_id"
     t.text     "confirmation_page_url"
+    t.boolean  "paid_out",              default: false, null: false
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
     t.index ["end_time"], name: "index_appointments_on_end_time", using: :btree
+    t.index ["paid_out"], name: "index_appointments_on_paid_out", using: :btree
     t.index ["start_time"], name: "index_appointments_on_start_time", using: :btree
     t.index ["user_id"], name: "index_appointments_on_user_id", using: :btree
   end
@@ -631,6 +633,7 @@ ActiveRecord::Schema.define(version: 20170904135347) do
     t.datetime "updated_at",         null: false
     t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
     t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+    t.index ["stripe_charge_id", "provider_id", "payoutable_type", "payoutable_id"], name: "index_payouts_on_charge", unique: true, using: :btree
     t.index ["transferred_on"], name: "index_payouts_on_transferred_on", using: :btree
   end
 

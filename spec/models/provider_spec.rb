@@ -13,6 +13,7 @@ RSpec.describe Provider, type: :model do
 
   describe "subscriptions" do
     it { is_expected.to belong_to(:user) }
+    it { should have_many(:payouts) }
   end
 
   describe "validations" do
@@ -23,7 +24,6 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:ssn) }
     it { provider.save; is_expected.to validate_uniqueness_of(:ssn).case_insensitive }
-    it { is_expected.to validate_presence_of(:phone) }
     it { is_expected.to validate_presence_of(:date_of_birth) }
     it { is_expected.to validate_presence_of(:address_line_1) }
     it { is_expected.to validate_presence_of(:city) }
@@ -47,18 +47,23 @@ RSpec.describe Provider, type: :model do
   end
 
   describe 'providers' do
+    let(:params) {  {
+                    first_name: "test",
+                    last_name: "name",
+                    ssn: FactoryGirl.generate(:ssn),
+                    phone: FactoryGirl.generate(:phone),
+                    date_of_birth: "01-01-2001",
+                    address_line_1: "test",
+                    city: "SF",
+                    state: "CA",
+                    country: "US",
+                    postal_code: "111111",
+                    id_proof: File.new("#{Rails.root}/spec/support/fixtures/image.png")
+                    }
+                  }
 
 		it "should create new account" do
-      params = {first_name: "test",
-                last_name: "name",
-                ssn: "123456789",
-                phone: FactoryGirl.generate(:phone),
-                date_of_birth: "01-01-2001",
-                address_line_1: "test",
-                city: "SF",
-                state: "CA",
-                country: "US",
-                postal_code: "111111"}
+     
 
       provider = Provider::CreateProvider.new(user, params ,"127.0.0.1").call
       
@@ -68,34 +73,23 @@ RSpec.describe Provider, type: :model do
       expect(provider.user.is_provider?).to be_truthy
   
 	  end
+
+    it "should have create activity" do
+
+      provider = Provider::CreateProvider.new(user, params ,"127.0.0.1").call
+
+      activity = provider.activities.first
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(provider)
+      expect(activity.owner).to eq(user)
+      expect(activity.private).to eq(true)
+    end
+
+    it "should delete from stripe" do
+      provider = Provider::CreateProvider.new(user, params ,"127.0.0.1").call
+      provider.destroy
+
+      expect(provider).not_to be_persisted
+    end
 	end
-
-  it "should have create activity" do
-    params = {first_name: "test",
-                last_name: "name",
-                ssn: "123456789",
-                phone: FactoryGirl.generate(:phone),
-                date_of_birth: "01-01-2001",
-                address_line_1: "test",
-                city: "SF",
-                state: "CA",
-                country: "US",
-                postal_code: "111111"}
-
-    provider = Provider::CreateProvider.new(user, params ,"127.0.0.1").call
-
-    activity = Activity.where(key: ProviderCreateActivity::KEY).last
-    expect(activity).to be_present
-    expect(activity.trackable).to eq(provider)
-    expect(activity.owner).to eq(user)
-    expect(activity.private).to eq(true)
-  end
-
-  it "should delete from stripe" do
-    provider.save
-    stripe_account_id = provider.stripe_account_id
-    provider.destroy
-
-    expect(provider).not_to be_persisted
-  end
 end

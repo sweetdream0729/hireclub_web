@@ -77,6 +77,8 @@ Rails.application.routes.draw do
       get :upcoming
       get :assigned
       get :unassigned
+      get :paid
+      get :unpaid
       get :all
     end
     member do
@@ -93,6 +95,8 @@ Rails.application.routes.draw do
   resources :subscriptions, only: [:new, :create, :show] 
   resources :providers, only: [:new, :create, :show, :index]
   resources :bank_accounts, only: [:new, :create]
+  resources :payouts, only: [:new, :create] do
+  end
   get 'subscription/cancel' => 'subscriptions#cancel_subscription'
   post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
 
