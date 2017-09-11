@@ -6,6 +6,9 @@
         = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
       .col-md-4.col-lg-4
         = render partial: "/users/user_completion_card"
+        
+        = link_to helpers_path do
+          = image_tag("helpers/helpers_preview.jpg", class: 'img-fluid rounded mb-4')
 
         = link_to headshots_path do
           = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
