@@ -7,7 +7,8 @@ class MessageRelayJob < ApplicationJob
       user_id: message.user.id,
       message: message,
       message_partial: render_message(message),
-      unread_message_hash: create_unread_msg_hash(message.conversation)
+      unread_message_hash: create_unread_msg_hash(message.conversation),
+      created_at: message.created_at.to_date
     }
   end
 
