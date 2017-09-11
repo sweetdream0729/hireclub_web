@@ -3,7 +3,7 @@ class OnboardingController < ApplicationController
   before_action :sign_up_required
   layout "minimal"
 
-  steps :username, :location, :status, :roles, :skills, :milestones
+  steps :username, :location, :status, :roles, :skills, :milestones, :communities
 
   def show
     @user = current_user
@@ -14,8 +14,11 @@ class OnboardingController < ApplicationController
       @user.user_skills.build if @user.user_skills.empty?
     when :milestones
       @user.milestones.build if @user.milestones.empty?
+    when :communities
+      @communities = Community.by_members
     end
 
+    @count = wizard_steps.count
     render_wizard
   end
 
