@@ -10,7 +10,7 @@ namespace :daily do
     ConversationUser.counter_culture_fix_counts
     CommunityMember.counter_culture_fix_counts
     EmailListMember.counter_culture_fix_counts
-    EmailList.add_confirmed_to_all
+    EmailList.add_confirmed_users_to_all
     Assignee.counter_culture_fix_counts
     SparkpostService.get_message_events
     StripeService.process_charges
