@@ -18,8 +18,9 @@ class EmailList < ApplicationRecord
   end
 
   def self.add_confirmed_users_to_all
+    all_users = self.get_all_users
     User.confirmed.find_each do |user|
-      self.get_all_users.add_user(user)
+      all_users.add_user(user)
     end
   end
 end
