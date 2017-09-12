@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907142654) do
+ActiveRecord::Schema.define(version: 20170912142817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,6 +331,26 @@ ActiveRecord::Schema.define(version: 20170907142654) do
     t.integer  "messages_count", default: 0, null: false
     t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
+  end
+
+  create_table "email_list_members", force: :cascade do |t|
+    t.string   "email",         null: false
+    t.integer  "user_id"
+    t.integer  "email_list_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["email", "email_list_id"], name: "index_email_list_members_on_email_and_email_list_id", unique: true, using: :btree
+    t.index ["email_list_id"], name: "index_email_list_members_on_email_list_id", using: :btree
+    t.index ["user_id", "email_list_id"], name: "index_email_list_members_on_user_id_and_email_list_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_email_list_members_on_user_id", using: :btree
+  end
+
+  create_table "email_lists", force: :cascade do |t|
+    t.citext   "name",                      null: false
+    t.integer  "members_count", default: 0, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["name"], name: "index_email_lists_on_name", unique: true, using: :btree
   end
 
   create_table "events", force: :cascade do |t|
@@ -953,6 +973,8 @@ ActiveRecord::Schema.define(version: 20170907142654) do
   add_foreign_key "community_members", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "email_list_members", "email_lists"
+  add_foreign_key "email_list_members", "users"
   add_foreign_key "events", "locations"
   add_foreign_key "events", "users"
   add_foreign_key "invites", "contacts"
