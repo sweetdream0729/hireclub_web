@@ -1,0 +1,120 @@
+.container-fluid.content_container
+  .row
+    - if current_user.is_admin
+      .col-sm-6.offset-sm-3
+        %ol.breadcrumb
+          %li.breadcrumb-item
+            = link_to "Providers", providers_path
+    .col-sm-6.offset-sm-3
+      %h1
+        = title "#{@provider.user.display_name}"
+      %p
+        = link_to link_display(user_url(@provider.user)), user_path(@provider.user)
+      - if is_admin?
+        = link_to rails_admin.edit_path(model_name: 'provider', id: @provider.id) do
+          %span.badge.badge-pill-outline.badge-warning.text-uppercase.mr-2
+            Admin
+      %p
+        - if @provider.approved
+          %span.badge.badge-success
+            Approved
+        - else 
+          %span.badge.badge-warning
+            Pending
+        - if @provider.charges_enabled
+          %span.badge.badge-success
+            Charges Enabled
+        - else 
+          %span.badge.badge-warning
+            Charges Disabled
+
+        - if @provider.payouts_enabled
+          %span.badge.badge-success
+            Payouts Enabled
+        - else 
+          %span.badge.badge-warning
+            Payouts Disabled
+
+        - if @provider.verification_status == "verified"
+          %span.badge.badge-success
+            = @provider.verification_status
+        - else
+          %span.badge.badge-warning
+            = "Unverified"
+      .card.mb-4
+        %h3.card-header Details
+        .card-block
+          %p.card-text 
+            .row 
+              .col-3 
+                Email
+              .col-9
+                = @provider.user.email
+              .col-3 
+                Terms
+              .col-9
+                = "Accepted on"
+                = @provider.tos_acceptance_date.strftime("%D")
+          %p.card-text 
+            .row 
+              .col-3 
+                First Name
+              .col-9
+                = @provider.first_name
+            .row
+              .col-3 
+                Last Name
+              .col-9
+                = @provider.last_name
+            .row
+              .col-3 
+                Date of birth
+              .col-9
+                = @provider.date_of_birth.strftime("%D")
+            .row
+              .col-3
+                Phone
+              .col-9
+                = @provider.phone.phony_formatted(format: :international, spaces: '-')
+            .row
+              .col-3 
+                SSN
+              .col-9
+                = @provider.ssn.nil? ? "Not provided" : "Provided"
+            .row
+              .col-3
+                US ID
+              .col-9
+                = @provider.stripe_file_id.nil? ? "Not provided" : "Provided"
+            .row
+              .col-3 
+                Address
+              .col-9
+                = @provider.address_line_1
+              .col-3
+              .col-9
+                = @provider.address_line_2
+              .col-3
+              .col-9
+                = @provider.city + ", " + @provider.state + ", " + @provider.country
+      .card
+        %h3.card-header Bank Accounts
+        .card-block
+          %ul.list-group.list-group-flush 
+            - @provider.bank_accounts.each do |bank_account|
+              %li.list-group-item
+                .col-3 
+                  Account Holder Name
+                .col-9
+                  = bank_account.holder_name
+                .col-3 
+                  Bank Name
+                .col-9
+                  = bank_account.bank_name
+                .col-3 
+                  Routing Number
+                .col-9
+                  = bank_account.routing_number
+          .mt-3
+          %a.btn.btn-primary{:href => new_bank_account_path} Add Bank Account
+        

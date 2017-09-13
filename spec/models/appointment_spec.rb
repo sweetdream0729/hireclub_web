@@ -1,12 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
+  let(:stripe_helper) { StripeMock.create_test_helper }
+  before { StripeMock.start }
+  after { StripeMock.stop }
   let(:appointment) { FactoryGirl.build(:appointment) }
 
   subject { appointment }
 
   describe "associations" do
     it { should belong_to(:user) }
+    it { should belong_to(:payee) }
     it { should belong_to(:completed_by) }
     it { should belong_to(:appointment_type) }
     it { should have_many(:appointment_messages) }
@@ -14,6 +18,8 @@ RSpec.describe Appointment, type: :model do
     it { should have_one(:appointment_review) }
     it { should have_many(:attachments) }
     it { should have_many(:payments) }
+    it { should have_many(:payouts) }
+
   end
 
   describe 'validations' do
@@ -42,6 +48,19 @@ RSpec.describe Appointment, type: :model do
 
       expect(appointment.start_time).to eq new_start_time
       expect(appointment.end_time).to eq new_end_time
+    end
+  end
+
+  describe "activity" do
+    it "should have create" do
+      appointment.save
+
+      activity = Activity.where(key: AppointmentCreateActivity::KEY).last
+      expect(activity).to be_present
+
+      expect(activity.trackable).to eq appointment
+      expect(activity.owner).to eq appointment.user
+      expect(activity.private).to eq true
     end
   end
 
@@ -157,4 +176,61 @@ RSpec.describe Appointment, type: :model do
       appointment.update_payments
     end
   end
+
+  describe "payout" do
+    let(:params) {  {
+                    first_name: "test",
+                    last_name: "name",
+                    ssn: FactoryGirl.generate(:ssn),
+                    phone: FactoryGirl.generate(:phone),
+                    date_of_birth: "01-01-2001",
+                    address_line_1: "test",
+                    city: "SF",
+                    state: "CA",
+                    country: "US",
+                    postal_code: "111111",
+                    id_proof: File.new("#{Rails.root}/spec/support/fixtures/image.png")
+                    }
+                  }
+    it "should create payout" do
+      StripeMock.stop
+      payee = FactoryGirl.create(:user)
+
+      provider = Provider::CreateProvider.new(payee, params ,"127.0.0.1").call
+
+      Provider::UpdateProvider.new(provider.stripe_account_id, provider).call
+
+      appointment.payee = payee
+      appointment.save
+      appointment.reload
+
+      stripe_charge = Stripe::Charge.create(
+        :amount => appointment.price_cents,
+        :currency => "usd",
+        :source => "tok_mastercard"
+      )
+
+      payment = appointment.payments.where(external_id: stripe_charge.id, 
+                                  processor: "Stripe").first_or_initialize
+      payment.amount_cents = stripe_charge.amount
+      payment.paid_on = DateTime.now
+      payment.user = appointment.user
+      payment.save
+
+      payout = appointment.payout!
+
+      expect(payout).to be_valid
+      expect(payout.transferred_on).to be_present
+      expect(payout.amount_cents).to eq appointment.payout_price_cents
+      appointment.reload
+      expect(appointment.paid_out).to eq true
+
+      provider.destroy
+      expect(provider).not_to be_persisted
+
+    end
+  end
+  
+
+
 end

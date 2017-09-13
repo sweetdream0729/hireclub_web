@@ -4,19 +4,41 @@
       Appointments
       %span.badge.badge-default
         = current_user.appointments.active.incomplete.count
-    = nav_link_to 'Completed', completed_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true }
-    = nav_link_to 'Canceled', canceled_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true }
+        
+    / = nav_link_to 'Completed', completed_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true }
+    / = nav_link_to 'Canceled', canceled_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true }
+
     - if current_user.has_assignments?
+      = nav_link_to in_progress_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
+        In Progress
+        %span.badge.badge-default
+          = current_user.assigned_appointments.incomplete.count
+
       = nav_link_to upcoming_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
         Upcoming
         %span.badge.badge-default
           = current_user.assigned_appointments.upcoming.count
+
+      = nav_link_to unpaid_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
+        Unpaid
+        %span.badge.badge-default
+          = current_user.assigned_appointments.unpaid.count
+
+      = nav_link_to paid_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
+        Paid
+        %span.badge.badge-default
+          = current_user.assigned_appointments.paid.count
 
       = nav_link_to assigned_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
         Assigned
         %span.badge.badge-default
           = current_user.assigned_appointments.count
     - if current_user.is_admin
+      = nav_link_to incomplete_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
+        Incomplete
+        %span.badge.badge-default
+          = Appointment.incomplete.all.count
+
       = nav_link_to unassigned_appointments_path, {class: 'list-group-item justify-content-between'}, { ignore_params: true } do
         Unassigned
         %span.badge.badge-default

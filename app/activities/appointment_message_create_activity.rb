@@ -6,10 +6,7 @@ class AppointmentMessageCreateActivity
     appointment = appointment_message.appointment
 
     # Everyone talking in appointment
-    recipients = appointment.participants - [appointment_message.user]
-    # Including appointment user if user is not one sending message
-    recipients << appointment.user if appointment.user != appointment_message.user
-
+    recipients = User.admin + appointment.users - [appointment_message.user]
     return recipients
   end
 

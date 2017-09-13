@@ -37,7 +37,7 @@ class AcuityService
       appointment_type_options = { name: acuity_option["name"], 
                        description: acuity_option["description"], 
                        duration: acuity_option["duration"], 
-                       price_cents: acuity_option["price"], 
+                       price: acuity_option["price"], 
                        appointment_category_id: appointment_category.id }
       appointment_type = AppointmentType.where(acuity_id: acuity_option["id"]).first_or_create(appointment_type_options)
       appointment_types << appointment_type
@@ -64,11 +64,16 @@ class AcuityService
     a.last_name = appointment['lastName']
     a.phone = appointment['phone']
     a.email = appointment['email']
-    a.price_cents = appointment['price']
-    a.amount_paid_cents = appointment['amountPaid']
-    a.start_time = appointment['date'] + " " + appointment['time']
-    a.end_time = appointment['date'] + " " + appointment['endTime']
-    a.timezone = appointment['timezone']
+    a.price = appointment['price']
+    a.amount_paid = appointment['amountPaid']
+
+    timezone = appointment['timezone']
+    a.timezone = timezone
+
+    a.start_time = (appointment['date'] + " " + appointment['time']).in_time_zone(a.timezone)
+    a.end_time = (appointment['date'] + " " + appointment['endTime']).in_time_zone(a.timezone)
+    
+    a.confirmation_page_url = appointment['confirmationPage']
 
     #if user is not registered on hireclub
     a.user_id = user.id if a.user.nil? && user.present?

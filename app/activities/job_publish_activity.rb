@@ -7,6 +7,7 @@ class JobPublishActivity
   end
 
   def self.send_notification(notification)
+    return unless notification.user.preference.email_on_job_post
     NotificationMailer.job_created(notification).deliver_later
   end
 

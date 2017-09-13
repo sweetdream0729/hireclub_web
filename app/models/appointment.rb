@@ -1,8 +1,12 @@
 class Appointment < ApplicationRecord
+  # Constants
+  COMMISSION = 0.7
+  
   # Extensions
   include UnpublishableActivity
   include PublicActivity::CreateActivityOnce
   include PublicActivity::Model
+  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   include PgSearch
   pg_search_scope :text_search,
@@ -19,20 +23,26 @@ class Appointment < ApplicationRecord
   paginates_per 10
 
   monetize :price_cents
+  monetize :amount_paid_cents
+  monetize :payout_price_cents
 
   # Scopes
   scope :active,        -> { where(canceled_at: nil) }
   scope :incomplete,    -> { where(completed_on: nil) }
   scope :unassigned,    -> { where(assignees_count: 0) }
+  scope :paid,          -> { where(paid_out: true) }
+  scope :unpaid,        -> { where(paid_out: false) }
   scope :canceled,      -> { where("appointments.canceled_at IS NOT NULL") }
   scope :completed,     -> { where("appointments.completed_on IS NOT NULL") }
   scope :upcoming,      -> { where('appointments.start_time > ?', Time.current) }
   scope :by_start_time, -> { order('appointments.start_time', 'appointments.id') }
+  scope :by_recent,     -> { order('appointments.start_time desc', 'appointments.id') }
 
   # Associations
   belongs_to :user
   belongs_to :appointment_type
   belongs_to :completed_by, class_name: 'User'
+  belongs_to :payee, class_name: 'User'
   has_many :appointment_messages, dependent: :destroy
   has_many :participants, through: :appointment_messages, source: :user
   has_many :assignees, dependent: :destroy
@@ -42,6 +52,7 @@ class Appointment < ApplicationRecord
   has_one :appointment_category, through: :appointment_type 
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :payments, as: :payable, dependent: :destroy
+  has_many :payouts, as: :payoutable, dependent: :destroy
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
@@ -54,7 +65,7 @@ class Appointment < ApplicationRecord
   end
   
   def user_name
-    return user.name if user.present?
+    return user.display_name if user.present?
     return "#{first_name} #{last_name}"
   end
     
@@ -77,14 +88,31 @@ class Appointment < ApplicationRecord
   def cancel!
     if canceled_at.nil?
       self.canceled_at = DateTime.now
-      self.save
+      if self.save
+        self.create_activity(key: AppointmentCancelActivity::KEY,
+                           owner: user,
+                           private: true)
+      end
     end
   end
 
   def reschedule!(new_start_time, new_end_time)
+    parameters = {old_start_time: self.start_time,
+                  old_end_time: self.end_time}
     self.start_time = new_start_time
     self.end_time = new_end_time
-    self.save
+    if self.save
+      parameters.merge!({new_start_time: self.start_time,
+                        new_end_time: self.end_time})
+      self.create_activity(key: AppointmentRescheduleActivity::KEY,
+                           owner: user,
+                           private: true,
+                           parameters: parameters)
+    end
+  end
+
+  def reschedulable?
+    !completed? && !canceled?
   end
 
   def complete!(completer)
@@ -142,6 +170,35 @@ class Appointment < ApplicationRecord
       payment.save
       
     end
+  end
+
+  def payout!
+    charge = self.payments.first
+    provider = self.payee.provider
+    if charge.present? && provider.present?
+      payout = self.payouts.where(provider: provider,
+                                  stripe_charge_id: charge.external_id,
+                                  amount_cents: payout_price_cents).first_or_create
+    end
+
+    if payout.present?
+      payout.transfer!
+    end
+
+    return payout
+  end
+
+  def paid_out!
+    self.paid_out = true
+    self.save
+  end
+
+  def payout_price_cents
+    COMMISSION * price_cents
+  end
+
+  def users
+    participants + assigned_users + [user]
   end
   
 end

@@ -38,4 +38,8 @@ class Payment < ApplicationRecord
 
     return payment
   end
+
+  def stripe?
+    processor == "stripe"
+  end
 end

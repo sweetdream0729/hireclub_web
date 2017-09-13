@@ -6,7 +6,7 @@
   .row.justify-content-center
     .col-lg-6.col-md-8.col-sm-10
       .progress.mb-4
-        .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "25", :role => "progressbar", :style => "width: 60%; height: 5px;"}
+        .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "40%", :role => "progressbar", :style => "width: #{100/@count * 4}%; height: 5px;"}
 
       %h1 🎩 What's your role?
 
@@ -20,6 +20,8 @@
                 = ff.object.errors.full_messages.first        
             %small.form-text.text-muted
               What do you do everyday?
+              %p
+              For example, whether you are Senior Designer or a Junior Designer, put Designer.
 
         .form-group
           = f.label :company

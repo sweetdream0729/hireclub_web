@@ -1,7 +1,7 @@
 class UserSkillListener
   def update_user_skill(user_skill)
     user = user_skill.user
-    return unless user.present? && user.persisted?
+    return unless user.present? && user.persisted? && !user.destroyed?
 
     user.update_years_experience
     user.reload

@@ -37,7 +37,7 @@ class Card < ApplicationRecord
       self.update_attribute(:deleted_on_stripe, true)
     end
     
-    self.update_attributes(active: false, default: false)
+    self.update_attributes(active: false)
 
     return true
   end

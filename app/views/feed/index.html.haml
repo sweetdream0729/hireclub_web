@@ -5,13 +5,33 @@
       .col-md-8.col-lg-6.activities
         = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
       .col-md-4.col-lg-4
+        = render partial: "/users/user_completion_card"
+        
+        = link_to helpers_path do
+          = image_tag("helpers/helpers_preview.jpg", class: 'img-fluid rounded mb-4')
+
         = link_to headshots_path do
           = image_tag("headshots/headshots_preview.jpg", class: 'img-fluid rounded')
-        = link_to heroes_path do
-          = image_tag("heroes_preview.jpg", class: 'img-fluid rounded mt-4')
+        / = link_to heroes_path do
+        /   = image_tag("heroes_preview.jpg", class: 'img-fluid rounded mt-4')
         - @placements.each do |placement|
           = render partial: "placements/#{placement.placeable_type.downcase}", locals: {placement: placement}
-        = render partial: "/users/user_completion_card"
+        
+
+        - if @event.present?
+          .events.mt-5
+            %h6 Upcoming Events
+            .card
+              %a{href: @event.source_url, target: "_blank"}
+                = image_tag(model_image(@event.image, 1920, 710, true), class: "card-img-top img-fluid")
+              .card-block
+                %h5.bold.card-title
+                  = link_to @event.name, @event
+                %p.card-text
+                  = @event.start_time.strftime("%A %B %e, %l:%M%p")
+                %a.btn.btn-info{:href => @event.source_url, target: "_blank"}
+                  RSVP
+
           
     .row
       .col-sm-12

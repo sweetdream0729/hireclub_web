@@ -29,6 +29,8 @@ class User < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create], owner: Proc.new{ |controller, model| model }
 
+  nilify_blanks
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :linkedin, :google_oauth2]
 
@@ -43,8 +45,9 @@ class User < ApplicationRecord
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
-  scope :scoreable,    -> { where.not(confirmed_at: nil).where.not(avatar_uid: nil)}
+  scope :scoreable,    -> { confirmed.where.not(avatar_uid: nil)}
   scope :has_stripe,   -> { where.not(stripe_customer_id: nil)}
+  scope :confirmed,    -> { where.not(confirmed_at: nil)}
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
@@ -67,6 +70,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy, inverse_of: :user
   has_many :jobs, dependent: :destroy, inverse_of: :user
   has_many :stories, dependent: :destroy, inverse_of: :user
+  has_many :events, dependent: :nullify, inverse_of: :user
   has_many :comments, dependent: :destroy, inverse_of: :user
   has_many :job_scores, dependent: :destroy, inverse_of: :user
   has_many :job_referrals, dependent: :destroy, inverse_of: :user
@@ -75,6 +79,7 @@ class User < ApplicationRecord
   has_many :analytics_events, dependent: :destroy, inverse_of: :user
   has_one :preference, dependent: :destroy, inverse_of: :user
   has_many :attachments, dependent: :destroy, inverse_of: :user
+  has_one :provider, dependent: :destroy
   accepts_nested_attributes_for :preference
 
   belongs_to :location
@@ -99,6 +104,8 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy, inverse_of: :user
   has_many :payments, dependent: :nullify, inverse_of: :user
   has_many :cards, inverse_of: :user, dependent: :destroy
+  has_many :email_list_members, inverse_of: :user, dependent: :destroy
+
 
   
   # Nested
@@ -221,6 +228,7 @@ class User < ApplicationRecord
 
   def welcome!
     create_activity_once :welcome, owner: self, private: false
+    EmailList.get_all_users.add_user(self)
   end
 
   def primary_role
@@ -424,6 +432,10 @@ class User < ApplicationRecord
     !stripe_customer_id.blank?
   end
 
+  def is_provider?
+    provider.present?
+  end
+
   def username_not_in_routes
     if RouteRecognizer.new.initial_path_segments.include?(username)
       errors.add(:username, "not available")
@@ -503,6 +515,44 @@ class User < ApplicationRecord
     user.import_google_omniauth(omniauth)
 
     return user
+  end
+
+  # Access token for a user
+  def preference_access_token(preference, value = false)
+    User.create_access_token(self, preference, value)
+  end
+
+  # Verifier based on our application secret
+  def self.verifier
+    ActiveSupport::MessageVerifier.new(Rails.application.secrets.secret_key_base)
+  end
+
+  # Get a user from a token
+  def self.read_access_token(signature)
+    parameters = verifier.verify(signature)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  # Class method for token generation
+  def self.create_access_token(user, preference, value = false)
+    verifier.generate({user_id: user.id, preference: preference, value: value})
+  end
+
+  def update_preference(preference_field, value)
+    if preference_field == "unsubscribe_all"
+      p = self.preference
+      p.unsubscribe_all = true
+      p.save
+      create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+    else
+      preference.update_attribute(preference_field.to_sym , value)
+      if value
+        create_activity :resubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      else
+        create_activity :unsubscribe, owner: self, private: true, parameters: {preference: preference_field} 
+      end
+    end
   end
 
 end

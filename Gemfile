@@ -123,6 +123,7 @@ gem 'geocoder'
 gem 'time_difference'
 gem 'money-rails', '~>1'
 gem 'timezone', '~> 1.0'
+gem 'phony_rails'
 
 #payment gateway
 gem 'stripe-rails'

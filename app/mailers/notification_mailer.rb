@@ -73,6 +73,8 @@ class NotificationMailer < ApplicationMailer
     set_notification(notification)
     @appointment = @notification.activity.trackable.appointment
 
+    @start_time = @appointment.start_time.in_time_zone(@user.timezone).strftime("%A %B %e %l:%M %P")
+
     @appointment_url = get_utm_url appointment_url(@appointment)
 
     add_metadata(:appointment_id, @appointment.id)
@@ -110,11 +112,32 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Appointment Completed')  
   end
 
+  def appointment_rescheduled(notification)
+    set_notification(notification)
+    @appointment = notification.activity.trackable
+    @appointment_url = get_utm_url appointment_url(@appointment)
+    @new_start_time = notification.activity.parameters[:new_start_time].in_time_zone(@user.timezone).strftime("%A %B %e %l:%M %P")
+
+    add_metadata(:appointment_id, @appointment.id)
+    
+    mail(to: @user.email, subject: 'Appointment Rescheduled')
+  end
+
+  def appointment_canceled(notification)
+    set_notification(notification)
+    @appointment = notification.activity.trackable
+    @appointment_url = get_utm_url appointment_url(@appointment)
+    add_metadata(:appointment_id, @appointment.id)
+    
+    mail(to: @user.email, subject: 'Appointment Canceled')
+  end
+
   def comment_created(notification)
     set_notification(notification)
 
     @comment = @notification.activity.trackable
     @commentable = @comment.commentable
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_comment"))
 
     @commentable_url = get_utm_url url_for(@commentable)
     @comment_user_url = get_utm_url url_for(@comment.user)
@@ -127,6 +150,7 @@ class NotificationMailer < ApplicationMailer
 
     @comment = @notification.activity.trackable.mentionable
     @commentable = @comment.commentable
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_mention"))
 
     @commentable_url = get_utm_url url_for(@commentable)
     @comment_user_url = get_utm_url url_for(@comment.user)
@@ -143,6 +167,7 @@ class NotificationMailer < ApplicationMailer
     @job_url = get_utm_url url_for(@job)
     @user_url = get_utm_url url_for(@job.user)
     @company_url = get_utm_url url_for(@company)
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_job_post"))
 
     mail(to: @user.email, subject: "#{@job.company.name} posted job #{@job.name}")
   end
@@ -155,6 +180,19 @@ class NotificationMailer < ApplicationMailer
     @story_url = get_utm_url url_for(@story)
 
     mail(to: @user.email, subject: "#{@story.user.display_name} published #{@story.name}")
+  end
+
+  def event_published(notification)
+    set_notification(notification)
+
+    @event = @notification.activity.trackable
+
+    @event_url = get_utm_url url_for(@event)
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_event_publish"))
+
+    add_metadata(:event_id, @event.id)
+
+    mail(to: @user.email, subject: "#{@event.user.display_name} added event #{@event.name}")
   end
 
   def project_created(notification)
@@ -175,6 +213,7 @@ class NotificationMailer < ApplicationMailer
 
     @follower_url = get_utm_url user_url(@follower)
     @follow_url = get_utm_url follow_user_url(@follower)
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_follow"))
     
     if @following
       @subject = "#{@follower.display_name} followed you back on HireClub"
@@ -233,12 +272,26 @@ class NotificationMailer < ApplicationMailer
     @conversation_user = @notification.activity.trackable
     @conversation = @conversation_user.conversation
     @conversation_url = url_for(@conversation)
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_unread"))
 
     add_metadata(:conversation_user_id, @conversation_user.id)
     add_metadata(:conversation_id, @conversation.id)
 
     @subject = "You have a message on HireClub"
     mail(to: @user.email, subject: @subject)
+  end
+
+
+  def provider_created(notification)
+    set_notification(notification)
+
+    @provider = @notification.activity.trackable
+    @provider_user = @provider.user
+
+    @provider_url = get_utm_url url_for(@provider)
+    @user_url = get_utm_url url_for(@provider_user)
+
+    mail(to: @user.email, subject: "#{@provider_user.display_name} became a provider")
   end
 
   def set_notification(notification)

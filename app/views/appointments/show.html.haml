@@ -20,6 +20,9 @@
         - if @appointment.completed?
           %span.badge.badge-success
             Completed
+        - if policy(@appointment).manage? && @appointment.paid_out?
+          %span.badge.badge-info
+            Paid
         - if @appointment.canceled?
           %span.badge.badge-warning
             Canceled
@@ -29,23 +32,31 @@
               %i.fa.fa-star.star_rating
 
       %p
-        = @appointment.start_time.strftime("%A %B %e")
+        = @appointment.start_time.in_time_zone(@appointment.timezone).strftime("%A %B %e")
         ·
-        = @appointment.start_time.strftime("%l:%M %P") 
+        = @appointment.start_time.in_time_zone(@appointment.timezone).strftime("%l:%M %P") 
         ·
         = pluralize(@appointment.duration.to_i, "minutes")
         ·
-        = humanized_money_with_symbol(@appointment.appointment_type.price_cents)
+        = humanized_money_with_symbol(@appointment.price)
       %p
         .btn-group
+          - if policy(@appointment).payout? && !@appointment.paid_out?
+            = link_to "Payout", new_payout_path({appointment_id: @appointment.friendly_id}), class: 'btn btn-danger'
+      
           - if policy(@appointment).complete?
             = link_to complete_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-check.mr-1
               Complete
-          - if policy(@appointment).refresh?
+          - if policy(@appointment).refresh? 
             = link_to refresh_appointment_path(@appointment), class: "btn btn-secondary" do
               %i.fa.fa-refresh.mr-1
               Refresh
+          - if policy(@appointment).show? && @appointment.reschedulable? 
+            = link_to @appointment.confirmation_page_url, class: "btn btn-secondary", target: "_blank" do
+              %i.fa.fa-clock-o.mr-1
+              Reschedule
+
           
           - if @appointment.completed? && !@appointment.reviewed? && @appointment.user == current_user
             = link_to "Add Your Review",new_appointment_review_path(appointment_id: @appointment.id), class: "btn btn-info"        
@@ -84,8 +95,21 @@
             %small.text-muted
               Reviewed
               = local_time_ago(@appointment.appointment_review.created_at)
-        
-          
+        %hr
+
+      - if @appointment.paid_out && policy(@appointment).manage?
+        %small
+          - @appointment.payouts.each do |payout|
+            - if is_admin?
+              = link_to rails_admin.show_path(model_name: 'payout', id: payout.id), class: "text-warning" do
+                = humanized_money_with_symbol(payout.amount)
+                Paid Out
+            - else
+              = humanized_money_with_symbol(payout.amount)
+              Paid Out
+            = local_time_ago(payout.created_at)
+            to
+            = link_to payout.provider.user.display_name, payout.provider
         %hr
 
       - if @appointment.active?
@@ -154,14 +178,14 @@
       - @appointment.attachments.by_oldest.each do |attachment|
         .media.attachment.mb-3
           - if attachment.has_file?
-            = link_to attachment.file.remote_url do
+            = link_to attachment.file.remote_url, download: attachment.file.name do
               = image_tag(model_image(attachment.file, 200, 200, true), class: "d-flex mr-2", width: "50")
           .media-body
             %p.mb-0
               - if attachment.has_link?
                 = link_to link_display(attachment.link), attachment.link
               - else
-                = link_to attachment.file.name, attachment.file.remote_url
+                = link_to attachment.file.name, attachment.file.remote_url, download: attachment.file.name
             %small.text-muted
               - if attachment.user.present?
                 = link_to attachment.user.display_name, attachment.user
@@ -170,6 +194,7 @@
               - if policy(attachment).destroy?
                 ·
                 = link_to "Delete", attachment_path(attachment), method: :delete, data: { confirm: "Delete this attachment?" }, class: "text-muted"
+
 
       - if policy(@attachment).create?
         %hr
@@ -188,8 +213,37 @@
             = local_time_ago(payment.paid_on)
             ·
             = payment.processor.titlecase
+            
             ·
-            = payment.external_id
-            - if current_user.is_admin
+            - if payment.stripe? && is_admin?
+              = link_to payment.external_id, "https://dashboard.stripe.com/payments/#{payment.external_id}", target: "_blank"
+            - else
+              = payment.external_id
+
+            - if is_admin?
               ·
               = link_to "Admin", rails_admin.edit_path(model_name: 'payment', id: payment.id), class: "text-warning"
+
+      - if policy(@appointment).manage?
+        %h6.mt-5 Payee
+        %hr
+      - if @appointment.payee && policy(@appointment).manage?
+        .media.mb-4
+          = link_to image_tag(model_avatar(@appointment.payee.avatar, 200, true), width: 52, class: 'd-flex mr-3 rounded-circle'), @appointment.payee
+          .media-body
+            %p.mb-0
+              %strong
+                = link_to @appointment.payee.display_name, @appointment.payee
+            %small.text-muted
+              - if policy(@appointment).remove_payee?
+                = link_to "Remove", remove_payee_appointment_path(id: @appointment.id), class: '', data: { confirm: "Are you sure?" }
+      - if @appointment.payee.nil? && policy(@appointment).add_payee?
+        = form_for @appointment, url: add_payee_appointment_path, method: :post do |f|
+          .form-group
+            = f.select :payee_id,[] , {}, {class: 'autocomplete_payee'}
+          = f.submit 'Add Payee', class: 'btn btn-info btn-sm'
+      
+      
+
+      
+      

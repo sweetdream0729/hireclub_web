@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828142928) do
+ActiveRecord::Schema.define(version: 20170912233420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,43 +88,49 @@ ActiveRecord::Schema.define(version: 20170828142928) do
   end
 
   create_table "appointment_types", force: :cascade do |t|
-    t.string   "name",                                null: false
+    t.string   "name",                                   null: false
     t.text     "description"
     t.integer  "duration",                default: 0
     t.integer  "price_cents",             default: 0
-    t.string   "acuity_id",                           null: false
+    t.string   "acuity_id",                              null: false
     t.integer  "appointment_category_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "priority",                default: 0, null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "priority",                default: 0,    null: false
     t.string   "image_uid"
+    t.boolean  "published",               default: true, null: false
     t.index ["acuity_id"], name: "index_appointment_types_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_category_id"], name: "index_appointment_types_on_appointment_category_id", using: :btree
+    t.index ["published"], name: "index_appointment_types_on_published", using: :btree
   end
 
   create_table "appointments", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "acuity_id",                       null: false
+    t.string   "acuity_id",                             null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone"
     t.string   "email"
-    t.integer  "price_cents",         default: 0
-    t.integer  "amount_paid_cents",   default: 0
+    t.integer  "price_cents",           default: 0
+    t.integer  "amount_paid_cents",     default: 0
     t.integer  "appointment_type_id"
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "timezone"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.datetime "canceled_at"
     t.datetime "completed_on"
     t.integer  "completed_by_id"
-    t.integer  "assignees_count",     default: 0, null: false
+    t.integer  "assignees_count",       default: 0,     null: false
+    t.integer  "payee_id"
+    t.text     "confirmation_page_url"
+    t.boolean  "paid_out",              default: false, null: false
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
     t.index ["end_time"], name: "index_appointments_on_end_time", using: :btree
+    t.index ["paid_out"], name: "index_appointments_on_paid_out", using: :btree
     t.index ["start_time"], name: "index_appointments_on_start_time", using: :btree
     t.index ["user_id"], name: "index_appointments_on_user_id", using: :btree
   end
@@ -327,6 +333,46 @@ ActiveRecord::Schema.define(version: 20170828142928) do
     t.integer  "messages_count", default: 0, null: false
     t.index ["key"], name: "index_conversations_on_key", unique: true, using: :btree
     t.index ["slug"], name: "index_conversations_on_slug", unique: true, using: :btree
+  end
+
+  create_table "email_list_members", force: :cascade do |t|
+    t.string   "email",         null: false
+    t.integer  "user_id"
+    t.integer  "email_list_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["email", "email_list_id"], name: "index_email_list_members_on_email_and_email_list_id", unique: true, using: :btree
+    t.index ["email_list_id"], name: "index_email_list_members_on_email_list_id", using: :btree
+    t.index ["user_id", "email_list_id"], name: "index_email_list_members_on_user_id_and_email_list_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_email_list_members_on_user_id", using: :btree
+  end
+
+  create_table "email_lists", force: :cascade do |t|
+    t.citext   "name",                      null: false
+    t.integer  "members_count", default: 0, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["name"], name: "index_email_lists_on_name", unique: true, using: :btree
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name",         null: false
+    t.citext   "slug",         null: false
+    t.datetime "start_time",   null: false
+    t.datetime "end_time"
+    t.text     "description"
+    t.string   "source_url"
+    t.string   "image_uid"
+    t.string   "venue"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "location_id"
+    t.datetime "published_on"
+    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
+    t.index ["published_on"], name: "index_events_on_published_on", using: :btree
+    t.index ["slug"], name: "index_events_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_events_on_user_id", using: :btree
   end
 
   create_table "facebook_posts", force: :cascade do |t|
@@ -597,6 +643,22 @@ ActiveRecord::Schema.define(version: 20170828142928) do
     t.index ["processor", "external_id"], name: "index_payments_on_processor_and_external_id", unique: true, using: :btree
   end
 
+  create_table "payouts", force: :cascade do |t|
+    t.integer  "provider_id",        null: false
+    t.string   "payoutable_type"
+    t.integer  "payoutable_id",      null: false
+    t.integer  "amount_cents",       null: false
+    t.string   "stripe_charge_id",   null: false
+    t.string   "stripe_transfer_id"
+    t.datetime "transferred_on"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["payoutable_type", "payoutable_id"], name: "index_payouts_on_payoutable_type_and_payoutable_id", using: :btree
+    t.index ["provider_id"], name: "index_payouts_on_provider_id", using: :btree
+    t.index ["stripe_charge_id", "provider_id", "payoutable_type", "payoutable_id"], name: "index_payouts_on_charge", unique: true, using: :btree
+    t.index ["transferred_on"], name: "index_payouts_on_transferred_on", using: :btree
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.string   "searchable_type"
@@ -632,15 +694,19 @@ ActiveRecord::Schema.define(version: 20170828142928) do
   end
 
   create_table "preferences", force: :cascade do |t|
-    t.integer  "user_id",                         null: false
-    t.boolean  "email_on_follow",  default: true, null: false
-    t.boolean  "email_on_comment", default: true, null: false
-    t.boolean  "email_on_mention", default: true, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.boolean  "email_on_unread",  default: true, null: false
+    t.integer  "user_id",                               null: false
+    t.boolean  "email_on_follow",        default: true, null: false
+    t.boolean  "email_on_comment",       default: true, null: false
+    t.boolean  "email_on_mention",       default: true, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "email_on_unread",        default: true, null: false
+    t.boolean  "email_on_job_post",      default: true, null: false
+    t.boolean  "email_on_event_publish", default: true, null: false
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
+    t.index ["email_on_event_publish"], name: "index_preferences_on_email_on_event_publish", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
+    t.index ["email_on_job_post"], name: "index_preferences_on_email_on_job_post", using: :btree
     t.index ["email_on_mention"], name: "index_preferences_on_email_on_mention", using: :btree
     t.index ["email_on_unread"], name: "index_preferences_on_email_on_unread", using: :btree
     t.index ["user_id"], name: "index_preferences_on_user_id", unique: true, using: :btree
@@ -694,6 +760,8 @@ ActiveRecord::Schema.define(version: 20170828142928) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "approved",               default: false, null: false
+    t.string   "id_proof_uid"
+    t.string   "stripe_file_id"
     t.index ["approved"], name: "index_providers_on_approved", using: :btree
     t.index ["phone"], name: "index_providers_on_phone", unique: true, using: :btree
     t.index ["ssn"], name: "index_providers_on_ssn", unique: true, using: :btree
@@ -907,6 +975,10 @@ ActiveRecord::Schema.define(version: 20170828142928) do
   add_foreign_key "community_members", "users"
   add_foreign_key "conversation_users", "conversations"
   add_foreign_key "conversation_users", "users"
+  add_foreign_key "email_list_members", "email_lists"
+  add_foreign_key "email_list_members", "users"
+  add_foreign_key "events", "locations"
+  add_foreign_key "events", "users"
   add_foreign_key "invites", "contacts"
   add_foreign_key "invites", "users"
   add_foreign_key "job_referrals", "jobs"
@@ -927,6 +999,7 @@ ActiveRecord::Schema.define(version: 20170828142928) do
   add_foreign_key "milestones", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payouts", "providers"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
   add_foreign_key "preferences", "users"

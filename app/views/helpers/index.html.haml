@@ -1,6 +1,6 @@
 - title "HireClub Helpers"
 
-.jumbotron.jumbotron-fluid{style: "background-color: #2B3369;"}
+.jumbotron.jumbotron-fluid.mb-0{style: "background-color: #2B3369;"}
   .container
     %h1.display-4.text-white.mb-4 Get Professional Career Coaching
     .row
@@ -11,118 +11,188 @@
       %a.btn.btn-info.btn-lg.mr-4{:href => Rails.application.secrets.acuity_link, :role => "button"} Book Now
       %a.btn.btn-outline-secondary.btn-lg.text-white{:href => "#learn-more", :role => "button"} Learn More
 
-.container.content_container#learn-more
-  .row
-    .col-md-8
-      %h3 Book an Appointment
-      - @appointment_categories.each do |category|
+%section{style: "background: #7baeda"}
+  .container#learn-more.pt-4
+    .row
+      .col-md-8
+        %h3.text-white Book an Appointment
+        - @appointment_categories.each do |category|
+          .row
+            .col-12
+              %h5.mt-4.text-white
+                %strong
+                  = category.name
+          .row.mb-4
+            .col-md-12
+              .card-deck
+                - category.appointment_types.published.by_priority.each do |appointment_type|
+                  .card.mb-3{style: "border: none"}
+                    = link_to appointment_type.acuity_link do
+                      = image_tag(model_image(appointment_type.image, 800,400), class: "card-img-top img-fluid")
+                    .card-block
+                      %h4.bold.card-title
+                        = appointment_type.name
+                      %h6.light
+                        = appointment_type.duration
+                        Minutes
+                        \/
+                        = humanized_money_with_symbol(appointment_type.price_cents)
+                      %p.card-text
+                        = appointment_type.description
+                        - if is_admin?
+                          = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
+                    .card-footer{style: "background-color:transparent; border-top: none;"}
+                      = link_to appointment_type.acuity_link, class: "btn btn-info" do
+                        Book
+                        = appointment_type.duration
+                        Minutes
+                        %i.fa.fa-long-arrow-right.ml-2
+
+      .col-md-4
+        %h3.text-white How It Works
         .row
           .col-12
-            %h5.mt-4
-              %strong
-                = category.name
-        .row.mb-4
-          .col-md-12
-            .card-deck
-              - category.appointment_types.by_priority.each do |appointment_type|
-                .card.mb-3
-                  = link_to appointment_type.acuity_link do
-                    = image_tag(model_image(appointment_type.image, 800,400), class: "card-img-top img-fluid")
-                  .card-block
-                    %h4.bold.card-title
-                      = appointment_type.name
-                    %h6.light
-                      = appointment_type.duration
-                      Minutes
-                      \/
-                      = humanized_money_with_symbol(appointment_type.price_cents)
-                    %p.card-text
-                      = appointment_type.description
-                      - if is_admin?
-                        = link_to "Admin", rails_admin.edit_path(model_name: 'appointment_type', id: appointment_type.id), class: "text-warning"
-                  .card-footer{style: "background-color:transparent; border-top: none;"}
-                    = link_to appointment_type.acuity_link, class: "btn btn-info" do
-                      Book
-                      = appointment_type.duration
-                      Minutes
-                      %i.fa.fa-long-arrow-right.ml-2
+            %h5.mt-4.text-white.bold
+              1. Book Your Appointment
+            %p.text-white-faded
+              Pick a time that works best for you.
 
-    .col-md-4
-      %h3 How It Works
-      .row
-        .col-12
-          %h5.mt-4
-            %strong Step 1
-            Book Your Appointment
-          %p
-            Pick a time that works best for you.
+            %h5.mt-4.text-white.bold
+              2. Tell Us Your Goals
+            %p.text-white-faded
+              Each session has a private discussion area for you to share your goals and concerns with us.
 
-          %h5.mt-4
-            %strong Step 2
-            Tell Us Your Goals
-          %p
-            Each session has a private discussion area for you to share your goals and concerns with us.
+            %h5.mt-4.text-white.bold
+              3. Be Ready To Win
+            %p.text-white-faded
+              During your session, your helper will give you actionable feedback and advice.
 
-          %h5.mt-4
-            %strong Step 3
-            Be Ready To Win
-          %p
-            During your session, your helper will give you actionable feedback and advice.
+            / %h5.mt-4
+            /   %strong Step 4
+            /   Leave A Review
+            / %p
+            /   We want your feedback as well. We're constantly making sure we are providing you with the best service possible.
 
-          / %h5.mt-4
-          /   %strong Step 4
-          /   Leave A Review
-          / %p
-          /   We want your feedback as well. We're constantly making sure we are providing you with the best service possible.
+.jumbotron.jumbotron-fluid.mb-0{style: "background-color: #f0f2f5;"}
+  .container.text-center
+    %h3.mb-4
+      Reviews
+    .row.justify-content-center.mb-4
+      .col-lg-8.col-md-10
+        %p.lead
+          My coach gave me an incredible amount of specific, actionable, helpful advice during our coaching session. 10/10 would do it again!
+        %p
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+        %h6
+          Developer
+        %hr
+    .row.justify-content-center.mb-4
+      .col-lg-8.col-md-10
+        %p.lead
+          Speaking with my coach gave me clarity through this ambiguous job search process. Having an experienced mentor to talk through current challenges and bounce questions gave me confidence and clarity going forward. I could not be happier where I ended up.
+        %p
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+        %h6
+          Marketer
+        %hr
+    .row.justify-content-center.mb-4
+      .col-lg-8.col-md-10
+        %p.lead
+          My session with Ketan was very helpful. He has remarkable insight on the job market and listens carefully then implements a plan of action. He offers great solutions and offers gems of wisdom. I'm very proud to refer my friends to Ketan as I know he'll take good care of them with proper guidance.
+        %p
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+          %i.fa.fa-star.star_rating
+        %h6
+          Recruiter
 
-  .row.mt-5.mb-4
-    .col-12
-      %h3
-        Frequently Asked Questions
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        Who is career coaching for?
-      %p
-        Career coaching on HireClub is for anyone who wants to reach the next step in their career. Whether you are early in your career or a seasoned executive, our coaches are ready to help you achieve your goals. 
+    
+%section
+  .container
+    .row.justify-content-center.mb-4.mt-5
+      .col-lg-6.col-md-8
+        %h3
+          Frequently Asked Questions
+    .row.justify-content-center
+      .col-lg-6.col-md-8.mb-4
+        %h5.semi_bold
+          Who is career coaching for?
+        %p
+          Career coaching on HireClub is for anyone who wants to reach the next step in their career. Whether you are early in your career or a seasoned executive, our coaches are ready to help you achieve your goals. 
 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold 
-        What can I use career coaching for?
-      %p
-        Some commonly discussed topics include resume/profile review, job search strategy, interview practice, salary/promotion negotiation, and executive coaching. 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        Which duration should I book? 
-      %p
-        You can book a duration that best fits your career needs and goals. The 15-minute session is perfect for a profile review such as your LinkedIn or HireClub profile. The 30-minute or 60-minute session is suitable for an in-depth career diagnostics, job search strategy, or a mock interview.
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold 
+          What can I use career coaching for?
+        %p
+          Some commonly discussed topics include resume/profile review, job search strategy, interview practice, salary/promotion negotiation, and executive coaching. 
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold
+          Which duration should I book? 
+        %p
+          You can book a duration that best fits your career needs and goals. The 15-minute session is perfect for a profile review such as your LinkedIn or HireClub profile. The 30-minute or 60-minute session is suitable for an in-depth career diagnostics, job search strategy, or a mock interview.
 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        How can I meet my coach?
-      %p
-        We offer flexibility so you can find the time and place that works with your schedule. When you book, you can choose to meet with your coach in a way that is most convenient to you: over the phone, video conference (Skype/Face Time).
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold
+          How can I meet my coach?
+        %p
+          We offer flexibility so you can find the time and place that works with your schedule. When you book, you can choose to meet with your coach in a way that is most convenient to you: over the phone, video conference (Skype/Face Time).
 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        Can I extend the duration of our session?
-      %p
-        Subject to your coach's availability, you have the option to extend the duration of service during your appointment.
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold
+          Can I extend the duration of our session?
+        %p
+          Subject to your coach's availability, you have the option to extend the duration of service during your appointment.
 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        Can I reschedule or cancel my appointment?
-      %p
-        You can reschedule or cancel for free up to 24 hours before your appointment. No refunds will be given after.
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold
+          Can I reschedule or cancel my appointment?
+        %p
+          You can reschedule or cancel for free up to 24 hours before your appointment. No refunds will be given after.
 
-  .row.mb-4
-    .col-md-6
-      %h5.semi_bold
-        Will my meeting be private and confidential?
-      %p
-        You bet! We honor the opportunity to be part of your career journey. Our coaches will not share any contents or discussion that pertains to the meeting. 
+    .row.justify-content-center.mb-4
+      .col-lg-6.col-md-8
+        %h5.semi_bold
+          Will my meeting be private and confidential?
+        %p
+          You bet! We honor the opportunity to be part of your career journey. Our coaches will not share any contents or discussion that pertains to the meeting. 
+
+.container-fluid.p-0
+  .row.no-gutters
+    .col-sm-6
+      .card.card-inverse.text-center.card-primary
+        %img.card-img{src: "http://placehold.it/800x200/79ADDC/ffffff?text=+", style: "border-radius: 0"}
+        .card-img-overlay
+          %h4.card-title.letterspace_min.bold{style: "font-size: 1.25rem;"}
+            Get Coaching
+          %p.card-text.text-white.letterspace_min Private, affordable coaching tailored for you.
+          %p.mt-4
+            %a.btn.btn-primary.btn-lg{:href => Rails.application.secrets.acuity_link, :role => "button"}
+              Book Now 
+    .col-sm-6
+      %a{href: new_job_path}
+      .card.card-inverse.text-center
+        %img.card-img{src: "http://placehold.it/800x200/6B4E71/ffffff?text=+", style: "border-radius: 0"}
+        .card-img-overlay
+          %h4.card-title.letterspace_min.bold{style: "font-size: 1.25rem;"}
+            Become A Helper
+          %p.card-text.text-white.letterspace_min 
+            Share your expertise and help our members while earning money.
+          %p.mt-4
+            %a.btn.btn-info.btn-lg{:href => new_provider_path, :role => "button"}
+              Apply Now
+          

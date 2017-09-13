@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'settings/links'
   get 'settings/notifications'
   get 'settings/payments'
+  get 'settings/unsubscribe_all'
+  get 'settings/unsubscribe/:signature' => 'settings#unsubscribe', as: 'unsubscribe'
+  get 'settings/resubscribe/:signature' => 'settings#resubscribe', as: 'resubscribe'
   put 'settings/update'
 
   mount ActionCable.server => '/cable'
@@ -48,6 +51,17 @@ Rails.application.routes.draw do
 
   get 'feed', to: "feed#index", as: :feed
 
+  resources :events do
+    collection do
+      get :past
+      get :drafts
+    end
+
+    member do
+      get :publish
+    end
+  end
+  
   resources :appointment_reviews, except: [:index, :update, :edit, :destroy]
   resources :appointment_messages, only: [:create, :destroy, :edit, :update] do
     member do
@@ -57,16 +71,22 @@ Rails.application.routes.draw do
   resources :appointments, only: [:index, :show] do
     collection do
       get :search
+      get :incomplete
+      get :in_progress
       get :completed
       get :canceled
       get :upcoming
       get :assigned
       get :unassigned
+      get :paid
+      get :unpaid
       get :all
     end
     member do
       get :refresh
       get :complete
+      post :add_payee
+      get :remove_payee
     end
 
     resources :attachments, module: :appointments
@@ -74,6 +94,10 @@ Rails.application.routes.draw do
 
   resources :assignees, only: [:create, :destroy] 
   resources :subscriptions, only: [:new, :create, :show] 
+  resources :providers, only: [:new, :create, :show, :index]
+  resources :bank_accounts, only: [:new, :create]
+  resources :payouts, only: [:new, :create] do
+  end
   get 'subscription/cancel' => 'subscriptions#cancel_subscription'
   post 'subscription/cancel' => 'subscriptions#cancel', as: :cancel_subscription
 

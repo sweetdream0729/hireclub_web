@@ -11,7 +11,7 @@ RSpec.describe ResumePolicy do
   context 'being a visitor' do
     let(:user) { nil }
 
-    it { should forbid_action(:show) }
+    it { should permit_action(:show) }
     it { should forbid_action(:create) }
     it { should forbid_action(:update) }
     it { should forbid_action(:destroy) }
@@ -28,7 +28,7 @@ RSpec.describe ResumePolicy do
   context 'being an another user' do
     let(:user) { FactoryGirl.create(:user) }
 
-    it { should forbid_action(:show) }
+    it { should permit_action(:show) }
     it { should permit_action(:create) }
     it { should forbid_action(:update) }
     it { should forbid_action(:destroy) }

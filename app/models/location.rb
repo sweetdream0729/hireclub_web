@@ -19,6 +19,8 @@ class Location < ApplicationRecord
   # Associations
   has_many :users
   has_many :jobs
+  has_many :events
+
   
   # Extensions
   include Searchable
@@ -31,6 +33,7 @@ class Location < ApplicationRecord
 
   # Scope
   scope :by_users_count, -> { order(users_count: :desc) }
+  scope :by_short,       -> { order(short: :asc)}
 
   # Validations
   validates_presence_of :name, :slug
@@ -202,5 +205,10 @@ class Location < ApplicationRecord
     end
   end
 
+
+  def self.us_states
+    country = Location.where(level: Location::COUNTRY, slug: "united-states").first
+    Location.where(level: Location::STATE, parent: country).by_short.pluck(:short)
+  end
 
 end

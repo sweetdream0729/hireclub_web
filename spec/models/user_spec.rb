@@ -53,6 +53,10 @@ RSpec.describe User, type: :model do
 
     it { should have_many(:payments).dependent(:nullify) }
     it { should have_many(:cards).dependent(:destroy) }
+
+    it { should have_many(:events).dependent(:nullify) }
+
+    it { should have_many(:email_list_members).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -464,4 +468,55 @@ describe "unread_messages_count" do
       expect(user.community_members.count).to eq 0
     end
   end
+
+  describe "preferences" do
+
+    it "should set relevant preference field to false" do
+      user.save
+      user.update_preference("email_on_comment", false)
+      expect(user.preference.email_on_comment).to be_falsey
+
+      activity = Activity.where(key: UserUnsubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "email_on_comment"})
+    end
+
+    it "should set relevant preference field to true" do
+      user.save
+      user.update_preference("email_on_comment", true)
+      expect(user.preference.email_on_comment).to be_truthy
+
+      activity = Activity.where(key: UserResubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "email_on_comment"})
+    end
+
+    it "should set all preference field to false" do
+      user.save
+      user.update_preference("unsubscribe_all", true)
+      expect(user.preference.email_on_comment).to be_falsey
+      expect(user.preference.email_on_follow).to be_falsey
+      expect(user.preference.email_on_mention).to be_falsey
+      expect(user.preference.email_on_unread).to be_falsey
+      expect(user.preference.email_on_job_post).to be_falsey
+      expect(user.preference.email_on_event_publish).to be_falsey
+
+      activity = Activity.where(key: UserUnsubscribeActivity::KEY).last
+    
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(user)
+      expect(activity.private).to eq(true)
+      expect(activity.parameters).to eq({preference: "unsubscribe_all"})
+    end
+
+  end
+
+
+
 end

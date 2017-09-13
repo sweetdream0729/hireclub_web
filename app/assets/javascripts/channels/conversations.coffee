@@ -31,8 +31,10 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
       # Insert the message
       App.typing.showTypingIndicator(false)
+
       #for appending day cell if required
-      @add_day_cell(data.message.created_at,active_conversation)
+      @add_day_cell(data.created_at,active_conversation)
+
       active_conversation.append(partial)
       App.conversations.scrollToBottom()
 

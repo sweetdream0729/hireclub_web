@@ -32,6 +32,11 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.comment_mentioned(notification)
   end
 
+  def provider_created
+    notification = Notification.where(activity_key: ProviderCreateActivity::KEY).last
+    NotificationMailer.provider_created(notification)
+  end
+
   def job_created
     notification = Notification.where(activity_key: JobCreateActivity::KEY, published: true).last
     NotificationMailer.job_created(notification)
@@ -50,6 +55,11 @@ class NotificationMailerPreview < ActionMailer::Preview
   def story_published
     notification = Notification.where(activity_key: StoryPublishActivity::KEY, published: true).last
     NotificationMailer.story_published(notification)
+  end
+
+  def event_published
+    notification = Notification.where(activity_key: EventPublishActivity::KEY, published: true).last
+    NotificationMailer.event_published(notification)
   end
 
   def project_created
@@ -87,6 +97,11 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.job_referred(notification)
   end
 
+  def appointment_assigned
+    notification = Notification.where(activity_key: AssigneeCreateActivity::KEY).last
+    NotificationMailer.appointment_assigned(notification)
+  end
+
   def appointment_messaged
     notification = Notification.where(activity_key: AppointmentMessageCreateActivity::KEY).last
     NotificationMailer.appointment_messaged(notification)
@@ -100,5 +115,10 @@ class NotificationMailerPreview < ActionMailer::Preview
   def appointment_reviewed
     notification = Notification.where(activity_key: AppointmentReviewCreateActivity::KEY).last
     NotificationMailer.appointment_reviewed(notification)
+  end
+
+  def appointment_rescheduled
+    notification = Notification.where(activity_key: AppointmentRescheduleActivity::KEY).last
+    NotificationMailer.appointment_rescheduled(notification)
   end
 end

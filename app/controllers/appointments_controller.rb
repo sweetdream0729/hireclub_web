@@ -1,11 +1,11 @@
 class AppointmentsController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming]
+  after_action :verify_authorized, except: [:index, :completed, :canceled, :all, :assigned, :unassigned, :search, :upcoming, :in_progress, :incomplete, :paid, :unpaid]
 
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :refresh, :complete, :add_payee, :remove_payee]
 
   def index
-    @appointments = current_user.appointments.active.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
+    @appointments = current_user.appointments.by_recent.includes(:appointment_type).page(params[:page])
   end
 
   def completed
@@ -18,8 +18,13 @@ class AppointmentsController < ApplicationController
     render :index
   end
 
+  def in_progress
+    @appointments = current_user.assigned_appointments.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
   def assigned
-    @appointments = current_user.assigned_appointments.by_start_time.includes(:appointment_type).page(params[:page])
+    @appointments = current_user.assigned_appointments.by_recent.includes(:appointment_type).page(params[:page])
     render :index
   end
 
@@ -28,6 +33,25 @@ class AppointmentsController < ApplicationController
     render :index
   end
 
+  def paid
+    @appointments = current_user.assigned_appointments.paid.by_recent.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
+  def unpaid
+    @appointments = current_user.assigned_appointments.unpaid.by_start_time.includes(:appointment_type).page(params[:page])
+    render :index
+  end
+
+  def incomplete
+    if !current_user.is_admin
+      redirect_to appointments_path 
+    else
+      @appointments = Appointment.incomplete.by_start_time.includes(:appointment_type).page(params[:page])
+      render :index
+    end
+  end
+  
   def unassigned
     if !current_user.is_admin
       redirect_to appointments_path 
@@ -41,7 +65,7 @@ class AppointmentsController < ApplicationController
     if !current_user.is_admin
       redirect_to appointments_path 
     else
-      @appointments = Appointment.by_start_time.includes(:appointment_type).page(params[:page])
+      @appointments = Appointment.by_recent.includes(:appointment_type).page(params[:page])
       render :index
     end
   end
@@ -80,6 +104,24 @@ class AppointmentsController < ApplicationController
       notice = "Appointment Completed by #{current_user.display_name}"
     end
     redirect_to @appointment, notice: notice
+  end
+
+  def add_payee
+    @appointment.payee_id = params[:appointment][:payee_id]
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully added"
+    else
+      redirect_to @appointment, notice: "Payee was not added"
+    end
+  end
+
+  def remove_payee
+    @appointment.payee_id = nil
+    if @appointment.save
+      redirect_to @appointment, notice: "Payee successfully removed"
+    else
+      redirect_to @appointment, notice: "Payee was not removed"
+    end
   end
 
   private

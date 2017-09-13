@@ -5,5 +5,7 @@ class FeedController < ApplicationController
     @placements = Placement.with_any_tags("home").in_time(DateTime.now).by_priority
 
     @user_completion = UserCompletion.new(current_user)
+
+    @event = Event.published.upcoming.by_start_time.first
   end
 end

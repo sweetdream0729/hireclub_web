@@ -20,6 +20,8 @@
       = pluralize(Community.all.count, "community")
 
   .communities.mt-4
-    = render @communities
+    .row
+      .col-md-6
+        = render @communities
 
   = paginate @communities

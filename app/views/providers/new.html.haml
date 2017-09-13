@@ -1,0 +1,82 @@
+.container.content_container
+  .row
+    .col-sm-6.offset-sm-3.text-center
+      %h1= title "Become A Provider"
+  .row
+    .col-sm-6.offset-sm-3
+      .mt-2
+        = form_for @provider, url: providers_path, method: 'POST' do |f|
+          - if @provider.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@provider.errors.count, "error")} prohibited this job from being saved:"
+              %ul
+                - @provider.errors.full_messages.each do |msg|
+                  %li= msg
+          .row
+            .col-12
+              %label Legal Name
+            .col-6
+              .form-group
+                = f.text_field :first_name, class: 'form-control',placeholder: "First Name"
+            .col-6
+              .form-group
+                = f.text_field :last_name, class: 'form-control', placeholder: "Last Name"
+          .row
+            .col-6
+              .form-group
+                = f.label :phone
+                = f.text_field :phone, class: 'form-control', placeholder: "Phone Number"
+            .col-6
+              .form-group
+                %label Date Of Birth
+                = f.text_field :date_of_birth, class: 'datepicker form-control', placeholder: "mm/dd/yyyy"
+                .form-control-feedback
+          .row
+            .col-12
+              .form-group
+                %label Social Security Number
+                = f.text_field :ssn, class: 'form-control', placeholder: "111-11-1111"
+                .form-text.text-muted{data: {toggle:"tooltip", placement: "bottom"}, title: "Stripe, our credit card payment processor, also helps us disburse funds to you. Any organization that sends funds to individuals, businesses, etc., is required to collect and verify information about people, known as “Know Your Customer” (or KYC) checks. To perform these checks, Stripe needs to gather certain information so they can verify your identity. Stripe first attempts to verify you off of the minimum requested information (legal name, date of birth (DOB), and your Social Security Number) "}
+                  We need your Social Security Number to verify your identity and process payments.
+
+                  
+              
+          .row
+            .col-12
+              = f.label "Address"
+            .col-12.mb-3
+              .form-group
+                = f.text_field :address_line_1, class: 'form-control',placeholder: "123 Main St"
+            .col-12.mb-3
+              .form-group
+                = f.text_field :address_line_2, class: 'form-control'
+            .col-6.mb-3
+              .form-group
+                = f.text_field :city, class: 'form-control', placeholder: "San Francisco"
+            .col-6.mb-3
+              .form-group
+                = f.select :state, Location.us_states, {}, {class: "form-control"}
+            .col-6.mb-3
+              .form-group
+                = f.text_field :postal_code, class: 'form-control', placeholder: "Enter Postal Code"
+            .col-6.mb-3
+              .form-group
+                = f.select :country, Provider::COUNTRIES.map{ |c| [c[:name], c[:code]] }, {}, {class: "form-control"}
+          .row
+            .col-12.mb-3
+              .form-group
+                %label Upload US Photo ID
+                = f.file_field :id_proof, class: 'form-control-file'
+                %p.form-text.text-muted
+                  You must provide a valid US Photo ID. Your Driver's License, State ID, Social Security Card, Passport, or Green Card are all accepted.
+            .col-12.mb-3
+              .form-group.tos
+                %input{ type: 'checkbox', name: 'tos', checked: false }
+                I accept the
+                %a{ href: 'https://stripe.com/us/terms', target: '_blank' } Stripe Terms of Service
+              %button{:form => "new_provider", :type => "submit", :value => "Submit", class: "btn btn-info btn-lg btn-block", id: "create_provider_btn"} Create Account
+
+            .col-12.mt-5
+              .text-center
+                %a.stripe-logo{ target: '_blank', href: 'https://stripe.com' }
+                  = image_tag 'powered-by-stripe.png', width: 238 / 2, height: 52 / 2, alt: ''

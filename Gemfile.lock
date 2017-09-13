@@ -184,7 +184,7 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    faker (1.7.2)
+    faker (1.8.4)
       i18n (~> 0.5)
     faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
@@ -232,7 +232,7 @@ GEM
       ruby_parser (~> 3.5)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.8.1)
+    i18n (0.8.6)
     impressionist (1.5.2)
       nokogiri (~> 1.6)
     ipaddress (0.8.3)
@@ -332,6 +332,10 @@ GEM
       activerecord (>= 4.2)
       activesupport (>= 4.2)
       arel (>= 6)
+    phony (2.15.47)
+    phony_rails (0.14.6)
+      activesupport (>= 3.0)
+      phony (> 2.15)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -571,6 +575,7 @@ DEPENDENCIES
   one_signal
   pg (~> 0.18)
   pg_search
+  phony_rails
   pry-byebug
   public_activity
   puma (~> 3.0)

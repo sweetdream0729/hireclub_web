@@ -22,8 +22,16 @@
               Someone mentions me
           .form-check
             %label.form-check-label
+              = p.check_box :email_on_job_post, class: 'form-check-input'
+              Someone I follow posts a job
+          .form-check
+            %label.form-check-label
+              = p.check_box :email_on_event_publish, class: 'form-check-input'
+              Someone I follow adds an event
+          .form-check
+            %label.form-check-label
               = p.check_box :email_on_unread, class: 'form-check-input'
-              I have unread messages
+              I have unread messages 
 
           %hr
             %label.form-check-label
