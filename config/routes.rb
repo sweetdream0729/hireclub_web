@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :newsletters
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
@@ -50,6 +49,12 @@ Rails.application.routes.draw do
   get 'search/communities' => 'search#communities'
 
   get 'feed', to: "feed#index", as: :feed
+
+  resources :newsletters do
+    member do
+      get :preview
+    end
+  end
 
   resources :events do
     collection do

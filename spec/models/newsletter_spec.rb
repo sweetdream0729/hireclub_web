@@ -12,6 +12,7 @@ RSpec.describe Newsletter, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:subject) }
+    it { should validate_presence_of(:email_list) }
     it { newsletter.save; should validate_uniqueness_of(:campaign_id).allow_nil }
   end
 

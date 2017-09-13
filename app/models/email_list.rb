@@ -2,6 +2,7 @@ class EmailList < ApplicationRecord
   # Associations
   has_many :email_list_members, inverse_of: :email_list, dependent: :destroy
   has_many :users, through: :email_list_members
+  has_many :newsletters
 
   # Validations
   validates :name, presence: true, uniqueness: { case_sensitive: false }

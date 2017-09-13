@@ -1,6 +1,9 @@
 class Newsletter < ApplicationRecord
+  # Association
+  belongs_to :email_list
 
   # Validations
+  validates_presence_of  :email_list
   validates_presence_of  :subject
   validates_uniqueness_of  :campaign_id, allow_nil: true
 

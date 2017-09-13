@@ -13,6 +13,9 @@
     = f.label :preheader
     = f.text_field :preheader, class: "form-control"
   .form-group
+    = f.label :email_list
+    = f.select :email_list_id, EmailList.all.map{ |el| [el.name, el.id] }, {}, {class: 'form-control'}
+  .form-group
     = f.label :html
     = f.text_area :html, class: "form-control", rows: 20
 

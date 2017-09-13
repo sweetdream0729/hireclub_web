@@ -6,6 +6,7 @@
       %tr
         %th Subject
         %th Preheader
+        %th Email List
         %th Sent On
         %th
         %th
@@ -15,8 +16,10 @@
         %tr
           %td= link_to newsletter.subject, newsletter
           %td= newsletter.preheader
+          %td= newsletter.email_list.try(:name)
           %td= newsletter.sent_on
           %td= link_to 'Edit', edit_newsletter_path(newsletter)
+          %td= link_to 'Preview', preview_newsletter_path(newsletter)
           %td= link_to 'Destroy', newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
   %br
