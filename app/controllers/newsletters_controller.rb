@@ -16,7 +16,7 @@ class NewslettersController < ApplicationController
 
   def preview
     NewsletterMailer.newsletter(@newsletter, current_user).deliver_now
-    redirect_to newsletters_path, notice: "Newsletter sent to #{current_user.email}"
+    redirect_to newsletters_path, notice: "Newsletter preview sent to #{current_user.email}"
   end
 
   # GET /newsletters/new
