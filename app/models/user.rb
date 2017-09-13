@@ -45,8 +45,9 @@ class User < ApplicationRecord
   scope :oldest,       -> { order(created_at: :asc) }
   scope :alphabetical, -> { order(name: :asc) }
   scope :by_followers, -> { order(followers_count_cache: :desc) }
-  scope :scoreable,    -> { where.not(confirmed_at: nil).where.not(avatar_uid: nil)}
+  scope :scoreable,    -> { confirmed.where.not(avatar_uid: nil)}
   scope :has_stripe,   -> { where.not(stripe_customer_id: nil)}
+  scope :confirmed,    -> { where.not(confirmed_at: nil)}
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
@@ -103,6 +104,8 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy, inverse_of: :user
   has_many :payments, dependent: :nullify, inverse_of: :user
   has_many :cards, inverse_of: :user, dependent: :destroy
+  has_many :email_list_members, inverse_of: :user, dependent: :destroy
+
 
   
   # Nested
@@ -225,6 +228,7 @@ class User < ApplicationRecord
 
   def welcome!
     create_activity_once :welcome, owner: self, private: false
+    EmailList.get_all_users.add_user(self)
   end
 
   def primary_role

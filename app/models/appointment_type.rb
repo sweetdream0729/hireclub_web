@@ -6,6 +6,7 @@ class AppointmentType < ApplicationRecord
 
   # Scopes
   scope :by_priority,    -> { order(priority: :asc) }
+  scope :published,      -> { where(published: :true) }
 
   # Associations
   belongs_to :appointment_category

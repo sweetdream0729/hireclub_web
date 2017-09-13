@@ -55,6 +55,8 @@ RSpec.describe User, type: :model do
     it { should have_many(:cards).dependent(:destroy) }
 
     it { should have_many(:events).dependent(:nullify) }
+
+    it { should have_many(:email_list_members).dependent(:destroy) }
   end
 
   describe 'validations' do
