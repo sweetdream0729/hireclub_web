@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913081752) do
+ActiveRecord::Schema.define(version: 20170914220705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -705,6 +705,8 @@ ActiveRecord::Schema.define(version: 20170913081752) do
     t.boolean  "email_on_unread",        default: true, null: false
     t.boolean  "email_on_job_post",      default: true, null: false
     t.boolean  "email_on_event_publish", default: true, null: false
+    t.boolean  "email_newsletter",       default: true, null: false
+    t.index ["email_newsletter"], name: "index_preferences_on_email_newsletter", using: :btree
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
     t.index ["email_on_event_publish"], name: "index_preferences_on_email_on_event_publish", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree

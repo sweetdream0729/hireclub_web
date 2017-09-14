@@ -15,6 +15,7 @@ class Preference < ApplicationRecord
       self.email_on_unread = false
       self.email_on_job_post = false
       self.email_on_event_publish = false
+      self.email_newsletter = false
     end
   end
 end
