@@ -3,7 +3,7 @@ class NewsletterMailer < ApplicationMailer
   def newsletter(newsletter, user)
     @newsletter = newsletter
     @user = user
-    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_newsletter"))
+    @unsubscribe_url = get_utm_url unsubscribe_url(@user.preference_access_token("email_on_newsletter"))
 
     set_campaign(@newsletter.campaign_id) if @newsletter.campaign_id.present?
     add_metadata(:user_id, @user.id)
