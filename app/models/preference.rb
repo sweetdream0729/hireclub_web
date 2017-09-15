@@ -2,6 +2,9 @@ class Preference < ApplicationRecord
   attr_accessor :unsubscribe_all
   belongs_to :user
 
+  # Scope
+  scope :email_newsletter,       -> { where(email_newsletter: true) }
+  
   # Validations
   validates :user, presence: true, uniqueness: true
 

@@ -52,7 +52,7 @@ class Newsletter < ApplicationRecord
     self.set_campaign_id
     self.save
 
-    self.email_list.users.find_each do |user|
+    self.email_list.users.email_newsletter.find_each do |user|
       NewsletterMailer.newsletter(self, user).deliver_later
     end
   end
