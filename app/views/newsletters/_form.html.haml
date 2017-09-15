@@ -24,5 +24,7 @@
 
   %hr
   = f.submit 'Save', class: "btn btn-lg btn-info"
+  - if policy(@newsletter).destroy?
+    = link_to 'Delete', @newsletter, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-danger btn-lg"
   = link_to 'Cancel', newsletters_path, class: "btn btn-lg btn-link"
 

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   resources :newsletters do
     member do
       get :preview
+      get :publish
     end
   end
 

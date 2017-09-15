@@ -1,12 +1,12 @@
 class NewslettersController < ApplicationController
   before_action :sign_up_required
-  before_action :set_newsletter, only: [:show, :edit, :update, :destroy, :preview]
+  before_action :set_newsletter, only: [:show, :edit, :update, :destroy, :preview, :publish]
   after_action :verify_authorized, except: [:index]
 
   # GET /newsletters
   def index
     redirect_to root_path unless current_user.is_admin
-    @newsletters = Newsletter.all
+    @newsletters = Newsletter.by_recent
   end
 
   # GET /newsletters/1
@@ -16,8 +16,14 @@ class NewslettersController < ApplicationController
   end
 
   def preview
-    NewsletterMailer.newsletter(@newsletter, current_user).deliver_now
+    @user = current_user
+    NewsletterMailer.newsletter(@newsletter, @user).deliver_now
     redirect_to newsletters_path, notice: "Newsletter preview sent to #{current_user.email}"
+  end
+
+  def publish
+    @newsletter.publish!
+    redirect_to newsletters_path, notice: "Newsletter #{@newsletter.campaign_id} sent to #{@newsletter.email_list.members_count} users in #{@newsletter.email_list.name}"
   end
 
   # GET /newsletters/new

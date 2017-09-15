@@ -1,4 +1,10 @@
 class Newsletter < ApplicationRecord
+  # Extensions
+  nilify_blanks
+
+  # Scopes
+  scope :by_recent, -> {order(created_at: :asc)}
+
   # Association
   belongs_to :email_list
 
@@ -12,13 +18,54 @@ class Newsletter < ApplicationRecord
   end
   
   def set_campaign_id
-    self.campaign_id = self.name.parameterize.gsub("-","_").downcase
+    self.campaign_id = self.name.parameterize.gsub("-","_").downcase if self.campaign_id.blank?
   end
 
   def replace_html(user)
-    output = self.html
+    return "" if html.blank?
+    output = html
 
-    output.gsub! '{first_name}', user.first_name
-    output.gsub! '{profile_link}', Rails.application.routes.url_helpers.user_url(user,:host => Rails.application.secrets.domain_name)
+    output = output.gsub '{first_name}', user.first_name
+    output = output.gsub '{profile_link}', Rails.application.routes.url_helpers.user_url(user,:host => Rails.application.secrets.domain_name)
+    output
+  end
+
+  def publish!
+    return unless publishable?
+    
+    if Rails.env.test?
+      DeliverNewsletterJob.perform_now(self)
+    else
+      #if self.scheduled_on.present?
+        #NewsletterDeliverJob.set(wait_until: self.scheduled_on).perform_later(self)
+      #else
+        DeliverNewsletterJob.perform_later(self)
+      #end
+    end
+  end
+
+  def deliver!
+    return if published?
+
+    self.sent_on = DateTime.now
+    self.set_name
+    self.set_campaign_id
+    self.save
+
+    self.email_list.users.find_each do |user|
+      NewsletterMailer.newsletter(self, user).deliver_later
+    end
+  end
+
+  def published?
+    sent_on.present?
+  end
+
+  def publishable?
+    !published? && persisted? && html.present?
+  end
+
+  def destroyable?
+    !published? && !new_record?
   end
 end

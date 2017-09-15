@@ -14,11 +14,15 @@ class NewsletterPolicy < ApplicationPolicy
   end
 
   def destroy?
-    admin?
+    admin? && record.destroyable?
   end
 
   def preview?
     admin?
+  end
+
+  def publish?
+    admin? && record.publishable?
   end
 
 end
