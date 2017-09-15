@@ -1,5 +1,8 @@
 class Newsletter < ApplicationRecord
   # Extensions
+  include UnpublishableActivity
+  include PublicActivity::Model
+  include PublicActivity::CreateActivityOnce
   nilify_blanks
 
   # Scopes
@@ -7,6 +10,7 @@ class Newsletter < ApplicationRecord
 
   # Association
   belongs_to :email_list
+  belongs_to :published_by, class_name: 'User'
 
   # Validations
   validates_presence_of  :email_list
@@ -30,9 +34,11 @@ class Newsletter < ApplicationRecord
     output
   end
 
-  def publish!
+  def publish!(user)
     return unless publishable?
-    
+    self.published_by = user
+    self.save
+
     if Rails.env.test?
       DeliverNewsletterJob.perform_now(self)
     else
@@ -42,6 +48,8 @@ class Newsletter < ApplicationRecord
         DeliverNewsletterJob.perform_later(self)
       #end
     end
+
+    self.create_activity_once :publish, owner: user, private: true
   end
 
   def deliver!

@@ -22,7 +22,7 @@ class NewslettersController < ApplicationController
   end
 
   def publish
-    @newsletter.publish!
+    @newsletter.publish!(current_user)
     @newsletter.reload
     redirect_to newsletters_path, notice: "Newsletter #{@newsletter.campaign_id} sent to #{@newsletter.email_list.members_count} users in #{@newsletter.email_list.name}"
   end

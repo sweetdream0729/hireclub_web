@@ -1,0 +1,2 @@
+- newsletter = activity.trackable
+= render partial: "/notifications/item", locals: {activity: activity, verb: "published newsletter", object: newsletter.subject, link: url_for(newsletter)}
