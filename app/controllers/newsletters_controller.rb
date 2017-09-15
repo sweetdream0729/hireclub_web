@@ -11,6 +11,7 @@ class NewslettersController < ApplicationController
 
   # GET /newsletters/1
   def show
+    @user = current_user
     render "newsletter_mailer/newsletter", layout: 'mailer'
   end
 
