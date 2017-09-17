@@ -21,4 +21,15 @@ class Preference < ApplicationRecord
       self.email_newsletter = false
     end
   end
+
+  def self.get_label(preference_type)
+    case preference_type
+    when "unsubscribe_all"
+      return "all"
+    when "email_newsletter"
+      return "newsletter"
+    else 
+      return preference_type.split('_')[2..-1].join(" ")
+    end 
+  end
 end

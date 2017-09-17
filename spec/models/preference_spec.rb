@@ -24,4 +24,14 @@ RSpec.describe Preference, type: :model do
       expect(preference.email_on_mention).to be false
     end
   end
+
+  describe "self.get_label" do
+    it "should return correct label for preference" do
+      expect(Preference.get_label("unsubscribe_all")).to eq("all")
+      expect(Preference.get_label("email_newsletter")).to eq("newsletter")
+      expect(Preference.get_label("email_on_follow")).to eq("follow")
+      expect(Preference.get_label("email_on_comment")).to eq("comment")
+      expect(Preference.get_label("email_on_mention")).to eq("mention")
+    end
+  end
 end

@@ -47,14 +47,7 @@ class SettingsController < ApplicationController
     if data && data[:user_id] && data[:preference]
       @user = User.find(data[:user_id])
       @user.update_preference(data[:preference], data[:value])
-
-      #mail_type used in view
-      if data[:preference] == "unsubscribe_all"
-        @mail_type = "all"
-      else
-        #preference has format eg. mail_on_comment ignoring mail_on
-        @mail_type = data[:preference].split('_')[2..-1].join(" ")
-      end
+      @mail_type = Preference.get_label(data[:preference])      
 
       render :layout => 'minimal'
     else
@@ -70,9 +63,8 @@ class SettingsController < ApplicationController
     if data && data[:user_id] && data[:preference]
       @user = User.find(data[:user_id])
       @user.update_preference(data[:preference], data[:value])
-
-      @mail_type = data[:preference].split('_')[2..-1].join(" ")
-
+      @mail_type = Preference.get_label(data[:preference])
+      
       render :layout => 'minimal'
     else
       redirect_to new_user_session_path
