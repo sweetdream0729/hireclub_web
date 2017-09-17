@@ -131,6 +131,13 @@
             = Appointment.created_between(@start_time,@end_time).count
           %p.card-text Appointments
 
+    .col-lg-2.col-md-3.col-sm-4.col-6
+      .card.card-inverse.card-success.mb-3
+        .card-block
+          %h2.card-title
+            = humanized_money_with_symbol(Payment.created_between(@start_time,@end_time).sum(:amount_cents)/100)
+          %p.card-text Revenue
+
   .row
     .col-12
       %p.text-muted
