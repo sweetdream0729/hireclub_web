@@ -6,6 +6,10 @@ class Payout < ApplicationRecord
   
   monetize :amount_cents
 
+  # Scopes
+  scope :by_oldest,        -> {order(created_at: :asc)}
+  scope :created_between,  -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  
   # Associations
   belongs_to :provider
   belongs_to :payoutable, polymorphic: true
