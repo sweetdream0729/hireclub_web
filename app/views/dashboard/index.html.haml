@@ -111,6 +111,25 @@
           %h2.card-title
             = AnalyticsEvent.searches.created_between(@start_time,@end_time).count
           %p.card-text Searches
+    .col-lg-2.col-md-3.col-sm-4.col-6
+      .card.card-inverse.card-primary.mb-3
+        .card-block
+          %h2.card-title
+            = AnalyticsEvent.email_opens.created_between(@start_time,@end_time).count
+          %p.card-text Email Opens
+    .col-lg-2.col-md-3.col-sm-4.col-6
+      .card.card-inverse.card-info.mb-3
+        .card-block
+          %h2.card-title
+            = AnalyticsEvent.email_clicks.created_between(@start_time,@end_time).count
+          %p.card-text Email Clicks
+
+    .col-lg-2.col-md-3.col-sm-4.col-6
+      .card.card-inverse.card-primary.mb-3
+        .card-block
+          %h2.card-title
+            = Appointment.created_between(@start_time,@end_time).count
+          %p.card-text Appointments
 
   .row
     .col-12
