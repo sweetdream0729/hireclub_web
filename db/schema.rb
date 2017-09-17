@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912233420) do
+ActiveRecord::Schema.define(version: 20170915140821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -604,11 +604,14 @@ ActiveRecord::Schema.define(version: 20170912233420) do
     t.string   "name"
     t.string   "campaign_id"
     t.datetime "sent_on"
-    t.string   "subject",     null: false
+    t.string   "subject",         null: false
     t.string   "preheader"
     t.text     "html"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "email_list_id"
+    t.integer  "published_by_id"
+    t.index ["email_list_id"], name: "index_newsletters_on_email_list_id", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -703,6 +706,8 @@ ActiveRecord::Schema.define(version: 20170912233420) do
     t.boolean  "email_on_unread",        default: true, null: false
     t.boolean  "email_on_job_post",      default: true, null: false
     t.boolean  "email_on_event_publish", default: true, null: false
+    t.boolean  "email_newsletter",       default: true, null: false
+    t.index ["email_newsletter"], name: "index_preferences_on_email_newsletter", using: :btree
     t.index ["email_on_comment"], name: "index_preferences_on_email_on_comment", using: :btree
     t.index ["email_on_event_publish"], name: "index_preferences_on_email_on_event_publish", using: :btree
     t.index ["email_on_follow"], name: "index_preferences_on_email_on_follow", using: :btree
@@ -997,6 +1002,7 @@ ActiveRecord::Schema.define(version: 20170912233420) do
   add_foreign_key "messages", "users"
   add_foreign_key "milestones", "companies"
   add_foreign_key "milestones", "users"
+  add_foreign_key "newsletters", "email_lists"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
   add_foreign_key "payouts", "providers"

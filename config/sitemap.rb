@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.hireclub.com"
+SitemapGenerator::Sitemap.default_host = "https://hireclub.com"
 # pick a place safe to write the files
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 
@@ -34,5 +34,30 @@ SitemapGenerator::Sitemap.create do
   add companies_path, :priority => 0.7, :changefreq => 'daily'
   Company.find_each do |company|
     add company_path(company), :lastmod => company.updated_at
+  end
+
+  add communities_path, :priority => 0.7, :changefreq => 'daily'
+  Community.find_each do |community|
+    add community_path(community), :lastmod => community.updated_at
+  end
+
+  add projects_path, :priority => 0.7, :changefreq => 'daily'
+  Project.find_each do |project|
+    add project_path(project), :lastmod => project.updated_at
+  end
+
+  add stories_path, :priority => 0.7, :changefreq => 'daily'
+  Story.published.find_each do |story|
+    add story_path(story), :lastmod => story.updated_at
+  end
+
+  add jobs_path, :priority => 0.7, :changefreq => 'daily'
+  Job.published.find_each do |job|
+    add job_path(job), :lastmod => job.updated_at
+  end
+
+  add events_path, :priority => 0.7, :changefreq => 'daily'
+  Event.published.find_each do |event|
+    add event_path(event), :lastmod => event.updated_at
   end
 end

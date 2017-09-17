@@ -2,9 +2,26 @@
 #
 # To ban all spiders from the entire site uncomment the next two lines:
 User-agent: *
-Disallow: /
+#Disallow: /*
+
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /search
+Disallow: /companies/*/edit
+Disallow: /skills/*/edit
+Disallow: /roles/*/edit
+Disallow: /events/*/edit
+Disallow: /projects/*/edit
+Disallow: /stories/*/edit
+Disallow: /jobs/*/edit
+Disallow: /communities/*/edit
+Disallow: /conversations
+Disallow: /appointments
 
 Allow: /$
+Allow: /helpers
+Allow: /headshots
 Allow: /about
 Allow: /companies
 Allow: /companies/*
@@ -12,6 +29,16 @@ Allow: /skills
 Allow: /skills/*
 Allow: /roles
 Allow: /roles/*
+Allow: /events
+Allow: /events/*
+Allow: /projects
+Allow: /projects/*
+Allow: /stories
+Allow: /stories/*
+Allow: /jobs
+Allow: /jobs/*
+Allow: /communities
+Allow: /communities/*
 Allow: /sitemap.xml
 
 SITEMAP: https://s3-us-west-1.amazonaws.com/hireclub-production/sitemaps/sitemap.xml.gz

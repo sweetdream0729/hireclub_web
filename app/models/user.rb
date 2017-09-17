@@ -49,6 +49,8 @@ class User < ApplicationRecord
   scope :has_stripe,   -> { where.not(stripe_customer_id: nil)}
   scope :confirmed,    -> { where.not(confirmed_at: nil)}
 
+  scope :email_newsletter, ->  { joins(:preference).merge(Preference.email_newsletter) }
+
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
   # Associations

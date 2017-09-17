@@ -1,6 +1,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  # For redirecting www to non www url
+  constraints subdomain: 'www' do
+    get ':any', to: redirect(subdomain: nil, path: '/%{any}'), any: /.*/
+  end
+  
   post 'webhooks/sparkpost' => 'webhooks#sparkpost'
   post 'webhooks/acuity_scheduled' => 'webhooks#acuity_scheduled'
   post 'webhooks/acuity_rescheduled' => 'webhooks#acuity_rescheduled'
@@ -49,6 +54,13 @@ Rails.application.routes.draw do
   get 'search/communities' => 'search#communities'
 
   get 'feed', to: "feed#index", as: :feed
+
+  resources :newsletters do
+    member do
+      get :preview
+      get :publish
+    end
+  end
 
   resources :events do
     collection do

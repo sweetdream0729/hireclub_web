@@ -1,0 +1,10 @@
+.container.content_container
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to "Newsletters", newsletters_path
+    %li.breadcrumb-item
+      = link_to @newsletter.subject, @newsletter
+      
+  %h1 Edit Newsletter
+
+  = render 'form'
