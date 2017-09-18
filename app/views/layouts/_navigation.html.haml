@@ -65,7 +65,7 @@
             .dropdown-divider
             %a.dropdown-item{:href => appointments_path} 
               Appointments
-              - count = current_user.appointments.active.incomplete.count 
+              - count = current_user.incomplete_appointments.count
               - if count > 0
                 %small.ml-2
                   %span.badge.badge-default

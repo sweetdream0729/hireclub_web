@@ -249,6 +249,10 @@ class User < ApplicationRecord
     notifications.published.not_messages
   end
 
+  def incomplete_appointments
+    appointments.active.incomplete
+  end
+
   def preference
     super || build_preference
   end

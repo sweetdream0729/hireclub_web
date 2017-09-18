@@ -6,7 +6,16 @@
         = render_activities(@activities, locals: { active_user: current_user}, layout: :activity)
       .col-md-4.col-lg-4
         = render partial: "/users/user_completion_card"
-        
+
+        - count = current_user.incomplete_appointments.count 
+        - if count > 0
+          - appointment = current_user.incomplete_appointments.by_start_time.first
+          .list-group.mb-4
+            = link_to current_user.appointments.active.first, class: "list-group-item" do
+              #{appointment.name}
+              &nbsp;
+              #{local_time(appointment.start_time)}
+
         = link_to helpers_path do
           = image_tag("helpers/helpers_preview.jpg", class: 'img-fluid rounded mb-4')
 
