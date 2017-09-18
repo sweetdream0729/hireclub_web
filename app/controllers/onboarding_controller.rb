@@ -23,6 +23,8 @@ class OnboardingController < ApplicationController
   end
 
   def update
+    @count = wizard_steps.count
+
     @user = current_user
     @user.update_attributes(user_params)
     render_wizard @user
