@@ -456,6 +456,11 @@ class User < ApplicationRecord
     return email
   end
 
+  def bio_count
+    return bio.length if bio.present?
+    0
+  end
+
   def suggested_username
     if username.present?
       source = username

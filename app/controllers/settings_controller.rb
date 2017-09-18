@@ -3,6 +3,7 @@ class SettingsController < ApplicationController
   before_action :set_user
 
   def index
+    @bio_remaining = 140 - @user.bio_count
   end
 
   def status

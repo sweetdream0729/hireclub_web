@@ -44,6 +44,10 @@
         .form-group
           = f.label :bio
           = f.text_area :bio, class: 'form-control', rows: 3, maxlength: 140
+          %small.form-text.text-muted
+            %span.js_bio_count
+              = @bio_remaining
+            Characters Left
 
         .form-group
           = f.label :timezone
