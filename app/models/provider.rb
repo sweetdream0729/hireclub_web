@@ -17,6 +17,7 @@ class Provider < ApplicationRecord
 
   # Associations
   belongs_to :user
+  delegate :name, to: :user
   has_many :bank_accounts, dependent: :destroy
   has_many :payouts, dependent: :destroy
 
