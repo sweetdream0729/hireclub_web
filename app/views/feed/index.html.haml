@@ -29,7 +29,8 @@
 
         - if @event.present?
           .events.mt-5
-            %h6 Upcoming Events
+            %h6 
+              = link_to "Events", events_path
             .card
               %a{href: @event.source_url, target: "_blank"}
                 = image_tag(model_image(@event.image, 1920, 710, true), class: "card-img-top img-fluid")
