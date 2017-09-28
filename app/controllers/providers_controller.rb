@@ -1,6 +1,7 @@
 class ProvidersController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :new]
+  after_action :verify_authorized, except: [:index, :new, :update]
+  before_action :set_provider, only: [:show, :edit, :update]
 
   def index
     unless current_user.is_admin
@@ -31,15 +32,31 @@ class ProvidersController < ApplicationController
     end
   end
 
+  def edit
+    authorize @provider
+  end
+
+  def update
+    if @provider.update(provider_params)
+      redirect_to @provider, notice: 'Provider was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   def show
-    @provider = Provider.find(params[:id])
     authorize @provider
   end
 
   private
+
+    def set_provider
+      @provider = Provider.find(params[:id])
+    end
+
     def provider_params
       params.require(:provider).permit(:first_name, :last_name, :phone,
        :ssn, :date_of_birth, :address_line_1, :address_line_2, :city,
-       :state, :country, :postal_code, :id_proof, :retained_id_proof)
-  end
+       :state, :country, :postal_code, :id_proof, :retained_id_proof, :acuity_calendar_id)
+    end
 end

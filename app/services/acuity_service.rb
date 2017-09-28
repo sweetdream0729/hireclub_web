@@ -79,6 +79,12 @@ class AcuityService
     a.user_id = user.id if a.user.nil? && user.present?
     a.appointment_type_id = appointment_type.id if appointment_type.present?
     a.save
+
+    #if calendar id exist assign provider as helper
+    provider = Provider.find_by(acuity_calendar_id: appointment['calenderID'])
+    if provider.present?
+      assignee = a.assignees.where(user_id: user_id).first_or_create
+    end
   end
 
 

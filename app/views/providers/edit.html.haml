@@ -1,0 +1,21 @@
+.container.content_container
+  .row
+    .col-sm-6.offset-sm-3.text-center
+      %h1= title "Update A Provider"
+  .row
+    .col-sm-6.offset-sm-3
+      .mt-2
+        = form_for @provider do |f|
+          - if @provider.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@provider.errors.count, "error")} prohibited this job from being saved:"
+              %ul
+                - @provider.errors.full_messages.each do |msg|
+                  %li= msg
+          .row
+            .col-12
+              %label Acuity Calender ID
+              .form-group
+                = f.text_field :acuity_calendar_id, class: 'form-control',placeholder: "Acuity Calender ID"
+            .col-12
+              = f.submit 'Update Account', class: 'btn btn-info btn-lg btn-block'

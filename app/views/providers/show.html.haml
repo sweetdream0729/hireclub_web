@@ -100,6 +100,11 @@
               .col-3
               .col-9
                 = @provider.city + ", " + @provider.state + ", " + @provider.country
+            .row
+              .col-3 
+                Acuity Calender ID
+              .col-9
+                = @provider.acuity_calendar_id
       .card
         %h3.card-header Bank Accounts
         .card-block
@@ -137,3 +142,6 @@
             %h2.card-title
               = humanized_money_with_symbol(@provider.user.assigned_appointments.sum(:price_cents)/100)
             %p.card-text Revenue    
+  %br
+  - if is_admin?
+    %a.btn.btn-primary{:href => edit_provider_path} Add Acuity Calender ID
