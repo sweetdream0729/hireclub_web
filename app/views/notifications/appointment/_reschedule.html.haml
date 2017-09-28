@@ -4,5 +4,5 @@
 
 - appointment = activity.trackable
 - user_name = appointment.user.present? ? "" : "#{appointment.user_name} "
-- object = "#{appointment.name} to #{local_time(new_start_time, "%A %B %e %l:%M %P")}".html_safe
+- object = "#{appointment.name} to #{new_start_time.in_time_zone(appointment.timezone).strftime("%A %B %e %l:%M %P")}".html_safe
 = render partial: "/notifications/item", locals: {activity: activity, verb: "#{user_name}rescheduled appointment", object: object, link: url_for(appointment)}
