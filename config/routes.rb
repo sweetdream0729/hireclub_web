@@ -226,6 +226,8 @@ Rails.application.routes.draw do
       get :print
       get :follow
       get :unfollow
+      get :block
+      get :unblock
       get :followers
       get :following
       get :resend_confirmation

@@ -25,6 +25,12 @@ class UsersController < ApplicationController
 
   def show
     set_user
+    
+    if current_user && ( current_user.blocked?(@user) || @user.blocked?(current_user) )
+      flash[:alert] = "User not found"
+      redirect_to(root_path)
+    end
+
     impressionist(@user)
 
     @milestones = @user.milestones.published.by_newest
@@ -83,6 +89,22 @@ class UsersController < ApplicationController
       format.js { render :follow}
       format.html { redirect_to @user }
     end
+  end
+
+  def block
+    set_user
+    current_user.block @user
+    @user.reload
+
+    redirect_to current_user, alert: "#{@user.display_name} is now blocked"
+  end
+
+  def unblock
+    set_user
+    current_user.unblock @user
+    @user.reload
+
+    redirect_to @user, notice: "#{@user.display_name} is not blocked any more"
   end
 
   def followers
