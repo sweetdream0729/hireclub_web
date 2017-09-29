@@ -25,6 +25,7 @@ class Milestone < ApplicationRecord
   scope :by_oldest,     -> { order(start_date: :asc) }
   scope :by_newest,     -> { order(start_date: :desc) }
   scope :printable,     -> { where(printable: :true) }
+  scope :published,     -> { where(published: :true) }
   scope :work,          -> { where(kind: WORK) }
   scope :education,     -> { where(kind: EDUCATION) }
 

@@ -51,13 +51,23 @@
         = f.label :type
         = f.select :kind, Milestone::KINDS, {}, {class: 'form-control'}
 
-      .form-check
-        %label.form-check-label
-          = f.check_box :printable, class: 'form-check-input'
-          Printable
-      %small.text-muted
-        Show this milestone in
-        = link_to "Print Profile", print_user_path(current_user), target: "_blank"
+      .form-group
+        .form-check
+          %label.form-check-label
+            = f.check_box :printable, class: 'form-check-input'
+            Printable
+        %small.text-muted
+          Show this milestone in
+          = link_to "Print Profile", print_user_path(current_user), target: "_blank"
+          
+      .form-group
+        .form-check
+          %label.form-check-label
+            = f.check_box :published, class: 'form-check-input'
+            Visible
+        %small.text-muted
+          Show this milestone on my
+          = link_to "Profile", user_path(current_user), target: "_blank"
 
 
     .col-sm-5.offset-sm-1.hidden-xs-down

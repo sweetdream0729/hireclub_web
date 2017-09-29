@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     set_user
     impressionist(@user)
 
-    @milestones = @user.milestones.by_newest
+    @milestones = @user.milestones.published.by_newest
     @first_milestones = @milestones.limit(5)
     @rest_milestones = @milestones.offset(5)
 
