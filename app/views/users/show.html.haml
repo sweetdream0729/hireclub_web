@@ -98,16 +98,12 @@
 
     .col-sm-3
       - if viewing_self?(@user)
-        / - if @user.review_requests.any?
-        /   = link_to "Check Review Status", review_request_path(@user.review_requests.last), class: "btn btn-info btn-block"
-        / - else
-        /   - if @user_completion.can_request_review?
-        /     = link_to "Request Review", new_review_request_path, class: "btn btn-success btn-block"
+        = link_to "Share", new_invite_path, class: "btn btn-info btn-block"
           
         - unless @user.onboarded?
           = link_to "Complete Profile", onboarding_index_path, class: "btn btn-info btn-block"
         - else
-          = link_to "Edit", settings_path, class: "btn btn-info btn-block"
+          = link_to "Edit", settings_path, class: "btn btn-secondary btn-block"
       - else
         = link_to "Message", between_conversations_path(user_ids: [current_user.id, @user.id]), class: "btn btn-info btn-block" if policy(Conversation).create?
         
