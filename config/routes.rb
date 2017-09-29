@@ -105,7 +105,7 @@ Rails.application.routes.draw do
 
   resources :assignees, only: [:create, :destroy] 
   resources :subscriptions, only: [:new, :create, :show] 
-  resources :providers, only: [:new, :create, :show, :index, :edit, :update]
+  resources :providers, only: [:new, :create, :show, :index]
   resources :bank_accounts, only: [:new, :create]
   resources :payouts, only: [:new, :create] do
   end

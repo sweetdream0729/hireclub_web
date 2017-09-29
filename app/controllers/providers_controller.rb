@@ -1,7 +1,7 @@
 class ProvidersController < ApplicationController
   before_action :sign_up_required
-  after_action :verify_authorized, except: [:index, :new, :update]
-  before_action :set_provider, only: [:show, :edit, :update]
+  after_action :verify_authorized, except: [:index, :new]
+  before_action :set_provider, only: [:show]
 
   def index
     unless current_user.is_admin
@@ -29,18 +29,6 @@ class ProvidersController < ApplicationController
   		redirect_to @provider, notice: "Add Your Bank Account"
   	else
   		render :new
-    end
-  end
-
-  def edit
-    authorize @provider
-  end
-
-  def update
-    if @provider.update(provider_params)
-      redirect_to @provider, notice: 'Provider was successfully updated.'
-    else
-      render :edit
     end
   end
 
