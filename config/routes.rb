@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'helpers' => 'helpers#index', as: :helpers
 
   get 'settings' => 'settings#index', as: :settings
+  get 'settings/blocked'
   get 'settings/status'
   get 'settings/account'
   get 'settings/links'

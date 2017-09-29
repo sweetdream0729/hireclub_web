@@ -1,0 +1,31 @@
+.container.content_container
+  .row
+    = render partial: "sub_nav"
+    
+    .col-sm-9.mb-4
+      %h1= title "Blocked Users"
+      %hr
+      - @blocked_users.each do |user|
+        .media
+          .media-left
+            = link_to image_tag(model_avatar(user.avatar, 200, true), width: 50, class: 'd-flex mr-3 rounded-circle'), user
+          .media-body
+            %h5.semi_bold.mt-0.mb-1
+              = link_to user.display_name, user
+              %small.ml-2
+                = render partial: "/users/icons", locals: {user: user}
+            %small.text-muted
+              - if user.primary_role.present?
+                = user.primary_role.name
+              - if user.company.present?
+                ·
+                = link_to user.company.name, user.company
+              - if user.location.present?
+                ·
+                = user.location.name
+              ·
+              = "#{display_years(user.years_experience)} Experience"
+          .media-right
+            = link_to "Unblock", unblock_user_path(user), class: "btn btn-secondary"
+        %hr
+
