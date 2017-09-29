@@ -266,7 +266,7 @@
               %th Uploaded
 
           %tbody
-            - @resumes.by_newest.each do |resume|
+            - @resumes.by_recent.each do |resume|
               %tr
                 - if resume.file_uid.present?
                   %td

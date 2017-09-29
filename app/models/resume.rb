@@ -6,7 +6,7 @@ class Resume < ApplicationRecord
   tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
 
   # Scopes
-  scope :by_newest,       -> { order(created_at: :desc) }
+  scope :by_recent,       -> { order(created_at: :desc) }
   scope :only_public,     -> { where(private: false) }
   scope :created_between, -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 

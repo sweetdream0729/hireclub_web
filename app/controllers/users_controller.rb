@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       resume_scope = @user.resumes
     end
 
-    @resumes = resume_scope.by_newest
+    @resumes = resume_scope.by_recent
     
     if @user == current_user
       @user_completion = UserCompletion.new(@user)
