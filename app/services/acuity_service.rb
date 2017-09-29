@@ -74,6 +74,7 @@ class AcuityService
     a.end_time = (appointment['date'] + " " + appointment['endTime']).in_time_zone(a.timezone)
     
     a.confirmation_page_url = appointment['confirmationPage']
+    a.acuity_calendar_id = appointment['calenderID']
 
     #if user is not registered on hireclub
     a.user_id = user.id if a.user.nil? && user.present?
@@ -83,7 +84,7 @@ class AcuityService
     #if calendar id exist assign provider as helper
     provider = Provider.find_by(acuity_calendar_id: appointment['calenderID'])
     if provider.present?
-      assignee = a.assignees.where(user_id: user_id).first_or_create
+      assignee = a.assignees.where(user_id: provider.user_id).first_or_create
     end
   end
 

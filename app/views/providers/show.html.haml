@@ -142,6 +142,4 @@
             %h2.card-title
               = humanized_money_with_symbol(@provider.user.assigned_appointments.sum(:price_cents)/100)
             %p.card-text Revenue    
-  %br
-  - if is_admin?
-    %a.btn.btn-primary{:href => edit_provider_path} Add Acuity Calender ID
+ 
