@@ -48,6 +48,11 @@
         %p
           %strong Viewed On
           = local_time @invite.viewed_on
+      - if @invite.recipient_id.present?
+        %p
+          = @invite.recipient.name
+          %strong Joined On
+          = local_time @invite.recipient.created_at
 
       - if @bounced
         %hr

@@ -17,6 +17,7 @@ class InvitesController < ApplicationController
     @bounced = @invite.activities.where(key: InviteBounceActivity::KEY).exists?
     
     if current_user.nil? || (!current_user.is_admin && current_user != @user)
+      cookies[:invite_id] = @invite.id
       redirect_to user_path(@invite.user)
     end
   end
