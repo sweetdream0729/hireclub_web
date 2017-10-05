@@ -24,7 +24,7 @@
           = f.fields_for :milestones, f.object.milestones do |milestone|
             = render 'milestone_fields', f: milestone
           .links
-            = link_to_add_association f, :milestones, class: "btn btn-info btn-lg btn-block" do
+            = link_to_add_association f, :milestones, class: "btn btn-primary btn-lg btn-block" do
               %i.fa.fa-plus.mr-1
               Add Milestone        
         %hr
