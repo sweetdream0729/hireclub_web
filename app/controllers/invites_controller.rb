@@ -6,7 +6,7 @@ class InvitesController < ApplicationController
 
   # GET /invites
   def index
-    @invites = current_user.invites
+    @invites = current_user.invites.by_recent
   end
 
   # GET /invites/1
