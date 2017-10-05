@@ -37,7 +37,7 @@ class Provider < ApplicationRecord
   validates :state, presence: true
   validates :country, presence: true
   validates :postal_code, presence: true
-  validates :id_proof, presence: true
+  validates :id_proof, presence: true, on: :create
 
   phony_normalize :phone, :default_country_code => 'US', :add_plus => false
   validates_plausible_phone :phone, country_code: 'US'
