@@ -68,8 +68,9 @@
                                  </span>
                               </font>
                            </a>
-                           
-                           <%= render partial: "/email/elements/p", locals: { text: @invite.text} if @invite.text %>
+                           <span style="text-align: left;">
+                              <%= render partial: "/email/elements/p", locals: { text: Rinku.auto_link(markdown(@invite.text)).html_safe} if @invite.text %>
+                           </span>
 
                            <%= render partial: "/email/elements/v_spacer", locals: { height: 40} %>
 

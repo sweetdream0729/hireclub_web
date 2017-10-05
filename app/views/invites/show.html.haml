@@ -36,7 +36,7 @@
       %p.text-muted
         = local_time @invite.created_at
       
-      %p= @invite.text
+      %p= Rinku.auto_link(markdown(@invite.text)).html_safe
 
       - if @invite.viewed_on.present?
         %p
@@ -48,6 +48,11 @@
         %p
           %strong Viewed On
           = local_time @invite.viewed_on
+      - if @invite.recipient_id.present?
+        %p
+          = link_to @invite.recipient.name, @invite.recipient
+          %strong Joined On
+          = local_time @invite.recipient.created_at
 
       - if @bounced
         %hr

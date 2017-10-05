@@ -3,12 +3,12 @@ class Invite < ApplicationRecord
   extend FriendlyId
   friendly_id :slug, use: [:finders]
   is_impressionable
-  auto_strip_attributes :text, :squish => true
   auto_strip_attributes :input, :squish => true
   nilify_blanks
 
   # Scopes
-  scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  scope :created_between, -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
+  scope :by_recent,       -> {order(created_at: :desc)}
 
   include UnpublishableActivity
   include PublicActivity::Model

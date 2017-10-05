@@ -6,7 +6,7 @@ class InvitesController < ApplicationController
 
   # GET /invites
   def index
-    @invites = current_user.invites
+    @invites = current_user.invites.by_recent
   end
 
   # GET /invites/1
@@ -17,6 +17,7 @@ class InvitesController < ApplicationController
     @bounced = @invite.activities.where(key: InviteBounceActivity::KEY).exists?
     
     if current_user.nil? || (!current_user.is_admin && current_user != @user)
+      cookies[:invite_id] = @invite.id
       redirect_to user_path(@invite.user)
     end
   end
