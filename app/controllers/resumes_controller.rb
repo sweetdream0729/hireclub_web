@@ -5,7 +5,7 @@ class ResumesController < ApplicationController
 
   # GET /resumes
   def index
-    @resumes = current_user.resumes.by_newest
+    @resumes = current_user.resumes.by_recent
   end
 
   # GET /resumes/1

@@ -45,6 +45,17 @@ class Conversation < ApplicationRecord
     conversation_users.where(user: user).first.try(:unread_messages_count)
   end
 
+  def blocked?(current_user)
+    other_users = self.other_users(current_user)
+    other_users.each do |user|
+      if current_user.blocked?(user) || user.blocked?(current_user)
+        return true
+      end
+    end
+
+    return false
+  end
+
   def self.key_for_users(users)
     users.sort.map(&:id).join("_")
   end

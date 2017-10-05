@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929051404) do
+ActiveRecord::Schema.define(version: 20170929094547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -573,7 +573,6 @@ ActiveRecord::Schema.define(version: 20170929051404) do
     t.string   "text",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "email_job_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -593,10 +592,12 @@ ActiveRecord::Schema.define(version: 20170929051404) do
     t.string   "facebook_id"
     t.string   "kind",        default: "work"
     t.string   "skills",      default: [],                  array: true
+    t.boolean  "published",   default: true,   null: false
     t.index ["company_id"], name: "index_milestones_on_company_id", using: :btree
     t.index ["facebook_id"], name: "index_milestones_on_facebook_id", unique: true, using: :btree
     t.index ["kind"], name: "index_milestones_on_kind", using: :btree
     t.index ["printable"], name: "index_milestones_on_printable", using: :btree
+    t.index ["published"], name: "index_milestones_on_published", using: :btree
     t.index ["skills"], name: "index_milestones_on_skills", using: :gin
     t.index ["start_date"], name: "index_milestones_on_start_date", using: :btree
     t.index ["user_id"], name: "index_milestones_on_user_id", using: :btree

@@ -4,6 +4,13 @@ class RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:name, :email, :password)
   end
 
+  #devise sign_up method overrided to update the invite
+
+  def sign_up(resource_name, resource)
+    sign_in(resource_name, resource)
+    update_invite(resource)
+  end
+
   def account_update_params
     params.require(:user).permit(:username, :name, :email, :password, :avatar, :retained_avatar, :remove_avatar, 
       :location_id, :company_id, :bio,
@@ -21,5 +28,15 @@ class RegistrationsController < Devise::RegistrationsController
 
   def after_update_path_for(resource)
     user_path(resource)
+  end
+
+  def update_invite(resource)
+    # if user invited to hireclub then update recipient_id for invite
+    if cookies[:invite_id].present?
+      invite = Invite.find(cookies[:invite_id])
+      invite.recipient_id = resource.id
+      invite.save
+      cookies.delete :invite_id
+    end
   end
 end
