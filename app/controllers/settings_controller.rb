@@ -24,6 +24,10 @@ class SettingsController < ApplicationController
     @payments = current_user.payments
   end
 
+  def blocked
+    @blocked_users = current_user.blocks
+  end
+
   def update
     # What page to return to
     session[:return_to] = request.referer

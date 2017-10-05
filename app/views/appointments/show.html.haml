@@ -161,6 +161,10 @@
               - if @appointment_user.twitter_url.present?
                 %li.list-group-item 
                   = link_to link_display(@appointment_user.twitter_url), @appointment_user.twitter_url
+              - if @appointment_user.resumes.any?
+                - resume = @appointment_user.resumes.by_recent.first
+                %li.list-group-item 
+                  = link_to resume.file_name, resume.file.remote_url
 
       %h6 Helpers
       %hr

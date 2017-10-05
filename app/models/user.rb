@@ -207,6 +207,17 @@ class User < ApplicationRecord
     self.update_attributes(years_experience: value)
   end
 
+  def blocked?(user)
+    follow = get_follow_for(user)
+    return false if follow.nil?
+    return follow.blocked
+  end
+
+  def unblock(user)
+    user.create_activity :unblock, owner: self
+    super(user)
+  end
+
   def has_facebook?
     authentications.facebook.any?
   end

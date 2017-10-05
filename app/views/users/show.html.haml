@@ -81,6 +81,20 @@
           %br
             - unless viewing_self?(@user)
               = link_to_follow_user(@user, current_user)
+              - if user_signed_in?
+                .dropdown{style: "display: inline-block"}
+                  %a#dropdownMenuLink.btn.btn-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown"}
+                    •••
+                  .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                    - if current_user.blocked?(@user)
+                      %a.dropdown-item{:href => unblock_user_path(@user)} Unblock
+                    - else
+                      %a.dropdown-item{:href => block_user_path(@user)} Block
+                    / %a.dropdown-item{:href => "#"} Another action
+                    / %a.dropdown-item{:href => "#"} Something else here
+
+
+          %br
             = link_to followers_user_path(@user) do
               %span.user_followers_count_cache
                 = pluralize(@user.followers.count, "Follower")
@@ -252,7 +266,7 @@
               %th Uploaded
 
           %tbody
-            - @resumes.by_newest.each do |resume|
+            - @resumes.by_recent.each do |resume|
               %tr
                 - if resume.file_uid.present?
                   %td
