@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'helpers' => 'helpers#index', as: :helpers
 
   get 'settings' => 'settings#index', as: :settings
+  get 'settings/blocked'
   get 'settings/status'
   get 'settings/account'
   get 'settings/links'
@@ -226,6 +227,8 @@ Rails.application.routes.draw do
       get :print
       get :follow
       get :unfollow
+      get :block
+      get :unblock
       get :followers
       get :following
       get :resend_confirmation

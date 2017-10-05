@@ -25,7 +25,11 @@ class Follow < ActiveRecord::Base
   after_destroy :create_unfollow_activity
 
   def create_follow_activity
-    followable.create_activity_once :follow, owner: follower
+    unless blocked
+      followable.create_activity_once :follow, owner: follower
+    else
+      follower.create_activity :block, owner: followable
+    end
   end
 
   def create_unfollow_activity

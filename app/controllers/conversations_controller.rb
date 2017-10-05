@@ -7,7 +7,12 @@ class ConversationsController < ApplicationController
   # GET /conversations
   def index
     if current_user.conversations.any?
-      redirect_to current_user.conversations.by_recent.first 
+      current_user.conversations.by_recent.find_each do |conversation|
+        unless conversation.blocked?(current_user)
+          redirect_to conversation 
+          return
+        end
+      end
     else
       redirect_back(fallback_location: user_path(User.first), alert: "You have no messages yet. Try messaging someone from their profile page.")
     end
@@ -22,6 +27,12 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
+    if @conversation.blocked?(current_user)
+      flash[:alert] = "User not found"
+      redirect_to(conversations_path)
+      return
+    end
+
     @other_users = @conversation.other_users(current_user)
     @message = Message.new
     @messages = @conversation.messages.by_recent
