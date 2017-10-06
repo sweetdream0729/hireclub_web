@@ -11,8 +11,10 @@
 }
 .navbar-inverse .navbar-nav .nav-link {  
   letter-spacing: 1px;
-  font-size: 15px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  font-family: "tt_normsmedium", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: antialiased;
 }
 
 .badge {
