@@ -57,7 +57,6 @@ class Appointment < ApplicationRecord
 
   # Validations
   validates :acuity_id, presence: true, uniqueness: true
-  
   #callbacks
   after_create :retrieve_payments
 

@@ -20,4 +20,5 @@ class ProviderPolicy < ApplicationPolicy
   def update?
     owner_or_admin?
   end
+
 end

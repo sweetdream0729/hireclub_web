@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170929094547) do
     t.integer  "payee_id"
     t.text     "confirmation_page_url"
     t.boolean  "paid_out",              default: false, null: false
+    t.integer  "acuity_calendar_id"
     t.index ["acuity_id"], name: "index_appointments_on_acuity_id", unique: true, using: :btree
     t.index ["appointment_type_id"], name: "index_appointments_on_appointment_type_id", using: :btree
     t.index ["completed_by_id"], name: "index_appointments_on_completed_by_id", using: :btree
@@ -769,6 +770,7 @@ ActiveRecord::Schema.define(version: 20170929094547) do
     t.boolean  "approved",               default: false, null: false
     t.string   "id_proof_uid"
     t.string   "stripe_file_id"
+    t.integer  "acuity_calendar_id"
     t.index ["approved"], name: "index_providers_on_approved", using: :btree
     t.index ["phone"], name: "index_providers_on_phone", unique: true, using: :btree
     t.index ["ssn"], name: "index_providers_on_ssn", unique: true, using: :btree
