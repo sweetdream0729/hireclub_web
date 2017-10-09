@@ -10,6 +10,8 @@
       = link_to "By #{@project.user.display_name}", projects_path(username: @project.user.username)
     %li.breadcrumb-item.active
       = @project.name
+      - if @project.private
+        %i.fa.fa-lock.ml-1
 
   - if policy(@project).edit?
     %p.mt-4
@@ -66,9 +68,9 @@
           = link_to link_host(@project.link), @project.link, target: "_blank"
           
       %hr
-      - previous_project = @project.previous_project
+      - previous_project = @project.previous_project(current_user)
       - if previous_project
         = link_to "Previous", project_path(previous_project), id: "previous_project"
-      - next_project = @project.next_project
+      - next_project = @project.next_project(current_user)
       - if next_project
         = link_to "Next", project_path(next_project), id: "next_project", class: 'pull-right'
