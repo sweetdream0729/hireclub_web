@@ -42,7 +42,7 @@ SitemapGenerator::Sitemap.create do
   end
 
   add projects_path, :priority => 0.7, :changefreq => 'daily'
-  Project.find_each do |project|
+  Project.only_public.find_each do |project|
     add project_path(project), :lastmod => project.updated_at
   end
 

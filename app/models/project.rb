@@ -35,6 +35,8 @@ class Project < ApplicationRecord
   scope :with_image,     -> { where.not(image_uid: nil) }
   scope :without_image,  -> { where(image_uid: nil) }
   scope :by_user,        -> (user) { where(user: user) }
+  scope :only_public,    -> { where(private: false) }
+  scope :only_private,   -> { where(private: true) }
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
@@ -106,14 +108,14 @@ class Project < ApplicationRecord
     return keywords.join(", ")
   end
 
-  def next_project 
-    projects = user.projects.by_position
+  def next_project(viewing_user = nil) 
+    projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
     return projects[index + 1]
   end
 
-  def previous_project
-    projects = user.projects.by_position
+  def previous_project(viewing_user = nil)
+    projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
     return nil if index == 0
     return projects[index - 1]
@@ -130,6 +132,13 @@ class Project < ApplicationRecord
 
   def completed_on_formatted=(value)
     self.completed_on = Chronic.parse(value)
+  end
+
+  def self.viewable_by(viewing_user, user)
+    if viewing_user != user
+      return user.projects.only_public 
+    end
+    return user.projects
   end
   
   def self.privatize_projects_without_image
