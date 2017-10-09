@@ -44,6 +44,14 @@
         = f.label :description
         = f.text_area :description, class: 'form-control', placeholder: "Describe the project...", rows: 4
 
+      .form-check
+        %label.form-check-label
+          = f.check_box :private, class: 'form-check-input'
+          %i.fa.fa-lock
+          Private
+        %p.form-text.text-muted
+          Private projects are only viewable to people with the link
+
       .form-group
         = f.label :position
         = f.number_field :position, class: 'form-control', min: 0
