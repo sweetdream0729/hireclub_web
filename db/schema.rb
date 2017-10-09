@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929094547) do
+ActiveRecord::Schema.define(version: 20171009151945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -721,24 +721,26 @@ ActiveRecord::Schema.define(version: 20170929094547) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.integer  "user_id",                   null: false
-    t.string   "name",                      null: false
-    t.citext   "slug",                      null: false
-    t.integer  "position",     default: 0,  null: false
+    t.integer  "user_id",                      null: false
+    t.string   "name",                         null: false
+    t.citext   "slug",                         null: false
+    t.integer  "position",     default: 0,     null: false
     t.string   "image_uid"
     t.string   "image_name"
     t.integer  "image_width"
     t.integer  "image_height"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "link"
     t.text     "description"
-    t.string   "skills",       default: [],              array: true
-    t.integer  "likes_count",  default: 0,  null: false
+    t.string   "skills",       default: [],                 array: true
+    t.integer  "likes_count",  default: 0,     null: false
     t.integer  "company_id"
     t.date     "completed_on"
+    t.boolean  "private",      default: false, null: false
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
     t.index ["completed_on"], name: "index_projects_on_completed_on", using: :btree
+    t.index ["private"], name: "index_projects_on_private", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
