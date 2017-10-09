@@ -19,7 +19,8 @@ class ProjectsController < ApplicationController
 
     if params[:username]
       @user = User.friendly.find(params[:username])
-      scope = scope.by_user(@user)
+      scope = scope.viewable_by(current_user, @user)
+
       @title = "#{@title} by #{@user.display_name}"
     end
 
@@ -87,6 +88,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def project_params
-      params.require(:project).permit(:name, :slug, :position, :image_uid, :image, :retained_image, :remove_image, :image_url, :link, :description, :skills_list, :company_id, :completed_on, :completed_on_formatted)
+      params.require(:project).permit(:name, :slug, :position, :image_uid, :image, :retained_image, :remove_image, :image_url, :link, :description, :skills_list, :company_id, :completed_on, :completed_on_formatted, :private)
     end
 end
