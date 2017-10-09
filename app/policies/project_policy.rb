@@ -9,6 +9,12 @@ class ProjectPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    # admins can always see private projects
+    return true if user.present? && user.is_admin
+    Project.viewable_by(user, record.user).where(id: record.id).exists?
+  end
+
   def create?
     user_present?
   end
