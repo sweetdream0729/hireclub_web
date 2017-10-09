@@ -48,6 +48,8 @@ class UsersController < ApplicationController
 
     @resumes = resume_scope.by_recent
     
+    @projects = Project.viewable_by(current_user, @user).by_position
+
     if @user == current_user
       @user_completion = UserCompletion.new(@user)
     end
