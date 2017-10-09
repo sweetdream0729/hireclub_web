@@ -221,7 +221,7 @@
             = render @rest_skills
 
 
-  - if @user.projects.by_position.exists? || viewing_self?(@user)
+  - if @projects.any? || viewing_self?(@user)
     %hr
     %h6.mt-4.mb-4
       Projects
@@ -237,7 +237,7 @@
     
 
     .row
-      = render @user.projects.by_position
+      = render @projects
     
   - if @user.badges.any?
     .row
