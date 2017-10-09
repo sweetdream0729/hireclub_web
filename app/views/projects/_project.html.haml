@@ -7,6 +7,8 @@
         .card-title.mt-2
           - if project.name.present?
             = link_to project.name, project
+            - if project.private
+              %i.fa.fa-lock.ml-1
 
           - if policy(project).edit?
             = link_to edit_project_path(project), class: "edit_user_projects ml-1 mr-1 display_none text-muted hover_primary " do
