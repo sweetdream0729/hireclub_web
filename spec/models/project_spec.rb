@@ -244,4 +244,29 @@ RSpec.describe Project, type: :model do
       expect(project.display_date).to eq(Date.today)
     end
   end
+
+  context "private projects" do
+    let(:owner) { FactoryGirl.create(:user)}
+    let!(:public_project) {FactoryGirl.create(:project, user: owner)}
+    let!(:private_project) {FactoryGirl.create(:project, user: owner, private: true)}
+    let(:other_user) { FactoryGirl.create(:user)}
+
+    it "should only return public projects for guest users" do
+      projects = Project.viewable_by(nil, owner)
+      expect(projects.length).to eq(1)
+      expect(projects[0]).to eq(public_project)
+    end
+
+    it "should only return public projects for other users" do
+      projects = Project.viewable_by(other_user, owner)
+      expect(projects.length).to eq(1)
+      expect(projects[0]).to eq(public_project)
+    end
+
+    it "should return all projects for owner" do
+      projects = Project.viewable_by(owner, owner)
+      expect(projects.length).to eq(2)
+    end
+  end
+
 end
