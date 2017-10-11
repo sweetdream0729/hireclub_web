@@ -25,7 +25,7 @@ class Project < ApplicationRecord
   has_smart_url :link
 
   include PgSearch
-  multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
+  multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name], if: :searchable?
 
   # Scopes
   scope :by_position,    -> { order(position: :asc) }
@@ -132,6 +132,10 @@ class Project < ApplicationRecord
 
   def completed_on_formatted=(value)
     self.completed_on = Chronic.parse(value)
+  end
+
+  def searchable?
+    !self.private
   end
 
   def self.viewable_by(viewing_user, user)
