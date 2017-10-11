@@ -132,6 +132,23 @@ RSpec.describe Project, type: :model do
       notification = notifications.first
       expect(notification.user).to eq other_user
     end
+
+    it "should not have notifications for private project" do
+      other_user = FactoryGirl.create(:user)
+      other_user.follow(project.user)
+
+      project.private = true
+      project.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(project)
+      expect(activity.owner).to eq(project.user)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(0)
+    end
   end
 
   describe "badges" do
