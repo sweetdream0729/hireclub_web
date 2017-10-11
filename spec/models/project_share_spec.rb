@@ -66,6 +66,7 @@ RSpec.describe ProjectShare, type: :model do
 
       expect(project_share.recipient).to be_nil
       expect(project_share.contact).to be_present
+
     end
   end
 
@@ -77,6 +78,15 @@ RSpec.describe ProjectShare, type: :model do
 
       expect(project_share.recipient).to eq other_user
       expect(project_share.contact).to be_nil
+
+      activity = PublicActivity::Activity.where(key: ProjectShareCreateActivity::KEY).last
+      expect(activity).to be_present
+      
+      CreateNotificationJob.perform_now(activity)
+
+      notification = Notification.where(activity: activity).last
+      expect(notification).to be_present
+      expect(notification.user).to eq(other_user)
     end
   end
 end

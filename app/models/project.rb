@@ -112,12 +112,20 @@ class Project < ApplicationRecord
   def next_project(viewing_user = nil) 
     projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
+    if index == nil
+      projects = user.projects
+      index = projects.index(self)
+    end
     return projects[index + 1]
   end
 
   def previous_project(viewing_user = nil)
     projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
+    if index == nil
+      projects = user.projects
+      index = projects.index(self)
+    end
     return nil if index == 0
     return projects[index - 1]
   end
@@ -141,7 +149,9 @@ class Project < ApplicationRecord
 
   def self.viewable_by(viewing_user, user)
     if viewing_user != user
-      return user.projects.only_public 
+      return user.projects.only_public if viewing_user.nil?
+      Rails.logger.info viewing_user.shared_projects.where(user: user).inspect
+      user.projects.only_public + viewing_user.shared_projects.where(user: user)
     end
     return user.projects
   end

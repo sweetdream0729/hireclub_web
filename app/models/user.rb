@@ -107,7 +107,10 @@ class User < ApplicationRecord
   has_many :payments, dependent: :nullify, inverse_of: :user
   has_many :cards, inverse_of: :user, dependent: :destroy
   has_many :email_list_members, inverse_of: :user, dependent: :destroy
-  has_many :project_shares, dependent: :destroy
+  has_many :project_shares, dependent: :destroy, inverse_of: :user
+  has_many :project_shares_received, inverse_of: :recipient, class_name: "ProjectShare", foreign_key: :recipient_id
+  has_many :shared_projects, through: :project_shares_received, source: :project
+
 
 
   

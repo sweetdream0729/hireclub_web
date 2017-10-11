@@ -285,6 +285,12 @@ RSpec.describe Project, type: :model do
       projects = Project.viewable_by(owner, owner)
       expect(projects.length).to eq(2)
     end
+
+    it "should return public + shared projects" do
+      project_share = FactoryGirl.create(:project_share, project: private_project, user: owner, recipient: other_user)
+      projects = Project.viewable_by(other_user, owner)
+      expect(projects.length).to eq(2)
+    end
   end
 
 end

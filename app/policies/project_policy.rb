@@ -23,6 +23,12 @@ class ProjectPolicy < ApplicationPolicy
     owner_or_admin?
   end
 
+  def share?
+    return true unless record.private
+    return true if record.private && user == record.user
+    return false
+  end
+
   def destroy?
     owner_or_admin?
   end

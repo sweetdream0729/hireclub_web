@@ -1,4 +1,4 @@
-.like_button{class: "like_button_#{likeable.class.name.downcase}_#{likeable.id}"}
+.like_button{class: "like_button_#{likeable.class.name.downcase}_#{likeable.id}", style: "display: inline-block"}
   - if !user_signed_in?
     = link_to omniauth_authorize_path(User, 'facebook'), class: "btn btn-secondary btn-sm" do
       %i.fa.mr-1{"aria-hidden" => "true", class: likeable_icon(likeable)}

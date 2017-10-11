@@ -9,8 +9,7 @@ class ProjectShare < ApplicationRecord
   include UnpublishableActivity
   include PublicActivity::Model
   include PublicActivity::CreateActivityOnce
-  tracked only: [:create], owner: Proc.new{ |controller, model| model.user }, private: true
-
+  
   # Scopes
   scope :created_between, -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
   scope :by_recent,       -> {order(created_at: :desc)}
@@ -34,6 +33,7 @@ class ProjectShare < ApplicationRecord
   # Callbacks
   before_validation :ensure_slug, on: :create
   before_validation :set_recipient, on: :create
+  after_commit :send_activity, on: :create
 
   def ensure_slug
     if slug.blank?
@@ -49,6 +49,12 @@ class ProjectShare < ApplicationRecord
     if self.recipient.nil?
       self.contact = Contact.where(email: input).first_or_create
     end
+  end
+
+  def send_activity
+    self.create_activity :create, owner: user, recipient: recipient, private: true, parameters: {
+      input: input
+    }
   end
 
   def mark_viewed!(other_user)

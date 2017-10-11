@@ -1,9 +1,9 @@
 class ProjectsController < ApplicationController
   before_action :sign_up_required, except: [:show, :index]
-  after_action :verify_authorized, except: [:index]
+  after_action :verify_authorized, except: [:index, :show]
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /projects
   def index
     scope = Project.with_image
@@ -35,23 +35,28 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    if @project.private && !user_signed_in? && cookies["viewable_project_#{@project.id}"].blank?
+      user_not_authorized
+    end
+
     impressionist(@project)
   end
 
   # GET /projects/new
   def new
     @project = current_user.projects.build
-    authorize @project
+    authorize_project
   end
 
   # GET /projects/1/edit
   def edit
+    authorize_project
   end
 
   # POST /projects
   def create
     @project = current_user.projects.build(project_params)
-    authorize @project
+    authorize_project
     
     if @project.save
       redirect_to project_path(@project), notice: 'Project added'
@@ -62,6 +67,7 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
+    authorize_project
     if @project.update(project_params)
       @project.reload
       redirect_to project_path(@project), notice: 'Project updated'
@@ -72,6 +78,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
+    authorize_project
     @project.destroy
     respond_to do |format|
       format.js   { render layout: false }
@@ -83,6 +90,9 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.friendly.find(params[:id])
+    end
+
+    def authorize_project
       authorize @project
     end
 

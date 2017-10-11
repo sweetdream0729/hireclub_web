@@ -197,6 +197,7 @@ Rails.application.routes.draw do
     resources :comments, module: :milestones
   end
 
+  resources :project_shares, except: [:edit, :update]
   resources :projects do
     resources :comments, module: :projects
   end
