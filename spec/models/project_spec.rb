@@ -12,6 +12,7 @@ RSpec.describe Project, type: :model do
     it { should belong_to(:user) }
     it { should belong_to(:company) }
     it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:project_shares).dependent(:destroy) }
   end
 
   describe 'validations' do

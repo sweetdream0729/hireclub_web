@@ -107,6 +107,7 @@ class User < ApplicationRecord
   has_many :payments, dependent: :nullify, inverse_of: :user
   has_many :cards, inverse_of: :user, dependent: :destroy
   has_many :email_list_members, inverse_of: :user, dependent: :destroy
+  has_many :project_shares, dependent: :destroy
 
 
   

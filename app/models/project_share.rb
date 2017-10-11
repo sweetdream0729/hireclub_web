@@ -1,4 +1,4 @@
-class Invite < ApplicationRecord
+class ProjectShare < ApplicationRecord
   # Extensions
   extend FriendlyId
   friendly_id :slug, use: [:finders]
@@ -17,12 +17,14 @@ class Invite < ApplicationRecord
 
   # Associations
   belongs_to :user
+  belongs_to :project
   belongs_to :contact
   belongs_to :viewed_by, class_name: "User"
   belongs_to :recipient, class_name: "User"
 
   # Validations
   validates :user, presence: true
+  validates :project, presence: true
   validates :slug, uniqueness: true, presence: true
 
   validates :input, presence: true
@@ -37,8 +39,15 @@ class Invite < ApplicationRecord
     if slug.blank?
       self.slug = loop do
         slug = SecureRandom.urlsafe_base64(6).tr('1+/=lIO0_-', 'pqrsxyz')
-        break slug unless Invite.where(slug: slug).exists?
+        break slug unless ProjectShare.where(slug: slug).exists?
       end
+    end
+  end
+
+  def set_recipient
+    self.recipient = User.where(email: input).first
+    if self.recipient.nil?
+      self.contact = Contact.where(email: input).first_or_create
     end
   end
 
@@ -47,22 +56,11 @@ class Invite < ApplicationRecord
       self.viewed_on = DateTime.now
       self.viewed_by = other_user
       self.save
-      self.create_activity_once key: InviteFirstViewActivity::KEY, owner: other_user, published: true, private: true, recipient: self.user
+      self.create_activity_once key: ProjectShareFirstViewActivity::KEY, owner: other_user, published: true, private: true, recipient: self.user
     end
-  end
-
-  def mark_bounced!
-    self.create_activity_once key: InviteBounceActivity::KEY, owner: nil, published: true, private: true, recipient: self.user
   end
 
   def viewed?
     viewed_on.present?
-  end
-
-  def set_recipient
-    self.recipient = User.where(email: input).first
-    if self.recipient.nil?
-      self.contact = Contact.where(email: input).first_or_create
-    end
   end
 end

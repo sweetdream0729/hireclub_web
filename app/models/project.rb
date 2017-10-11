@@ -43,6 +43,7 @@ class Project < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :company
+  has_many :project_shares, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
 
