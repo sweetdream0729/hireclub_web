@@ -32,6 +32,9 @@
     .col-sm-4
       %h1
         = @project.name
+      - if @project.private
+        %i.fa.fa-lock.ml-1
+        Private
       %hr
       .media.mb-4
         = link_to image_tag(model_avatar(@project.user.avatar, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
