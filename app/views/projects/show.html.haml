@@ -10,6 +10,8 @@
       = link_to "By #{@project.user.display_name}", projects_path(username: @project.user.username)
     %li.breadcrumb-item.active
       = @project.name
+      - if @project.private
+        %i.fa.fa-lock.ml-1
 
   - if policy(@project).edit?
     %p.mt-4
@@ -30,6 +32,9 @@
     .col-sm-4
       %h1
         = @project.name
+      - if @project.private
+        %i.fa.fa-lock.ml-1
+        Private
       %hr
       .media.mb-4
         = link_to image_tag(model_avatar(@project.user.avatar, 200, true), width: 50, class: "d-flex align-self-center mr-3 rounded-circle"), @project.user
@@ -39,6 +44,10 @@
           = local_time(@project.display_date, "%B %e, %Y")
       %hr
       = render partial: "/likes/like_button", locals: { likeable: @project }
+      - if policy(@project).share?
+        = link_to new_project_share_path(project_id: @project.id), class: "btn btn-primary btn-sm ml-2" do
+          %i.fa.fa-share.mr-1
+          Share
       %hr
 
       - if @project.skills_list.present?
@@ -66,9 +75,9 @@
           = link_to link_host(@project.link), @project.link, target: "_blank"
           
       %hr
-      - previous_project = @project.previous_project
+      - previous_project = @project.previous_project(current_user)
       - if previous_project
         = link_to "Previous", project_path(previous_project), id: "previous_project"
-      - next_project = @project.next_project
+      - next_project = @project.next_project(current_user)
       - if next_project
         = link_to "Next", project_path(next_project), id: "next_project", class: 'pull-right'

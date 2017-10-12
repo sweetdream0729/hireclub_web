@@ -28,10 +28,6 @@ class InvitesController < ApplicationController
     authorize @invite
   end
 
-  # GET /invites/1/edit
-  def edit
-  end
-
   # POST /invites
   def create
     @invite = current_user.invites.build(invite_params)
@@ -41,15 +37,6 @@ class InvitesController < ApplicationController
       redirect_to @invite, notice: "Invite sent to #{@invite.input}."
     else
       render :new
-    end
-  end
-
-  # PATCH/PUT /invites/1
-  def update
-    if @invite.update(invite_params)
-      redirect_to @invite, notice: 'Invite was successfully updated.'
-    else
-      render :edit
     end
   end
 

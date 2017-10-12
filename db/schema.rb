@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929094547) do
+ActiveRecord::Schema.define(version: 20171011113144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -720,25 +720,48 @@ ActiveRecord::Schema.define(version: 20170929094547) do
     t.index ["user_id"], name: "index_preferences_on_user_id", unique: true, using: :btree
   end
 
+  create_table "project_shares", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.integer  "project_id",   null: false
+    t.string   "input",        null: false
+    t.string   "slug",         null: false
+    t.string   "text"
+    t.datetime "viewed_on"
+    t.integer  "viewed_by_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "contact_id"
+    t.index ["contact_id"], name: "index_project_shares_on_contact_id", using: :btree
+    t.index ["project_id"], name: "index_project_shares_on_project_id", using: :btree
+    t.index ["recipient_id"], name: "index_project_shares_on_recipient_id", using: :btree
+    t.index ["slug"], name: "index_project_shares_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_project_shares_on_user_id", using: :btree
+    t.index ["viewed_by_id"], name: "index_project_shares_on_viewed_by_id", using: :btree
+    t.index ["viewed_on"], name: "index_project_shares_on_viewed_on", using: :btree
+  end
+
   create_table "projects", force: :cascade do |t|
-    t.integer  "user_id",                   null: false
-    t.string   "name",                      null: false
-    t.citext   "slug",                      null: false
-    t.integer  "position",     default: 0,  null: false
+    t.integer  "user_id",                      null: false
+    t.string   "name",                         null: false
+    t.citext   "slug",                         null: false
+    t.integer  "position",     default: 0,     null: false
     t.string   "image_uid"
     t.string   "image_name"
     t.integer  "image_width"
     t.integer  "image_height"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "link"
     t.text     "description"
-    t.string   "skills",       default: [],              array: true
-    t.integer  "likes_count",  default: 0,  null: false
+    t.string   "skills",       default: [],                 array: true
+    t.integer  "likes_count",  default: 0,     null: false
     t.integer  "company_id"
     t.date     "completed_on"
+    t.boolean  "private",      default: false, null: false
     t.index ["company_id"], name: "index_projects_on_company_id", using: :btree
     t.index ["completed_on"], name: "index_projects_on_completed_on", using: :btree
+    t.index ["private"], name: "index_projects_on_private", using: :btree
     t.index ["skills"], name: "index_projects_on_skills", using: :gin
     t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
@@ -1013,6 +1036,9 @@ ActiveRecord::Schema.define(version: 20170929094547) do
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
   add_foreign_key "preferences", "users"
+  add_foreign_key "project_shares", "contacts"
+  add_foreign_key "project_shares", "projects"
+  add_foreign_key "project_shares", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "projects", "users"
   add_foreign_key "providers", "users"

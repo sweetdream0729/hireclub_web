@@ -12,6 +12,7 @@ RSpec.describe Project, type: :model do
     it { should belong_to(:user) }
     it { should belong_to(:company) }
     it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:project_shares).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -132,6 +133,23 @@ RSpec.describe Project, type: :model do
       notification = notifications.first
       expect(notification.user).to eq other_user
     end
+
+    it "should not have notifications for private project" do
+      other_user = FactoryGirl.create(:user)
+      other_user.follow(project.user)
+
+      project.private = true
+      project.save
+      activity = PublicActivity::Activity.last
+      expect(activity).to be_present
+      expect(activity.trackable).to eq(project)
+      expect(activity.owner).to eq(project.user)
+
+      CreateNotificationJob.perform_now(activity.id)
+
+      notifications = Notification.where(activity: activity)
+      expect(notifications.count).to eq(0)
+    end
   end
 
   describe "badges" do
@@ -244,4 +262,35 @@ RSpec.describe Project, type: :model do
       expect(project.display_date).to eq(Date.today)
     end
   end
+
+  context "private projects" do
+    let(:owner) { FactoryGirl.create(:user)}
+    let!(:public_project) {FactoryGirl.create(:project, user: owner)}
+    let!(:private_project) {FactoryGirl.create(:project, user: owner, private: true)}
+    let(:other_user) { FactoryGirl.create(:user)}
+
+    it "should only return public projects for guest users" do
+      projects = Project.viewable_by(nil, owner)
+      expect(projects.length).to eq(1)
+      expect(projects[0]).to eq(public_project)
+    end
+
+    it "should only return public projects for other users" do
+      projects = Project.viewable_by(other_user, owner)
+      expect(projects.length).to eq(1)
+      expect(projects[0]).to eq(public_project)
+    end
+
+    it "should return all projects for owner" do
+      projects = Project.viewable_by(owner, owner)
+      expect(projects.length).to eq(2)
+    end
+
+    it "should return public + shared projects" do
+      project_share = FactoryGirl.create(:project_share, project: private_project, user: owner, recipient: other_user)
+      projects = Project.viewable_by(other_user, owner)
+      expect(projects.length).to eq(2)
+    end
+  end
+
 end

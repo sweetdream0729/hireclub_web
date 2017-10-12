@@ -1,0 +1,2 @@
+- project_share = activity.trackable
+= render partial: "/notifications/item", locals: {activity: activity, verb: "#{project_share.project.name} was viewed by #{project_share.input}", object: "", link: url_for(project_share)}

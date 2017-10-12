@@ -1,0 +1,18 @@
+= form_for @project_share do |f|
+  - if @project_share.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project_share.errors.count, "error")} prohibited this project_share from being saved:"
+      %ul
+        - @project_share.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.hidden_field :project_id
+
+  .form-group
+    = f.label "Email"
+    = f.email_field :input, class: "form-control"
+  / .form-group
+  /   = f.label "Message"
+  /   = f.text_area :text, class: "form-control", rows: 2
+  
+  = f.submit 'Share Project', class: "btn btn-info btn-block btn-lg"

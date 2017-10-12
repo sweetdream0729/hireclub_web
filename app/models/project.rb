@@ -25,7 +25,7 @@ class Project < ApplicationRecord
   has_smart_url :link
 
   include PgSearch
-  multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name]
+  multisearchable :against => [:name, :user_username, :user_display_name, :link, :skills_list, :company_name], if: :searchable?
 
   # Scopes
   scope :by_position,    -> { order(position: :asc) }
@@ -35,12 +35,15 @@ class Project < ApplicationRecord
   scope :with_image,     -> { where.not(image_uid: nil) }
   scope :without_image,  -> { where(image_uid: nil) }
   scope :by_user,        -> (user) { where(user: user) }
+  scope :only_public,    -> { where(private: false) }
+  scope :only_private,   -> { where(private: true) }
 
   scope :created_between,      -> (start_date, end_date) { where("created_at BETWEEN ? and ?", start_date, end_date) }
 
   # Associations
   belongs_to :user
   belongs_to :company
+  has_many :project_shares, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
 
@@ -106,15 +109,23 @@ class Project < ApplicationRecord
     return keywords.join(", ")
   end
 
-  def next_project 
-    projects = user.projects.by_position
+  def next_project(viewing_user = nil) 
+    projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
+    if index == nil
+      projects = user.projects
+      index = projects.index(self)
+    end
     return projects[index + 1]
   end
 
-  def previous_project
-    projects = user.projects.by_position
+  def previous_project(viewing_user = nil)
+    projects = Project.viewable_by(viewing_user, user).by_position
     index = projects.index(self)
+    if index == nil
+      projects = user.projects
+      index = projects.index(self)
+    end
     return nil if index == 0
     return projects[index - 1]
   end
@@ -130,6 +141,19 @@ class Project < ApplicationRecord
 
   def completed_on_formatted=(value)
     self.completed_on = Chronic.parse(value)
+  end
+
+  def searchable?
+    !self.private
+  end
+
+  def self.viewable_by(viewing_user, user)
+    if viewing_user != user
+      return user.projects.only_public if viewing_user.nil?
+      Rails.logger.info viewing_user.shared_projects.where(user: user).inspect
+      user.projects.only_public + viewing_user.shared_projects.where(user: user)
+    end
+    return user.projects
   end
   
   def self.privatize_projects_without_image
