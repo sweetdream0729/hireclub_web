@@ -108,6 +108,16 @@
             = link_to heroes_path do 
               %span.badge.badge-info.text-uppercase
                 Hero
+          - if @user.is_provider?
+            %br
+            - if is_admin?
+              = link_to @user.provider do 
+                %span.badge.badge-info.text-uppercase
+                  Helper
+            - else
+              %span.badge.badge-info.text-uppercase
+                Helper
+
         
 
     .col-sm-3
