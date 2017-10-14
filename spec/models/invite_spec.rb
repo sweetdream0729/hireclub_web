@@ -91,6 +91,8 @@ RSpec.describe Invite, type: :model do
       expect(activity.recipient).to eq invite.user
       expect(activity.published).to be true
       expect(activity.private).to be true
+
+      expect(invite.bounced?).to be true
     end
   end
 end
