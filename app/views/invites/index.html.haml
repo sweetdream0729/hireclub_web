@@ -18,7 +18,10 @@
           %td= link_to invite.input, invite
           %td= local_time(invite.created_at)
           %td
-            - if invite.viewed?
+            - if invite.bounced?
+              %strong.text-warning
+                Bounced
+            - elsif invite.viewed?
               - if invite.viewed_by.present?
                 = link_to invite.viewed_by.display_name, invite.viewed_by
               - else

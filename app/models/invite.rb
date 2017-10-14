@@ -55,6 +55,10 @@ class Invite < ApplicationRecord
     self.create_activity_once key: InviteBounceActivity::KEY, owner: nil, published: true, private: true, recipient: self.user
   end
 
+  def bounced?
+    self.activities.where(key: InviteBounceActivity::KEY).any?
+  end
+  
   def viewed?
     viewed_on.present?
   end
