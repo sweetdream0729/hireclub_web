@@ -1,3 +1,4 @@
+- title "#{@job.name} #{@job.company.name}"
 - set_meta_tags canonical: job_url(@job)
 - set_meta_tags image_src: model_image(@company.avatar, 200, 200, true)
 - set_meta_tags description: @job.description
@@ -16,7 +17,7 @@
         = link_to image_tag(company_avatar(@company.avatar, 200, true), width: 100, class: "d-flex mr-3 rounded"), @company
         .media-body
           %h1.bold.mb-1
-            = title @job.name
+            = @job.name
           %p
             = link_to @company.name, @company
             - if @job.role
