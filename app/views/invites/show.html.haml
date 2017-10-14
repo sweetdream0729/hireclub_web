@@ -36,7 +36,8 @@
       %p.text-muted
         = local_time @invite.created_at
       
-      %p= Rinku.auto_link(markdown(@invite.text)).html_safe
+      %p
+        = Rinku.auto_link(markdown(@invite.text)).html_safe if @invite.text.present?
 
       - if @invite.viewed_on.present?
         %p
