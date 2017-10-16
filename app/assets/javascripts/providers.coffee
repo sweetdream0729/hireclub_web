@@ -22,6 +22,8 @@ $(document).ready ->
             message: 'Your SSN is required.'
       'provider[phone]':
         validators:
+            phone:
+                country: 'US'
           notEmpty: 
             message: 'Your phone is required.'
       'provider[address_line_1]':
