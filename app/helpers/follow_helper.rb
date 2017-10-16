@@ -34,7 +34,7 @@ module FollowHelper
       options[:class] += " user_follow_btn_#{user_to_follow.id} btn btn-secondary"
 
       link_to("Unfollow", url, options)
-    else
+    elsif user != user_to_follow
       url = follow_user_path(user_to_follow)
 
       options[:method] = :get
