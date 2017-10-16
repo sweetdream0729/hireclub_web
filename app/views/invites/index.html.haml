@@ -3,6 +3,9 @@
     = title "Invites"
     %small
       = link_to 'New Invite', new_invite_path, class: "btn btn-info btn-sm" if policy(Invite).new?
+  %p
+    %small
+      = pluralize(current_user.invites.count, "invites")
 
   %table.table
     %thead
