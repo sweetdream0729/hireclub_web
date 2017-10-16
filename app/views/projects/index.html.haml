@@ -26,4 +26,4 @@
     .row
       .col-sm-12
         %p.pagination
-          = link_to_next_page(@projects, 'Next Page', :remote => true, params: params.permit(:page, :sort_by))
+          = link_to_next_page(@projects, 'Next Page', :remote => true, params: params.permit(:page, :sort_by, :username))
