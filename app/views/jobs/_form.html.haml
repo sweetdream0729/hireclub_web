@@ -38,7 +38,7 @@
           .input-group
             %span.input-group-addon
               $
-            = f.text_field :min_pay, placeholder: "0", class: "form-control"
+            = f.number_field :min_pay, placeholder: "0", class: "form-control", min: 0
             %span.input-group-addon.suffix_annually{class: @job.annually? ? "" : "d-none"}
               k
             
@@ -47,7 +47,7 @@
           .input-group
             %span.input-group-addon
               $
-            = f.text_field :max_pay, placeholder: "110", class: "form-control"
+            = f.number_field :max_pay, placeholder: "110", class: "form-control", min: 0
             %span.input-group-addon.suffix_annually{class: @job.annually? ? "" : "d-none"}
               k
            
