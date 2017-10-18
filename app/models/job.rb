@@ -22,6 +22,13 @@ class Job < ApplicationRecord
   include HasTagsList
   has_tags_list :skills
 
+  ANNUALLY = "annually"
+  HOURLY = "hourly"
+  PAY_TYPES = [
+    ANNUALLY,
+    HOURLY
+  ]
+
   # Scopes
   scope :recent,          -> { order(created_at: :desc) }
   scope :published,       -> { where.not(published_on: nil) }
@@ -49,7 +56,13 @@ class Job < ApplicationRecord
   validates_length_of :name, minimum: 6, maximum: 50
   validates :slug, presence: true, uniqueness: {case_sensitive: false}
   validates :description, presence: true
+  validates :min_pay, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :max_pay, numericality: true, allow_nil: true
+  validates :pay_type, presence: true, 
+                            inclusion: { in: PAY_TYPES, message: "%{value} is not a valid pay type" }
+
   validate :skills_exist
+  validate :check_max_pay
 
   # Callbacks
 
@@ -175,5 +188,31 @@ class Job < ApplicationRecord
 
   def referred_user(user)
     job_referrals.pluck(:user_id).include?(user.id)
+  end
+
+  def hourly?
+    pay_type == HOURLY
+  end
+
+  def annually?
+    pay_type == ANNUALLY
+  end
+
+  def display_pay
+    suffix = annually? ? "k" : "/hr"
+    if max_pay
+      if max_pay != min_pay
+        return "$#{min_pay} - $#{max_pay}#{suffix}"
+      end
+      return "$#{min_pay}#{suffix}"
+    end
+
+    "$#{min_pay}#{suffix}"
+  end
+
+  def check_max_pay
+    if max_pay && max_pay < min_pay
+      errors.add(:max_pay, "must be greater than minimum pay")
+    end
   end
 end

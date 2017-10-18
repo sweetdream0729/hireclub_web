@@ -20,6 +20,9 @@
             = @job.name
           %p
             = link_to @company.name, @company
+            - if @job.min_pay > 0
+              ·
+              = @job.display_pay
             - if @job.role
               ·
               = link_to @job.role.name, @job.role 

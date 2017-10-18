@@ -23,6 +23,14 @@ RSpec.describe Job, type: :model do
     it { should validate_presence_of(:role) }
     it { should validate_presence_of(:location) }
     it { should validate_presence_of(:description) }
+
+    it { should validate_presence_of(:pay_type) }
+    it { should validate_inclusion_of(:pay_type).in_array(Job::PAY_TYPES) }
+
+    it { should validate_presence_of(:min_pay) }
+    it { should validate_numericality_of(:min_pay).is_greater_than_or_equal_to(0) }
+    
+    it { should validate_numericality_of(:max_pay) }
     
     #it { should validate_uniqueness_of(:slug).case_insensitive }
     
