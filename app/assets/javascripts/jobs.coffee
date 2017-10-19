@@ -1,15 +1,12 @@
 //= require jquery.are-you-sure
 
 $(document).ready ->
-  $('select').on 'change', (e) ->
+  $('#job_pay_type').on 'change', (e) ->
     value = @value
     if value == 'annually'
       $('.suffix_annually').removeClass("d-none")
     else
       $('.suffix_annually').addClass("d-none")
-    
-    
-    console.log(value)
     return
 
   $('.job_form').formValidation(
