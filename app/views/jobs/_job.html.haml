@@ -5,11 +5,16 @@
       %h5.semi_bold.mt-0.mb-1
         = link_to job.name, job
       %small.text-muted
-        = job.company.name
+        %strong
+          = job.company.name
+        - if job.min_pay > 0
+          ·
+          = job.display_pay
+        
         = "· #{job.role.name}" if job.role
         ·
         = job.location.cached_display_name
-        ·
-        = local_relative_time(job.created_at, type: 'time-or-date')
+        / ·
+        / = local_relative_time(job.created_at, type: 'time-or-date')
         
   %hr

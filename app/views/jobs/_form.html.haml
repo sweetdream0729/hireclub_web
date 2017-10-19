@@ -31,6 +31,29 @@
       .form-group
         = f.label "Skills"
         = f.text_field :skills_list, placeholder: "Design, Rails, Marketing"
+      .row.form-group
+        .col-12
+          = f.label "Pay Range"
+        .col-sm-3
+          .input-group
+            %span.input-group-addon
+              $
+            = f.number_field :min_pay, placeholder: "0", class: "form-control", min: 0
+            %span.input-group-addon.suffix_annually{class: @job.annually? ? "" : "d-none"}
+              k
+            
+
+        .col-sm-3
+          .input-group
+            %span.input-group-addon
+              $
+            = f.number_field :max_pay, placeholder: "110", class: "form-control", min: 0
+            %span.input-group-addon.suffix_annually{class: @job.annually? ? "" : "d-none"}
+              k
+           
+        .col-sm-6
+          = f.select :pay_type, Job::PAY_TYPES.map{ |el| [el.capitalize, el] }, {}, {class: 'form-control'}
+          
 
       .form-group
         = f.label :description

@@ -145,6 +145,7 @@ class JobsController < ApplicationController
         :internship,
         :relocation_offered,
         :source_url,
+        :min_pay, :max_pay, :pay_type,
         :user_id)
     end
 end
